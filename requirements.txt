@@ -1,0 +1,15 @@
+langchain
+langchain-community
+langchain-core
+langchain-openai
+langchain-chroma
+chromadb
+pypdf
+python-dotenv
+pydantic
+streamlit
+pandas
+langgraph
+openai
+langsmith
+tenacity
