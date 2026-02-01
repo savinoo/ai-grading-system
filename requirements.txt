@@ -13,3 +13,6 @@ langgraph
 openai
 langsmith
 tenacity
+dspy-ai
+google-generativeai --upgrade
+langchain-google-genai

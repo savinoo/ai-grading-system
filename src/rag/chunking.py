@@ -26,10 +26,11 @@ def process_and_index_pdf(file_path: str, discipline: str, topic: str):
     
     # 2. Chunking Estrutural (Adaptive Strategy - TCC Seção 2.1)
     # Tenta manter parágrafos e seções juntos.
+    # Otimização: Aumentado para 4000 caracteres para reduzir número de chamadas de API (Free Tier Latency)
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=1000,      # Tamanho alvo do chunk
-        chunk_overlap=200,    # Sobreposição para manter contexto nas bordas
-        separators=["\n\n", "\n", ".", " ", ""] # Prioridade de quebra
+        chunk_size=4000,      
+        chunk_overlap=200,    
+        separators=["\n\n", "\n", ".", " ", ""] 
     )
     chunks = text_splitter.split_documents(raw_docs)
     

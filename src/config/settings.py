@@ -7,15 +7,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Load .env file
 env_path = BASE_DIR / ".env"
-load_dotenv(dotenv_path=env_path)
+load_dotenv(dotenv_path=env_path, override=True)
 
 class Settings:
     """
     Centralized configuration management.
     """
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-    # Trocando para gpt-4o para maior capacidade de raciocínio
-    MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4o")
+    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY") # Chave do Gemini
+    
+    # Model Selection
+    # Usando gemini-1.5-flash padrão que é garantidamente gratuito
+    MODEL_NAME = os.getenv("MODEL_NAME", "gemini-3-flash-preview")
+    
     TEMPERATURE = float(os.getenv("TEMPERATURE", "0"))
     DIVERGENCE_THRESHOLD = float(os.getenv("DIVERGENCE_THRESHOLD", "2.0"))
 
@@ -34,7 +38,13 @@ class Settings:
 
     @classmethod
     def validate(cls):
-        if not cls.OPENAI_API_KEY:
-            raise ValueError("OPENAI_API_KEY not found in environment variables or .env file.")
+        # Validation for Google Gemini
+        if "gemini" in cls.MODEL_NAME.lower():
+            if not cls.GOOGLE_API_KEY:
+                raise ValueError("GOOGLE_API_KEY not found. Required for Gemini models.")
+        # Legacy validation for OpenAI
+        elif "gpt" in cls.MODEL_NAME.lower():
+            if not cls.OPENAI_API_KEY:
+                raise ValueError("OPENAI_API_KEY not found. Required for GPT models.")
 
 settings = Settings()

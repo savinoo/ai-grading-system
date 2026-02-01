@@ -2,7 +2,7 @@
 import os
 import logging
 from langchain_chroma import Chroma
-from langchain_openai import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from src.config.settings import settings
 
 logger = logging.getLogger(__name__)
@@ -11,11 +11,12 @@ def get_vector_store() -> Chroma:
     """
     Inicializa e retorna a conexão com o ChromaDB (Persistente).
     
-    Técnica: Usamos OpenAIEmbeddings para alinhar a qualidade vetorial 
-    com o modelo de raciocínio (GPT-4o), garantindo alta fidelidade semântica.
+    Técnica: Usamos GoogleGenerativeAIEmbeddings para alinhar a qualidade vetorial 
+    com o modelo de raciocínio, usando embeddings gratuitos se possível.
     """
-    embeddings = OpenAIEmbeddings(
-        model="text-embedding-3-small" # Eficiente e barato
+    embeddings = GoogleGenerativeAIEmbeddings(
+        model="models/text-embedding-004", # Modelo mais recente de embeddings do Google
+        google_api_key=settings.GOOGLE_API_KEY
     )
     
     # Ensure absolute path for persistence

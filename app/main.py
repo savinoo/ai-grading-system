@@ -24,7 +24,8 @@ from src.rag.retriever import search_context
 from src.domain.schemas import ExamQuestion, EvaluationCriterion, QuestionMetadata, StudentAnswer
 from src.config.settings import settings
 from src.agents.mock_generator import MockDataGeneratorAgent
-from langchain_openai import ChatOpenAI
+# from langchain_openai import ChatOpenAI # SUBSTITUIDO PELO FACTORY
+from src.infrastructure.llm_factory import get_chat_model
 from src.infrastructure.vector_db import get_vector_store
 from src.infrastructure.langsmith_config import initialize_langsmith, is_langsmith_enabled
 
@@ -32,7 +33,8 @@ from src.infrastructure.langsmith_config import initialize_langsmith, is_langsmi
 setup_logging()
 initialize_langsmith()  # Inicializa LangSmith tracing
 # Usando temperatura 1 para criatividade na geração de dados (Questões e Respostas)
-llm_creation = ChatOpenAI(model=settings.MODEL_NAME, temperature=1)
+# Usa o factory para suportar Gemini ou OpenAI transparentemente
+llm_creation = get_chat_model(temperature=1)
 mock_agent = MockDataGeneratorAgent(llm_creation)
 
 setup_page()

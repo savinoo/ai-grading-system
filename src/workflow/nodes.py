@@ -1,23 +1,32 @@
 # src/workflow/nodes.py
 import logging
 from typing import Dict, Any
-from langchain_openai import ChatOpenAI # Ou outro modelo
+# [MODIFICADO] Usando DSPy para o Agente Examinador (Corretores 1 e 2)
+# from langchain_openai import ChatOpenAI # REMOVIDO: Agora usamos factory
 
 from src.domain.state import GraphState
 from src.domain.schemas import AgentID
 from src.agents.examiner import ExaminerAgent
+from src.agents.dspy_examiner import DSPyExaminerAgent
 from src.agents.arbiter import ArbiterAgent
+from src.agents.dspy_arbiter import DSPyArbiterAgent
 from src.config.settings import settings
 from src.utils.helpers import measure_time
+from src.infrastructure.llm_factory import get_chat_model
 
 logger = logging.getLogger(__name__)
 
 # Instanciação dos Agentes (Em produção, usaria Injeção de Dependência)
-# Usando gpt-4o para garantir raciocínio complexo nos corretores
-# Correção deve usar temperatura 0 para maior determinismo e precisão
-llm = ChatOpenAI(model=settings.MODEL_NAME, temperature=0)
-examiner = ExaminerAgent(llm)
-arbiter = ArbiterAgent(llm)
+# Factory decide se usa GPT ou Gemini baseado no .env
+llm = get_chat_model(temperature=0)
+
+# [MODIFICADO] Usando DSPy para o Agente Examinador (Corretores 1 e 2)
+examiner = DSPyExaminerAgent()
+# examiner = ExaminerAgent(llm) # Versão anterior (LangChain)
+
+# [MODIFICADO] Usando DSPy para o Agente Árbitro
+arbiter = DSPyArbiterAgent()
+# arbiter = ArbiterAgent(llm) # Versão anterior
 
 from src.rag.retriever import search_context # Importar a nova função
 
