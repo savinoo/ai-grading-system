@@ -12,7 +12,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # --- Custom Modules ---
 from src.utils.logging_config import setup_logging
-from src.utils.helpers import run_async, save_uploaded_file
+from src.utils.helpers import run_async, save_uploaded_file, safe_gather
 from app.persistence import save_persistence_data, load_persistence_data
 from app.ui_components import (
     setup_page, render_custom_css, render_student_report, 
@@ -309,7 +309,7 @@ else:
                                 
                                 # Executa o lote da questão
                                 async def run_question_batch():
-                                    return await asyncio.gather(*tasks)
+                                    return await safe_gather(*tasks)
                                 
                                 batch_answers = run_async(run_question_batch())
                                 
@@ -371,7 +371,7 @@ else:
                                 # Note: run_correction_pipeline is async, so we need a gather wrapper or run each
                                 # Trying to run all students for this question in parallel
                                 async def process_q_batch():
-                                    return await asyncio.gather(*tasks)
+                                    return await safe_gather(*tasks)
                                 
                                 batch_results = run_async(process_q_batch())
                                 

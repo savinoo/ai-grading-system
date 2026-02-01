@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import MagicMock
-from src.domain.schemas import AgentID, CorrectionResult
+from src.domain.schemas import AgentID, AgentCorrection
 from src.workflow.nodes import calculate_divergence_node, finalize_grade_node
 from src.config.settings import settings
 
@@ -13,7 +13,7 @@ class TestGradingLogic(unittest.TestCase):
     def create_mock_state(self, scores):
         corrections = []
         for i, score in enumerate(scores):
-            mock_correction = MagicMock(spec=CorrectionResult)
+            mock_correction = MagicMock(spec=AgentCorrection)
             mock_correction.total_score = score
             # Atribuir IDs baseados na ordem (0=C1, 1=C2, 2=Arbiter)
             if i == 0:

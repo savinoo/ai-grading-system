@@ -14,5 +14,5 @@ openai
 langsmith
 tenacity
 dspy-ai
-google-generativeai --upgrade
+google-generativeai
 langchain-google-genai
