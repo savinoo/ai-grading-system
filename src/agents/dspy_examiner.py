@@ -88,9 +88,12 @@ class DSPyExaminerAgent:
 
         try:
             prediction = await loop.run_in_executor(None, run_prediction)
-            
-            # Tratamento robusto para retorno do DSPy (Objeto vs String vs Dict)
             raw_result = prediction.correction
+            
+            # --- DEBUG LOGGING ---
+            logger.info(f"[{agent_id}] RAW RESULT TYPE: {type(raw_result)}")
+            logger.info(f"[{agent_id}] RAW RESULT CONTENT: {raw_result}")
+            # ---------------------
             
             if isinstance(raw_result, AgentCorrection):
                 result = raw_result
@@ -149,6 +152,10 @@ class DSPyExaminerAgent:
                 # 3. Agent ID (Injeção)
                 if "agent_id" not in data:
                     data["agent_id"] = agent_id
+
+                # --- DEBUG SANITIZED ---
+                logger.info(f"[{agent_id}] SANITIZED DATA: {data}")
+                # -----------------------
 
                 result = AgentCorrection.model_validate(data)
 
