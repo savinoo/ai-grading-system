@@ -118,29 +118,39 @@ class DSPyExaminerAgent:
                 else:
                     result = AgentCorrection.model_validate_json(clean_json)
                     
-            elif isinstance(raw_result, dict):
-                # Sanitização de tipos para o Flash (que ama listas)
-                if "reasoning_chain" in raw_result and isinstance(raw_result["reasoning_chain"], list):
-                    raw_result["reasoning_chain"] = "\n".join(raw_result["reasoning_chain"])
-                
-                if "criteria_scores" in raw_result and isinstance(raw_result["criteria_scores"], list):
-                    # Converte lista de dicts [{'criterion': 'X', 'score': 1}] para dict {'X': 1}
-                    new_scores = {}
-                    for item in raw_result["criteria_scores"]:
-                        if isinstance(item, dict):
-                            key = item.get('criterion') or item.get('name') or list(item.keys())[0]
-                            val = item.get('score') or item.get('value') or list(item.values())[0]
-                            new_scores[str(key)] = float(val)
-                    raw_result["criteria_scores"] = new_scores
-
-                # Injeta agent_id se faltar (o modelo não gera isso)
-                if "agent_id" not in raw_result:
-                    raw_result["agent_id"] = agent_id
-
-                result = AgentCorrection.model_validate(raw_result)
             else:
-                 # Tentativa final: talvez seja um objeto Prediction aninhado
-                 result = AgentCorrection.model_validate(raw_result)
+                # Fallback universal para Dict ou Objetos DSPy
+                # Converte para dict se não for
+                if hasattr(raw_result, "model_dump"):
+                    data = raw_result.model_dump()
+                elif hasattr(raw_result, "to_dict"):
+                    data = raw_result.to_dict()
+                elif isinstance(raw_result, dict):
+                    data = raw_result
+                else:
+                    data = dict(raw_result) # Tenta cast direto
+
+                # --- SANITIZAÇÃO DE TIPOS (FLASH FIX) ---
+                # 1. Reasoning Chain (Lista -> String)
+                if "reasoning_chain" in data and isinstance(data["reasoning_chain"], list):
+                    data["reasoning_chain"] = "\n".join(data["reasoning_chain"])
+                
+                # 2. Criteria Scores (Lista de Dicts -> Dict)
+                if "criteria_scores" in data and isinstance(data["criteria_scores"], list):
+                    new_scores = {}
+                    for item in data["criteria_scores"]:
+                        if isinstance(item, dict):
+                            # Tenta pegar chaves/valores de forma resiliente
+                            k = item.get('criterion') or item.get('name') or (list(item.keys())[0] if item else "Unknown")
+                            v = item.get('score') or item.get('value') or (list(item.values())[0] if item else 0.0)
+                            new_scores[str(k)] = float(v)
+                    data["criteria_scores"] = new_scores
+
+                # 3. Agent ID (Injeção)
+                if "agent_id" not in data:
+                    data["agent_id"] = agent_id
+
+                result = AgentCorrection.model_validate(data)
 
             # Garante que o ID do agente está correto e recupera CoT antigo se vier separado
             # Se usou ChainOfThought, o raciocínio pode estar em prediction.rationale ou prediction.reasoning
