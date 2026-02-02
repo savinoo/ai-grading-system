@@ -4,6 +4,7 @@ import uuid
 from langchain_core.language_models import BaseChatModel
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
 from src.domain.schemas import ExamQuestion, StudentAnswer, QuestionMetadata, EvaluationCriterion
 from src.utils.helpers import measure_time
@@ -17,6 +18,11 @@ class MockDataGeneratorAgent:
     def __init__(self, llm: BaseChatModel):
         self.llm = llm
 
+    @retry(
+        wait=wait_exponential(multiplier=1, min=4, max=60),
+        stop=stop_after_attempt(10),
+        reraise=True
+    )
     async def generate_exam_question(self, topic: str, discipline: str, difficulty: str = "Medium") -> ExamQuestion:
         """
         Gera uma questão de prova completa com rubrica baseada no tópico.
@@ -58,6 +64,11 @@ class MockDataGeneratorAgent:
             )
         )
 
+    @retry(
+        wait=wait_exponential(multiplier=1, min=4, max=60),
+        stop=stop_after_attempt(10),
+        reraise=True
+    )
     async def generate_exam_questions(self, topic: str, discipline: str, difficulty: str = "Medium", count: int = 5) -> List[ExamQuestion]:
         """
         Gera uma lista de questões de uma única vez, com RUBRICA UNIFICADA para toda a prova.
@@ -116,6 +127,11 @@ class MockDataGeneratorAgent:
             
         return final_questions
 
+    @retry(
+        wait=wait_exponential(multiplier=1, min=4, max=60),
+        stop=stop_after_attempt(10),
+        reraise=True
+    )
     async def generate_student_answer(self, question: ExamQuestion, quality: str = "average", student_name: str = "Student") -> StudentAnswer:
         """
         Gera uma resposta de aluno simulada com base na qualidade desejada.

@@ -367,11 +367,23 @@ else:
                             
                             # Execute Batch
                             if inputs_by_student:
-                                tasks = [run_correction_pipeline(inp, None) for inp in inputs_by_student.values()] 
-                                # Note: run_correction_pipeline is async, so we need a gather wrapper or run each
-                                # Trying to run all students for this question in parallel
+                                # [MODIFICAÇÃO] Chunking para evitar Rate Limit (Gemini 429)
+                                # Processa em lotes de 3 alunos por vez (3 * 2 corretores = 6 calls simultâneos)
+                                tasks = [run_correction_pipeline(inp, None) for inp in inputs_by_student.values()]
+                                
                                 async def process_q_batch():
-                                    return await safe_gather(*tasks)
+                                    results = []
+                                    chunk_size = 3
+                                    total = len(tasks)
+                                    
+                                    for i in range(0, total, chunk_size):
+                                        chunk = tasks[i : i + chunk_size]
+                                        status_container.write(f"Corrigindo Q{q_idx+1}: Lote {i//chunk_size + 1}/{(total//chunk_size)+1}...")
+                                        chunk_results = await safe_gather(*chunk)
+                                        results.extend(chunk_results)
+                                        # Pequena pausa para 'esfriar' a API
+                                        await asyncio.sleep(1) 
+                                    return results
                                 
                                 batch_results = run_async(process_q_batch())
                                 

@@ -2,6 +2,7 @@ import dspy
 import logging
 import asyncio
 from langsmith import traceable
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from src.domain.schemas import AgentCorrection, AgentID
 from src.domain.state import GraphState
 from src.config.settings import settings
@@ -52,6 +53,11 @@ class DSPyArbiterAgent:
     def __init__(self):
         self.module = DSPyArbiterModule()
 
+    @retry(
+        wait=wait_exponential(multiplier=1, min=4, max=60),
+        stop=stop_after_attempt(10),
+        reraise=True
+    )
     @traceable(name="DSPy Arbiter Decision", run_type="chain")
     async def arbitrate(self, state: GraphState) -> AgentCorrection:
         """

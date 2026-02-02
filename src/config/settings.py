@@ -17,8 +17,8 @@ class Settings:
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY") # Chave do Gemini
     
     # Model Selection
-    # Usando gemini-1.5-flash padrão que é garantidamente gratuito
-    MODEL_NAME = os.getenv("MODEL_NAME", "gemini-3-flash-preview")
+    # Usando gemini-2.0-flash para maior velocidade e eficiência (Tier 1 safe)
+    MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.0-flash")
     
     TEMPERATURE = float(os.getenv("TEMPERATURE", "0"))
     DIVERGENCE_THRESHOLD = float(os.getenv("DIVERGENCE_THRESHOLD", "2.0"))

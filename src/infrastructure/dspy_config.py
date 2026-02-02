@@ -14,8 +14,12 @@ def configure_dspy():
         # Requer: pip install google-generativeai
         try:
             # Importa dinamicamente dspy.Google
+            # Remove prefixo 'models/' se existir, pois dspy.Google já lida bem, 
+            # mas para LiteLLM/GenerativeAI puro, o ID limpo é preferível na v1beta
+            clean_model = model_name.replace("models/", "")
+            
             lm = dspy.Google(
-                model=f"models/{model_name}" if not model_name.startswith("models/") else model_name,
+                model=clean_model,
                 api_key=settings.GOOGLE_API_KEY,
                 temperature=settings.TEMPERATURE
             )

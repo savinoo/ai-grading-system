@@ -2,6 +2,7 @@ import dspy
 import logging
 import asyncio
 from langsmith import traceable
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from src.domain.schemas import AgentCorrection, AgentID
 from src.domain.state import GraphState
 from src.config.settings import settings
@@ -54,6 +55,11 @@ class DSPyExaminerAgent:
     def __init__(self):
         self.module = DSPyExaminerModule()
 
+    @retry(
+        wait=wait_exponential(multiplier=1, min=4, max=60),
+        stop=stop_after_attempt(10),
+        reraise=True
+    )
     @traceable(name="DSPy Examiner Evaluation", run_type="chain")
     async def evaluate(self, state: GraphState, agent_id: AgentID) -> AgentCorrection:
         """
