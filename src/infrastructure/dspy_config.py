@@ -33,4 +33,13 @@ def configure_dspy():
             # Último recurso: dspy.OpenAI legado
             lm = dspy.OpenAI(model=model_name, api_key=settings.OPENAI_API_KEY)
         
-    dspy.settings.configure(lm=lm)
+    try:
+        dspy.settings.configure(lm=lm)
+    except RuntimeError as e:
+        # Streamlit re-run safety:
+        # Se o DSPy já foi configurado em outra thread (execução anterior),
+        # ele bloqueia reconfiguração. Ignoramos pois a config global persiste.
+        if "thread that initially configured it" in str(e):
+            pass
+        else:
+            raise e
