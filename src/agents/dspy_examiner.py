@@ -16,16 +16,17 @@ logger = logging.getLogger(__name__)
 
 class GradingSignature(dspy.Signature):
     """
-    Avalie a resposta do aluno com base na rubrica detalhada e no contexto fornecido.
-    Siga rigorosamente os critérios de avaliação.
-    Gere um raciocínio detalhado (CoT) antes de atribuir as notas.
+    Avalie a resposta do aluno com base na rubrica detalhada.
+    IMPORTANTE: Sua saída deve ser ESTRITAMENTE um objeto JSON válido seguindo o schema de AgentCorrection.
+    NÃO escreva introduções, markdown ou texto livre fora do JSON.
+    Campos obrigatórios: reasoning_chain, criteria_scores (lista), total_score, feedback_text.
     """
     question_statement = dspy.InputField(desc="O enunciado da questão da prova")
     rubric_formatted = dspy.InputField(desc="A rubrica de avaliação detalhada com critérios e pesos")
     rag_context_formatted = dspy.InputField(desc="Trechos relevantes do material didático (RAG)")
     student_answer = dspy.InputField(desc="A resposta discursiva submetida pelo aluno")
     
-    correction = dspy.OutputField(desc="A correção estruturada contendo raciocínio, notas e feedback", type=AgentCorrection)
+    correction = dspy.OutputField(desc="A correção estruturada (JSON)", type=AgentCorrection)
 
 class DSPyExaminerModule(dspy.Module):
     def __init__(self):
@@ -97,7 +98,26 @@ class DSPyExaminerAgent:
                 # Se voltou string (às vezes acontece em fallbacks), parseamos manualmente
                 # Remove markdown code blocks se houver
                 clean_json = raw_result.replace("```json", "").replace("```", "").strip()
-                result = AgentCorrection.model_validate_json(clean_json)
+                
+                # Tentativa de 'Rescue': Se não começar com '{', é texto solto (Markdown do Gemini).
+                if not clean_json.strip().startswith("{"):
+                    logger.warning(f"[{agent_id}] Modelo retornou texto livre. Tentando estruturar manual.")
+                    # Cria um objeto 'pobre' mas funcional para não quebrar o fluxo
+                    import re
+                    # Tenta achar nota tipo "Nota: 0.8/2.0" ou "Total: 10"
+                    score_match = re.search(r"(?:Nota|Total|Score)[:\s]*(\d+[\.,]?\d*)", clean_json, re.IGNORECASE)
+                    score = float(score_match.group(1).replace(",", ".")) if score_match else 0.0
+                    
+                    result = AgentCorrection(
+                        agent_id=agent_id,
+                        reasoning_chain=clean_json, # O texto todo vira o raciocínio
+                        criteria_scores=[],
+                        total_score=score,
+                        feedback_text="[Sistema] Correção gerada em formato texto (fallback aplicado)."
+                    )
+                else:
+                    result = AgentCorrection.model_validate_json(clean_json)
+                    
             elif isinstance(raw_result, dict):
                  result = AgentCorrection.model_validate(raw_result)
             else:
