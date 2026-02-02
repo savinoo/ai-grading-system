@@ -7,12 +7,12 @@ from src.domain.schemas import AgentCorrection, AgentID
 from src.domain.state import GraphState
 from src.config.settings import settings
 from src.config.prompts import format_rubric_text, format_rag_context
-from src.infrastructure.dspy_config import configure_dspy
+# from src.infrastructure.dspy_config import configure_dspy # REMOVIDO: Configuração deve ser global no main
 
 logger = logging.getLogger(__name__)
 
 # Garante a configuração
-configure_dspy()
+# configure_dspy()
 
 class GradingSignature(dspy.Signature):
     """

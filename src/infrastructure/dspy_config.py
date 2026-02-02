@@ -5,38 +5,32 @@ from src.config.settings import settings
 def configure_dspy():
     """
     Configura o backend do DSPy com o modelo LM definido nas settings.
-    Suporta OpenAI e Google Gemini.
+    Suporta OpenAI, Google Gemini e outros via LiteLLM.
     """
     model_name = settings.MODEL_NAME.lower()
     
+    # Limpeza básica de prefixos legados
+    clean_name = model_name.replace("models/", "").replace("google/", "").replace("gemini/", "")
+    
     if "gemini" in model_name:
-        # Configuração para Google Gemini
-        # Requer: pip install google-generativeai
-        try:
-            # Importa dinamicamente dspy.Google
-            # Remove prefixo 'models/' se existir, pois dspy.Google já lida bem, 
-            # mas para LiteLLM/GenerativeAI puro, o ID limpo é preferível na v1beta
-            clean_model = model_name.replace("models/", "")
-            
-            lm = dspy.Google(
-                model=clean_model,
-                api_key=settings.GOOGLE_API_KEY,
-                temperature=settings.TEMPERATURE
-            )
-        except (AttributeError, NameError):
-             # Fallback: dspy-ai versions variam muito nas interfaces de Google.
-             # Tenta usar a classe genérica LM do novo dspy
-             lm = dspy.LM(f"google/{model_name}", api_key=settings.GOOGLE_API_KEY)
+        # Configuração para Gemini via LiteLLM (dspy.LM)
+        # Formato esperado: gemini/gemini-2.0-flash
+        provider_model = f"gemini/{clean_name}"
+        
+        # dspy.LM é a interface moderna (v2.5+) que usa LiteLLM por baixo dos panos
+        # e suporta async nativo melhor que dspy.Google
+        lm = dspy.LM(model=provider_model, api_key=settings.GOOGLE_API_KEY, temperature=settings.TEMPERATURE)
 
+    elif "gpt" in model_name:
+        # Configuração OpenAI
+        lm = dspy.LM(model=f"openai/{clean_name}", api_key=settings.OPENAI_API_KEY, temperature=settings.TEMPERATURE)
+        
     else:
-        # Configuração Padrão (OpenAI)
+        # Fallback genérico (tenta usar como está ou assume OpenAI)
         try:
-            lm = dspy.LM(f"openai/{settings.MODEL_NAME}", api_key=settings.OPENAI_API_KEY)
+            lm = dspy.LM(model=model_name)
         except:
-            lm = dspy.OpenAI(
-                model=settings.MODEL_NAME, 
-                api_key=settings.OPENAI_API_KEY,
-                temperature=settings.TEMPERATURE
-            )
+            # Último recurso: dspy.OpenAI legado
+            lm = dspy.OpenAI(model=model_name, api_key=settings.OPENAI_API_KEY)
         
     dspy.settings.configure(lm=lm)

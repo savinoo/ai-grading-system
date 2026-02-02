@@ -32,6 +32,8 @@ from src.infrastructure.langsmith_config import initialize_langsmith, is_langsmi
 # --- Initialization ---
 setup_logging()
 initialize_langsmith()  # Inicializa LangSmith tracing
+from src.infrastructure.dspy_config import configure_dspy
+configure_dspy()
 # Usando temperatura 1 para criatividade na geração de dados (Questões e Respostas)
 # Usa o factory para suportar Gemini ou OpenAI transparentemente
 llm_creation = get_chat_model(temperature=1)
