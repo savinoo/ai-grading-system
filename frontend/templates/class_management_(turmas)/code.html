@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestão de Turmas - Corretum AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#773399",
+                        "secondary-green": "#476647",
+                        "background-light": "#ffffff",
+                        "background-dark": "#1a171c",
+                        "border-muted": "#E0E0E0",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-item-active {
+            background-color: rgba(119, 51, 153, 0.1);
+            color: #773399;
+            border-right: 3px solid #773399;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex-shrink-0 border-r border-border-muted dark:border-white/10 flex flex-col bg-background-light dark:bg-background-dark">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<h1 class="text-sm font-bold leading-tight tracking-tight">Corretum AI</h1>
+<p class="text-[10px] uppercase tracking-widest text-slate-400 font-extrabold">Painel do Instrutor</p>
+</div>
+</div>
+<nav class="flex-1 mt-4">
+<div class="px-3 mb-2">
+<p class="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Gestão</p>
+<a class="sidebar-item-active flex items-center gap-3 px-3 py-2.5 rounded-sm transition-all group" href="#">
+<span class="material-symbols-outlined text-xl">school</span>
+<span class="text-sm font-semibold">Turmas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-50 dark:hover:bg-white/5 rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-xl">description</span>
+<span class="text-sm font-medium">Avaliações</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-50 dark:hover:bg-white/5 rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-xl">group</span>
+<span class="text-sm font-medium">Lista de Alunos</span>
+</a>
+</div>
+<div class="px-3 mt-6">
+<p class="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Operações</p>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-50 dark:hover:bg-white/5 rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-xl">rule</span>
+<span class="text-sm font-medium">Fila de Correção</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-50 dark:hover:bg-white/5 rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-xl">bar_chart</span>
+<span class="text-sm font-medium">Relatórios</span>
+</a>
+</div>
+</nav>
+<div class="p-4 border-t border-border-muted dark:border-white/10">
+<div class="flex items-center gap-3 p-2">
+<img alt="teacher Profile" class="w-8 h-8 rounded-full border border-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKPqaFZvypzkAbOE_waCrlh1ARGHk-A9dSRzeGw9m2bLOuJDolCg3ViBtwYurWlg5KJgh1Sz4kCQF4XrPMWaqZCeDQojA0D6Pkzu4LKw9qdUrXfDjFu_iOgstfefXZ-UaroKesRQkcifDrVA5mrkV2Nn2gFDE_Jl7jlj7Ivp9QD3c_0WZXI-6cvVz6noOyJMDXEB3Qw7y7pZz0DUyDiGEViGWpY6spYAzmQJEP4QbZnmKgXBdKq53PPy8QqOUcv-LbupEb_pJ3Y0Y"/>
+<div class="overflow-hidden">
+<p class="text-xs font-bold truncate">Dr. Julian Vance</p>
+<p class="text-[10px] text-slate-500 truncate">Instrutor Sênior</p>
+</div>
+<button class="ml-auto text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined text-lg">settings</span>
+</button>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto bg-slate-50/50 dark:bg-background-dark p-8">
+<header class="max-w-6xl mx-auto mb-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<div class="flex items-center gap-2 text-slate-400 mb-1">
+<span class="text-xs font-bold uppercase tracking-widest">Dashboard</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-xs font-bold uppercase tracking-widest text-primary">Gestão de Turmas</span>
+</div>
+<h2 class="text-3xl font-extrabold tracking-tight dark:text-white">Gestão de Turmas</h2>
+<p class="text-slate-500 mt-1 font-medium">Organize suas turmas acadêmicas e acompanhe o progresso das correções automáticas.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-5 py-2.5 bg-secondary-green text-white text-sm font-bold rounded-lg shadow-sm hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-lg">upload_file</span>
+                        Importar Alunos (CSV)
+                    </button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-bold rounded-lg shadow-sm hover:shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                        + Criar Turma
+                    </button>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto bg-background-light dark:bg-white/5 rounded-xl border border-border-muted dark:border-white/10 shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden">
+<div class="p-4 border-b border-border-muted dark:border-white/10 flex flex-wrap items-center justify-between gap-4">
+<div class="flex-1 min-w-[300px] max-w-md relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-white/5 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/50 transition-all" placeholder="Buscar turmas por nome, período ou ano..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<select class="bg-slate-100 dark:bg-white/5 border-none rounded-lg text-xs font-bold py-2 px-4 focus:ring-0 cursor-pointer">
+<option>Todos os Períodos</option>
+<option>2023.2</option>
+<option>2024.1</option>
+</select>
+<button class="flex items-center gap-2 text-xs font-bold text-slate-500 px-3 py-2 hover:bg-slate-100 dark:hover:bg-white/10 rounded-lg transition-all">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                        Mais Filtros
+                    </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 dark:bg-white/[0.02]">
+<tr>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-border-muted dark:border-white/10">Nome da Turma</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-border-muted dark:border-white/10">Período/Ano</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-border-muted dark:border-white/10 text-center">Qtd. Alunos</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-border-muted dark:border-white/10">Última Atividade</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-widest border-b border-border-muted dark:border-white/10 text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-muted dark:divide-white/10">
+<tr class="hover:bg-slate-50/80 dark:hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">RC</div>
+<div>
+<p class="text-sm font-bold dark:text-white">Redação e Composição I</p>
+<p class="text-xs text-slate-500">ID: COMP-101-04</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300">2023.2</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="text-sm font-semibold">32</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 font-medium">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                    há 2 horas
+                                </div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-all" title="Ver Turma">
+<span class="material-symbols-outlined text-xl">visibility</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-all" title="Editar Turma">
+<span class="material-symbols-outlined text-xl">edit</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded transition-all" title="Arquivar Turma">
+<span class="material-symbols-outlined text-xl">archive</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/80 dark:hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">EC</div>
+<div>
+<p class="text-sm font-bold dark:text-white">Escrita Criativa II</p>
+<p class="text-xs text-slate-500">ID: ENGL-302-01</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300">2024.1</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="text-sm font-semibold">28</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 font-medium">
+<span class="w-2 h-2 rounded-full bg-slate-300"></span>
+                                    ontem
+                                </div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-all" title="Ver Turma">
+<span class="material-symbols-outlined text-xl">visibility</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded transition-all" title="Editar Turma">
+<span class="material-symbols-outlined text-xl">edit</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded transition-all" title="Arquivar Turma">
+<span class="material-symbols-outlined text-xl">archive</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-slate-50/50 dark:bg-white/[0.01] border-t border-border-muted dark:border-white/10 flex items-center justify-between">
+<p class="text-xs font-bold text-slate-500">Exibindo 2 de 12 turmas</p>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-400 hover:text-slate-800 disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-white text-xs font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-slate-200 dark:hover:bg-white/10 text-xs font-bold">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-slate-200 dark:hover:bg-white/10 text-xs font-bold">3</button>
+</div>
+<button class="p-2 text-slate-400 hover:text-slate-800">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-6xl mx-auto mt-6 flex items-start gap-3 p-4 bg-primary/5 rounded-lg border border-primary/10">
+<span class="material-symbols-outlined text-primary">info</span>
+<div>
+<h4 class="text-xs font-extrabold text-primary uppercase tracking-wider">Aviso para Instrutores</h4>
+<p class="text-xs text-slate-600 dark:text-slate-400 mt-0.5">Arquivar uma turma moverá os dados para a aba de Arquivo. Você pode restaurá-los a qualquer momento antes do fechamento do semestre.</p>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

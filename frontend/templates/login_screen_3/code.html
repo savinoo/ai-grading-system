@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detalhe da Prova | Corretum AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1f6b7a",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .status-badge {
+            @apply px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex font-display transition-colors duration-300">
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hidden lg:flex flex-col sticky top-0 h-screen">
+<div class="p-6 flex items-center gap-3 text-primary">
+<div class="size-8 flex items-center justify-center bg-primary text-white rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-xl">school</span>
+</div>
+<h2 class="text-[#101819] dark:text-white text-xl font-extrabold tracking-tight">Corretum AI</h2>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-semibold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-sm font-bold">Provas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-sm font-semibold">Turmas</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-sm font-semibold">Relatórios</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500">person</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-xs font-bold text-slate-900 dark:text-white truncate">Prof. Ricardo Silva</p>
+<p class="text-[10px] text-slate-500 truncate">Universidade Federal</p>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-sm">logout</span>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-w-0">
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 px-8 flex items-center justify-between">
+<div class="flex items-center gap-2 text-sm text-slate-500">
+<span>Provas</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="font-bold text-slate-900 dark:text-white">Detalhe da Prova</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
+<button class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:bg-opacity-90">
+<span class="material-symbols-outlined text-sm">add</span>
+<span>Nova Prova</span>
+</button>
+</div>
+</header>
+<div class="p-8 space-y-8">
+<section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="md:col-span-2 space-y-2">
+<span class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">Prova Selecionada</span>
+<h1 class="text-2xl font-extrabold text-slate-900 dark:text-white">Avaliação de Filosofia Moderna - Bimestre II</h1>
+<div class="flex items-center gap-4 text-slate-500 text-sm mt-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">groups</span>
+<span>Turma: 3º Ano A - Matutino</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span>Data: 15/10/2024</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col justify-center border-l border-slate-100 dark:border-slate-800 pl-8">
+<p class="text-slate-500 text-sm font-medium">Pontuação Total</p>
+<p class="text-3xl font-extrabold text-slate-900 dark:text-white">10,0 <span class="text-sm font-medium text-slate-400">pts</span></p>
+</div>
+<div class="flex flex-col justify-center">
+<div class="flex justify-between items-end mb-2">
+<p class="text-slate-500 text-sm font-medium">Progresso de Correção</p>
+<span class="text-primary font-bold text-sm">75%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[75%] rounded-full"></div>
+</div>
+<p class="text-[10px] text-slate-400 mt-2 uppercase font-bold tracking-wider text-right">30 de 40 alunos</p>
+</div>
+</div>
+</section>
+<section class="space-y-4">
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 flex flex-wrap items-center justify-between gap-4 shadow-sm">
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border-none rounded-lg text-sm w-64 focus:ring-2 focus:ring-primary/20" placeholder="Buscar aluno..." type="text"/>
+</div>
+<button class="flex items-center gap-2 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-sm font-semibold transition-all">
+<span class="material-symbols-outlined text-sm">filter_alt</span>
+<span>Filtros</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 px-3 py-2 text-primary hover:bg-primary/5 border border-primary/20 rounded-lg text-sm font-bold">
+<span class="material-symbols-outlined text-sm">upload_file</span>
+<span>Importar CSV</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-2 text-primary hover:bg-primary/5 border border-primary/20 rounded-lg text-sm font-bold">
+<span class="material-symbols-outlined text-sm">content_paste</span>
+<span>Colar Tabela</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-sm font-bold border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+<span>Marcar como revisado</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-2 bg-slate-900 dark:bg-slate-700 text-white rounded-lg text-sm font-bold shadow-md hover:opacity-90">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>Exportar selecionados</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 uppercase text-[10px] font-bold tracking-widest border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 w-12 text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</th>
+<th class="px-6 py-4">Aluno</th>
+<th class="px-6 py-4">RA</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Nota</th>
+<th class="px-6 py-4 text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-6 py-4 font-bold text-slate-700 dark:text-slate-200">Ana Beatriz Garcia</td>
+<td class="px-6 py-4 text-slate-500 text-sm">20240105</td>
+<td class="px-6 py-4">
+<span class="status-badge bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">Corrigida</span>
+</td>
+<td class="px-6 py-4 font-extrabold text-slate-900 dark:text-white">9,5</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors border border-slate-200 dark:border-slate-700 rounded-lg">Ver/Editar</button>
+<button class="px-3 py-1.5 text-xs font-bold bg-primary text-white rounded-lg shadow-sm hover:opacity-90">Revisar</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-6 py-4 font-bold text-slate-700 dark:text-slate-200">Carlos Eduardo Silva</td>
+<td class="px-6 py-4 text-slate-500 text-sm">20240112</td>
+<td class="px-6 py-4">
+<span class="status-badge bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">Pendente de revisão</span>
+</td>
+<td class="px-6 py-4 font-extrabold text-slate-400 italic">--</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-100 group-hover:opacity-100">
+<button class="px-3 py-1.5 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors border border-slate-200 dark:border-slate-700 rounded-lg">Ver/Editar</button>
+<button class="px-3 py-1.5 text-xs font-bold bg-primary text-white rounded-lg shadow-sm hover:opacity-90">Revisar</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-6 py-4 font-bold text-slate-700 dark:text-slate-200">Fernanda Oliveira</td>
+<td class="px-6 py-4 text-slate-500 text-sm">20240201</td>
+<td class="px-6 py-4">
+<span class="status-badge bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">Resposta inserida</span>
+</td>
+<td class="px-6 py-4 font-extrabold text-slate-400 italic">--</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors border border-slate-200 dark:border-slate-700 rounded-lg">Ver/Editar</button>
+<button class="px-3 py-1.5 text-xs font-bold bg-primary text-white rounded-lg shadow-sm hover:opacity-90">Corrigir Agora</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-6 py-4 font-bold text-slate-700 dark:text-slate-200">Guilherme Santos</td>
+<td class="px-6 py-4 text-slate-500 text-sm">20240315</td>
+<td class="px-6 py-4">
+<span class="status-badge bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-500">Sem resposta</span>
+</td>
+<td class="px-6 py-4 font-extrabold text-slate-400 italic">--</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors border border-slate-200 dark:border-slate-700 rounded-lg">Inserir Resposta</button>
+<button class="px-3 py-1.5 text-xs font-bold text-slate-300 bg-slate-100 dark:bg-slate-800 cursor-not-allowed rounded-lg" disabled="">Revisar</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4 text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-6 py-4 font-bold text-slate-700 dark:text-slate-200">Juliana Lima</td>
+<td class="px-6 py-4 text-slate-500 text-sm">20240422</td>
+<td class="px-6 py-4">
+<span class="status-badge bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">Corrigida</span>
+</td>
+<td class="px-6 py-4 font-extrabold text-slate-900 dark:text-white">8,2</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="px-3 py-1.5 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-primary transition-colors border border-slate-200 dark:border-slate-700 rounded-lg">Ver/Editar</button>
+<button class="px-3 py-1.5 text-xs font-bold bg-primary text-white rounded-lg shadow-sm hover:opacity-90">Revisar</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex items-center justify-between px-2 text-sm">
+<p class="text-slate-500">Exibindo 1 a 10 de 40 alunos</p>
+<div class="flex gap-2">
+<button class="p-2 border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="px-3 py-1 border border-primary bg-primary/5 text-primary rounded-lg font-bold">1</button>
+<button class="px-3 py-1 border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">2</button>
+<button class="px-3 py-1 border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">3</button>
+<button class="p-2 border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+<footer class="mt-auto px-8 py-6 border-t border-slate-200 dark:border-slate-800 text-slate-400 text-[11px] font-bold uppercase tracking-widest flex flex-col sm:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-6">
+<a class="hover:text-primary transition-colors" href="#">Privacidade</a>
+<a class="hover:text-primary transition-colors" href="#">Termos</a>
+<a class="hover:text-primary transition-colors" href="#">Suporte</a>
+</div>
+<span>© 2024 Corretum AI. Tecnologia Educacional de Ponta.</span>
+</footer>
+</main>
+
+</body></html>

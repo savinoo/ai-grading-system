@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestão de Alunos - Corretum AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ea2a33",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#211111",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Public Sans", sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#181111] dark:text-white">
+<div class="relative flex flex-col min-h-screen w-full">
+<header class="flex items-center justify-between border-b border-solid border-[#e5dcdc] dark:border-[#3d2a2a] bg-white dark:bg-[#2d1a1a] px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="text-primary size-8">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+<path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-[#181111] dark:text-white text-lg font-bold leading-tight tracking-tight">Corretum AI</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-9">
+<a class="text-[#181111] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-[#181111] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Provas</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary py-1" href="#">Alunos</a>
+<a class="text-[#181111] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#">Correções</a>
+</nav>
+<div class="flex items-center gap-3 border-l border-[#e5dcdc] dark:border-[#3d2a2a] pl-8">
+<div class="text-right">
+<p class="text-xs font-bold">Prof. Julian Vane</p>
+<p class="text-[10px] text-gray-500">Administrador</p>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="Portrait of the teacher profile" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAGQcRoOwxSfR3TmoRup-_uYFkYA034XjUvSJGuj_KUejmGA5lduc-TSct0FXnEfqm87TnF3CNaoPOPFW9SxLnFifVajvLcCygCVXNMiOL-U40h9ZDV0hLyNwqr0Z56HmmIUgzsy6lcZ5kHNoNvz1fmByrx1BfEvNkD8GdueWAr0dUQNNzpTExOBLha3K3W6G7E0CcbLTVZBzfxprEbbka923m02mLNJ9nZ5gp6wPn4t7qXUTt7I8TGkcb78BWEOsKVQFQB-ow0Y4w");'></div>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-[1280px] w-full mx-auto px-10 py-8">
+<div class="flex flex-wrap gap-2 mb-4">
+<a class="text-[#886364] dark:text-gray-400 text-sm font-medium hover:text-primary" href="#">Início</a>
+<span class="text-[#886364] text-sm">/</span>
+<a class="text-[#886364] dark:text-gray-400 text-sm font-medium hover:text-primary" href="#">Gestão</a>
+<span class="text-[#886364] text-sm">/</span>
+<span class="text-[#181111] dark:text-white text-sm font-bold">Alunos</span>
+</div>
+<div class="flex flex-wrap justify-between items-end gap-4 mb-8">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#181111] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Gestão de Alunos</h1>
+<p class="text-[#886364] dark:text-gray-400 text-base font-normal">Gerencie 1.248 alunos matriculados em todas as turmas ativas.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-11 px-5 bg-white dark:bg-[#3d2a2a] border border-[#e5dcdc] dark:border-[#4d3a3a] text-[#181111] dark:text-white text-sm font-bold shadow-sm hover:bg-gray-50 dark:hover:bg-[#4d3a3a] transition-all gap-2">
+<span class="material-symbols-outlined text-lg">upload_file</span>
+<span>Importar CSV</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-11 px-6 bg-primary text-white text-sm font-bold shadow-md hover:bg-[#c9242b] transition-all gap-2">
+<span class="material-symbols-outlined text-lg">person_add</span>
+<span>+ Adicionar Aluno</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-[#2d1a1a] rounded-xl shadow-sm border border-[#e5dcdc] dark:border-[#3d2a2a] overflow-hidden">
+<div class="flex items-center justify-between border-b border-[#e5dcdc] dark:border-[#3d2a2a] px-6">
+<div class="flex gap-8">
+<a class="flex items-center border-b-[3px] border-primary text-primary pb-4 pt-5" href="#">
+<p class="text-sm font-bold tracking-tight">Todos os Alunos</p>
+<span class="ml-2 bg-primary/10 text-primary text-[10px] font-black px-1.5 py-0.5 rounded-full">1.248</span>
+</a>
+<a class="flex items-center border-b-[3px] border-transparent text-[#886364] dark:text-gray-400 pb-4 pt-5 hover:text-[#181111] dark:hover:text-white" href="#">
+<p class="text-sm font-bold tracking-tight">Ativos</p>
+</a>
+<a class="flex items-center border-b-[3px] border-transparent text-[#886364] dark:text-gray-400 pb-4 pt-5 hover:text-[#181111] dark:hover:text-white" href="#">
+<p class="text-sm font-bold tracking-tight">Formados</p>
+</a>
+</div>
+<div class="flex items-center gap-4 py-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xl">search</span>
+<input class="pl-10 pr-4 py-2 bg-background-light dark:bg-[#3d2a2a] border-none rounded-lg text-sm focus:ring-2 focus:ring-primary w-64 transition-all" placeholder="Buscar por nome ou matrícula..." type="text"/>
+</div>
+<div class="relative">
+<select class="pl-4 pr-10 py-2 bg-background-light dark:bg-[#3d2a2a] border-none rounded-lg text-sm focus:ring-2 focus:ring-primary appearance-none cursor-pointer">
+<option>Filtrar por Turma</option>
+<option>Inglês 101</option>
+<option>IA Avançada</option>
+<option>Escrita Criativa B</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-background-light dark:bg-[#342222] text-[#886364] dark:text-gray-400 text-[11px] uppercase tracking-widest font-bold">
+<th class="px-6 py-4 w-12 text-center">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</th>
+<th class="px-6 py-4">Nome do Aluno</th>
+<th class="px-6 py-4">Matrícula</th>
+<th class="px-6 py-4">Turma/Grupo</th>
+<th class="px-6 py-4">Média Geral</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#e5dcdc] dark:divide-[#3d2a2a]">
+<tr class="hover:bg-gray-50 dark:hover:bg-[#342222] transition-colors group">
+<td class="px-6 py-4 text-center">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-lg bg-cover bg-center border border-gray-200" data-alt="Student profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWWMVfTDM-7ViFNx5bylCHTMLdElXbjhSLoQ99ecbU3cj8SAuQ9c_diAtqboyMP_JQ8_Nfqkqvo8DgEyTT9WgG-dhpusGMn9w4r4lciGzueNROXDI7L9LfDoh98iCMSK3f826p7Wr-Gu6O_ku4DjDFtibc87f9doXKHMxhxyTo9slfnns8jGhzcwkr4-P4UCJnoZgNhoHdlpSeWd7_0tFogVI8VhD8w8EopiwKgk0bQolgZG8l9dNiZ2eaLeGCT9HSmwNZxZZ0D7s')"></div>
+<div>
+<p class="text-sm font-bold text-[#181111] dark:text-white">Marcus Sterling</p>
+<p class="text-xs text-gray-500">marcus.s@universidade.edu</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium font-mono text-gray-600 dark:text-gray-400">STU-2024-0891</td>
+<td class="px-6 py-4 text-sm font-medium">Inglês 101-B</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 88%"></div>
+</div>
+<span class="text-xs font-bold">88%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black bg-green-100 text-green-700 uppercase tracking-tighter">Ativo</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors" title="Ver Perfil">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors" title="Editar">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors" title="Excluir">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-[#342222] transition-colors group">
+<td class="px-6 py-4 text-center">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-lg bg-cover bg-center border border-gray-200" data-alt="Student profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAOdbOCvaBAwYq4AcFzW3xS-32HkYC0hpuImvakqbmme5vvd761ZbuBTP3V2muJ_7-fAoljhW5_64wD3qHPwFls-LU9wUGsAFYPEXzeJDxHeLv2GkPtMXj9hmU2VAn8RRS8H6rIkbpNAMuNRCR7s1xg-PYWzZxIEugUn390cXBinQHH5789G_RU6ppJA4LgVPDMHBz0RkP8RHhTt54ohOEvlj9RpupIc2o2IK03IJngr_hyDxgw7pbGQFEjH9KRUVwLo7OgZu7kXdE')"></div>
+<div>
+<p class="text-sm font-bold text-[#181111] dark:text-white">Elena Rodriguez</p>
+<p class="text-xs text-gray-500">e.rodriguez@universidade.edu</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium font-mono text-gray-600 dark:text-gray-400">STU-2024-0442</td>
+<td class="px-6 py-4 text-sm font-medium">IA Avançada</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 94%"></div>
+</div>
+<span class="text-xs font-bold">94%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black bg-green-100 text-green-700 uppercase tracking-tighter">Ativo</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors" title="Ver Perfil">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors" title="Editar">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors" title="Excluir">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-[#342222] transition-colors group">
+<td class="px-6 py-4 text-center">
+<input class="rounded border-gray-300 text-primary focus:ring-primary" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-lg bg-cover bg-center border border-gray-200" data-alt="Student profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB4Wz3qH078YJodjthtnLaLBW43KvHJZESzD620QzEdzN9pcZzLUC1de66bFyNBK0OaUJilJRvhaj6uzMOhNBI4IIXTU1l4vNsWJfZhfvrtJz2bh1fJzutuFLUxkMQZJVRAW0EePwrFklJekskeZkSDxZvtw7-LcHstxM5V2-4K5dgrzu9u5C5fXi_y3SbQJM-JKQHjBussP9gd7zZgOPA8ela99k7jp9TGcP1xVlT4OLeb4GuXx1wSabPNO6l47UeVHCgxQpYovoI')"></div>
+<div>
+<p class="text-sm font-bold text-[#181111] dark:text-white">Jameson Kincaid</p>
+<p class="text-xs text-gray-500">jkincaid@universidade.edu</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium font-mono text-gray-600 dark:text-gray-400">STU-2023-1105</td>
+<td class="px-6 py-4 text-sm font-medium">Escrita Criativa B</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-gray-400 h-full" style="width: 12%"></div>
+</div>
+<span class="text-xs font-bold">12%</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300 uppercase tracking-tighter">Inativo</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors" title="Ver Perfil">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors" title="Editar">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-primary transition-colors" title="Excluir">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex items-center justify-between px-6 py-4 bg-gray-50 dark:bg-[#342222] border-t border-[#e5dcdc] dark:border-[#3d2a2a]">
+<div class="text-xs text-gray-500 font-medium">
+                        Mostrando <span class="text-[#181111] dark:text-white font-bold">1 - 25</span> de <span class="text-[#181111] dark:text-white font-bold">1.248</span> alunos
+                    </div>
+<div class="flex items-center gap-1">
+<button class="size-8 flex items-center justify-center rounded-lg border border-[#e5dcdc] dark:border-[#4d3a3a] text-gray-400 hover:bg-white dark:hover:bg-[#4d3a3a] disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-xl">chevron_left</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-lg bg-primary text-white text-xs font-bold">1</button>
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-[#4d3a3a] text-xs font-bold">2</button>
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-[#4d3a3a] text-xs font-bold">3</button>
+<span class="px-1 text-gray-400">...</span>
+<button class="size-8 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-[#4d3a3a] text-xs font-bold">50</button>
+<button class="size-8 flex items-center justify-center rounded-lg border border-[#e5dcdc] dark:border-[#4d3a3a] text-gray-600 dark:text-white hover:bg-white dark:hover:bg-[#4d3a3a]">
+<span class="material-symbols-outlined text-xl">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+<div class="bg-[#181111] dark:bg-primary/10 p-6 rounded-xl text-white">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<h3 class="text-sm font-bold uppercase tracking-wider text-gray-400">Saúde da Correção AI</h3>
+</div>
+<p class="text-3xl font-black mb-1">98.2%</p>
+<p class="text-xs text-gray-400">Consistência média nas avaliações automáticas</p>
+</div>
+<div class="bg-white dark:bg-[#2d1a1a] p-6 rounded-xl border border-[#e5dcdc] dark:border-[#3d2a2a]">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-blue-500">group_work</span>
+<h3 class="text-sm font-bold uppercase tracking-wider text-[#886364] dark:text-gray-400">Distribuição por Turma</h3>
+</div>
+<p class="text-3xl font-black text-[#181111] dark:text-white mb-1">42</p>
+<p class="text-xs text-gray-500">Grupos de estudo ativos detectados</p>
+</div>
+<div class="bg-white dark:bg-[#2d1a1a] p-6 rounded-xl border border-[#e5dcdc] dark:border-[#3d2a2a]">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-green-500">history_edu</span>
+<h3 class="text-sm font-bold uppercase tracking-wider text-[#886364] dark:text-gray-400">Redações Processadas</h3>
+</div>
+<p class="text-3xl font-black text-[#181111] dark:text-white mb-1">12.402</p>
+<p class="text-xs text-gray-500">Avaliadas nos últimos 30 dias</p>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>
