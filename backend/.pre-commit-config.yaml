@@ -1,0 +1,19 @@
+repos:
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args: [
+          "-rn",
+          "-sn",
+          "--rcfile=.pylintrc", 
+          "--load-plugins=pylint.extensions.docparams",
+        ]
+# pre-commit install
+
+# para rodar os hooks em todos os arquivos manualmente
+# pre-commit run --all-files
+# pre-commit autoupdate
