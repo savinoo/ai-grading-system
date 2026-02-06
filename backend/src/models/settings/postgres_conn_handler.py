@@ -12,7 +12,7 @@ from src.core.logging_config import get_logger
 logger = get_logger(__name__)
 
 engine = create_engine(
-    settings.POSTGRES_CONN_STRING,
+    settings.DATABASE_URL,
     pool_pre_ping=True,  # Verifica conexões antes de usar
     pool_size=10,  # Número de conexões mantidas no pool
     max_overflow=20,  # Conexões adicionais permitidas além do pool_size

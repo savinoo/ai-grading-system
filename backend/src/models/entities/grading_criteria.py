@@ -24,7 +24,7 @@ class GradingCriteria(Base):
     
     __tablename__ = "grading_criteria"
     __table_args__ = (
-        Index("uq_grading_criteria_uuid", "exam_uuid", unique=True),
+        Index("uq_grading_criteria_uuid", "uuid", unique=True),
         {"schema": "public"},
     )
     
@@ -37,7 +37,7 @@ class GradingCriteria(Base):
     )
     
     
-    code: Mapped[str] = mapped_column(String(50), nullable=False)
+    code: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     

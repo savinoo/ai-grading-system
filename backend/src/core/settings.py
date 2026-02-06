@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     CSP_REPORT_ONLY: bool = False
     
     # === DATABASE (POSTGRES) ===
-    POSTGRES_CONN_STRING: str = Field(..., description="Connection string do PostgreSQL")
+    DATABASE_URL: str = Field(..., description="Connection string do PostgreSQL")
     
     # === OPENAI ===
     OPENAI_API_KEY: str = Field(..., description="Chave da API OpenAI")
