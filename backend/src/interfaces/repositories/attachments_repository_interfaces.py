@@ -153,6 +153,75 @@ class AttachmentsRepositoryInterface(ABC):
         """
         raise NotImplementedError()
 
+    @abstractmethod
+    def get_by_vector_status(
+        self,
+        db: Session,
+        vector_status: str,
+        *,
+        skip: int = 0,
+        limit: int = 100
+    ) -> Sequence[Attachments]:
+        """
+        Busca anexos por status de processamento vetorial.
+        
+        Args:
+            db: Sessão do banco de dados
+            vector_status: Status vetorial (DRAFT, SUCCESS, FAILED)
+            skip: Número de registros a pular
+            limit: Número máximo de registros a retornar
+            
+        Returns:
+            Sequence[Attachments]: Lista de anexos com o status especificado
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_by_exam_and_vector_status(
+        self,
+        db: Session,
+        exam_uuid: UUID,
+        vector_status: str,
+        *,
+        skip: int = 0,
+        limit: int = 100
+    ) -> Sequence[Attachments]:
+        """
+        Busca anexos de uma prova específica com determinado status vetorial.
+        Útil para processar anexos quando a prova é publicada.
+        
+        Args:
+            db: Sessão do banco de dados
+            exam_uuid: UUID da prova
+            vector_status: Status vetorial (DRAFT, SUCCESS, FAILED)
+            skip: Número de registros a pular
+            limit: Número máximo de registros a retornar
+            
+        Returns:
+            Sequence[Attachments]: Lista de anexos
+        """
+        raise NotImplementedError()
+    
+    @abstractmethod
+    def count_by_vector_status(
+        self,
+        db: Session,
+        vector_status: str,
+        exam_uuid: Optional[UUID] = None
+    ) -> int:
+        """
+        Conta anexos por status vetorial.
+        
+        Args:
+            db: Sessão do banco de dados
+            vector_status: Status vetorial (DRAFT, SUCCESS, FAILED)
+            exam_uuid: Se fornecido, conta apenas da prova especificada
+            
+        Returns:
+            int: Total de anexos com o status
+        """
+        raise NotImplementedError()
+
     # ==================== CREATE OPERATIONS ====================
 
     @abstractmethod
@@ -254,6 +323,49 @@ class AttachmentsRepositoryInterface(ABC):
             ]
         """
         raise NotImplementedError()
+    
+    @abstractmethod
+    def update_vector_status(
+        self,
+        db: Session,
+        uuid: UUID,
+        vector_status: str
+    ) -> Attachments:
+        """
+        Atualiza o status de processamento vetorial de um anexo.
+        Método dedicado para a operação mais comum de atualização.
+        
+        Args:
+            db: Sessão do banco de dados
+            uuid: UUID do anexo
+            vector_status: Novo status (DRAFT, SUCCESS, FAILED)
+            
+        Returns:
+            Attachments: Anexo atualizado
+        """
+        raise NotImplementedError()
+    
+    @abstractmethod
+    def bulk_update_vector_status(
+        self,
+        db: Session,
+        attachment_uuids: list[UUID],
+        vector_status: str
+    ) -> int:
+        """
+        Atualiza o status vetorial de múltiplos anexos.
+        Útil para processar lotes de arquivos.
+        
+        Args:
+            db: Sessão do banco de dados
+            attachment_uuids: Lista de UUIDs dos anexos
+            vector_status: Novo status (DRAFT, SUCCESS, FAILED)
+            
+        Returns:
+            int: Número de anexos atualizados
+        """
+        raise NotImplementedError()
+
 
     # ==================== DELETE OPERATIONS ====================
 

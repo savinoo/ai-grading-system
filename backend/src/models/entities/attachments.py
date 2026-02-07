@@ -4,12 +4,14 @@ from datetime import datetime
 
 from sqlalchemy import (
     Index,
+    CheckConstraint,
     BigInteger,
     ForeignKey,
     text,
     Text,
     Integer,
     DateTime,
+    String,
 )
 
 from sqlalchemy.dialects.postgresql import UUID
@@ -24,8 +26,13 @@ class Attachments(Base):
     
     __tablename__ = "attachments"
     __table_args__ = (
+        CheckConstraint(
+            "vector_status IN ('DRAFT', 'SUCCESS', 'FAILED')",
+            "chk_attachments_vector_status",
+        ),
         Index("idx_attachments_exam_uuid", "exam_uuid"),
         Index("idx_attachments_sha256_hash", "sha256_hash"),
+        Index("idx_attachments_vector_status", "vector_status"),
         
         {"schema": "public"},
     )
@@ -48,6 +55,12 @@ class Attachments(Base):
     mime_type: Mapped[str] = mapped_column(Text, nullable=False)
     size_bytes: Mapped[int] = mapped_column(Integer, nullable=False)
     sha256_hash: Mapped[str] = mapped_column(Text, nullable=False)
+    
+    vector_status: Mapped[str] = mapped_column(
+        String(50), 
+        nullable=False, 
+        server_default=text("'DRAFT'")
+    )
     
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

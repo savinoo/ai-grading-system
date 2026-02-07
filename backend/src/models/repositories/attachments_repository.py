@@ -250,6 +250,147 @@ class AttachmentsRepository(AttachmentsRepositoryInterface):
             self.__logger.error("Erro ao verificar existência de UUID: %s", e, exc_info=True)
             raise
 
+    def get_by_vector_status(
+        self,
+        db: Session,
+        vector_status: str,
+        *,
+        skip: int = 0,
+        limit: int = 100
+    ) -> Sequence[Attachments]:
+        """
+        Busca anexos por status de processamento vetorial.
+        
+        Args:
+            db: Sessão do banco de dados
+            vector_status: Status vetorial (DRAFT, SUCCESS, FAILED)
+            skip: Número de registros a pular
+            limit: Número máximo de registros a retornar
+            
+        Returns:
+            Sequence[Attachments]: Lista de anexos com o status especificado
+        """
+        try:
+            stmt = (
+                select(Attachments)
+                .where(Attachments.vector_status == vector_status)
+                .order_by(Attachments.created_at.desc())
+                .offset(skip)
+                .limit(limit)
+            )
+            result = db.execute(stmt).scalars().all()
+            self.__logger.debug(
+                "Encontrados %d anexos com vector_status=%s",
+                len(result),
+                vector_status
+            )
+            return result
+
+        except SQLAlchemyError as e:
+            self.__logger.error(
+                "Erro ao buscar anexos por vector_status=%s: %s",
+                vector_status,
+                e,
+                exc_info=True
+            )
+            raise
+
+    def get_by_exam_and_vector_status(
+        self,
+        db: Session,
+        exam_uuid: UUID,
+        vector_status: str,
+        *,
+        skip: int = 0,
+        limit: int = 100
+    ) -> Sequence[Attachments]:
+        """
+        Busca anexos de uma prova específica com determinado status vetorial.
+        Útil para processar anexos quando a prova é publicada.
+        
+        Args:
+            db: Sessão do banco de dados
+            exam_uuid: UUID da prova
+            vector_status: Status vetorial (DRAFT, SUCCESS, FAILED)
+            skip: Número de registros a pular
+            limit: Número máximo de registros a retornar
+            
+        Returns:
+            Sequence[Attachments]: Lista de anexos
+        """
+        try:
+            stmt = (
+                select(Attachments)
+                .where(
+                    Attachments.exam_uuid == exam_uuid,
+                    Attachments.vector_status == vector_status
+                )
+                .order_by(Attachments.created_at.desc())
+                .offset(skip)
+                .limit(limit)
+            )
+            result = db.execute(stmt).scalars().all()
+            self.__logger.debug(
+                "Encontrados %d anexos para prova %s com vector_status=%s",
+                len(result),
+                exam_uuid,
+                vector_status
+            )
+            return result
+
+        except SQLAlchemyError as e:
+            self.__logger.error(
+                "Erro ao buscar anexos da prova %s por vector_status=%s: %s",
+                exam_uuid,
+                vector_status,
+                e,
+                exc_info=True
+            )
+            raise
+
+    def count_by_vector_status(
+        self,
+        db: Session,
+        vector_status: str,
+        exam_uuid: Optional[UUID] = None
+    ) -> int:
+        """
+        Conta anexos por status vetorial.
+        
+        Args:
+            db: Sessão do banco de dados
+            vector_status: Status vetorial (DRAFT, SUCCESS, FAILED)
+            exam_uuid: Se fornecido, conta apenas da prova especificada
+            
+        Returns:
+            int: Total de anexos com o status
+        """
+        try:
+            stmt = select(func.count(Attachments.id)).where(  # pylint: disable=not-callable
+                Attachments.vector_status == vector_status
+            )
+            
+            if exam_uuid:
+                stmt = stmt.where(Attachments.exam_uuid == exam_uuid)
+            
+            result = db.execute(stmt).scalar()
+            count = result or 0
+            self.__logger.debug(
+                "Total de anexos com vector_status=%s: %d",
+                vector_status,
+                count
+            )
+            return count
+
+        except SQLAlchemyError as e:
+            self.__logger.error(
+                "Erro ao contar anexos por vector_status=%s: %s",
+                vector_status,
+                e,
+                exc_info=True
+            )
+            raise
+
     # ==================== CREATE OPERATIONS ====================
 
     def create(
@@ -261,7 +402,8 @@ class AttachmentsRepository(AttachmentsRepositoryInterface):
         mime_type: str,
         size_bytes: int,
         sha256_hash: str,
-        uuid: Optional[UUID] = None
+        uuid: Optional[UUID] = None,
+        vector_status: str = "DRAFT"
     ) -> Attachments:
         """
         Cria um novo anexo.
@@ -274,6 +416,7 @@ class AttachmentsRepository(AttachmentsRepositoryInterface):
             size_bytes: Tamanho do arquivo em bytes
             sha256_hash: Hash SHA256 do arquivo
             uuid: UUID do anexo (opcional, será gerado automaticamente se não fornecido)
+            vector_status: Status do processamento vetorial (DRAFT, SUCCESS, FAILED)
             
         Returns:
             Attachments: Anexo criado
@@ -287,7 +430,8 @@ class AttachmentsRepository(AttachmentsRepositoryInterface):
                 original_filename=original_filename,
                 mime_type=mime_type,
                 size_bytes=size_bytes,
-                sha256_hash=sha256_hash
+                sha256_hash=sha256_hash,
+                vector_status=vector_status
             )
             
             db.add(attachment)
@@ -295,10 +439,11 @@ class AttachmentsRepository(AttachmentsRepositoryInterface):
             db.refresh(attachment)
             
             self.__logger.info(
-                "Anexo criado: ID=%s, UUID=%s, arquivo=%s", 
+                "Anexo criado: ID=%s, UUID=%s, arquivo=%s, vector_status=%s", 
                 attachment.id, 
                 attachment.uuid, 
-                original_filename
+                original_filename,
+                vector_status
             )
             return attachment
 
@@ -430,6 +575,108 @@ class AttachmentsRepository(AttachmentsRepositoryInterface):
 
         except SQLAlchemyError as e:
             self.__logger.error("Erro no bulk update: %s", e, exc_info=True)
+            raise
+
+    def update_vector_status(
+        self,
+        db: Session,
+        uuid: UUID,
+        vector_status: str
+    ) -> Attachments:
+        """
+        Atualiza o status de processamento vetorial de um anexo.
+        Método dedicado para a operação mais comum de atualização.
+        
+        Args:
+            db: Sessão do banco de dados
+            uuid: UUID do anexo
+            vector_status: Novo status (DRAFT, SUCCESS, FAILED)
+            
+        Returns:
+            Attachments: Anexo atualizado
+        """
+        try:
+            self.__logger.debug(
+                "Atualizando vector_status do anexo %s para %s",
+                uuid,
+                vector_status
+            )
+            
+            attachment = self.get_by_uuid(db, uuid)
+            attachment.vector_status = vector_status
+            
+            db.flush()
+            db.refresh(attachment)
+            
+            self.__logger.info(
+                "Vector status do anexo %s atualizado para %s",
+                uuid,
+                vector_status
+            )
+            return attachment
+
+        except SQLAlchemyError as e:
+            self.__logger.error(
+                "Erro ao atualizar vector_status do anexo %s: %s",
+                uuid,
+                e,
+                exc_info=True
+            )
+            raise
+
+    def bulk_update_vector_status(
+        self,
+        db: Session,
+        attachment_uuids: list[UUID],
+        vector_status: str
+    ) -> int:
+        """
+        Atualiza o status vetorial de múltiplos anexos.
+        Útil para processar lotes de arquivos.
+        
+        Args:
+            db: Sessão do banco de dados
+            attachment_uuids: Lista de UUIDs dos anexos
+            vector_status: Novo status (DRAFT, SUCCESS, FAILED)
+            
+        Returns:
+            int: Número de anexos atualizados
+        """
+        if not attachment_uuids:
+            return 0
+
+        try:
+            self.__logger.debug(
+                "Atualizando vector_status de %d anexos para %s",
+                len(attachment_uuids),
+                vector_status
+            )
+            
+            stmt = (
+                select(Attachments)
+                .where(Attachments.uuid.in_(attachment_uuids))
+            )
+            attachments = db.execute(stmt).scalars().all()
+            
+            for attachment in attachments:
+                attachment.vector_status = vector_status
+            
+            db.flush()
+            
+            count = len(attachments)
+            self.__logger.info(
+                "Vector status de %d anexos atualizado para %s",
+                count,
+                vector_status
+            )
+            return count
+
+        except SQLAlchemyError as e:
+            self.__logger.error(
+                "Erro ao atualizar vector_status em lote: %s",
+                e,
+                exc_info=True
+            )
             raise
 
     # ==================== DELETE OPERATIONS ====================
