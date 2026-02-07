@@ -55,6 +55,14 @@ class Settings(BaseSettings):
     RECOVERY_CODE_EXPIRY_MINUTES: int = Field(default=15, description="Minutos até expiração do código")
     RECOVERY_CODE_MAX_ATTEMPTS: int = Field(default=3, description="Máximo de tentativas de validação")
     
+    # === FILE UPLOAD ===
+    UPLOAD_DIR: str = Field(default="./data/uploads", description="Diretório raiz para uploads")
+    MAX_FILE_SIZE_MB: int = Field(default=50, description="Tamanho máximo de arquivo em MB")
+    ALLOWED_MIME_TYPES: list[str] = Field(
+        default=["application/pdf"],
+        description="Tipos MIME permitidos para upload"
+    )
+    
     @field_validator("ALLOW_ORIGINS")
     @classmethod
     def validate_cors_in_production(cls, v: list[str], info) -> list[str]:
