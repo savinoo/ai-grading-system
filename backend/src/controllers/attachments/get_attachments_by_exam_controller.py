@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 
 from fastapi import HTTPException
@@ -8,7 +7,7 @@ from fastapi import HTTPException
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.interfaces.services.attachments.manage_attachments_service_interface import ManageAttachmentsServiceInterface
 
@@ -18,7 +17,7 @@ from src.errors.domain.sql_error import SqlError
 from src.core.logging_config import get_logger
 
 
-class GetAttachmentsByExamController(ControllerInterface):
+class GetAttachmentsByExamController(AsyncControllerInterface):
     """
     Controller responsável por listar anexos de uma prova.
     """
@@ -27,7 +26,7 @@ class GetAttachmentsByExamController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger(__name__)
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:  # type: ignore[override]
         """
         Processa a requisição de listagem de anexos de uma prova.
         
@@ -72,17 +71,15 @@ class GetAttachmentsByExamController(ControllerInterface):
             exam_uuid = UUID(exam_uuid_str)
 
             # Busca anexos
-            attachments = asyncio.run(
-                self.__service.get_by_exam_uuid(
-                    db,
-                    exam_uuid,
-                    skip=skip,
-                    limit=limit
-                )
+            attachments = await self.__service.get_by_exam_uuid(
+                db,
+                exam_uuid,
+                skip=skip,
+                limit=limit
             )
 
             # Conta total
-            total = asyncio.run(self.__service.count_by_exam_uuid(db, exam_uuid))
+            total = await self.__service.count_by_exam_uuid(db, exam_uuid)
 
             self.__logger.info(
                 "Listados %d anexos da prova %s",

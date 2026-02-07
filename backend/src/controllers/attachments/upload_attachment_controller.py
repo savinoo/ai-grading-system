@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 from typing import BinaryIO
 
 from fastapi import HTTPException
@@ -8,7 +7,7 @@ from fastapi import HTTPException
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.interfaces.services.attachments.upload_attachment_service_interface import UploadAttachmentServiceInterface
 
@@ -17,7 +16,7 @@ from src.errors.domain.sql_error import SqlError
 from src.core.logging_config import get_logger
 
 
-class UploadAttachmentController(ControllerInterface):
+class UploadAttachmentController(AsyncControllerInterface):
     """
     Controller responsável por processar requisições de upload de anexos.
     """
@@ -26,7 +25,7 @@ class UploadAttachmentController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger(__name__)
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:  # type: ignore[override]
         """
         Processa a requisição de upload de anexo.
         
@@ -69,7 +68,7 @@ class UploadAttachmentController(ControllerInterface):
                 )
 
             # Faz o upload
-            result = asyncio.run(self.__service.upload(db, file, request))
+            result = await self.__service.upload(db, file, request)
 
             self.__logger.info(
                 "Anexo enviado com sucesso: %s (prova: %s)",

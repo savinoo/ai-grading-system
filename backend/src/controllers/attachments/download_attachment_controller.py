@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 
 from fastapi import HTTPException
@@ -8,7 +7,7 @@ from fastapi import HTTPException
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.interfaces.services.attachments.manage_attachments_service_interface import ManageAttachmentsServiceInterface
 
@@ -18,7 +17,7 @@ from src.errors.domain.sql_error import SqlError
 from src.core.logging_config import get_logger
 
 
-class DownloadAttachmentController(ControllerInterface):
+class DownloadAttachmentController(AsyncControllerInterface):
     """
     Controller responsável por buscar informações para download de anexo.
     """
@@ -27,7 +26,7 @@ class DownloadAttachmentController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger(__name__)
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:  # type: ignore[override]
         """
         Processa a requisição de download de anexo.
         
@@ -70,7 +69,7 @@ class DownloadAttachmentController(ControllerInterface):
             uuid = UUID(uuid_str)
 
             # Busca informações de download
-            download_info = asyncio.run(self.__service.get_download_info(db, uuid))
+            download_info = await self.__service.get_download_info(db, uuid)
 
             self.__logger.info(
                 "Informações de download obtidas: %s",
