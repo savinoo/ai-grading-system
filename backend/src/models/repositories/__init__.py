@@ -5,6 +5,7 @@ from .grading_criteria_repository import GradingCriteriaRepository
 from .exam_criteria_repository import ExamCriteriaRepository
 from .exam_question_repository import ExamQuestionRepository
 from .student_answer_repository import StudentAnswerRepository
+from .attachments_repository import AttachmentsRepository
 
 __all__ = [
     "UserRepository",
@@ -13,5 +14,6 @@ __all__ = [
     "GradingCriteriaRepository",
     "ExamCriteriaRepository",
     "ExamQuestionRepository",
-    "StudentAnswerRepository"
+    "StudentAnswerRepository",
+    "AttachmentsRepository"
 ]
