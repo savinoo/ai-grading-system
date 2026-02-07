@@ -57,7 +57,7 @@ class Settings(BaseSettings):
     
     # === FILE UPLOAD ===
     UPLOAD_DIR: str = Field(default="./data/uploads", description="Diretório raiz para uploads")
-    MAX_FILE_SIZE_MB: int = Field(default=50, description="Tamanho máximo de arquivo em MB")
+    MAX_FILE_SIZE_MB: int = Field(default=200, description="Tamanho máximo de arquivo em MB")
     ALLOWED_MIME_TYPES: list[str] = Field(
         default=["application/pdf"],
         description="Tipos MIME permitidos para upload"
