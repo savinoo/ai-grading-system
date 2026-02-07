@@ -12,6 +12,7 @@ from sqlalchemy.exc import SQLAlchemyError, NoResultFound
 from src.interfaces.repositories.exams_repository_interfaces import ExamsRepositoryInterface
 
 from src.models.entities.exams import Exams
+from src.models.entities.classes import Classes
 
 from src.core.logging_config import get_logger
 
@@ -124,7 +125,7 @@ class ExamsRepository(ExamsRepositoryInterface):
         active_only: bool = True
     ) -> Sequence[Exams]:
         """
-        Lista provas de um professor específico.
+        Lista provas de um professor específico com informações da turma.
         
         Args:
             db: Sessão do banco de dados
@@ -137,13 +138,34 @@ class ExamsRepository(ExamsRepositoryInterface):
             Sequence[Exams]: Lista de provas do professor
         """
         try:
-            stmt = select(Exams).where(Exams.created_by == teacher_uuid)
+            # Faz LEFT JOIN com Classes para pegar o nome da turma
+            stmt = (
+                select(
+                    Exams,
+                    Classes.name.label('class_name')
+                )
+                .outerjoin(Classes, Exams.class_uuid == Classes.uuid)
+                .where(Exams.created_by == teacher_uuid)
+            )
+            
             if active_only:
                 stmt = stmt.where(Exams.active == True)
+                
             stmt = stmt.offset(skip).limit(limit).order_by(Exams.created_at.desc())
-            result = db.execute(stmt).scalars().all()
-            self.__logger.debug("Listadas %d provas do professor %s", len(result), teacher_uuid)
-            return result
+            
+            results = db.execute(stmt).all()
+            
+            # Adiciona o class_name dinamicamente a cada objeto Exams
+            exams = []
+            for row in results:
+                exam = row[0]  # Exams object
+                class_name = row[1]  # class_name
+                # Adiciona atributo dinâmico
+                setattr(exam, 'class_name', class_name)
+                exams.append(exam)
+            
+            self.__logger.debug("Listadas %d provas do professor %s", len(exams), teacher_uuid)
+            return exams
 
         except SQLAlchemyError as e:
             self.__logger.error("Erro ao listar provas do professor: %s", e, exc_info=True)

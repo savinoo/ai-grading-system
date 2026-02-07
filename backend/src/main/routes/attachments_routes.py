@@ -140,7 +140,7 @@ async def upload_attachment(
         # Processa através do controller
         controller = make_upload_attachment_controller()
 
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = (
             http_response.body.model_dump(mode='json')
             if hasattr(http_response.body, 'model_dump')
@@ -169,7 +169,7 @@ async def upload_attachment(
     summary="Listar anexos de uma prova",
     description="Endpoint para listar todos os anexos de uma prova. Requer autenticação."
 )
-def get_attachments_by_exam(
+async def get_attachments_by_exam(
     request: Request,
     exam_uuid: Annotated[str, Path(description="UUID da prova")],
     skip: int = Query(0, ge=0, description="Número de registros a pular"),
@@ -227,7 +227,7 @@ def get_attachments_by_exam(
     controller = make_get_attachments_by_exam_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=http_response.body
@@ -250,7 +250,7 @@ def get_attachments_by_exam(
     summary="Buscar anexo por UUID",
     description="Endpoint para buscar um anexo específico por UUID. Requer autenticação."
 )
-def get_attachment_by_uuid(
+async def get_attachment_by_uuid(
     request: Request,
     uuid: Annotated[str, Path(description="UUID do anexo")],
     caller: CallerMeta = Depends(get_caller_meta),
@@ -300,7 +300,7 @@ def get_attachment_by_uuid(
     controller = make_get_attachment_by_uuid_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = (
             http_response.body.model_dump(mode='json')
             if hasattr(http_response.body, 'model_dump')
@@ -327,7 +327,7 @@ def get_attachment_by_uuid(
     summary="Deletar anexo",
     description="Endpoint para deletar um anexo. Remove o registro do banco e o arquivo físico. Requer autenticação de professor."
 )
-def delete_attachment(
+async def delete_attachment(
     request: Request,
     uuid: Annotated[str, Path(description="UUID do anexo")],
     caller: CallerMeta = Depends(get_caller_meta),
@@ -377,7 +377,7 @@ def delete_attachment(
     controller = make_delete_attachment_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=http_response.body
@@ -399,7 +399,7 @@ def delete_attachment(
     summary="Download de anexo",
     description="Endpoint para fazer download do arquivo anexo. Requer autenticação."
 )
-def download_attachment(
+async def download_attachment(
     request: Request,
     uuid: Annotated[str, Path(description="UUID do anexo")],
     caller: CallerMeta = Depends(get_caller_meta),
@@ -449,7 +449,7 @@ def download_attachment(
     controller = make_download_attachment_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         download_info = http_response.body
 
         logger.info("Download do anexo %s: %s", uuid, download_info["original_filename"])

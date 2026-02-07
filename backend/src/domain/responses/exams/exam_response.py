@@ -49,6 +49,11 @@ class ExamResponse(BaseModel):
         description="UUID da turma"
     )
 
+    class_name: Optional[str] = Field(
+        default=None,
+        description="Nome da turma"
+    )
+
     status: str = Field(
         ...,
         description="Status da prova (DRAFT, PUBLISHED, ARCHIVED, FINISHED)"
