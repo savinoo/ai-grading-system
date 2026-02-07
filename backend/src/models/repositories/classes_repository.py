@@ -251,14 +251,13 @@ class ClassesRepository(ClassesRepositoryInterface):
             )
             
             db.add(new_class)
-            db.commit()
+            db.flush()
             db.refresh(new_class)
             
             self.__logger.info("Turma criada: %s (UUID: %s)", name, uuid)
             return new_class
             
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao criar turma: %s", e, exc_info=True)
             raise
 
@@ -283,14 +282,13 @@ class ClassesRepository(ClassesRepositoryInterface):
                 if hasattr(class_obj, key):
                     setattr(class_obj, key, value)
             
-            db.commit()
+            db.flush()
             db.refresh(class_obj)
             
             self.__logger.info("Turma atualizada: ID=%s", class_id)
             return class_obj
             
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao atualizar turma: %s", e, exc_info=True)
             raise
 
@@ -341,11 +339,10 @@ class ClassesRepository(ClassesRepositoryInterface):
         try:
             class_obj = self.get_by_id(db, class_id)
             db.delete(class_obj)
-            db.commit()
+            db.flush()
             
             self.__logger.info("Turma removida: ID=%s", class_id)
             
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao remover turma: %s", e, exc_info=True)
             raise

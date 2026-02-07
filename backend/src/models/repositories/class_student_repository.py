@@ -209,14 +209,13 @@ class ClassStudentRepository(ClassStudentRepositoryInterface):
             )
             
             db.add(new_enrollment)
-            db.commit()
+            db.flush()
             db.refresh(new_enrollment)
             
             self.__logger.info("Aluno %s matriculado na turma %s", student_uuid, class_uuid)
             return new_enrollment
             
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao matricular aluno: %s", e, exc_info=True)
             raise
 
@@ -252,14 +251,13 @@ class ClassStudentRepository(ClassStudentRepositoryInterface):
             ]
             
             db.add_all(enrollments)
-            db.commit()
+            db.flush()
             
             count = len(enrollments)
             self.__logger.info("%d alunos matriculados na turma %s", count, class_uuid)
             return count
             
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao matricular alunos em lote: %s", e, exc_info=True)
             raise
 
@@ -280,14 +278,13 @@ class ClassStudentRepository(ClassStudentRepositoryInterface):
             enrollment = self.get_by_id(db, class_student_id)
             enrollment.active = True
             
-            db.commit()
+            db.flush()
             db.refresh(enrollment)
             
             self.__logger.info("Matrícula ativada: ID=%s", class_student_id)
             return enrollment
             
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao ativar matrícula: %s", e, exc_info=True)
             raise
 
@@ -306,14 +303,13 @@ class ClassStudentRepository(ClassStudentRepositoryInterface):
             enrollment = self.get_by_id(db, class_student_id)
             enrollment.active = False
             
-            db.commit()
+            db.flush()
             db.refresh(enrollment)
             
             self.__logger.info("Matrícula desativada: ID=%s", class_student_id)
             return enrollment
             
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao desativar matrícula: %s", e, exc_info=True)
             raise
 
@@ -330,12 +326,11 @@ class ClassStudentRepository(ClassStudentRepositoryInterface):
         try:
             enrollment = self.get_by_id(db, class_student_id)
             db.delete(enrollment)
-            db.commit()
+            db.flush()
             
             self.__logger.info("Matrícula removida: ID=%s", class_student_id)
             
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao remover matrícula: %s", e, exc_info=True)
             raise
 
@@ -357,7 +352,7 @@ class ClassStudentRepository(ClassStudentRepositoryInterface):
             )
             enrollment = db.execute(stmt).scalar_one()
             db.delete(enrollment)
-            db.commit()
+            db.flush()
             
             self.__logger.info("Aluno %s removido da turma %s", student_uuid, class_uuid)
             
@@ -365,6 +360,5 @@ class ClassStudentRepository(ClassStudentRepositoryInterface):
             self.__logger.warning("Matrícula não encontrada: aluno %s na turma %s", student_uuid, class_uuid)
             raise
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao remover aluno da turma: %s", e, exc_info=True)
             raise

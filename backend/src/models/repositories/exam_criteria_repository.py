@@ -178,7 +178,7 @@ class ExamCriteriaRepository(ExamCriteriaRepositoryInterface):
             )
 
             db.add(new_exam_criteria)
-            db.commit()
+            db.flush()
             db.refresh(new_exam_criteria)
 
             self.__logger.info(
@@ -190,7 +190,6 @@ class ExamCriteriaRepository(ExamCriteriaRepositoryInterface):
             return new_exam_criteria
 
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao criar critério de prova: %s", e, exc_info=True)
             raise
 
@@ -215,14 +214,13 @@ class ExamCriteriaRepository(ExamCriteriaRepositoryInterface):
                 if hasattr(exam_criteria_obj, key):
                     setattr(exam_criteria_obj, key, value)
 
-            db.commit()
+            db.flush()
             db.refresh(exam_criteria_obj)
 
             self.__logger.info("Critério de prova atualizado: ID=%s", exam_criteria_id)
             return exam_criteria_obj
 
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao atualizar critério de prova: %s", e, exc_info=True)
             raise
 
@@ -273,11 +271,10 @@ class ExamCriteriaRepository(ExamCriteriaRepositoryInterface):
         try:
             exam_criteria_obj = self.get_by_id(db, exam_criteria_id)
             db.delete(exam_criteria_obj)
-            db.commit()
+            db.flush()
 
             self.__logger.info("Critério de prova removido: ID=%s", exam_criteria_id)
 
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao remover critério de prova: %s", e, exc_info=True)
             raise

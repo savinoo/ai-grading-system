@@ -290,14 +290,13 @@ class ExamsRepository(ExamsRepositoryInterface):
             )
 
             db.add(new_exam)
-            db.commit()
+            db.flush()
             db.refresh(new_exam)
 
             self.__logger.info("Prova criada: %s (UUID: %s)", title, uuid)
             return new_exam
 
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao criar prova: %s", e, exc_info=True)
             raise
 
@@ -322,14 +321,13 @@ class ExamsRepository(ExamsRepositoryInterface):
                 if hasattr(exam_obj, key):
                     setattr(exam_obj, key, value)
 
-            db.commit()
+            db.flush()
             db.refresh(exam_obj)
 
             self.__logger.info("Prova atualizada: ID=%s", exam_id)
             return exam_obj
 
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao atualizar prova: %s", e, exc_info=True)
             raise
 
@@ -398,11 +396,10 @@ class ExamsRepository(ExamsRepositoryInterface):
         try:
             exam_obj = self.get_by_id(db, exam_id)
             db.delete(exam_obj)
-            db.commit()
+            db.flush()
 
             self.__logger.info("Prova removida: ID=%s", exam_id)
 
         except SQLAlchemyError as e:
-            db.rollback()
             self.__logger.error("Erro ao remover prova: %s", e, exc_info=True)
             raise
