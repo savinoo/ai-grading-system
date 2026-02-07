@@ -18,6 +18,7 @@ from src.core.logging_config import setup_logging, get_logger
 from src.main.routes.auth_routes import router as auth_router
 from src.main.routes.users_routes import router as users_router
 from src.main.routes.classes_routes import router as classes_router
+from src.main.routes.exams_routes import router as exams_router
 
 # Configura o logging conforme as configurações
 setup_logging()
@@ -27,7 +28,7 @@ logger = get_logger(__name__)
 app = FastAPI(
     title="AvaliaAI API",
     version="1.0.0",
-    debug=(settings.ENV != "prd")    
+    debug=(settings.ENV != "prd")
 )
 
 # Middleware de Id de Requisição
@@ -66,12 +67,12 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     Captura e loga erros de validação do Pydantic (status 422).
     """
     errors = exc.errors()
-    
+
     # Remove objetos não serializáveis do ctx
     for error in errors:
         if "ctx" in error and "error" in error["ctx"]:
             error["ctx"]["error"] = str(error["ctx"]["error"])
-    
+
     logger.error(
         "Erro de validação (422) na requisição: %s %s - Detalhes: %s",
         request.method,
@@ -85,7 +86,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
             "body": exc.body
         }
     )
-    
+
 # Rota raiz redireciona para health check
 @app.get("/", include_in_schema=False)
 async def root():
@@ -104,3 +105,4 @@ async def health_check():
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(classes_router)
+app.include_router(exams_router)
