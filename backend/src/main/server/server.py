@@ -19,6 +19,7 @@ from src.main.routes.auth_routes import router as auth_router
 from src.main.routes.users_routes import router as users_router
 from src.main.routes.classes_routes import router as classes_router
 from src.main.routes.exams_routes import router as exams_router
+from src.main.routes.attachments_routes import router as attachments_router
 
 # Configura o logging conforme as configurações
 setup_logging()
@@ -106,3 +107,4 @@ app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(classes_router)
 app.include_router(exams_router)
+app.include_router(attachments_router)
