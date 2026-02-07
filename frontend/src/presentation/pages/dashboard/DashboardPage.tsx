@@ -83,9 +83,12 @@ export const DashboardPage: React.FC = () => {
         <span className="material-symbols-outlined text-lg">edit_note</span>
         <span>Inserir Respostas</span>
       </button>
-      <button className="flex items-center gap-2 bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm">
+      <button 
+        onClick={() => navigate('/dashboard/exams/create')}
+        className="flex items-center gap-2 bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm"
+      >
         <span className="material-symbols-outlined text-lg">add</span>
-        <span>+ Criar Nova Prova</span>
+        <span>Nova Prova</span>
       </button>
     </>
   );

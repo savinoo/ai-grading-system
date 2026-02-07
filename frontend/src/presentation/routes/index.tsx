@@ -11,6 +11,8 @@ import { TermsPage } from '@presentation/pages/legal/TermsPage';
 import { PrivacyPage } from '@presentation/pages/legal/PrivacyPage';
 import { DashboardPage } from '@presentation/pages/dashboard/DashboardPage';
 import { ExamsPage } from '@presentation/pages/exams/ExamsPage';
+import { ExamFormPage } from '@presentation/pages/exams/ExamFormPage';
+import { ExamDetailsPage } from '@presentation/pages/exams/ExamDetailsPage';
 import { ClassesPage } from '@presentation/pages/classes/ClassesPage';
 import { StudentsPage } from '@presentation/pages/students/StudentsPage';
 import { ResultsPage } from '@presentation/pages/results/ResultsPage';
@@ -36,6 +38,10 @@ export const AppRoutes: React.FC = () => {
         {/* Private Routes */}
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/dashboard/exams" element={<ExamsPage />} />
+          <Route path="/dashboard/exams/create" element={<ExamFormPage />} />
+          <Route path="/dashboard/exams/:examUuid" element={<ExamDetailsPage />} />
+          <Route path="/dashboard/exams/:examUuid/edit" element={<ExamFormPage />} />
           <Route path="/exams" element={<ExamsPage />} />
           <Route path="/classes" element={<ClassesPage />} />
           <Route path="/students" element={<StudentsPage />} />
