@@ -3,7 +3,7 @@ Analytics Schemas for Professor Assistant Module
 Tracks student performance, learning gaps, and class-level insights.
 """
 from datetime import datetime
-from typing import List, Dict, Optional, Literal
+from typing import List, Dict, Optional, Literal, Any
 from pydantic import BaseModel, Field
 
 
@@ -77,7 +77,7 @@ class ClassInsights(BaseModel):
     )
     
     # Common patterns
-    most_difficult_questions: List[Dict[str, any]] = Field(default_factory=list)
+    most_difficult_questions: List[Dict[str, Any]] = Field(default_factory=list)
     most_common_gaps: List[LearningGap] = Field(default_factory=list)
     
     # Outliers
