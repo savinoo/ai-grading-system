@@ -18,12 +18,19 @@ from app.ui_components import (
     setup_page, render_custom_css, render_student_report, 
     render_global_kpis, render_class_ranking
 )
+from app.analytics_ui import (
+    render_student_profile_card, render_class_analytics_dashboard, 
+    render_analytics_selector
+)
 from src.workflow.graph import build_grading_workflow
 from src.rag.chunking import process_and_index_pdf
 from src.rag.retriever import search_context
 from src.domain.schemas import ExamQuestion, EvaluationCriterion, QuestionMetadata, StudentAnswer
+from src.domain.analytics_schemas import SubmissionRecord
 from src.config.settings import settings
 from src.agents.mock_generator import MockDataGeneratorAgent
+from src.analytics import StudentTracker, ClassAnalyzer
+from src.memory import get_knowledge_base
 # from langchain_openai import ChatOpenAI # SUBSTITUIDO PELO FACTORY
 from src.infrastructure.llm_factory import get_chat_model
 from src.infrastructure.vector_db import get_vector_store
@@ -38,6 +45,11 @@ configure_dspy()
 # Usa o factory para suportar Gemini ou OpenAI transparentemente
 llm_creation = get_chat_model(temperature=1)
 mock_agent = MockDataGeneratorAgent(llm_creation)
+
+# Analytics initialization
+tracker = StudentTracker()
+kb = get_knowledge_base()
+analyzer = ClassAnalyzer()
 
 setup_page()
 render_custom_css()
@@ -93,7 +105,7 @@ with st.sidebar:
     st.title("⚙️ Painel de Controle")
     operation_mode = st.radio(
         "Modo de Operação", 
-        ["Single Student (Debug)", "Batch Processing (Turma)"],
+        ["Single Student (Debug)", "Batch Processing (Turma)", "📊 Analytics Dashboard"],
         index=1
     )
     st.divider()
@@ -400,6 +412,44 @@ else:
                                         "state": final_state
                                     })
                                     students_results_map[s_id]["total_grade"] += final_state.get('final_grade', 0)
+                                    
+                                    # **NEW**: Track this submission in analytics
+                                    from datetime import datetime
+                                    
+                                    # Extract criterion scores from corrections
+                                    criterion_scores = {}
+                                    if final_state.get('individual_corrections'):
+                                        last_correction = final_state['individual_corrections'][-1]
+                                        if hasattr(last_correction, 'criterion_scores'):
+                                            for crit in last_correction.criterion_scores:
+                                                criterion_scores[crit.criterion_name] = crit.score
+                                    
+                                    submission_record = SubmissionRecord(
+                                        submission_id=f"SUB_{s_id}_{q.id}_{datetime.now().timestamp()}",
+                                        question_id=q.id,
+                                        question_text=q.statement,
+                                        student_answer=inp['student_answer'].text,
+                                        grade=final_state.get('final_grade', 0),
+                                        max_score=10.0,
+                                        criterion_scores=criterion_scores,
+                                        divergence_detected=final_state.get('divergence_detected', False),
+                                        timestamp=datetime.now()
+                                    )
+                                    
+                                    # Update student profile
+                                    student_name = next(
+                                        (s['name'] for s in students_list if s['id'] == s_id),
+                                        f"Student_{s_id}"
+                                    )
+                                    
+                                    profile = tracker.add_submission(
+                                        student_id=str(s_id),
+                                        student_name=student_name,
+                                        submission=submission_record
+                                    )
+                                    
+                                    # Persist to knowledge base
+                                    kb.add_or_update(profile)
                             
                             corr_bar.progress((q_idx + 1) / len(questions))
                             
@@ -441,4 +491,87 @@ else:
         if selected_name:
             student_data = next(r for r in results if r['name'] == selected_name)
             render_student_report(student_data)
+
+else:
+    # --- MODO 3: ANALYTICS DASHBOARD ---
+    st.title("📊 Professor Assistant - Analytics Dashboard")
+    st.markdown("Análise pedagógica avançada com tracking de alunos e insights de turma.")
+    
+    # Load all profiles from knowledge base
+    all_profiles = kb.get_all()
+    
+    if not all_profiles:
+        st.warning("⚠️ Nenhum dado disponível ainda. Execute correções em modo Batch primeiro para gerar analytics.")
+        st.info("💡 **Como usar:** Execute correções de uma turma, e os dados de tracking serão salvos automaticamente.")
+    else:
+        # Tabs for different analytics views
+        tab_overview, tab_student, tab_class = st.tabs([
+            "📋 Visão Geral",
+            "👤 Perfil do Aluno", 
+            "🏫 Análise da Turma"
+        ])
+        
+        with tab_overview:
+            st.subheader("Resumo Geral")
+            
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                st.metric("Total de Alunos Rastreados", len(all_profiles))
+            
+            with col2:
+                total_submissions = sum(len(p.submissions_history) for p in all_profiles)
+                st.metric("Total de Submissões", total_submissions)
+            
+            with col3:
+                all_grades = [s.grade for p in all_profiles for s in p.submissions_history]
+                avg_grade = sum(all_grades) / len(all_grades) if all_grades else 0
+                st.metric("Média Global", f"{avg_grade:.2f}")
+            
+            st.divider()
+            
+            # Trend summary
+            st.subheader("📈 Resumo de Tendências")
+            trend_counts = {
+                "improving": 0,
+                "stable": 0,
+                "declining": 0,
+                "insufficient_data": 0
+            }
+            
+            for profile in all_profiles:
+                trend_counts[profile.trend] += 1
+            
+            col_imp, col_stab, col_dec, col_insuf = st.columns(4)
+            
+            with col_imp:
+                st.metric("📈 Melhorando", trend_counts["improving"])
+            
+            with col_stab:
+                st.metric("➡️ Estável", trend_counts["stable"])
+            
+            with col_dec:
+                st.metric("📉 Piorando", trend_counts["declining"])
+            
+            with col_insuf:
+                st.metric("❓ Dados Insuficientes", trend_counts["insufficient_data"])
+        
+        with tab_student:
+            st.subheader("Análise Individual de Aluno")
+            
+            selected_profile = render_analytics_selector(all_profiles)
+            
+            if selected_profile:
+                render_student_profile_card(selected_profile)
+        
+        with tab_class:
+            st.subheader("Análise da Turma")
+            
+            # Generate class insights
+            insights = analyzer.analyze_class(
+                class_id="current_class",
+                student_profiles=all_profiles
+            )
+            
+            render_class_analytics_dashboard(insights, all_profiles)
 
