@@ -9,6 +9,7 @@ export const useAttachments = () => {
     uploadAttachment,
     loadAttachments,
     deleteAttachment,
+    downloadAttachment,
     clearAttachments,
   } = useAttachmentStore();
 
@@ -33,6 +34,13 @@ export const useAttachments = () => {
     [deleteAttachment]
   );
 
+  const handleDownload = useCallback(
+    async (attachmentUuid: string, filename: string) => {
+      await downloadAttachment(attachmentUuid, filename);
+    },
+    [downloadAttachment]
+  );
+
   return {
     attachments,
     isLoading,
@@ -40,6 +48,7 @@ export const useAttachments = () => {
     uploadAttachment: handleUpload,
     loadAttachments: handleLoad,
     deleteAttachment: handleDelete,
+    downloadAttachment: handleDownload,
     clearAttachments,
   };
 };

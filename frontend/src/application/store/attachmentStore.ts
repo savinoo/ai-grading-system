@@ -7,6 +7,7 @@ import {
   UploadAttachmentUseCase,
   ListAttachmentsByExamUseCase,
   DeleteAttachmentUseCase,
+  DownloadAttachmentUseCase,
 } from '@application/use-cases/attachment.use-cases';
 
 interface AttachmentState {
@@ -17,6 +18,7 @@ interface AttachmentState {
   uploadAttachment: (examUuid: string, file: File) => Promise<Attachment>;
   loadAttachments: (examUuid: string) => Promise<void>;
   deleteAttachment: (attachmentUuid: string) => Promise<void>;
+  downloadAttachment: (attachmentUuid: string, filename: string) => Promise<void>;
   clearAttachments: () => void;
 }
 
@@ -26,6 +28,7 @@ const repository = new AttachmentRepository(httpClient);
 const uploadUseCase = new UploadAttachmentUseCase(repository);
 const listUseCase = new ListAttachmentsByExamUseCase(repository);
 const deleteUseCase = new DeleteAttachmentUseCase(repository);
+const downloadUseCase = new DownloadAttachmentUseCase(repository);
 
 export const useAttachmentStore = create<AttachmentState>((set) => ({
   attachments: [],
@@ -69,6 +72,18 @@ export const useAttachmentStore = create<AttachmentState>((set) => ({
       }));
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Erro ao remover anexo';
+      set({ isLoading: false, error: message });
+      throw error;
+    }
+  },
+
+  downloadAttachment: async (attachmentUuid: string, filename: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      await downloadUseCase.execute(attachmentUuid, filename);
+      set({ isLoading: false });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Erro ao baixar anexo';
       set({ isLoading: false, error: message });
       throw error;
     }

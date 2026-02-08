@@ -24,3 +24,11 @@ export class DeleteAttachmentUseCase {
     return this.repository.deleteAttachment(attachmentUuid);
   }
 }
+
+export class DownloadAttachmentUseCase {
+  constructor(private repository: IAttachmentRepository) {}
+
+  async execute(attachmentUuid: string, filename: string): Promise<void> {
+    return this.repository.downloadAttachment(attachmentUuid, filename);
+  }
+}

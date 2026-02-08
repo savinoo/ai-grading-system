@@ -21,6 +21,7 @@ export const ExamDetailsPage: React.FC = () => {
   const {
     attachments,
     loadAttachments,
+    downloadAttachment,
     isLoading: isLoadingAttachments,
   } = useAttachments();
 
@@ -110,6 +111,13 @@ export const ExamDetailsPage: React.FC = () => {
               )}
 
               <div className="flex flex-wrap items-center gap-6 text-sm">
+                {currentExam.class_name && (
+                  <div className="flex items-center gap-2 text-slate-500">
+                    <span className="material-symbols-outlined text-lg">school</span>
+                    <span className="font-semibold">{currentExam.class_name}</span>
+                  </div>
+                )}
+
                 <div className="flex items-center gap-2 text-slate-500">
                   <span className="material-symbols-outlined text-lg">calendar_today</span>
                   <span>Criada em {new Date(currentExam.created_at).toLocaleDateString('pt-BR')}</span>
@@ -126,9 +134,9 @@ export const ExamDetailsPage: React.FC = () => {
                 </div>
 
                 {totalWeight > 0 && (
-                  <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg text-primary">functions</span>
-                    <span className="font-bold text-primary">{totalWeight.toFixed(1)}% peso total</span>
+                  <div className="flex items-center gap-2 text-slate-500">
+                    <span className="material-symbols-outlined text-lg">functions</span>
+                    <span>{totalWeight.toFixed(1)}% peso total</span>
                   </div>
                 )}
               </div>
@@ -224,6 +232,7 @@ export const ExamDetailsPage: React.FC = () => {
           ) : (
             <AttachmentList
               attachments={attachments}
+              onDownload={downloadAttachment}
             />
           )}
         </div>

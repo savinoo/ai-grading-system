@@ -40,4 +40,23 @@ export class AttachmentRepository implements IAttachmentRepository {
   async deleteAttachment(attachmentUuid: string): Promise<void> {
     await this.httpClient.delete(`${this.baseUrl}/${attachmentUuid}`);
   }
+
+  async downloadAttachment(attachmentUuid: string, filename: string): Promise<void> {
+    const response = await this.httpClient.getClient().get(
+      `${this.baseUrl}/${attachmentUuid}/download`,
+      {
+        responseType: 'blob',
+      }
+    );
+
+    // Cria um link temporário e aciona o download com o nome fornecido
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  }
 }

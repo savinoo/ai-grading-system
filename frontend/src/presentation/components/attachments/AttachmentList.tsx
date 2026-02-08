@@ -5,12 +5,14 @@ import { Button } from '@presentation/components/ui/Button';
 interface AttachmentListProps {
   attachments: Attachment[];
   onDelete?: (attachmentUuid: string) => void;
+  onDownload?: (attachmentUuid: string, filename: string) => void;
   isDeleting?: boolean;
 }
 
 export const AttachmentList: React.FC<AttachmentListProps> = ({
   attachments,
   onDelete,
+  onDownload,
   isDeleting = false,
 }) => {
   const formatFileSize = (bytes: number): string => {
@@ -50,6 +52,16 @@ export const AttachmentList: React.FC<AttachmentListProps> = ({
           <div
             key={attachment.uuid}
             className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-primary/50 transition-colors"
+            onClick={() => onDownload?.(attachment.uuid, attachment.original_filename)}
+            style={{ cursor: onDownload ? 'pointer' : 'default' }}
+            role={onDownload ? 'button' : undefined}
+            tabIndex={onDownload ? 0 : undefined}
+            onKeyDown={(e) => {
+              if (onDownload && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                onDownload(attachment.uuid, attachment.original_filename);
+              }
+            }}
           >
             <div className="flex-shrink-0">
               <span className="material-symbols-outlined text-3xl text-red-600 dark:text-red-400">
@@ -74,18 +86,37 @@ export const AttachmentList: React.FC<AttachmentListProps> = ({
               </p>
             </div>
 
-            {onDelete && (
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => onDelete(attachment.uuid)}
-                disabled={isDeleting}
-                title="Remover arquivo"
-                className="!bg-red-50 dark:!bg-red-900/20 !text-red-600 dark:!text-red-400 hover:!bg-red-100 dark:hover:!bg-red-900/30"
-              >
-                <span className="material-symbols-outlined text-lg">delete</span>
-              </Button>
-            )}
+            <div className="flex items-center gap-2">
+              {onDownload && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDownload(attachment.uuid, attachment.original_filename);
+                  }}
+                  title="Baixar arquivo"
+                  className="!bg-primary/10 dark:!bg-primary/20 !text-primary hover:!bg-primary/20 dark:hover:!bg-primary/30"
+                >
+                  <span className="material-symbols-outlined text-lg">download</span>
+                </Button>
+              )}
+              {onDelete && (
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete(attachment.uuid);
+                  }}
+                  disabled={isDeleting}
+                  title="Remover arquivo"
+                  className="!bg-red-50 dark:!bg-red-900/20 !text-red-600 dark:!text-red-400 hover:!bg-red-100 dark:hover:!bg-red-900/30"
+                >
+                  <span className="material-symbols-outlined text-lg">delete</span>
+                </Button>
+              )}
+            </div>
           </div>
         );
       })}
