@@ -1,0 +1,12 @@
+"""Controllers para gerenciamento de sobrescritas de critérios de questões."""
+from src.controllers.exam_question_criteria_override.create_question_criteria_override_controller import CreateQuestionCriteriaOverrideController
+from src.controllers.exam_question_criteria_override.reset_question_criteria_controller import ResetQuestionCriteriaController
+from src.controllers.exam_question_criteria_override.update_question_criteria_override_controller import UpdateQuestionCriteriaOverrideController
+from src.controllers.exam_question_criteria_override.delete_question_criteria_override_controller import DeleteQuestionCriteriaOverrideController
+
+__all__ = [
+    "CreateQuestionCriteriaOverrideController",
+    "ResetQuestionCriteriaController",
+    "UpdateQuestionCriteriaOverrideController",
+    "DeleteQuestionCriteriaOverrideController"
+]

@@ -1,0 +1,12 @@
+"""Interfaces para serviços de sobrescritas de critérios de questões."""
+from src.interfaces.services.exam_question_criteria_override.create_question_criteria_override_service_interface import CreateQuestionCriteriaOverrideServiceInterface
+from src.interfaces.services.exam_question_criteria_override.reset_question_criteria_service_interface import ResetQuestionCriteriaServiceInterface
+from src.interfaces.services.exam_question_criteria_override.update_question_criteria_override_service_interface import UpdateQuestionCriteriaOverrideServiceInterface
+from src.interfaces.services.exam_question_criteria_override.delete_question_criteria_override_service_interface import DeleteQuestionCriteriaOverrideServiceInterface
+
+__all__ = [
+    "CreateQuestionCriteriaOverrideServiceInterface",
+    "ResetQuestionCriteriaServiceInterface",
+    "UpdateQuestionCriteriaOverrideServiceInterface",
+    "DeleteQuestionCriteriaOverrideServiceInterface"
+]
