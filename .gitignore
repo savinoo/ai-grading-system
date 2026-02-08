@@ -12,6 +12,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# Streamlit secrets
+.streamlit/secrets.toml
+
 # IDES
 .vscode/
 .idea/
