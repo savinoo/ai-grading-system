@@ -56,24 +56,39 @@ class ExamsRepository(ExamsRepositoryInterface):
 
     def get_by_uuid(self, db: Session, uuid: UUID) -> Exams:
         """
-        Busca prova por UUID.
+        Busca prova por UUID com informações da turma.
         
         Args:
             db: Sessão do banco de dados
             uuid: UUID da prova
             
         Returns:
-            Exams: Entidade da prova
+            Exams: Entidade da prova com class_name populado
             
         Raises:
             SQLAlchemyError: Em caso de erro de banco de dados
             NoResultFound: Se a prova não existir
         """
         try:
-            stmt = select(Exams).where(Exams.uuid == uuid)
-            result = db.execute(stmt).scalar_one()
-            self.__logger.debug("Prova encontrada: UUID=%s", uuid)
-            return result
+            # Faz LEFT JOIN com Classes para pegar o nome da turma
+            stmt = (
+                select(
+                    Exams,
+                    Classes.name.label('class_name')
+                )
+                .outerjoin(Classes, Exams.class_uuid == Classes.uuid)
+                .where(Exams.uuid == uuid)
+            )
+            
+            result = db.execute(stmt).one()
+            exam = result[0]  # Exams object
+            class_name = result[1]  # class_name
+            
+            # Adiciona atributo dinâmico
+            setattr(exam, 'class_name', class_name)
+            
+            self.__logger.debug("Prova encontrada: UUID=%s, class_name=%s", uuid, class_name)
+            return exam
 
         except NoResultFound:
             self.__logger.warning("Prova não encontrada: UUID=%s", uuid)

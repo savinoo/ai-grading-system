@@ -420,7 +420,6 @@ async def download_attachment(
     headers = request.headers
     
     try:
-        # Autenticação
         auth_header = headers.get("Authorization") or headers.get("authorization") or ""
         if not auth_header.startswith("Bearer "):
             raise HTTPException(
@@ -454,12 +453,13 @@ async def download_attachment(
 
         logger.info("Download do anexo %s: %s", uuid, download_info["original_filename"])
 
-        # Retorna o arquivo
-        return FileResponse(
+        response = FileResponse(
             path=str(download_info["file_path"]),
             media_type=download_info["mime_type"],
             filename=download_info["original_filename"]
         )
+        response.headers["Content-Disposition"] = f'attachment; filename="{download_info["original_filename"]}"'
+        return response
 
     except HTTPException as e:
         logger.error("Erro ao fazer download do anexo: %s", str(e.detail))
