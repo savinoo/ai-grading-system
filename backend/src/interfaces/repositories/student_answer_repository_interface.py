@@ -101,6 +101,29 @@ class StudentAnswerRepositoryInterface(ABC):
         raise NotImplementedError()
 
     @abstractmethod
+    def get_by_question(
+        self,
+        db: Session,
+        question_uuid: UUID,
+        *,
+        skip: int = 0,
+        limit: int = 100
+    ) -> Sequence[StudentAnswer]:
+        """
+        Lista respostas de uma questão específica.
+        
+        Args:
+            db: Sessão do banco de dados
+            question_uuid: UUID da questão
+            skip: Número de registros a pular
+            limit: Número máximo de registros a retornar
+            
+        Returns:
+            Sequence[StudentAnswer]: Lista de respostas da questão
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
     def count_by_exam(self, db: Session, exam_uuid: UUID) -> int:
         """
         Conta o total de respostas de uma prova.

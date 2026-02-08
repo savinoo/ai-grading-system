@@ -155,6 +155,37 @@ class StudentAnswerRepository(StudentAnswerRepositoryInterface):
             self.__logger.error("Erro ao listar respostas do aluno na prova: %s", e, exc_info=True)
             raise
 
+    def get_by_question(
+        self,
+        db: Session,
+        question_uuid: UUID,
+        *,
+        skip: int = 0,
+        limit: int = 100
+    ) -> Sequence[StudentAnswer]:
+        """
+        Lista respostas de uma questão específica.
+        
+        Args:
+            db: Sessão do banco de dados
+            question_uuid: UUID da questão
+            skip: Número de registros a pular
+            limit: Número máximo de registros a retornar
+            
+        Returns:
+            Sequence[StudentAnswer]: Lista de respostas da questão
+        """
+        try:
+            stmt = select(StudentAnswer).where(StudentAnswer.question_uuid == question_uuid)
+            stmt = stmt.offset(skip).limit(limit).order_by(StudentAnswer.created_at)
+            result = db.execute(stmt).scalars().all()
+            self.__logger.debug("Listadas %d respostas da questão %s", len(result), question_uuid)
+            return result
+
+        except SQLAlchemyError as e:
+            self.__logger.error("Erro ao listar respostas da questão: %s", e, exc_info=True)
+            raise
+
     def count_by_exam(self, db: Session, exam_uuid: UUID) -> int:
         """
         Conta o total de respostas de uma prova.

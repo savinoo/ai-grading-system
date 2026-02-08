@@ -11,6 +11,7 @@ from sqlalchemy import (
     Index,
     Numeric,
     String,
+    Boolean,
     Text,
     text,
 )
@@ -99,6 +100,12 @@ class StudentAnswer(Base):
         UUID(as_uuid=True),
         ForeignKey("public.users.uuid", onupdate="CASCADE", ondelete="SET NULL"),
         nullable=True,
+    )
+    
+    is_graded: Mapped[bool] = mapped_column(
+        Boolean,
+        nullable=False,
+        server_default=text("FALSE"),
     )
 
     created_at: Mapped[datetime] = mapped_column(

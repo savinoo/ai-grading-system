@@ -84,6 +84,12 @@ class ExamQuestion(Base):
         server_default=text("TRUE"),
     )
 
+    is_graded: Mapped[bool] = mapped_column(
+        Boolean,
+        nullable=False,
+        server_default=text("FALSE"),
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
