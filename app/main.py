@@ -198,7 +198,7 @@ if operation_mode == "Single Student (Debug)":
     with tab3:
         st.info("Funcionalidade detalhada disponível no modo Batch.")
 
-else:
+elif operation_mode == "Batch Processing (Turma)":
     # --- MODO 2: BATCH PROCESSING ---
     st.title("🎓 Modo Turma: Correção em Escala")
     st.markdown("Gerencie a correção automática de dezenas de alunos simultaneamente.")
@@ -492,7 +492,7 @@ else:
             student_data = next(r for r in results if r['name'] == selected_name)
             render_student_report(student_data)
 
-else:
+elif operation_mode == "📊 Analytics Dashboard":
     # --- MODO 3: ANALYTICS DASHBOARD ---
     st.title("📊 Professor Assistant - Analytics Dashboard")
     st.markdown("Análise pedagógica avançada com tracking de alunos e insights de turma.")
