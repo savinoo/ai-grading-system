@@ -17,7 +17,8 @@ from src.core.logging_config import get_logger
 from src.main.composer.student_answers_composer import (
     make_create_student_answer_controller,
     make_update_student_answer_controller,
-    make_delete_student_answer_controller
+    make_delete_student_answer_controller,
+    make_list_student_answers_controller
 )
 
 from src.main.dependencies.request_meta import get_caller_meta
@@ -30,6 +31,70 @@ router = APIRouter(
     prefix="/student-answers",
     tags=["Student Answers"],
 )
+
+@router.get(
+    "/question/{question_uuid}",
+    response_model=list[StudentAnswerResponse],
+    status_code=200,
+    summary="Listar respostas de uma questão",
+    description="Endpoint para listar todas as respostas de alunos de uma questão específica. Requer autenticação de professor."
+)
+def list_student_answers(
+    request: Request,
+    question_uuid: str = Path(..., description="UUID da questão"),
+    caller: CallerMeta = Depends(get_caller_meta),
+    db=Depends(get_db),
+):
+    """
+    Endpoint para listar respostas de uma questão.
+    
+    Args:
+        request (Request): Objeto de requisição FastAPI
+        question_uuid (str): UUID da questão
+        caller (CallerMeta): Metadados do chamador
+        db (Session): Sessão do banco de dados
+        
+    Returns:
+        JSONResponse: Resposta HTTP com lista de respostas
+    """
+    headers = request.headers
+    try:
+        auth_header = headers.get("Authorization") or headers.get("authorization") or ""
+        if not auth_header.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Credenciais ausentes ou inválidas.")
+        token = auth_header.split(" ", 1)[1].strip()
+
+        token_infos = auth_jwt_verify(token, db, scope="teacher")
+        logger.debug("Token válido: %s", token_infos)
+    except HTTPException as e:
+        logger.error("Authentication error: %s", str(e), exc_info=True)
+        raise HTTPException(status_code=e.status_code, detail=e.detail) from e
+
+    http_request = HttpRequest(
+        body=None,
+        db=db,
+        caller=caller,
+        headers=request.headers,
+        token_infos=token_infos,
+        param={"question_uuid": question_uuid}
+    )
+
+    controller = make_list_student_answers_controller()
+
+    try:
+        http_response: HttpResponse = controller.handle(http_request)
+        # Serializa a lista de responses Pydantic para JSON
+        response_body = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in http_response.body]
+        return JSONResponse(
+            status_code=http_response.status_code,
+            content=response_body
+        )
+    except HTTPException as e:
+        logger.error("Erro ao listar respostas: %s", str(e.detail))
+        raise e
+    except Exception as e:
+        logger.exception("Erro inesperado ao listar respostas")
+        raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
 
 @router.post(
     "",

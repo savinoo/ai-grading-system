@@ -7,11 +7,13 @@ from src.services.exam_question_criteria_override.create_question_criteria_overr
 from src.services.exam_question_criteria_override.reset_question_criteria_service import ResetQuestionCriteriaService
 from src.services.exam_question_criteria_override.update_question_criteria_override_service import UpdateQuestionCriteriaOverrideService
 from src.services.exam_question_criteria_override.delete_question_criteria_override_service import DeleteQuestionCriteriaOverrideService
+from src.services.exam_question_criteria_override.list_question_criteria_overrides_service import ListQuestionCriteriaOverridesService
 
 from src.controllers.exam_question_criteria_override.create_question_criteria_override_controller import CreateQuestionCriteriaOverrideController
 from src.controllers.exam_question_criteria_override.reset_question_criteria_controller import ResetQuestionCriteriaController
 from src.controllers.exam_question_criteria_override.update_question_criteria_override_controller import UpdateQuestionCriteriaOverrideController
 from src.controllers.exam_question_criteria_override.delete_question_criteria_override_controller import DeleteQuestionCriteriaOverrideController
+from src.controllers.exam_question_criteria_override.list_question_criteria_overrides_controller import ListQuestionCriteriaOverridesController
 
 def make_create_question_criteria_override_controller() -> CreateQuestionCriteriaOverrideController:
     """
@@ -88,5 +90,22 @@ def make_delete_question_criteria_override_controller() -> DeleteQuestionCriteri
         exams_repository
     )
     controller = DeleteQuestionCriteriaOverrideController(delete_service)
+
+    return controller
+
+def make_list_question_criteria_overrides_controller() -> ListQuestionCriteriaOverridesController:
+    """
+    Factory para criar uma instância de ListQuestionCriteriaOverridesController.
+    """
+    override_repository = ExamQuestionCriteriaOverrideRepository()
+    question_repository = ExamQuestionRepository()
+    exams_repository = ExamsRepository()
+
+    list_service = ListQuestionCriteriaOverridesService(
+        override_repository,
+        question_repository,
+        exams_repository
+    )
+    controller = ListQuestionCriteriaOverridesController(list_service)
 
     return controller

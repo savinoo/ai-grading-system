@@ -7,6 +7,7 @@ from src.domain.http.caller_domains import CallerMeta
 
 # Request Models
 from src.domain.requests.exam_questions.exam_question_create_request import ExamQuestionCreateRequest
+from src.domain.requests.exam_questions.exam_question_update_request import ExamQuestionUpdateRequest
 
 # Response Models
 from src.domain.responses.exam_questions.exam_question_response import ExamQuestionResponse
@@ -17,7 +18,8 @@ from src.main.composer.exam_questions_composer import (
     make_create_exam_question_controller,
     make_delete_exam_question_controller,
     make_delete_all_question_answers_controller,
-    make_list_exam_questions_controller
+    make_list_exam_questions_controller,
+    make_update_exam_question_controller
 )
 
 from src.main.dependencies.request_meta import get_caller_meta
@@ -277,4 +279,69 @@ def list_exam_questions(
         raise e
     except Exception as e:
         logger.exception("Erro inesperado ao listar questões")
+        raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
+
+@router.put(
+    "/{question_uuid}",
+    response_model=ExamQuestionResponse,
+    status_code=200,
+    summary="Atualizar uma questão",
+    description="Endpoint para atualizar os dados de uma questão. Requer autenticação de professor."
+)
+def update_exam_question(
+    request: Request,
+    question_uuid: str = Path(..., description="UUID da questão a ser atualizada"),
+    body: ExamQuestionUpdateRequest = Body(...),
+    caller: CallerMeta = Depends(get_caller_meta),
+    db=Depends(get_db),
+):
+    """
+    Endpoint para atualizar uma questão.
+    
+    Args:
+        request (Request): Objeto de requisição FastAPI
+        question_uuid (str): UUID da questão a ser atualizada
+        body (ExamQuestionUpdateRequest): Dados a serem atualizados
+        caller (CallerMeta): Metadados do chamador
+        db (Session): Sessão do banco de dados
+        
+    Returns:
+        JSONResponse: Resposta HTTP com os dados da questão atualizada
+    """
+    headers = request.headers
+    try:
+        auth_header = headers.get("Authorization") or headers.get("authorization") or ""
+        if not auth_header.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Credenciais ausentes ou inválidas.")
+        token = auth_header.split(" ", 1)[1].strip()
+
+        token_infos = auth_jwt_verify(token, db, scope="teacher")
+        logger.debug("Token válido: %s", token_infos)
+    except HTTPException as e:
+        logger.error("Authentication error: %s", str(e), exc_info=True)
+        raise HTTPException(status_code=e.status_code, detail=e.detail) from e
+
+    http_request = HttpRequest(
+        param={"question_uuid": question_uuid},
+        body=body,
+        db=db,
+        caller=caller,
+        headers=request.headers,
+        token_infos=token_infos
+    )
+
+    controller = make_update_exam_question_controller()
+
+    try:
+        http_response: HttpResponse = controller.handle(http_request)
+        response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
+        return JSONResponse(
+            status_code=http_response.status_code,
+            content=response_body
+        )
+    except HTTPException as e:
+        logger.error("Erro ao atualizar questão: %s", str(e.detail))
+        raise e
+    except Exception as e:
+        logger.exception("Erro inesperado ao atualizar questão")
         raise HTTPException(status_code=500, detail="Erro interno do servidor") from e

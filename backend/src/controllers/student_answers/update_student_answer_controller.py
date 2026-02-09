@@ -41,7 +41,13 @@ class UpdateStudentAnswerController(ControllerInterface):
 
         db = http_request.db
         caller = http_request.caller
-        answer_uuid: UUID = http_request.path_params.get("answer_uuid")
+        
+        # Extrai answer_uuid do body (mesclado pela rota)
+        body_dict = http_request.body
+        answer_uuid = UUID(body_dict.get("answer_uuid"))
+        
+        # Remove answer_uuid do dict para não passar para o service
+        body_dict_clean = {k: v for k, v in body_dict.items() if k != "answer_uuid"}
 
         self.__logger.debug(
             "Handling update student answer request from caller: %s - %s - %s", 
@@ -51,7 +57,9 @@ class UpdateStudentAnswerController(ControllerInterface):
         )
 
         try:
-            request = http_request.body
+            # Reconstrói o request a partir do dict limpo
+            from src.domain.requests.student_answers.student_answer_update_request import StudentAnswerUpdateRequest
+            request = StudentAnswerUpdateRequest(**body_dict_clean)
 
             result = asyncio.run(self.__service.update_student_answer(db, answer_uuid, request))
 

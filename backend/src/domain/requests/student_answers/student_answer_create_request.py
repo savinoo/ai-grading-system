@@ -26,7 +26,7 @@ class StudentAnswerCreateRequest(BaseModel):
         examples=["123e4567-e89b-12d3-a456-426614174002"]
     )
 
-    answer: Optional[str] = Field(
+    answer_text: Optional[str] = Field(
         default=None,
         description="Resposta do aluno para a questão",
         examples=["Polimorfismo é a capacidade de objetos de classes diferentes responderem à mesma mensagem..."]

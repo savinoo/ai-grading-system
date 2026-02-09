@@ -123,7 +123,7 @@ class CreateStudentAnswerService(CreateStudentAnswerServiceInterface):
                     exam_uuid=request.exam_uuid,
                     question_uuid=request.question_uuid,
                     student_uuid=request.student_uuid,
-                    answer=request.answer,
+                    answer=request.answer_text,  # Mapeia answer_text para answer
                     status="SUBMITTED"
                 )
             except IntegrityError as exc:

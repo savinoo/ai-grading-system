@@ -20,7 +20,8 @@ from src.main.composer.exams_composer import (
     make_create_exam_controller,
     make_get_exams_by_teacher_controller,
     make_get_exam_by_uuid_controller,
-    make_update_exam_controller
+    make_update_exam_controller,
+    make_delete_exam_controller
 )
 
 from src.main.dependencies.request_meta import get_caller_meta
@@ -290,4 +291,64 @@ def update_exam(
         raise e
     except Exception as e:
         logger.exception("Erro inesperado ao atualizar prova")
+        raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
+
+@router.delete(
+    "/{exam_uuid}",
+    status_code=204,
+    summary="Deletar uma prova",
+    description="Endpoint para professores deletarem uma prova. Requer autenticação e permissão."
+)
+def delete_exam(
+    request: Request,
+    exam_uuid: str,
+    caller: CallerMeta = Depends(get_caller_meta),
+    db=Depends(get_db),
+):
+    """
+    Endpoint para deletar uma prova.
+    
+    Args:
+        request (Request): Objeto de requisição FastAPI
+        exam_uuid (str): UUID da prova a ser deletada
+        caller (CallerMeta): Metadados do chamador
+        db (Session): Sessão do banco de dados
+        
+    Returns:
+        No content (204)
+    """
+    headers = request.headers
+    try:
+        auth_header = headers.get("Authorization") or headers.get("authorization") or ""
+        if not auth_header.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Credenciais ausentes ou inválidas.")
+        token = auth_header.split(" ", 1)[1].strip()
+
+        token_infos = auth_jwt_verify(token, db, scope="teacher")
+        logger.debug("Token válido: %s", token_infos)
+    except HTTPException as e:
+        logger.error("Authentication error: %s", str(e), exc_info=True)
+        raise HTTPException(status_code=e.status_code, detail=e.detail) from e
+
+    http_request = HttpRequest(
+        param={"exam_uuid": exam_uuid},
+        db=db,
+        caller=caller,
+        headers=request.headers,
+        token_infos=token_infos
+    )
+
+    controller = make_delete_exam_controller()
+
+    try:
+        http_response: HttpResponse = controller.handle(http_request)
+        return JSONResponse(
+            status_code=http_response.status_code,
+            content=None
+        )
+    except HTTPException as e:
+        logger.error("Erro ao deletar prova: %s", str(e.detail))
+        raise e
+    except Exception as e:
+        logger.exception("Erro inesperado ao deletar prova")
         raise HTTPException(status_code=500, detail="Erro interno do servidor") from e

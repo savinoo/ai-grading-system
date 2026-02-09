@@ -92,8 +92,8 @@ class UpdateStudentAnswerService(UpdateStudentAnswerServiceInterface):
 
             # Atualiza a resposta
             updates = {}
-            if request.answer is not None:
-                updates["answer"] = request.answer
+            if request.answer_text is not None:
+                updates["answer"] = request.answer_text
 
             if updates:
                 answer_obj = self.__student_answer_repository.update(

@@ -9,7 +9,7 @@ class StudentAnswerResponse(BaseModel):
     Modelo de resposta para resposta de aluno.
     """
     
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(from_attributes=True, populate_by_name=True)
 
     uuid: UUID = Field(
         ...,
@@ -35,10 +35,11 @@ class StudentAnswerResponse(BaseModel):
         examples=["123e4567-e89b-12d3-a456-426614174003"]
     )
 
-    answer: Optional[str] = Field(
+    answer_text: Optional[str] = Field(
         default=None,
         description="Resposta do aluno",
-        examples=["Polimorfismo é a capacidade de objetos de classes diferentes responderem à mesma mensagem..."]
+        examples=["Polimorfismo é a capacidade de objetos de classes diferentes responderem à mesma mensagem..."],
+        alias="answer"  # Mapeia do campo 'answer' do model
     )
 
     status: str = Field(

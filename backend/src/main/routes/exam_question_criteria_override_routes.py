@@ -18,7 +18,8 @@ from src.main.composer.exam_question_criteria_override_composer import (
     make_create_question_criteria_override_controller,
     make_reset_question_criteria_controller,
     make_update_question_criteria_override_controller,
-    make_delete_question_criteria_override_controller
+    make_delete_question_criteria_override_controller,
+    make_list_question_criteria_overrides_controller
 )
 
 from src.main.dependencies.request_meta import get_caller_meta
@@ -31,6 +32,70 @@ router = APIRouter(
     prefix="/question-criteria-override",
     tags=["Question Criteria Override"],
 )
+
+@router.get(
+    "/question/{question_uuid}",
+    response_model=list[ExamQuestionCriteriaOverrideResponse],
+    status_code=200,
+    summary="Listar critérios customizados de uma questão",
+    description="Endpoint para listar todos os critérios customizados de uma questão específica. Requer autenticação de professor."
+)
+def list_question_criteria_overrides(
+    request: Request,
+    question_uuid: str = Path(..., description="UUID da questão"),
+    caller: CallerMeta = Depends(get_caller_meta),
+    db=Depends(get_db),
+):
+    """
+    Endpoint para listar critérios customizados de uma questão.
+    
+    Args:
+        request (Request): Objeto de requisição FastAPI
+        question_uuid (str): UUID da questão
+        caller (CallerMeta): Metadados do chamador
+        db (Session): Sessão do banco de dados
+        
+    Returns:
+        JSONResponse: Resposta HTTP com lista de critérios customizados
+    """
+    headers = request.headers
+    try:
+        auth_header = headers.get("Authorization") or headers.get("authorization") or ""
+        if not auth_header.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Credenciais ausentes ou inválidas.")
+        token = auth_header.split(" ", 1)[1].strip()
+
+        token_infos = auth_jwt_verify(token, db, scope="teacher")
+        logger.debug("Token válido: %s", token_infos)
+    except HTTPException as e:
+        logger.error("Authentication error: %s", str(e), exc_info=True)
+        raise HTTPException(status_code=e.status_code, detail=e.detail) from e
+
+    http_request = HttpRequest(
+        body=None,
+        db=db,
+        caller=caller,
+        headers=request.headers,
+        token_infos=token_infos,
+        param={"question_uuid": question_uuid}
+    )
+
+    controller = make_list_question_criteria_overrides_controller()
+
+    try:
+        http_response: HttpResponse = controller.handle(http_request)
+        # Serializa a lista de responses Pydantic para JSON
+        response_body = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in http_response.body]
+        return JSONResponse(
+            status_code=http_response.status_code,
+            content=response_body
+        )
+    except HTTPException as e:
+        logger.error("Erro ao listar critérios customizados: %s", str(e.detail))
+        raise e
+    except Exception as e:
+        logger.exception("Erro inesperado ao listar critérios customizados")
+        raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
 
 @router.post(
     "",
@@ -130,7 +195,7 @@ def update_question_criteria_override(
         caller=caller,
         headers=request.headers,
         token_infos=token_infos,
-        path_params={"override_uuid": override_uuid}
+        param={"override_uuid": override_uuid}
     )
 
     controller = make_update_question_criteria_override_controller()
@@ -183,7 +248,7 @@ def delete_question_criteria_override(
         caller=caller,
         headers=request.headers,
         token_infos=token_infos,
-        path_params={"override_uuid": override_uuid}
+        param={"override_uuid": override_uuid}
     )
 
     controller = make_delete_question_criteria_override_controller()

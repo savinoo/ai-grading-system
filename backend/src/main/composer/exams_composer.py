@@ -5,11 +5,13 @@ from src.services.exams.create_exam_service import CreateExamService
 from src.services.exams.get_exams_by_teacher_service import GetExamsByTeacherService
 from src.services.exams.get_exam_by_uuid_service import GetExamByUuidService
 from src.services.exams.update_exam_service import UpdateExamService
+from src.services.exams.delete_exam_service import DeleteExamService
 
 from src.controllers.exams.create_exam_controller import CreateExamController
 from src.controllers.exams.get_exams_by_teacher_controller import GetExamsByTeacherController
 from src.controllers.exams.get_exam_by_uuid_controller import GetExamByUuidController
 from src.controllers.exams.update_exam_controller import UpdateExamController
+from src.controllers.exams.delete_exam_controller import DeleteExamController
 
 def make_create_exam_controller() -> CreateExamController:
     """
@@ -71,3 +73,17 @@ def make_update_exam_controller() -> UpdateExamController:
     update_exam_controller = UpdateExamController(update_exam_service)
 
     return update_exam_controller
+
+def make_delete_exam_controller() -> DeleteExamController:
+    """
+    Factory para criar uma instância de DeleteExamController
+    com suas dependências injetadas.
+    
+    Returns:
+        DeleteExamController: Instância do controlador de exclusão de provas
+    """
+    exam_repository = ExamsRepository()
+    delete_exam_service = DeleteExamService(exam_repository)
+    delete_exam_controller = DeleteExamController(delete_exam_service)
+
+    return delete_exam_controller
