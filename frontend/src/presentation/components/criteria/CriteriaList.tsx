@@ -46,6 +46,7 @@ export const CriteriaList: React.FC<CriteriaListProps> = ({
   }
 
   const totalWeight = criteria.reduce((sum, c) => sum + c.weight, 0);
+  const totalMaxPoints = criteria.reduce((sum, c) => sum + c.max_points, 0);
 
   return (
     <div className="space-y-4">
@@ -58,6 +59,9 @@ export const CriteriaList: React.FC<CriteriaListProps> = ({
               </th>
               <th className="px-6 py-4 text-center text-xs font-extrabold text-slate-500 uppercase tracking-wider">
                 Peso
+              </th>
+              <th className="px-6 py-4 text-center text-xs font-extrabold text-slate-500 uppercase tracking-wider">
+                Pontuação Máxima
               </th>
               {isEditable && (
                 <th className="px-6 py-4 text-right text-xs font-extrabold text-slate-500 uppercase tracking-wider">
@@ -87,6 +91,12 @@ export const CriteriaList: React.FC<CriteriaListProps> = ({
                   <td className="px-6 py-4 text-center">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-primary/10 text-primary">
                       {criterion.weight}
+                    </span>
+                  </td>
+
+                  <td className="px-6 py-4 text-center">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400">
+                      {criterion.max_points.toFixed(1)} pts
                     </span>
                   </td>
 
@@ -123,8 +133,13 @@ export const CriteriaList: React.FC<CriteriaListProps> = ({
         <div className="text-sm text-slate-600 dark:text-slate-400">
           Total de critérios: <span className="font-bold text-slate-900 dark:text-white">{criteria.length}</span>
         </div>
-        <div className="text-sm text-slate-600 dark:text-slate-400">
-          Peso total: <span className="font-bold text-slate-900 dark:text-white">{totalWeight.toFixed(2)}</span>
+        <div className="flex items-center gap-6">
+          <div className="text-sm text-slate-600 dark:text-slate-400">
+            Peso total: <span className="font-bold text-slate-900 dark:text-white">{totalWeight.toFixed(2)}</span>
+          </div>
+          <div className="text-sm text-slate-600 dark:text-slate-400">
+            Pontuação total: <span className="font-bold text-emerald-600 dark:text-emerald-400">{totalMaxPoints.toFixed(1)} pts</span>
+          </div>
         </div>
       </div>
     </div>

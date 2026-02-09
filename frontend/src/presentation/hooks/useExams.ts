@@ -202,23 +202,9 @@ export const useExams = () => {
       
       const criteria = await listExamCriteriaUseCase.execute(examUuid, { active_only: true });
       
-      // Enriquecer critérios com informações do GradingCriteria
-      const gradState = useExamStore.getState().gradingCriteria;
-      const enrichedCriteria = criteria.map(examCriteria => {
-        const gradingCriteria = gradState.find(
-          gc => gc.uuid === examCriteria.criteria_uuid
-        );
-        
-        return {
-          ...examCriteria,
-          grading_criteria_uuid: gradingCriteria?.uuid,
-          grading_criteria_name: gradingCriteria?.name || 'Critério não encontrado',
-          grading_criteria_description: gradingCriteria?.description || '',
-        };
-      });
-      
-      setExamCriteria(enrichedCriteria);
-      return enrichedCriteria;
+      // Os critérios já vêm enriquecidos do backend com grading_criteria_name e grading_criteria_description
+      setExamCriteria(criteria);
+      return criteria;
     } catch (err: any) {
       const errorMessage = err.response?.data?.detail || 'Erro ao carregar critérios da prova';
       setError(errorMessage);
@@ -236,21 +222,9 @@ export const useExams = () => {
       
       const newCriteria = await createExamCriteriaUseCase.execute(data);
       
-      // Enriquecer o critério criado com informações do GradingCriteria
-      const gradState = useExamStore.getState().gradingCriteria;
-      const gradingCriteria = gradState.find(
-        gc => gc.uuid === newCriteria.criteria_uuid
-      );
-      
-      const enrichedCriteria = {
-        ...newCriteria,
-        grading_criteria_uuid: gradingCriteria?.uuid,
-        grading_criteria_name: gradingCriteria?.name || 'Critério não encontrado',
-        grading_criteria_description: gradingCriteria?.description || '',
-      };
-      
-      addExamCriteria(enrichedCriteria);
-      return enrichedCriteria;
+      // O critério já vem enriquecido do backend com grading_criteria_name e grading_criteria_description
+      addExamCriteria(newCriteria);
+      return newCriteria;
     } catch (err: any) {
       const errorMessage = err.response?.data?.detail || 'Erro ao adicionar critério';
       setError(errorMessage);
