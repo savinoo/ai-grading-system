@@ -13,6 +13,7 @@ from src.main.middlewares.security_headers import SecurityHeadersMiddleware
 # Core
 from src.core.settings import settings
 from src.core.logging_config import setup_logging, get_logger
+from src.core.dspy_config import configure_dspy
 
 # Rotas
 from src.main.routes.auth_routes import router as auth_router
@@ -37,6 +38,26 @@ app = FastAPI(
     debug=(settings.ENV != "prd")
 )
 
+
+# ===== EVENTOS DE STARTUP =====
+@app.on_event("startup")
+async def startup_event():
+    """
+    Inicialização de recursos ao iniciar a aplicação.
+    """
+    logger.info("Iniciando aplicação AvaliaAI")
+    
+    # Configurar DSPy globalmente
+    try:
+        configure_dspy()
+        logger.info("DSPy configurado no startup")
+    except Exception as e:
+        logger.warning("Falha ao configurar DSPy (não crítico): %s", e)
+    
+    logger.info("Aplicação inicializada com sucesso")
+
+
+# ===== MIDDLEWARES =====
 # Middleware de Id de Requisição
 app.add_middleware(RequestIdMiddleware)
 
