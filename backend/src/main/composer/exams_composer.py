@@ -1,11 +1,13 @@
 from src.models.repositories.exams_repository import ExamsRepository
 from src.models.repositories.student_answer_repository import StudentAnswerRepository
+from src.models.repositories.attachments_repository import AttachmentsRepository
 
 from src.services.exams.create_exam_service import CreateExamService
 from src.services.exams.get_exams_by_teacher_service import GetExamsByTeacherService
 from src.services.exams.get_exam_by_uuid_service import GetExamByUuidService
 from src.services.exams.update_exam_service import UpdateExamService
 from src.services.exams.delete_exam_service import DeleteExamService
+from src.services.attachments.manage_attachments_service import ManageAttachmentsService
 
 from src.controllers.exams.create_exam_controller import CreateExamController
 from src.controllers.exams.get_exams_by_teacher_controller import GetExamsByTeacherController
@@ -83,7 +85,13 @@ def make_delete_exam_controller() -> DeleteExamController:
         DeleteExamController: Instância do controlador de exclusão de provas
     """
     exam_repository = ExamsRepository()
-    delete_exam_service = DeleteExamService(exam_repository)
+    attachments_repository = AttachmentsRepository()
+    
+    # Cria o serviço de anexos para deletar arquivos físicos
+    manage_attachments_service = ManageAttachmentsService(attachments_repository)
+    
+    # Cria o serviço de exclusão de provas com dependência de anexos
+    delete_exam_service = DeleteExamService(exam_repository, manage_attachments_service)
     delete_exam_controller = DeleteExamController(delete_exam_service)
 
     return delete_exam_controller

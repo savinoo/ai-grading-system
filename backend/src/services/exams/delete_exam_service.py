@@ -7,6 +7,7 @@ from sqlalchemy.exc import NoResultFound
 
 from src.interfaces.services.exams.delete_exam_service_interface import DeleteExamServiceInterface
 from src.interfaces.repositories.exams_repository_interfaces import ExamsRepositoryInterface
+from src.interfaces.services.attachments.manage_attachments_service_interface import ManageAttachmentsServiceInterface
 
 from src.errors.domain.validate_error import ValidateError
 from src.errors.domain.sql_error import SqlError
@@ -18,8 +19,13 @@ class DeleteExamService(DeleteExamServiceInterface):
     Serviço para deletar uma prova e todos os seus dados relacionados.
     """
 
-    def __init__(self, repository: ExamsRepositoryInterface) -> None:
+    def __init__(
+        self,
+        repository: ExamsRepositoryInterface,
+        attachments_service: ManageAttachmentsServiceInterface
+    ) -> None:
         self.__repository = repository
+        self.__attachments_service = attachments_service
         self.__logger = get_logger(__name__)
 
     async def delete_exam(
@@ -61,7 +67,26 @@ class DeleteExamService(DeleteExamServiceInterface):
                     }
                 )
 
-            # Deleta a prova (cascade irá deletar os relacionados)
+            # Deleta todos os anexos físicos da prova
+            try:
+                deleted_count = await self.__attachments_service.delete_all_by_exam_uuid(
+                    db,
+                    exam.uuid
+                )
+                self.__logger.info(
+                    "Removidos %d anexos físicos da prova %s",
+                    deleted_count,
+                    exam_uuid
+                )
+            except Exception as e:
+                self.__logger.warning(
+                    "Erro ao remover anexos da prova %s: %s",
+                    exam_uuid,
+                    str(e)
+                )
+                # Continua mesmo se falhar, pois os metadados serão removidos pelo cascade
+
+            # Deleta a prova (cascade irá deletar os metadados relacionados)
             self.__repository.delete(db, exam.id)
             db.commit()
 

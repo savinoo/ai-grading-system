@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, Body, Query
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
@@ -342,10 +342,8 @@ def delete_exam(
 
     try:
         http_response: HttpResponse = controller.handle(http_request)
-        return JSONResponse(
-            status_code=http_response.status_code,
-            content=None
-        )
+        # Retorna Response vazia para status 204 (No Content)
+        return Response(status_code=http_response.status_code)
     except HTTPException as e:
         logger.error("Erro ao deletar prova: %s", str(e.detail))
         raise e

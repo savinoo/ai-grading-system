@@ -5,7 +5,7 @@ from typing import Optional, Sequence
 from uuid import UUID
 
 from sqlalchemy import select, func
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy.exc import SQLAlchemyError, NoResultFound
 
 from src.interfaces.repositories.exam_criteria_repository_interface import ExamCriteriaRepositoryInterface
@@ -103,11 +103,17 @@ class ExamCriteriaRepository(ExamCriteriaRepositoryInterface):
             Sequence[ExamCriteria]: Lista de critérios da prova
         """
         try:
-            stmt = select(ExamCriteria).where(ExamCriteria.exam_uuid == exam_uuid)
+            stmt = (
+                select(ExamCriteria)
+                .options(joinedload(ExamCriteria.grading_criteria))
+                .where(ExamCriteria.exam_uuid == exam_uuid)
+            )
             if active_only:
                 stmt = stmt.where(ExamCriteria.active == True)
             stmt = stmt.offset(skip).limit(limit).order_by(ExamCriteria.created_at)
-            result = db.execute(stmt).scalars().all()
+            
+            result = db.execute(stmt).scalars().unique().all()
+            
             self.__logger.debug("Listados %d critérios da prova %s", len(result), exam_uuid)
             return result
 

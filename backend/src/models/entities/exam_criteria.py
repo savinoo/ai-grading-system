@@ -14,7 +14,7 @@ from sqlalchemy import (
     text
 )
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.models.settings.base import Base
 
@@ -68,6 +68,12 @@ class ExamCriteria(Base):
         DateTime(timezone=True),
         nullable=False,
         server_default=text("NOW()"),
+    )
+    
+    # Relacionamentos
+    grading_criteria: Mapped["GradingCriteria"] = relationship(
+        "GradingCriteria",
+        lazy="joined"  # Carrega automaticamente o relacionamento
     )
     
     def __repr__(self) -> str:

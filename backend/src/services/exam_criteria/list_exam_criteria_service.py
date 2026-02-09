@@ -65,7 +65,20 @@ class ListExamCriteriaService(ListExamCriteriaServiceInterface):
             )
 
             self.__logger.info("Total de critérios encontrados: %d", len(criteria_list))
-            return [self.__format_response(criteria) for criteria in criteria_list]
+            
+            responses = []
+            for criteria in criteria_list:
+                response = self.__format_response(criteria)
+                responses.append(response)
+                # Log do que está sendo retornado
+                self.__logger.info(
+                    "Critério %s: name=%s, description=%s",
+                    response.uuid,
+                    response.grading_criteria_name,
+                    response.grading_criteria_description
+                )
+            
+            return responses
 
         except Exception as e:
             self.__logger.error("Erro ao listar critérios da prova: %s", e)
@@ -85,4 +98,21 @@ class ListExamCriteriaService(ListExamCriteriaServiceInterface):
         Returns:
             ExamCriteriaResponse: Resposta formatada
         """
-        return ExamCriteriaResponse.model_validate(exam_criteria_obj)
+        response = ExamCriteriaResponse.model_validate(exam_criteria_obj)
+        
+        # Adicionar dados do grading_criteria se disponível
+        try:
+            if exam_criteria_obj.grading_criteria:
+                response.grading_criteria_name = exam_criteria_obj.grading_criteria.name
+                response.grading_criteria_description = exam_criteria_obj.grading_criteria.description
+                self.__logger.info(
+                    "Critério %s carregado com nome: %s",
+                    exam_criteria_obj.uuid,
+                    exam_criteria_obj.grading_criteria.name
+                )
+            else:
+                self.__logger.warning("grading_criteria é None para exam_criteria %s", exam_criteria_obj.uuid)
+        except Exception as e:
+            self.__logger.error("Erro ao acessar grading_criteria: %s", e, exc_info=True)
+        
+        return response

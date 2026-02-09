@@ -52,3 +52,16 @@ class ExamCriteriaResponse(BaseModel):
         description="Data de criação do critério de prova",
         examples=["2026-01-01T10:00:00Z"]
     )
+
+    # Campos do GradingCriteria (via JOIN ou relacionamento)
+    grading_criteria_name: Optional[str] = Field(
+        default=None,
+        description="Nome do critério de avaliação",
+        examples=["Clareza"]
+    )
+
+    grading_criteria_description: Optional[str] = Field(
+        default=None,
+        description="Descrição do critério de avaliação",
+        examples=["Avalia a clareza na comunicação das ideias"]
+    )
