@@ -49,4 +49,8 @@ export class ExamRepository implements IExamRepository {
     const response = await this.httpClient.patch<Exam>(`/exams/${examUuid}`, data);
     return response;
   }
+
+  async deleteExam(examUuid: string): Promise<void> {
+    await this.httpClient.delete(`/exams/${examUuid}`);
+  }
 }

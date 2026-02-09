@@ -12,7 +12,7 @@ export interface ExamCriteria {
   exam_uuid: string;
   criteria_uuid: string;
   weight: number;
-  max_points: number | null;
+  max_points: number;
   active: boolean;
   created_at: string;
   // Campos opcionais que podem vir do backend quando se faz JOIN
@@ -29,10 +29,10 @@ export interface CreateExamCriteriaDTO {
   exam_uuid: string;
   criteria_uuid: string;
   weight: number;
-  max_points?: number | null;
+  max_points: number;
 }
 
 export interface UpdateExamCriteriaDTO {
   weight?: number;
-  max_points?: number | null;
+  max_points?: number;
 }

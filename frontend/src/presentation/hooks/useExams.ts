@@ -7,6 +7,7 @@ import { CreateExamUseCase } from '@application/use-cases/exams/CreateExamUseCas
 import { GetTeacherExamsUseCase } from '@application/use-cases/exams/GetTeacherExamsUseCase';
 import { GetExamByUuidUseCase } from '@application/use-cases/exams/GetExamByUuidUseCase';
 import { UpdateExamUseCase } from '@application/use-cases/exams/UpdateExamUseCase';
+import { DeleteExamUseCase } from '@application/use-cases/exams/DeleteExamUseCase';
 
 // Use Cases - Criteria
 import { ListGradingCriteriaUseCase } from '@application/use-cases/criteria/ListGradingCriteriaUseCase';
@@ -36,6 +37,7 @@ const createExamUseCase = new CreateExamUseCase(examRepository);
 const getTeacherExamsUseCase = new GetTeacherExamsUseCase(examRepository);
 const getExamByUuidUseCase = new GetExamByUuidUseCase(examRepository);
 const updateExamUseCase = new UpdateExamUseCase(examRepository);
+const deleteExamUseCase = new DeleteExamUseCase(examRepository);
 
 // Criteria Use Cases
 const listGradingCriteriaUseCase = new ListGradingCriteriaUseCase(criteriaRepository);
@@ -147,6 +149,29 @@ export const useExams = () => {
       setLoading(false);
     }
   }, [currentExam, updateExam, setCurrentExam, setLoading, setError]);
+
+  const deleteExam = useCallback(async (examUuid: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      await deleteExamUseCase.execute(examUuid);
+      
+      // Remover do estado local
+      const currentExams = useExamStore.getState().exams;
+      setExams(currentExams.filter(e => e.uuid !== examUuid));
+      
+      if (currentExam?.uuid === examUuid) {
+        setCurrentExam(null);
+      }
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.detail || 'Erro ao deletar prova';
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentExam, setExams, setCurrentExam, setLoading, setError]);
 
   // ==================== GRADING CRITERIA OPERATIONS ====================
 
@@ -282,6 +307,7 @@ export const useExams = () => {
     loadTeacherExams,
     loadExamDetails,
     updateExamData,
+    deleteExam,
     
     // Grading Criteria Operations
     loadGradingCriteria,

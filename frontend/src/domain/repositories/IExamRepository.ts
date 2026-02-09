@@ -20,4 +20,6 @@ export interface IExamRepository {
   getExamByUuid(examUuid: string): Promise<Exam>;
 
   updateExam(examUuid: string, data: UpdateExamDTO): Promise<Exam>;
+
+  deleteExam(examUuid: string): Promise<void>;
 }
