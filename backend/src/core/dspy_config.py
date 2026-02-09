@@ -50,7 +50,7 @@ def configure_dspy() -> None:
         if not settings.GOOGLE_API_KEY:
             raise ValueError("GOOGLE_API_KEY não configurada para DSPy")
         api_key = settings.GOOGLE_API_KEY
-        model_string = f"google/{settings.LLM_MODEL_NAME}"
+        model_string = f"gemini/{settings.LLM_MODEL_NAME}"
     elif provider == "openai":
         if not settings.OPENAI_API_KEY:
             raise ValueError("OPENAI_API_KEY não configurada para DSPy")
