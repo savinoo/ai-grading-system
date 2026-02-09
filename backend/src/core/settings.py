@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -23,14 +24,30 @@ class Settings(BaseSettings):
     # === DATABASE (POSTGRES) ===
     DATABASE_URL: str = Field(..., description="Connection string do PostgreSQL")
     
-    # === OPENAI ===
-    OPENAI_API_KEY: str = Field(..., description="Chave da API OpenAI")
-    OPENAI_MODEL: str = Field(default="gpt-4o-mini", description="Modelo padrão")
-    OPENAI_TEMPERATURE: float = Field(default=0.7, ge=0.0, le=2.0)
+    # === RAG & Vector Database ===
+    CHROMA_PERSIST_DIRECTORY: str = Field(default="./data/chromadb", description="Diretório de persistência do ChromaDB")
+    EMBEDDING_MODEL: str = Field(default="text-embedding-004", description="Modelo de embeddings")
+    EMBEDDING_PROVIDER: str = Field(default="google", description="Provedor de embeddings (google, openai)")
     
-    # === CHROMADB ===
-    CHROMA_PERSIST_DIRECTORY: str = Field(default="./chroma_db", description="Diretório do ChromaDB")
-    CHROMA_COLLECTION_NAME: str = Field(default="documents", description="Nome da coleção")
+    # === LLM Configuration ===
+    LLM_PROVIDER: str = Field(default="gemini", description="Provedor de LLM (openai, gemini, litellm)")
+    OPENAI_API_KEY: Optional[str] = Field(default=None, description="Chave da API OpenAI")
+    GOOGLE_API_KEY: Optional[str] = Field(default=None, description="Chave da API Google")
+    LLM_MODEL_NAME: str = Field(default="gemini-2.0-flash-exp", description="Nome do modelo LLM")
+    LLM_TEMPERATURE: float = Field(default=0.0, ge=0.0, le=2.0, description="Temperatura do LLM (0=determinístico)")
+    LLM_MAX_RETRIES: int = Field(default=3, ge=1, le=10, description="Máximo de tentativas em caso de falha")
+    
+    # === DSPy ===
+    DSPY_CACHE_DIR: str = Field(default="./data/dspy_cache", description="Diretório de cache do DSPy")
+    
+    # === LangSmith (Observability) ===
+    LANGSMITH_API_KEY: Optional[str] = Field(default=None, description="Chave da API LangSmith")
+    LANGSMITH_PROJECT_NAME: str = Field(default="ai-grading-backend", description="Nome do projeto no LangSmith")
+    LANGSMITH_TRACING_ENABLED: bool = Field(default=False, description="Habilitar rastreamento no LangSmith")
+    
+    # === Grading Workflow ===
+    DIVERGENCE_THRESHOLD: float = Field(default=2.0, ge=0.0, description="Limiar de divergência entre avaliadores")
+    RAG_TOP_K: int = Field(default=4, ge=1, le=20, description="Número de documentos recuperados pelo RAG")
     
     # === BCRYPT ===
     BCRYPT_ROUNDS: int = Field(default=12, ge=4, le=31, description="Número de rounds para bcrypt")
