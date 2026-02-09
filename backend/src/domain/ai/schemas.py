@@ -120,6 +120,10 @@ class StudentAnswer(BaseModel):
     Usada como input principal para o workflow de correção.
     """
     
+    id: Optional[UUID] = Field(
+        default=None,
+        description="UUID da resposta (se já existir no banco)"
+    )
     student_id: UUID = Field(
         ...,
         description="UUID do estudante (foreign key)"
