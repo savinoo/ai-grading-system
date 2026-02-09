@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, Body, Query
+from fastapi import APIRouter, Depends, HTTPException, Request, Body, Query, BackgroundTasks
 from fastapi.responses import JSONResponse, Response
 
 from src.domain.http.http_request import HttpRequest
@@ -23,6 +23,8 @@ from src.main.composer.exams_composer import (
     make_update_exam_controller,
     make_delete_exam_controller
 )
+
+from src.controllers.exams.publish_exam_controller import publish_exam_controller
 
 from src.main.dependencies.request_meta import get_caller_meta
 from src.main.dependencies.get_db_session import get_db
@@ -348,5 +350,101 @@ def delete_exam(
         logger.error("Erro ao deletar prova: %s", str(e.detail))
         raise e
     except Exception as e:
+        logger.exception("Erro inesperado ao deletar prova")
+        raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
+
+
+@router.post(
+    "/{exam_uuid}/publish",
+    response_model=HttpResponse,
+    status_code=202,
+    summary="Publicar prova",
+    description=(
+        "Publica uma prova e inicia processamento em background. "
+        "Indexa PDFs e executa correção automática. "
+        "Requer autenticação de professor."
+    )
+)
+async def publish_exam(
+    request: Request,
+    exam_uuid: str,
+    background_tasks: BackgroundTasks,
+    caller: CallerMeta = Depends(get_caller_meta),
+    db=Depends(get_db),
+):
+    """
+    Endpoint para publicar uma prova.
+    
+    Fluxo:
+    1. Valida que prova existe e está em DRAFT
+    2. Atualiza status para PUBLISHED (síncrono)
+    3. Agenda background task para:
+       - Indexar PDFs (attachments com vector_status=DRAFT)
+       - Executar correção automática
+       - Atualizar status final (GRADED ou WARNING)
+    
+    Args:
+        request: Objeto de requisição FastAPI
+        exam_uuid: UUID da prova a ser publicada
+        background_tasks: FastAPI BackgroundTasks
+        caller: Metadados do chamador
+        db: Sessão do banco de dados
+    
+    Returns:
+        JSONResponse: HTTP 202 com detalhes da publicação
+    """
+    headers = request.headers
+    try:
+        auth_header = headers.get("Authorization") or headers.get("authorization") or ""
+        if not auth_header.startswith("Bearer "):
+            raise HTTPException(
+                status_code=401,
+                detail="Credenciais ausentes ou inválidas."
+            )
+        token = auth_header.split(" ", 1)[1].strip()
+        
+        token_infos = auth_jwt_verify(token, db, scope="teacher")
+        logger.debug("Token válido: %s", token_infos)
+    except HTTPException as e:
+        logger.error("Authentication error: %s", str(e), exc_info=True)
+        raise HTTPException(status_code=e.status_code, detail=e.detail) from e
+    
+    # Converter string UUID para UUID object
+    from uuid import UUID
+    try:
+        exam_uuid_obj = UUID(exam_uuid)
+    except ValueError:
+        raise HTTPException(
+            status_code=400,
+            detail="UUID da prova inválido"
+        )
+    
+    # Chamar controller
+    try:
+        http_response: HttpResponse = await publish_exam_controller(
+            exam_uuid=exam_uuid_obj,
+            background_tasks=background_tasks,
+            db=db
+        )
+        
+        response_body = (
+            http_response.body.model_dump(mode='json')
+            if hasattr(http_response.body, 'model_dump')
+            else http_response.body
+        )
+        
+        return JSONResponse(
+            status_code=http_response.status_code,
+            content=response_body
+        )
+    except HTTPException as e:
+        logger.error("Erro ao publicar prova: %s", str(e.detail))
+        raise e
+    except Exception as e:
+        logger.exception("Erro inesperado ao publicar prova")
+        raise HTTPException(
+            status_code=500,
+            detail="Erro interno do servidor"
+        ) from e
         logger.exception("Erro inesperado ao deletar prova")
         raise HTTPException(status_code=500, detail="Erro interno do servidor") from e

@@ -409,7 +409,7 @@ class ExamsRepository(ExamsRepositoryInterface):
         Args:
             db: Sessão do banco de dados
             exam_id: ID da prova
-            status: Novo status (DRAFT, PUBLISHED, ARCHIVED, FINISHED)
+            status: Novo status (DRAFT, PUBLISHED, ARCHIVED, FINISHED, WARNING, GRADED)
             
         Returns:
             Exams: Prova com status atualizado
@@ -418,6 +418,30 @@ class ExamsRepository(ExamsRepositoryInterface):
             return self.update(db, exam_id, status=status)
         except SQLAlchemyError as e:
             self.__logger.error("Erro ao atualizar status da prova: %s", e, exc_info=True)
+            raise
+
+    def update_status_by_uuid(self, db: Session, exam_uuid: UUID, status: str) -> Exams:
+        """
+        Atualiza o status de uma prova por UUID.
+        
+        Args:
+            db: Sessão do banco de dados
+            exam_uuid: UUID da prova
+            status: Novo status (DRAFT, PUBLISHED, ARCHIVED, FINISHED, WARNING, GRADED)
+            
+        Returns:
+            Exams: Prova com status atualizado
+        """
+        try:
+            exam_obj = self.get_by_uuid(db, exam_uuid)
+            exam_obj.status = status
+            exam_obj.updated_at = datetime.utcnow()
+            db.flush()
+            db.refresh(exam_obj)
+            self.__logger.info("Status da prova %s atualizado para %s", exam_uuid, status)
+            return exam_obj
+        except SQLAlchemyError as e:
+            self.__logger.error("Erro ao atualizar status da prova por UUID: %s", e, exc_info=True)
             raise
 
     # ==================== DELETE OPERATIONS ====================

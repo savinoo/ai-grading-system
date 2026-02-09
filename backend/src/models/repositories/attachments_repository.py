@@ -86,7 +86,8 @@ class AttachmentsRepository(AttachmentsRepositoryInterface):
         exam_uuid: UUID,
         *,
         skip: int = 0,
-        limit: int = 100
+        limit: int = 100,
+        vector_status: Optional[str] = None
     ) -> Sequence[Attachments]:
         """
         Busca todos os anexos de uma prova específica.
@@ -96,6 +97,7 @@ class AttachmentsRepository(AttachmentsRepositoryInterface):
             exam_uuid: UUID da prova
             skip: Número de registros a pular
             limit: Número máximo de registros a retornar
+            vector_status: Filtro por status de vetorização (DRAFT, INDEXED, FAILED)
             
         Returns:
             Sequence[Attachments]: Lista de anexos da prova
@@ -104,12 +106,18 @@ class AttachmentsRepository(AttachmentsRepositoryInterface):
             stmt = (
                 select(Attachments)
                 .where(Attachments.exam_uuid == exam_uuid)
-                .order_by(Attachments.created_at.desc())
-                .offset(skip)
-                .limit(limit)
             )
+            
+            if vector_status is not None:
+                stmt = stmt.where(Attachments.vector_status == vector_status)
+            
+            stmt = stmt.order_by(Attachments.created_at.desc()).offset(skip).limit(limit)
+            
             result = db.execute(stmt).scalars().all()
-            self.__logger.debug("Encontrados %d anexos para prova UUID=%s", len(result), exam_uuid)
+            self.__logger.debug(
+                "Encontrados %d anexos para prova UUID=%s (vector_status=%s)",
+                len(result), exam_uuid, vector_status
+            )
             return result
 
         except SQLAlchemyError as e:
