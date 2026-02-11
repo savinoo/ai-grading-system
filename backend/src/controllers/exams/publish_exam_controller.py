@@ -3,136 +3,131 @@ Controller para publicação de provas.
 Endpoint: POST /exams/{exam_uuid}/publish
 """
 
-import logging
+from __future__ import annotations
+
 from uuid import UUID
-from fastapi import Depends, BackgroundTasks, HTTPException, status
-from sqlalchemy.orm import Session
-from sqlalchemy.exc import NoResultFound
+from fastapi import HTTPException
 
+from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
-from src.main.dependencies.get_db_session import get_db as get_db_session
-from src.services.exams.publish_exam_service import PublishExamService
-from src.models.repositories.exams_repository import ExamsRepository
 
-logger = logging.getLogger(__name__)
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
+from src.interfaces.services.exams.publish_exam_service_interface import PublishExamServiceInterface
+
+from src.errors.domain.not_found import NotFoundError
+from src.errors.domain.validate_error import ValidateError
+from src.errors.domain.sql_error import SqlError
+from src.core.logging_config import get_logger
 
 
-async def publish_exam_controller(
-    exam_uuid: UUID,
-    background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db_session)
-) -> HttpResponse:
+class PublishExamController(AsyncControllerInterface):
     """
-    Publica uma prova e inicia processamento em background.
-    
-    Fluxo síncrono (na requisição):
-    - Validar que prova existe e está em DRAFT
-    - Atualizar status para PUBLISHED
-    - Retornar HTTP 202 Accepted
-    
-    Fluxo assíncrono (background task):
-    - Indexar PDFs (attachments com vector_status=DRAFT)
-    - Executar correção automática (grade_exam)
-    - Atualizar status final (GRADED ou WARNING)
-    
-    Args:
-        exam_uuid: UUID da prova a ser publicada
-        background_tasks: FastAPI BackgroundTasks para processamento assíncrono
-        db: Sessão do banco de dados (injetada)
-    
-    Returns:
-        HTTPResponse: 
-            - 202 Accepted: Publicação iniciada
-            - 400 Bad Request: Prova não está em DRAFT
-            - 404 Not Found: Prova não existe
-    
-    Examples:
-        POST /exams/123e4567-e89b-12d3-a456-426614174000/publish
-        → 202 {"message": "Prova publicada...", "status": "PUBLISHED"}
+    Controller que delega ao PublishExamService a publicação de uma prova.
     """
-    logger.info("📥 Requisição de publicação recebida: exam_uuid=%s", exam_uuid)
-    
-    exam_repo = ExamsRepository()
-    
-    # === 1. Validar que prova existe ===
-    try:
-        exam = exam_repo.get_by_uuid(db, exam_uuid)
-    except NoResultFound as exc:
-        logger.warning("❌ Prova não encontrada: %s", exam_uuid)
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Prova {exam_uuid} não encontrada"
-        ) from exc
-    except Exception as e:
-        logger.error("Erro ao buscar prova: %s", e, exc_info=True)
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Erro interno ao buscar prova"
-        ) from e
-    
-    # === 2. Validar que prova está em DRAFT ===
-    if exam.status != 'DRAFT':
-        logger.warning(
-            "❌ Tentativa de publicar prova com status inválido: %s (atual=%s)",
-            exam_uuid, exam.status
+
+    def __init__(self, service: PublishExamServiceInterface) -> None:
+        self.__service = service
+        self.__logger = get_logger(__name__)
+
+    async def handle(
+        self,
+        http_request: HttpRequest
+    ) -> HttpResponse:
+        """
+        Processa a requisição de publicação de prova.
+        
+        Fluxo:
+        1. Validar que prova existe e está em DRAFT
+        2. Atualizar status para PUBLISHED
+        3. Retornar HTTP 202 Accepted
+        4. Background task faz indexação + correção
+        
+        Args:
+            http_request: Requisição HTTP contendo exam_uuid no param e background_tasks em context
+            
+        Returns:
+            HttpResponse: Resposta HTTP 202 com detalhes da publicação
+            
+        Raises:
+            HTTPException: Em caso de erro
+        """
+
+        db = http_request.db
+        caller = http_request.caller
+        background_tasks = http_request.context.get('background_tasks')
+
+        self.__logger.debug(
+            "Handling publish exam request from caller: %s - %s - %s", 
+            caller.caller_app if caller else "unknown",
+            caller.caller_user if caller else "unknown",
+            caller.ip if caller else "unknown"
         )
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=(
-                f"Não é possível publicar prova com status '{exam.status}'. "
-                "Apenas provas em DRAFT podem ser publicadas."
+
+        try:
+            exam_uuid_str = http_request.param.get("exam_uuid")
+            
+            if not exam_uuid_str:
+                raise HTTPException(
+                    status_code=400,
+                    detail={"error": "UUID da prova é obrigatório"}
+                )
+            
+            # Converter string para UUID
+            try:
+                exam_uuid = UUID(exam_uuid_str)
+            except ValueError as exc:
+                raise HTTPException(
+                    status_code=400,
+                    detail={"error": "UUID da prova inválido"}
+                ) from exc
+
+            # Chamar service assincronamente
+            result = await self.__service.publish_exam(
+                db=db,
+                exam_uuid=exam_uuid,
+                background_tasks=background_tasks
             )
-        )
-    
-    # === 3. Atualizar status para PUBLISHED (síncrono) ===
-    try:
-        exam_repo.update_status_by_uuid(db, exam_uuid, 'PUBLISHED')
-        db.commit()
-        
-        logger.info(
-            "✅ Status da prova %s atualizado para PUBLISHED",
-            exam_uuid
-        )
-        
-    except Exception as e:
-        logger.error(
-            "Erro ao atualizar status da prova: %s",
-            e,
-            exc_info=True
-        )
-        db.rollback()
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Erro ao atualizar status da prova"
-        ) from e
-    
-    # === 4. Agendar processamento em background ===
-    publish_service = PublishExamService(db)
-    background_tasks.add_task(
-        publish_service.publish_exam,
-        exam_uuid
-    )
-    
-    logger.info(
-        "🚀 Background task agendada para prova %s. "
-        "Indexação e correção serão executadas assincronamente.",
-        exam_uuid
-    )
-    
-    # === 5. Retornar HTTP 202 Accepted ===
-    return HttpResponse(
-        status_code=status.HTTP_202_ACCEPTED,
-        body={
-            "message": (
-                "Prova publicada com sucesso. "
-                "O processamento de indexação e correção foi iniciado em background."
-            ),
-            "exam_uuid": str(exam_uuid),
-            "status": "PUBLISHED",
-            "next_steps": [
-                "Os PDFs estão sendo indexados no sistema de vetorização",
-                "Após indexação, a correção automática será executada",
-                "Acompanhe o status da prova para verificar conclusão"
-            ]
-        }
-    )
+
+            self.__logger.info("Prova publicada com sucesso: %s", exam_uuid)
+
+            return HttpResponse(
+                status_code=202,
+                body=result
+            )
+
+        except NotFoundError as not_found_err:
+            self.__logger.warning("Prova não encontrada: %s", not_found_err.message)
+            raise HTTPException(
+                status_code=404,
+                detail={
+                    "error": not_found_err.message,
+                    "context": not_found_err.context
+                }
+            ) from not_found_err
+
+        except ValidateError as validation_err:
+            self.__logger.warning("Erro de validação: %s", validation_err.message)
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "error": validation_err.message,
+                    "context": validation_err.context
+                }
+            ) from validation_err
+
+        except SqlError as sql_err:
+            self.__logger.error("Erro de banco de dados ao publicar prova: %s", sql_err, exc_info=True)
+            raise HTTPException(
+                status_code=500,
+                detail={
+                    "error": "Erro de banco de dados ao publicar prova",
+                    "code": sql_err.code
+                }
+            ) from sql_err
+
+        except Exception as e:
+            self.__logger.error("Erro inesperado ao publicar prova: %s", e, exc_info=True)
+            raise HTTPException(
+                status_code=500,
+                detail={"error": "Erro interno do servidor"}
+            ) from e

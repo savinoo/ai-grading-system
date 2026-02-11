@@ -13,6 +13,7 @@ from src.domain.requests.exams.exam_update_request import ExamUpdateRequest
 from src.domain.responses.exams.exam_create_response import ExamCreateResponse
 from src.domain.responses.exams.exam_response import ExamResponse
 from src.domain.responses.exams.exams_list_response import ExamsListResponse
+from src.domain.responses.exams.publish_exam_response import PublishExamResponse
 
 from src.core.logging_config import get_logger
 
@@ -21,10 +22,9 @@ from src.main.composer.exams_composer import (
     make_get_exams_by_teacher_controller,
     make_get_exam_by_uuid_controller,
     make_update_exam_controller,
-    make_delete_exam_controller
+    make_delete_exam_controller,
+    make_publish_exam_controller
 )
-
-from src.controllers.exams.publish_exam_controller import publish_exam_controller
 
 from src.main.dependencies.request_meta import get_caller_meta
 from src.main.dependencies.get_db_session import get_db
@@ -356,7 +356,7 @@ def delete_exam(
 
 @router.post(
     "/{exam_uuid}/publish",
-    response_model=HttpResponse,
+    response_model=PublishExamResponse,
     status_code=202,
     summary="Publicar prova",
     description=(
@@ -409,23 +409,19 @@ async def publish_exam(
         logger.error("Authentication error: %s", str(e), exc_info=True)
         raise HTTPException(status_code=e.status_code, detail=e.detail) from e
     
-    # Converter string UUID para UUID object
-    from uuid import UUID
+    http_request = HttpRequest(
+        param={"exam_uuid": exam_uuid},
+        db=db,
+        caller=caller,
+        headers=request.headers,
+        token_infos=token_infos,
+        context={"background_tasks": background_tasks}
+    )
+
+    controller = make_publish_exam_controller()
+
     try:
-        exam_uuid_obj = UUID(exam_uuid)
-    except ValueError:
-        raise HTTPException(
-            status_code=400,
-            detail="UUID da prova inválido"
-        )
-    
-    # Chamar controller
-    try:
-        http_response: HttpResponse = await publish_exam_controller(
-            exam_uuid=exam_uuid_obj,
-            background_tasks=background_tasks,
-            db=db
-        )
+        http_response: HttpResponse = await controller.handle(http_request)
         
         response_body = (
             http_response.body.model_dump(mode='json')
@@ -446,5 +442,3 @@ async def publish_exam(
             status_code=500,
             detail="Erro interno do servidor"
         ) from e
-        logger.exception("Erro inesperado ao deletar prova")
-        raise HTTPException(status_code=500, detail="Erro interno do servidor") from e

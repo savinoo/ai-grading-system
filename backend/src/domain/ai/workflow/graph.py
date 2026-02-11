@@ -1,12 +1,9 @@
-"""
-Definição do grafo LangGraph para correção automática.
-Orquestra fluxo: RAG → C1+C2 (paralelo) → Divergence → Árbitro → Finalização.
-"""
+from __future__ import annotations
 
-import logging
 from langgraph.graph import StateGraph, END
-from .state import GradingState
-from .nodes import (
+
+from src.domain.ai.workflow.state import GradingState
+from src.domain.ai.workflow.nodes import (
     retrieve_context_node,
     examiner_1_node,
     examiner_2_node,
@@ -15,7 +12,9 @@ from .nodes import (
     finalize_node
 )
 
-logger = logging.getLogger(__name__)
+from src.core.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 def should_call_arbiter(state: GradingState) -> str:

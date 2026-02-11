@@ -1,22 +1,23 @@
-"""
-Agente Corretor (Examiner) com DSPy para correção estruturada de respostas.
-"""
+from __future__ import annotations
 
-import logging
 import asyncio
 from typing import List
+
 import dspy
 from langsmith import traceable
 from tenacity import retry, stop_after_attempt, wait_exponential
 
+from src.interfaces.services.agents.examiner_agent_interface import ExaminerAgentInterface
+
 from src.domain.ai.schemas import ExamQuestion, StudentAnswer
 from src.domain.ai.rag_schemas import RetrievedContext
 from src.domain.ai.agent_schemas import AgentCorrection, AgentID, CriterionScore
-from src.services.agents.base_agent import BaseAgent
-from src.services.agents.prompts import format_rubric_text, format_rag_context
-from src.core.settings import settings
+from src.domain.ai.prompts import format_rubric_text, format_rag_context
 
-logger = logging.getLogger(__name__)
+from src.errors.domain.sql_error import SqlError
+
+from src.core.settings import settings
+from src.core.logging_config import get_logger
 
 
 # =============================================================================
@@ -98,20 +99,18 @@ class DSPyExaminerModule(dspy.Module):
 # Examiner Agent
 # =============================================================================
 
-class ExaminerAgent(BaseAgent):
+class ExaminerAgent(ExaminerAgentInterface):
     """
-    Agente Corretor usando DSPy para avaliação estruturada.
+    Serviço de agente corretor usando DSPy para avaliação estruturada.
     
     Pode ser instanciado 2 vezes (CORRETOR_1 e CORRETOR_2) para avaliações
     independentes da mesma resposta.
-    
-    Attributes:
-        dspy_module: Módulo DSPy configurado para correção
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Inicializa o módulo DSPy de correção."""
-        self.dspy_module = DSPyExaminerModule()
+        self.__dspy_module = DSPyExaminerModule()
+        self.__logger = get_logger(__name__)
     
     @traceable(run_type="chain", name="Examiner Agent Evaluation")
     @retry(
@@ -136,12 +135,12 @@ class ExaminerAgent(BaseAgent):
             rag_contexts: Contextos recuperados via RAG para fundamentar a correção
         
         Returns:
-            AgentCorrection estruturado com notas, raciocínio e feedback
+            AgentCorrection: Resultado estruturado da avaliação
         
         Raises:
-            Exception: Se houver falha na comunicação com o LLM após retries
+            SqlError: Se houver falha na comunicação com o LLM após retries
         """
-        logger.info(
+        self.__logger.info(
             "[%s] Iniciando avaliação da questão %s para resposta do aluno %s",
             agent_id, question.id, student_answer.student_id
         )
@@ -155,7 +154,7 @@ class ExaminerAgent(BaseAgent):
         
         def run_dspy_prediction():
             """Closure para executar DSPy de forma síncrona."""
-            return self.dspy_module(
+            return self.__dspy_module(
                 question_statement=question.statement,
                 rubric_formatted=rubric_text,
                 rag_context_formatted=rag_text,
@@ -166,7 +165,7 @@ class ExaminerAgent(BaseAgent):
             # Executa DSPy em thread separada
             prediction = await loop.run_in_executor(None, run_dspy_prediction)
             
-            logger.debug("[%s] DSPy prediction type: %s", agent_id, type(prediction))
+            self.__logger.debug("[%s] DSPy prediction type: %s", agent_id, type(prediction))
             
             # Extrair dados da predição DSPy
             raw_reasoning = prediction.reasoning_chain
@@ -180,7 +179,7 @@ class ExaminerAgent(BaseAgent):
                     criteria_scores.append(CriterionScore(**item))
                 else:
                     # Fallback: tentar extrair campos manualmente
-                    logger.warning("[%s] Formato inesperado em criteria_scores: %s", agent_id, item)
+                    self.__logger.warning("[%s] Formato inesperado em criteria_scores: %s", agent_id, item)
                     criteria_scores.append(
                         CriterionScore(
                             criterion_name=str(getattr(item, 'criterion_name', 'Unknown')),
@@ -197,18 +196,26 @@ class ExaminerAgent(BaseAgent):
                 total_score=raw_total_score  # Validadores do Pydantic vão recalcular se necessário
             )
             
-            logger.info(
+            self.__logger.info(
                 "[%s] Avaliação concluída. Nota atribuída: %.2f",
                 agent_id, correction.total_score
             )
-            logger.debug("[%s] Critérios avaliados: %d", agent_id, len(correction.criteria_scores))
+            self.__logger.debug("[%s] Critérios avaliados: %d", agent_id, len(correction.criteria_scores))
             
             return correction
             
         except Exception as e:
-            logger.error(
+            self.__logger.error(
                 "[%s] Erro durante avaliação da questão %s: %s",
                 agent_id, question.id, e,
                 exc_info=True
             )
-            raise
+            raise SqlError(
+                message="Erro ao avaliar resposta do aluno",
+                context={
+                    "agent_id": str(agent_id),
+                    "question_id": str(question.id),
+                    "student_id": str(student_answer.student_id)
+                },
+                cause=e
+            ) from e

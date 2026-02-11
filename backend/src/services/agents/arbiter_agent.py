@@ -1,22 +1,23 @@
-"""
-Agente Árbitro (Arbiter) com DSPy para desempate de avaliações divergentes.
-"""
+from __future__ import annotations
 
-import logging
 import asyncio
 from typing import List
+
 import dspy
 from langsmith import traceable
 from tenacity import retry, stop_after_attempt, wait_exponential
 
+from src.interfaces.services.agents.arbiter_agent_interface import ArbiterAgentInterface
+
 from src.domain.ai.schemas import ExamQuestion, StudentAnswer
 from src.domain.ai.rag_schemas import RetrievedContext
 from src.domain.ai.agent_schemas import AgentCorrection, AgentID, CriterionScore
-from src.services.agents.base_agent import BaseAgent
-from src.services.agents.prompts import format_rubric_text, format_rag_context
-from src.core.settings import settings
+from src.domain.ai.prompts import format_rubric_text, format_rag_context
 
-logger = logging.getLogger(__name__)
+from src.errors.domain.sql_error import SqlError
+
+from src.core.settings import settings
+from src.core.logging_config import get_logger
 
 
 # =============================================================================
@@ -97,20 +98,18 @@ class DSPyArbiterModule(dspy.Module):
 # Arbiter Agent
 # =============================================================================
 
-class ArbiterAgent(BaseAgent):
+class ArbiterAgent(ArbiterAgentInterface):
     """
-    Agente Árbitro usando DSPy para desempate de avaliações divergentes.
+    Serviço de agente árbitro usando DSPy para desempate de avaliações divergentes.
     
     É chamado quando a diferença entre as notas de CORRETOR_1 e CORRETOR_2
     excede o limiar de divergência configurado (DIVERGENCE_THRESHOLD).
-    
-    Attributes:
-        dspy_module: Módulo DSPy configurado para arbitragem
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Inicializa o módulo DSPy de arbitragem."""
-        self.dspy_module = DSPyArbiterModule()
+        self.__dspy_module = DSPyArbiterModule()
+        self.__logger = get_logger(__name__)
     
     @traceable(run_type="chain", name="Arbiter Agent Decision")
     @retry(
@@ -137,12 +136,12 @@ class ArbiterAgent(BaseAgent):
             correction_2: Avaliação do CORRETOR_2
         
         Returns:
-            AgentCorrection estruturado com a decisão final do árbitro
+            AgentCorrection: Resultado estruturado da arbitração
         
         Raises:
-            Exception: Se houver falha na comunicação com o LLM após retries
+            SqlError: Se houver falha na comunicação com o LLM após retries
         """
-        logger.info(
+        self.__logger.info(
             "[ARBITER] Iniciando arbitragem para questão %s (divergência: %.2f pontos)",
             question.id, abs(correction_1.total_score - correction_2.total_score)
         )
@@ -183,7 +182,7 @@ class ArbiterAgent(BaseAgent):
         
         def run_dspy_arbitration():
             """Closure para executar DSPy de forma síncrona."""
-            return self.dspy_module(
+            return self.__dspy_module(
                 question_statement=question.statement,
                 rubric_formatted=rubric_text,
                 rag_context_formatted=rag_text,
@@ -197,7 +196,7 @@ class ArbiterAgent(BaseAgent):
             # Executa DSPy em thread separada
             prediction = await loop.run_in_executor(None, run_dspy_arbitration)
             
-            logger.debug("[ARBITER] DSPy prediction type: %s", type(prediction))
+            self.__logger.debug("[ARBITER] DSPy prediction type: %s", type(prediction))
             
             # Extrair dados da predição DSPy
             raw_reasoning = prediction.reasoning_chain
@@ -211,7 +210,7 @@ class ArbiterAgent(BaseAgent):
                     criteria_scores.append(CriterionScore(**item))
                 else:
                     # Fallback: tentar extrair campos manualmente
-                    logger.warning("[ARBITER] Formato inesperado em criteria_scores: %s", item)
+                    self.__logger.warning("[ARBITER] Formato inesperado em criteria_scores: %s", item)
                     criteria_scores.append(
                         CriterionScore(
                             criterion_name=str(getattr(item, 'criterion_name', 'Unknown')),
@@ -228,11 +227,11 @@ class ArbiterAgent(BaseAgent):
                 total_score=raw_total_score
             )
             
-            logger.info(
+            self.__logger.info(
                 "[ARBITER] Arbitragem concluída. Nota final: %.2f",
                 correction.total_score
             )
-            logger.debug(
+            self.__logger.debug(
                 "[ARBITER] Comparação - C1: %.2f | C2: %.2f | Árbitro: %.2f",
                 correction_1.total_score, correction_2.total_score, correction.total_score
             )
@@ -240,9 +239,17 @@ class ArbiterAgent(BaseAgent):
             return correction
             
         except Exception as e:
-            logger.error(
+            self.__logger.error(
                 "[ARBITER] Erro durante arbitragem da questão %s: %s",
                 question.id, e,
                 exc_info=True
             )
-            raise
+            raise SqlError(
+                message="Erro ao arbitrar avaliações divergentes",
+                context={
+                    "question_id": str(question.id),
+                    "student_id": str(student_answer.student_id),
+                    "divergence": abs(correction_1.total_score - correction_2.total_score)
+                },
+                cause=e
+            ) from e

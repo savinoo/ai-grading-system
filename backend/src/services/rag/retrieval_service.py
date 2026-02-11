@@ -1,33 +1,33 @@
-"""
-Serviço de Retrieval - Busca semântica com filtros de metadados.
-Responsável por recuperar contexto relevante para avaliação de respostas.
-"""
+from __future__ import annotations
 
-import logging
 from typing import List, Optional
 from uuid import UUID
 
+from src.interfaces.services.rag.retrieval_service_interface import RetrievalServiceInterface
+
 from src.core.vector_db_handler import get_vector_store
-from src.domain.ai.rag_schemas import RetrievedContext
+from src.core.logging_config import get_logger
 from src.core.settings import settings
 
-logger = logging.getLogger(__name__)
+from src.domain.ai.rag_schemas import RetrievedContext
+
+from src.errors.domain.sql_error import SqlError
 
 
-class RetrievalService:
+class RetrievalService(RetrievalServiceInterface):
     """
-    Busca semântica com filtros rígidos de metadados.
+    Serviço de busca semântica com filtros rígidos de metadados.
     
     CRÍTICO: SEMPRE filtra por exam_uuid para garantir isolamento
     entre provas (RAG de uma prova NÃO retorna material de outra).
     """
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Inicializa o serviço de retrieval."""
-        self.vector_store = get_vector_store()
-        logger.debug("RetrievalService inicializado")
+        self.__vector_store = get_vector_store()
+        self.__logger = get_logger(__name__)
     
-    def search_context(
+    async def search_context(
         self,
         query: str,
         exam_uuid: UUID,
@@ -70,7 +70,7 @@ class RetrievalService:
         """
         k = k or settings.RAG_TOP_K
         
-        logger.info(
+        self.__logger.info(
             "RAG Query",
             extra={
                 "exam_uuid": str(exam_uuid),
@@ -83,7 +83,7 @@ class RetrievalService:
         
         # Validação de entrada
         if not query.strip():
-            logger.warning("Query vazia recebida")
+            self.__logger.warning("Query vazia recebida")
             return []
         
         # Filtros de metadados (ChromaDB where clause)
@@ -96,13 +96,13 @@ class RetrievalService:
         
         try:
             # Busca com score (distância L2)
-            results_with_score = self.vector_store.similarity_search_with_score(
+            results_with_score = self.__vector_store.similarity_search_with_score(
                 query=query,
                 k=k,
                 filter=metadata_filter
             )
             
-            logger.debug(
+            self.__logger.debug(
                 "ChromaDB retornou %d resultados antes de filtro de score",
                 len(results_with_score)
             )
@@ -116,7 +116,7 @@ class RetrievalService:
                 
                 # Filtrar por score mínimo
                 if score < min_relevance:
-                    logger.debug(
+                    self.__logger.debug(
                         "Chunk filtrado por score baixo: %.4f < %.4f",
                         score,
                         min_relevance
@@ -136,7 +136,7 @@ class RetrievalService:
             # Ordenar por relevância (descendente)
             contexts.sort(key=lambda x: x.relevance_score, reverse=True)
             
-            logger.info(
+            self.__logger.info(
                 "RAG retornou contextos",
                 extra={
                     "exam_uuid": str(exam_uuid),
@@ -148,14 +148,21 @@ class RetrievalService:
             return contexts
             
         except Exception as e:
-            logger.error(
+            self.__logger.error(
                 "Erro ao buscar contexto RAG: %s",
                 str(e),
                 exc_info=True
             )
-            return []
+            raise SqlError(
+                message="Erro ao buscar contexto RAG",
+                context={
+                    "exam_uuid": str(exam_uuid),
+                    "discipline": discipline
+                },
+                cause=e
+            ) from e
     
-    def search_by_similarity(
+    async def _search_by_similarity(
         self,
         reference_text: str,
         exam_uuid: UUID,
@@ -175,20 +182,20 @@ class RetrievalService:
         Returns:
             Lista de contextos similares
         """
-        logger.debug(
+        self.__logger.debug(
             "Busca por similaridade: exam=%s, k=%d",
             exam_uuid,
             k
         )
         
-        return self.search_context(
+        return await self.search_context(
             query=reference_text,
             exam_uuid=exam_uuid,
             discipline=discipline,
             k=k
         )
     
-    def get_context_for_question(
+    async def _get_context_for_question(
         self,
         question_text: str,
         student_answer: str,
@@ -217,12 +224,12 @@ class RetrievalService:
         # Combinar questão + resposta para query mais rica
         combined_query = f"{question_text}\n\n{student_answer}"
         
-        logger.debug(
+        self.__logger.debug(
             "Busca contexto para questão+resposta: %d chars",
             len(combined_query)
         )
         
-        return self.search_context(
+        return await self.search_context(
             query=combined_query,
             exam_uuid=exam_uuid,
             discipline=discipline,
@@ -230,7 +237,7 @@ class RetrievalService:
             k=k
         )
     
-    def validate_exam_has_vectors(self, exam_uuid: UUID) -> bool:
+    async def _validate_exam_has_vectors(self, exam_uuid: UUID) -> bool:
         """
         Verifica se uma prova tem vetores indexados.
         Útil antes de tentar fazer retrieval.
@@ -243,7 +250,7 @@ class RetrievalService:
         """
         try:
             # Busca com k=1 apenas para testar existência
-            results = self.vector_store.similarity_search(
+            results = self.__vector_store.similarity_search(
                 query="test",  # Query dummy
                 k=1,
                 filter={"exam_uuid": {"$eq": str(exam_uuid)}}
@@ -251,7 +258,7 @@ class RetrievalService:
             
             has_vectors = len(results) > 0
             
-            logger.debug(
+            self.__logger.debug(
                 "Prova %s %s vetores indexados",
                 exam_uuid,
                 "TEM" if has_vectors else "NÃO TEM"
@@ -260,14 +267,14 @@ class RetrievalService:
             return has_vectors
             
         except Exception as e:
-            logger.error(
+            self.__logger.error(
                 "Erro ao validar vetores da prova %s: %s",
                 exam_uuid,
                 str(e)
             )
             return False
     
-    def get_all_sources_for_exam(self, exam_uuid: UUID) -> List[str]:
+    async def _get_all_sources_for_exam(self, exam_uuid: UUID) -> List[str]:
         """
         Retorna lista de documentos fonte de uma prova.
         Útil para debugging e auditoria.
@@ -280,7 +287,7 @@ class RetrievalService:
         """
         try:
             # Buscar alguns chunks para extrair metadados
-            results = self.vector_store.similarity_search(
+            results = self.__vector_store.similarity_search(
                 query="",
                 k=100,  # Suficiente para cobrir múltiplos documentos
                 filter={"exam_uuid": {"$eq": str(exam_uuid)}}
@@ -297,7 +304,7 @@ class RetrievalService:
             
             sources_list = sorted(list(sources))
             
-            logger.debug(
+            self.__logger.debug(
                 "Prova %s tem %d documentos fonte: %s",
                 exam_uuid,
                 len(sources_list),
@@ -307,7 +314,7 @@ class RetrievalService:
             return sources_list
             
         except Exception as e:
-            logger.error(
+            self.__logger.error(
                 "Erro ao buscar sources da prova %s: %s",
                 exam_uuid,
                 str(e)

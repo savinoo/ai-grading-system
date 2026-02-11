@@ -1,19 +1,19 @@
-"""
-Serviço de Chunking - Processamento de PDFs em chunks estruturados.
-Responsável por carregar e dividir documentos PDF em partes menores.
-"""
+from __future__ import annotations
 
-import logging
 from typing import List
 from pathlib import Path
+
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
-logger = logging.getLogger(__name__)
+from src.interfaces.services.rag.chunking_service_interface import ChunkingServiceInterface
 
+from src.errors.domain.validate_error import ValidateError
 
-class ChunkingService:
+from src.core.logging_config import get_logger
+
+class ChunkingService(ChunkingServiceInterface):
     """
     Processa PDFs em chunks estruturados para indexação vetorial.
     
@@ -29,10 +29,9 @@ class ChunkingService:
             chunk_size: Tamanho máximo do chunk em caracteres (padrão: 4000)
             chunk_overlap: Overlap entre chunks para manter contexto (padrão: 200)
         """
-        self.chunk_size = chunk_size
-        self.chunk_overlap = chunk_overlap
+        self.__logger = get_logger(__name__)
         
-        self.text_splitter = RecursiveCharacterTextSplitter(
+        self.__text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,
             chunk_overlap=chunk_overlap,
             separators=["\n\n", "\n", ".", "!", "?", ";", " ", ""],
@@ -40,7 +39,7 @@ class ChunkingService:
             is_separator_regex=False
         )
         
-        logger.info(
+        self.__logger.info(
             "ChunkingService inicializado",
             extra={
                 "chunk_size": chunk_size,
@@ -48,7 +47,7 @@ class ChunkingService:
             }
         )
     
-    def process_pdf(self, file_path: str) -> List[Document]:
+    async def process_pdf(self, file_path: str) -> List[Document]:
         """
         Carrega PDF e retorna chunks (sem metadados específicos ainda).
         
@@ -62,12 +61,11 @@ class ChunkingService:
             Lista de Document (LangChain) com page_number e source
             
         Raises:
-            FileNotFoundError: Se o arquivo não existir
-            ValueError: Se o arquivo não for PDF válido
+            ValidateError: Se o arquivo não existir ou não for PDF válido
             
         Examples:
             >>> chunking = ChunkingService()
-            >>> chunks = chunking.process_pdf("/data/uploads/exam_material.pdf")
+            >>> chunks = await chunking.process_pdf("/data/uploads/exam_material.pdf")
             >>> len(chunks)
             15
             >>> chunks[0].metadata
@@ -76,14 +74,20 @@ class ChunkingService:
         # Validar arquivo existe
         path = Path(file_path)
         if not path.exists():
-            logger.error("Arquivo não encontrado: %s", file_path)
-            raise FileNotFoundError(f"PDF não encontrado: {file_path}")
+            self.__logger.error("Arquivo não encontrado: %s", file_path)
+            raise ValidateError(
+                message="PDF não encontrado",
+                context={"file_path": file_path}
+            )
         
         if not path.suffix.lower() == '.pdf':
-            logger.error("Arquivo não é PDF: %s", file_path)
-            raise ValueError(f"Arquivo deve ser PDF: {file_path}")
+            self.__logger.error("Arquivo não é PDF: %s", file_path)
+            raise ValidateError(
+                message="Arquivo deve ser PDF",
+                context={"file_path": file_path, "extension": path.suffix}
+            )
         
-        logger.info("Processando PDF: %s", file_path)
+        self.__logger.info("Processando PDF: %s", file_path)
         
         try:
             # Carregar PDF
@@ -91,18 +95,18 @@ class ChunkingService:
             raw_docs = loader.load()
             
             if not raw_docs:
-                logger.warning("PDF vazio ou não legível: %s", file_path)
+                self.__logger.warning("PDF vazio ou não legível: %s", file_path)
                 return []
             
-            logger.debug(
+            self.__logger.debug(
                 "PDF carregado: %d páginas",
                 len(raw_docs)
             )
             
             # Dividir em chunks
-            chunks = self.text_splitter.split_documents(raw_docs)
+            chunks = self.__text_splitter.split_documents(raw_docs)
             
-            logger.info(
+            self.__logger.info(
                 "PDF dividido em chunks",
                 extra={
                     "file": file_path,
@@ -115,7 +119,7 @@ class ChunkingService:
             return chunks
             
         except Exception as e:
-            logger.error(
+            self.__logger.error(
                 "Erro ao processar PDF: %s - %s",
                 file_path,
                 str(e),
@@ -123,42 +127,7 @@ class ChunkingService:
             )
             raise
     
-    def process_multiple_pdfs(self, file_paths: List[str]) -> List[Document]:
-        """
-        Processa múltiplos PDFs em batch.
-        
-        Args:
-            file_paths: Lista de caminhos de PDFs
-            
-        Returns:
-            Lista consolidada de chunks de todos os PDFs
-            
-        Note:
-            Erros em PDFs individuais são logados mas não interrompem o batch.
-        """
-        all_chunks = []
-        
-        for file_path in file_paths:
-            try:
-                chunks = self.process_pdf(file_path)
-                all_chunks.extend(chunks)
-            except Exception as e:
-                logger.warning(
-                    "Falha ao processar PDF %s: %s. Continuando batch...",
-                    file_path,
-                    str(e)
-                )
-                continue
-        
-        logger.info(
-            "Batch processing concluído: %d PDFs → %d chunks",
-            len(file_paths),
-            len(all_chunks)
-        )
-        
-        return all_chunks
-    
-    def get_chunk_stats(self, chunks: List[Document]) -> dict:
+    def _get_chunk_stats(self, chunks: List[Document]) -> dict:
         """
         Retorna estatísticas sobre os chunks gerados.
         Útil para debugging e otimização.

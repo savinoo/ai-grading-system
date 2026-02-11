@@ -7,7 +7,10 @@ Aplica técnicas de Engenharia de Prompt:
 3. Groundedness (Fidelidade ao Contexto RAG)
 """
 
+from __future__ import annotations
+
 from typing import List
+
 from src.domain.ai.schemas import EvaluationCriterion
 from src.domain.ai.rag_schemas import RetrievedContext
 

@@ -1,43 +1,41 @@
-"""
-Serviço de Indexação - Indexa chunks no ChromaDB com metadados enriquecidos.
-Responsável por adicionar contexto de prova/disciplina e gerenciar status.
-"""
+from __future__ import annotations
 
-import logging
 from typing import List
 from uuid import UUID
+
 from langchain_core.documents import Document
 from sqlalchemy.orm import Session
 
 from src.core.vector_db_handler import get_vector_store
-from src.models.repositories.attachments_repository import AttachmentsRepository
+from src.core.logging_config import get_logger
 
-logger = logging.getLogger(__name__)
+from src.interfaces.services.rag.indexing_service_interface import IndexingServiceInterface
+from src.interfaces.repositories.attachments_repository_interfaces import AttachmentsRepositoryInterface
 
+from src.errors.domain.sql_error import SqlError
 
-class IndexingService:
+class IndexingService(IndexingServiceInterface):
     """
-    Indexa chunks no ChromaDB com metadados da prova.
+    Serviço para indexação de chunks no ChromaDB com metadados da prova.
     
     CRÍTICO: Adiciona exam_uuid a TODOS os chunks para garantir
     isolamento entre provas no retrieval.
     """
     
-    def __init__(self, db: Session):
+    def __init__(self, attachment_repository: AttachmentsRepositoryInterface) -> None:
         """
         Inicializa o serviço de indexação.
         
         Args:
-            db: Sessão do banco de dados para atualizar status
+            attachment_repository: Repositório de anexos para atualizar status
         """
-        self.db = db
-        self.vector_store = get_vector_store()
-        self.attachment_repo = AttachmentsRepository()
-        
-        logger.debug("IndexingService inicializado")
+        self.__attachment_repository = attachment_repository
+        self.__vector_store = get_vector_store()
+        self.__logger = get_logger(__name__)
     
-    def index_exam_material(
+    async def index_exam_material(
         self,
+        db: Session,
         chunks: List[Document],
         exam_uuid: UUID,
         attachment_uuid: UUID,
@@ -53,6 +51,7 @@ class IndexingService:
         3. Atualiza status do attachment no DB
         
         Args:
+            db: Sessão do banco de dados
             chunks: Lista de chunks do PDF (do ChunkingService)
             exam_uuid: UUID da prova (FILTRO PRINCIPAL RAG)
             attachment_uuid: UUID do anexo (para atualizar status)
@@ -63,8 +62,9 @@ class IndexingService:
             True se sucesso, False se erro
             
         Examples:
-            >>> indexing = IndexingService(db)
+            >>> indexing = IndexingService(attachment_repo)
             >>> success = indexing.index_exam_material(
+            ...     db=db,
             ...     chunks=chunks,
             ...     exam_uuid=UUID("..."),
             ...     attachment_uuid=UUID("..."),
@@ -73,11 +73,11 @@ class IndexingService:
             ... )
         """
         if not chunks:
-            logger.warning("Lista de chunks vazia. Nada a indexar.")
+            self.__logger.warning("Lista de chunks vazia. Nada a indexar.")
             return False
         
         try:
-            logger.info(
+            self.__logger.info(
                 "Indexando material da prova",
                 extra={
                     "exam_uuid": str(exam_uuid),
@@ -98,13 +98,13 @@ class IndexingService:
                     "chunk_index": idx                  # Para ordenação
                 })
             
-            logger.debug("Metadados enriquecidos em %d chunks", len(chunks))
+            self.__logger.debug("Metadados enriquecidos em %d chunks", len(chunks))
             
             # Indexar no ChromaDB
             # add_documents retorna lista de IDs dos documentos adicionados
-            vector_ids = self.vector_store.add_documents(chunks)
+            vector_ids = self.__vector_store.add_documents(chunks)
             
-            logger.info(
+            self.__logger.info(
                 "Chunks indexados no ChromaDB",
                 extra={
                     "vector_ids_count": len(vector_ids),
@@ -113,15 +113,15 @@ class IndexingService:
             )
             
             # Atualizar status no DB
-            self.attachment_repo.update_vector_status(
-                db=self.db,
+            self.__attachment_repository.update_vector_status(
+                db=db,
                 uuid=attachment_uuid,
                 vector_status="SUCCESS"
             )
             
-            self.db.commit()  # Commit da transação
+            db.commit()  # Commit da transação
             
-            logger.info(
+            self.__logger.info(
                 "Indexação concluída com sucesso",
                 extra={
                     "exam_uuid": str(exam_uuid),
@@ -132,41 +132,49 @@ class IndexingService:
             return True
             
         except Exception as e:
-            logger.error(
-                "Erro ao indexar material da prova %s: %s",
-                exam_uuid,
+            self.__logger.error(
+                "Erro ao indexar material da prova: %s",
                 str(e),
                 exc_info=True
             )
             
             # Rollback da transação
-            self.db.rollback()
+            db.rollback()
             
             # Marcar como falha no DB
             try:
-                self.attachment_repo.update_vector_status(
-                    db=self.db,
+                self.__attachment_repository.update_vector_status(
+                    db=db,
                     uuid=attachment_uuid,
                     vector_status="FAILED"
                 )
-                self.db.commit()
+                db.commit()
             except Exception as update_error:
-                logger.error(
+                self.__logger.error(
                     "Erro ao atualizar status de falha: %s",
                     str(update_error)
                 )
-                self.db.rollback()
+                db.rollback()
             
-            return False
+            raise SqlError(
+                message="Erro ao indexar material da prova",
+                context={
+                    "exam_uuid": str(exam_uuid),
+                    "attachment_uuid": str(attachment_uuid)
+                },
+                cause=e
+            ) from e
     
-    def index_multiple_attachments(
+    async def _index_multiple_attachments(
         self,
+        db: Session,
         attachments_data: List[dict]
     ) -> dict:
         """
         Indexa múltiplos anexos em batch.
         
         Args:
+            db: Sessão do banco de dados
             attachments_data: Lista de dicts com:
                 - chunks: List[Document]
                 - exam_uuid: UUID
@@ -189,21 +197,21 @@ class IndexingService:
         }
         
         for data in attachments_data:
-            success = self.index_exam_material(
-                chunks=data["chunks"],
-                exam_uuid=data["exam_uuid"],
-                attachment_uuid=data["attachment_uuid"],
-                discipline=data["discipline"],
-                topic=data["topic"]
-            )
-            
-            if success:
+            try:
+                await self.index_exam_material(
+                    db=db,
+                    chunks=data["chunks"],
+                    exam_uuid=data["exam_uuid"],
+                    attachment_uuid=data["attachment_uuid"],
+                    discipline=data["discipline"],
+                    topic=data["topic"]
+                )
                 results["success"] += 1
-            else:
+            except Exception:
                 results["failed"] += 1
                 results["failed_uuids"].append(data["attachment_uuid"])
         
-        logger.info(
+        self.__logger.info(
             "Batch indexing concluído: %d/%d sucesso",
             results["success"],
             results["total"]
@@ -211,7 +219,7 @@ class IndexingService:
         
         return results
     
-    def delete_exam_vectors(self, exam_uuid: UUID) -> bool:
+    async def _delete_exam_vectors(self, exam_uuid: UUID) -> bool:
         """
         Remove todos os vetores associados a uma prova.
         Útil ao deletar/reprocessar uma prova.
@@ -223,18 +231,18 @@ class IndexingService:
             True se sucesso, False se erro
         """
         try:
-            logger.info("Removendo vetores da prova %s", exam_uuid)
+            self.__logger.info("Removendo vetores da prova %s", exam_uuid)
             
             # ChromaDB delete com filtro
-            self.vector_store.delete(
+            self.__vector_store.delete(
                 filter={"exam_uuid": {"$eq": str(exam_uuid)}}
             )
             
-            logger.info("Vetores da prova %s removidos", exam_uuid)
+            self.__logger.info("Vetores da prova %s removidos", exam_uuid)
             return True
             
         except Exception as e:
-            logger.error(
+            self.__logger.error(
                 "Erro ao remover vetores da prova %s: %s",
                 exam_uuid,
                 str(e),

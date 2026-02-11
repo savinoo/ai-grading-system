@@ -1,18 +1,16 @@
-"""
-Nodes do LangGraph de correção.
-Cada função recebe GradingState, executa uma tarefa e retorna state atualizado.
-"""
+from __future__ import annotations
 
-import logging
 from src.services.rag.retrieval_service import RetrievalService
 from src.services.agents.examiner_agent import ExaminerAgent
 from src.services.agents.arbiter_agent import ArbiterAgent
-from src.services.grading.divergence_checker import DivergenceChecker
-from src.services.grading.consensus_builder import ConsensusBuilder
+from src.domain.ai.utils.divergence_checker import DivergenceChecker
+from src.domain.ai.utils.consensus_builder import ConsensusBuilder
 from src.domain.ai.agent_schemas import AgentID
-from .state import GradingState
+from src.domain.ai.workflow.state import GradingState
 
-logger = logging.getLogger(__name__)
+from src.core.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 # =============================================================================
@@ -31,7 +29,7 @@ async def retrieve_context_node(state: GradingState) -> dict:
     )
     
     rag_service = RetrievalService()
-    contexts = rag_service.search_context(
+    contexts = await rag_service.search_context(
         query=state['question'].statement,
         exam_uuid=state['exam_uuid'],
         discipline=state['question'].metadata.discipline,

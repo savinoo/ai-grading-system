@@ -1,10 +1,8 @@
-"""
-Estado compartilhado do LangGraph de correção.
-TypedDict que flui entre todos os nodes do workflow.
-"""
+from __future__ import annotations
 
 from typing import TypedDict, List, Optional
 from uuid import UUID
+
 from src.domain.ai.schemas import ExamQuestion, StudentAnswer
 from src.domain.ai.rag_schemas import RetrievedContext
 from src.domain.ai.agent_schemas import AgentCorrection

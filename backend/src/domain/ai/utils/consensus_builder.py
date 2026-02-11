@@ -1,13 +1,10 @@
-"""
-Algoritmo de consenso para cálculo da nota final.
-Combina múltiplas avaliações (2 ou 3) em uma única nota justa.
-"""
+from __future__ import annotations
 
-import logging
 from typing import List
+
 from src.domain.ai.agent_schemas import AgentCorrection
 
-logger = logging.getLogger(__name__)
+from src.core.logging_config import get_logger
 
 
 class ConsensusBuilder:
@@ -18,6 +15,10 @@ class ConsensusBuilder:
     - 2 notas: média aritmética simples
     - 3 notas: média dos 2 corretores mais próximos (reduz outliers)
     """
+    
+    def __init__(self) -> None:
+        """Inicializa o builder de consenso."""
+        self.__logger = get_logger(__name__)
     
     def calculate_final_score(self, corrections: List[AgentCorrection]) -> float:
         """
@@ -40,7 +41,7 @@ class ConsensusBuilder:
         
         if len(scores) == 2:
             final = sum(scores) / 2
-            logger.info(
+            self.__logger.info(
                 "Consenso (2 notas): média simples = %.2f",
                 final
             )
@@ -60,7 +61,7 @@ class ConsensusBuilder:
                 # Notas mais próximas: 2ª e 3ª (descarta outlier baixo)
                 final = (sorted_scores[1] + sorted_scores[2]) / 2
             
-            logger.info(
+            self.__logger.info(
                 "Consenso (3 notas): %s → %.2f (descartou outlier)",
                 sorted_scores, final
             )

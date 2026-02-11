@@ -1,31 +1,35 @@
-"""
-Service de alto nível para workflow de correção automática.
-Wrapper do LangGraph que gerencia execução e persistência.
-"""
+from __future__ import annotations
 
-import logging
 from typing import Dict, List
 from uuid import UUID, uuid4
 from datetime import datetime
+
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
+
+from src.interfaces.services.grading.grading_workflow_service_interface import GradingWorkflowServiceInterface
+
 from src.domain.ai.schemas import ExamQuestion, StudentAnswer
 from src.domain.ai.agent_schemas import AgentCorrection
 from src.domain.ai.schemas import QuestionMetadata, EvaluationCriterion
-from src.models.repositories.student_answer_repository import StudentAnswerRepository
-from src.models.repositories.exam_question_repository import ExamQuestionRepository
-from src.models.repositories.grading_criteria_repository import GradingCriteriaRepository
-from src.models.repositories.exam_criteria_repository import ExamCriteriaRepository
+from src.domain.ai.workflow.graph import get_grading_graph
+from src.domain.ai.workflow.state import GradingState
+
+from src.interfaces.repositories.student_answer_repository_interface import StudentAnswerRepositoryInterface
+from src.interfaces.repositories.exam_question_repository_interface import ExamQuestionRepositoryInterface
+from src.interfaces.repositories.grading_criteria_repository_interface import GradingCriteriaRepositoryInterface
+from src.interfaces.repositories.exam_criteria_repository_interface import ExamCriteriaRepositoryInterface
+
 from src.models.entities.student_answer_criteria_scores import StudentAnswerCriteriaScore
-from .workflow.graph import get_grading_graph
-from .workflow.state import GradingState
 
-logger = logging.getLogger(__name__)
+from src.errors.domain.sql_error import SqlError
+
+from src.core.logging_config import get_logger
 
 
-class GradingWorkflowService:
+class GradingWorkflowService(GradingWorkflowServiceInterface):
     """
-    Service wrapper para o LangGraph de correção.
+    Serviço wrapper para o LangGraph de correção.
     
     Responsabilidades:
     - Inicializar estado do grafo
@@ -34,22 +38,32 @@ class GradingWorkflowService:
     - Gerenciar transações e rollback
     """
     
-    def __init__(self, db: Session):
+    def __init__(
+        self,
+        student_answer_repository: StudentAnswerRepositoryInterface,
+        exam_question_repository: ExamQuestionRepositoryInterface,
+        grading_criteria_repository: GradingCriteriaRepositoryInterface,
+        exam_criteria_repository: ExamCriteriaRepositoryInterface
+    ) -> None:
         """
-        Inicializa service com conexão ao banco.
+        Inicializa service com repositórios injetados.
         
         Args:
-            db: Sessão SQLAlchemy ativa
+            student_answer_repository: Repositório de respostas de alunos
+            exam_question_repository: Repositório de questões
+            grading_criteria_repository: Repositório de critérios de avaliação
+            exam_criteria_repository: Repositório de critérios por prova
         """
-        self.db = db
-        self.graph = get_grading_graph()
-        self.student_answer_repo = StudentAnswerRepository()
-        self.exam_question_repo = ExamQuestionRepository()
-        self.grading_criteria_repo = GradingCriteriaRepository()
-        self.exam_criteria_repo = ExamCriteriaRepository()
+        self.__student_answer_repository = student_answer_repository
+        self.__exam_question_repository = exam_question_repository
+        self.__grading_criteria_repository = grading_criteria_repository
+        self.__exam_criteria_repository = exam_criteria_repository
+        self.__graph = get_grading_graph()
+        self.__logger = get_logger(__name__)
     
     async def grade_single_answer(
         self,
+        db: Session,
         exam_uuid: UUID,
         question: ExamQuestion,
         student_answer: StudentAnswer
@@ -63,6 +77,7 @@ class GradingWorkflowService:
         3. Persistir resultado no DB
         
         Args:
+            db: Sessão do banco de dados
             exam_uuid: UUID da prova (para filtrar RAG)
             question: Questão com enunciado e rubrica
             student_answer: Resposta do aluno (deve conter student_answer.id para persistência)
@@ -77,7 +92,7 @@ class GradingWorkflowService:
         Raises:
             Exception: Erros do LangGraph ou persistência
         """
-        logger.info(
+        self.__logger.info(
             "Iniciando workflow LangGraph: aluno=%s, questão=%s",
             student_answer.student_id, question.id
         )
@@ -100,22 +115,23 @@ class GradingWorkflowService:
         
         # === Executar grafo ===
         try:
-            final_state = await self.graph.ainvoke(initial_state)
+            final_state = await self.__graph.ainvoke(initial_state)
             
             # === Persistir resultado ===
             if student_answer.id:
-                await self._persist_result(
+                await self.__persist_result(
+                    db=db,
                     student_answer_uuid=student_answer.id,
                     final_score=final_state['final_score'],
                     corrections=final_state['all_corrections'],
                     question=question
                 )
             else:
-                logger.warning(
+                self.__logger.warning(
                     "student_answer.id não fornecido - resultado não será persistido"
                 )
             
-            logger.info(
+            self.__logger.info(
                 "Workflow concluído: nota=%.2f, árbitro=%s",
                 final_state['final_score'],
                 final_state.get('correction_arbiter') is not None
@@ -128,15 +144,24 @@ class GradingWorkflowService:
             }
             
         except Exception as e:
-            logger.error(
-                "Erro no workflow: %s",
+            self.__logger.error(
+                "Erro crítico no workflow: %s",
                 str(e),
                 exc_info=True
             )
-            raise
+            raise SqlError(
+                message="Erro crítico no workflow de correção",
+                context={
+                    "exam_uuid": str(exam_uuid),
+                    "question_id": str(question.id),
+                    "student_id": str(student_answer.student_id)
+                },
+                cause=e
+            ) from e
     
-    async def _persist_result(
+    async def __persist_result(
         self,
+        db: Session,
         student_answer_uuid: UUID,
         final_score: float,
         corrections: List[AgentCorrection],
@@ -151,6 +176,7 @@ class GradingWorkflowService:
         - COMMIT ou ROLLBACK em caso de erro
         
         Args:
+            db: Sessão do banco de dados
             student_answer_uuid: UUID da resposta do aluno
             final_score: Nota final consensuada
             corrections: Lista de AgentCorrection (2 ou 3)
@@ -158,14 +184,14 @@ class GradingWorkflowService:
         """
         try:
             # === 1. Buscar resposta no banco ===
-            answer_entity = self.student_answer_repo.get_by_uuid(
-                self.db,
+            answer_entity = self.__student_answer_repository.get_by_uuid(
+                db,
                 student_answer_uuid
             )
             
             # === 2. Atualizar student_answers ===
-            self.student_answer_repo.update(
-                self.db,
+            self.__student_answer_repository.update(
+                db,
                 answer_entity.id,
                 score=final_score,
                 is_graded=True,
@@ -173,7 +199,7 @@ class GradingWorkflowService:
                 status="GRADED"
             )
             
-            logger.info(
+            self.__logger.info(
                 "Resposta atualizada: UUID=%s, nota=%.2f",
                 student_answer_uuid, final_score
             )
@@ -189,14 +215,14 @@ class GradingWorkflowService:
             for rubric_criterion in question.rubric:
                 # Buscar UUID do critério no banco pelo nome
                 try:
-                    criteria_entity = self.grading_criteria_repo.get_by_code(
-                        self.db,
+                    criteria_entity = self.__grading_criteria_repository.get_by_code(
+                        db,
                         rubric_criterion.name  # Assumindo que name é o code
                     )
                     criteria_map[rubric_criterion.name] = criteria_entity.uuid
                     weight_map[rubric_criterion.name] = rubric_criterion.weight
                 except Exception as e:
-                    logger.warning(
+                    self.__logger.warning(
                         "Critério '%s' não encontrado no banco: %s",
                         rubric_criterion.name, e
                     )
@@ -210,7 +236,7 @@ class GradingWorkflowService:
                 criterion_weight = weight_map.get(criterion_score.criterion_name, 1.0)
                 
                 if not criteria_uuid:
-                    logger.warning(
+                    self.__logger.warning(
                         "UUID não encontrado para critério '%s' - pulando",
                         criterion_score.criterion_name
                     )
@@ -229,35 +255,35 @@ class GradingWorkflowService:
                     feedback=criterion_score.feedback
                 )
                 
-                self.db.add(score_entity)
+                db.add(score_entity)
             
             # === 5. Commit da transação ===
-            self.db.commit()
+            db.commit()
             
-            logger.info(
+            self.__logger.info(
                 "Persistência concluída: %d critérios salvos para resposta %s",
                 len(final_correction.criteria_scores),
                 student_answer_uuid
             )
             
         except SQLAlchemyError as e:
-            logger.error(
+            self.__logger.error(
                 "Erro ao persistir resultado: %s - fazendo rollback",
                 str(e),
                 exc_info=True
             )
-            self.db.rollback()
+            db.rollback()
             raise
         except Exception as e:
-            logger.error(
+            self.__logger.error(
                 "Erro inesperado ao persistir resultado: %s",
                 str(e),
                 exc_info=True
             )
-            self.db.rollback()
+            db.rollback()
             raise
     
-    async def grade_exam(self, exam_uuid: UUID) -> Dict:
+    async def grade_exam(self, db: Session, exam_uuid: UUID) -> Dict:
         """
         Corrige todas as respostas de todas as questões da prova.
         
@@ -268,6 +294,7 @@ class GradingWorkflowService:
         4. Agregar estatísticas (média, desvio padrão, distribuição)
         
         Args:
+            db: Sessão do banco de dados
             exam_uuid: UUID da prova a ser corrigida
         
         Returns:
@@ -281,19 +308,19 @@ class GradingWorkflowService:
                 "max_score": float
             }
         """
-        logger.info("Iniciando correção completa da prova %s", exam_uuid)
+        self.__logger.info("Iniciando correção completa da prova %s", exam_uuid)
         
         try:
             # === 1. Buscar questões da prova ===
-            questions = self.exam_question_repo.get_by_exam(
-                self.db,
+            questions = self.__exam_question_repository.get_by_exam(
+                db,
                 exam_uuid,
                 active_only=True,
                 limit=1000  # Ajustar se necessário
             )
             
             if not questions:
-                logger.warning("Nenhuma questão encontrada para prova %s", exam_uuid)
+                self.__logger.warning("Nenhuma questão encontrada para prova %s", exam_uuid)
                 return {
                     "total_questions": 0,
                     "total_answers": 0,
@@ -304,7 +331,7 @@ class GradingWorkflowService:
                     "max_score": 0.0
                 }
             
-            logger.info("Encontradas %d questões na prova", len(questions))
+            self.__logger.info("Encontradas %d questões na prova", len(questions))
             
             # === 2. Estatísticas ===
             total_answers = 0
@@ -315,13 +342,13 @@ class GradingWorkflowService:
             # === 3. Iterar por questões e respostas ===
             for question_entity in questions:
                 # Buscar respostas para esta questão
-                answers = self.student_answer_repo.get_by_question(
-                    self.db,
+                answers = self.__student_answer_repository.get_by_question(
+                    db,
                     question_entity.uuid,
                     limit=1000
                 )
                 
-                logger.info(
+                self.__logger.info(
                     "Questão %s: %d respostas para corrigir",
                     question_entity.uuid, len(answers)
                 )
@@ -330,7 +357,7 @@ class GradingWorkflowService:
                     total_answers += 1
                     
                     # Converter entidades DB → schemas Pydantic
-                    question_schema = self._convert_question_to_schema(question_entity)
+                    question_schema = self.__convert_question_to_schema(db, question_entity)
                     answer_schema = StudentAnswer(
                         id=answer_entity.uuid,
                         student_id=answer_entity.student_uuid,
@@ -341,6 +368,7 @@ class GradingWorkflowService:
                     try:
                         # Executar workflow de correção
                         result = await self.grade_single_answer(
+                            db=db,
                             exam_uuid=exam_uuid,
                             question=question_schema,
                             student_answer=answer_schema
@@ -349,14 +377,14 @@ class GradingWorkflowService:
                         graded_answers += 1
                         scores.append(result['final_score'])
                         
-                        logger.debug(
+                        self.__logger.debug(
                             "Resposta %s corrigida: nota=%.2f",
                             answer_entity.uuid, result['final_score']
                         )
                         
                     except Exception as e:
                         failed_answers += 1
-                        logger.error(
+                        self.__logger.error(
                             "Erro ao corrigir resposta %s: %s",
                             answer_entity.uuid, str(e),
                             exc_info=True
@@ -377,14 +405,14 @@ class GradingWorkflowService:
                 "max_score": round(max_score, 2)
             }
             
-            logger.info(
+            self.__logger.info(
                 "Correção da prova %s concluída: %d/%d respostas corrigidas (%.1f%% sucesso)",
                 exam_uuid,
                 graded_answers,
                 total_answers,
                 (graded_answers / total_answers * 100) if total_answers > 0 else 0
             )
-            logger.info(
+            self.__logger.info(
                 "Estatísticas: média=%.2f, min=%.2f, max=%.2f",
                 avg_score, min_score, max_score
             )
@@ -392,28 +420,29 @@ class GradingWorkflowService:
             return result
             
         except Exception as e:
-            logger.error(
+            self.__logger.error(
                 "Erro fatal ao corrigir prova %s: %s",
                 exam_uuid, str(e),
                 exc_info=True
             )
             raise
     
-    def _convert_question_to_schema(self, question_entity) -> ExamQuestion:
+    def __convert_question_to_schema(self, db: Session, question_entity) -> ExamQuestion:
         """
         Converte entidade ExamQuestion do DB para schema Pydantic.
         
         Busca os critérios reais da prova via exam_criteria e converte para rubrica.
         
         Args:
+            db: Sessão do banco de dados
             question_entity: Entidade do banco
         
         Returns:
             ExamQuestion schema Pydantic com rubrica completa
         """
         # === 1. Buscar critérios da prova do banco ===
-        exam_criteria_list = self.exam_criteria_repo.get_by_exam(
-            self.db,
+        exam_criteria_list = self.__exam_criteria_repository.get_by_exam(
+            db,
             question_entity.exam_uuid,
             active_only=True,
             limit=100
@@ -441,7 +470,7 @@ class GradingWorkflowService:
         
         # === 3. Fallback: se não houver critérios, criar um genérico ===
         if not rubric:
-            logger.warning(
+            self.__logger.warning(
                 "Nenhum critério encontrado para prova %s - usando critério genérico",
                 question_entity.exam_uuid
             )
