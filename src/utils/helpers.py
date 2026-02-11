@@ -7,9 +7,28 @@ from contextlib import contextmanager
 
 logger = logging.getLogger(__name__)
 
-# [MODIFICADO] Semáforo global para limitar chamadas concorrentes à API (Evitar Erro 429)
-# Limite conservador para Gemini Free Tier (1 requisição simultânea por segurança)
-api_semaphore = asyncio.Semaphore(1)
+# Concurrency limiter
+# NOTE: asyncio primitives are bound to the event loop they were created in.
+# Streamlit reruns + our `run_async()` create new event loops, so a module-level
+# Semaphore will eventually trigger: "Semaphore ... is bound to a different event loop".
+# We therefore create one Semaphore per running loop.
+_api_semaphores: dict[int, asyncio.Semaphore] = {}
+
+
+def get_api_semaphore(limit: int = 1) -> asyncio.Semaphore:
+    """Return a per-event-loop semaphore to avoid cross-loop binding errors."""
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        # Fallback: use current loop if available (older asyncio usage)
+        loop = asyncio.get_event_loop()
+
+    key = id(loop)
+    sem = _api_semaphores.get(key)
+    if sem is None:
+        sem = asyncio.Semaphore(limit)
+        _api_semaphores[key] = sem
+    return sem
 
 @contextmanager
 def measure_time(operation_name: str):
@@ -42,10 +61,12 @@ async def safe_gather(*tasks):
     Wrapper seguro para asyncio.gather que respeita o semáforo global.
     Substitui chamadas diretas para garantir controle de taxa.
     """
+    sem = get_api_semaphore(1)
+
     async def semaphore_wrapper(task):
-        async with api_semaphore:
+        async with sem:
             # Pequeno delay para garantir que o rate limit resete
-            await asyncio.sleep(2.0) 
+            await asyncio.sleep(2.0)
             return await task
 
     # Envolve cada task original com o wrapper do semáforo
