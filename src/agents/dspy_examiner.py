@@ -119,7 +119,11 @@ class DSPyExaminerAgent:
                         feedback_text="[Sistema] Correção gerada em formato texto (fallback aplicado)."
                     )
                 else:
-                    result = AgentCorrection.model_validate_json(clean_json)
+                    import json as _json
+                    data = _json.loads(clean_json)
+                    if isinstance(data, dict) and "agent_id" not in data:
+                        data["agent_id"] = agent_id
+                    result = AgentCorrection.model_validate(data)
                     
             else:
                 # Fallback universal para Dict ou Objetos DSPy

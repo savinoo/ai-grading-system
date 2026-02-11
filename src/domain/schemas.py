@@ -42,20 +42,51 @@ class RetrievedContext(BaseModel):
     page_number: Optional[int] = None
     relevance_score: float = Field(..., description="Score de similaridade do vector DB")
 
+class CriterionScore(BaseModel):
+    """Score per criterion (more LLM-friendly than a dict)."""
+
+    criterion: str
+    score: float
+    feedback: Optional[str] = None
+
+
 class AgentCorrection(BaseModel):
     """Saída de um único agente corretor (Output Cognitivo)"""
-    agent_id: AgentID
-    # Forçamos o modelo a gerar o raciocínio ANTES da nota para garantir CoT
-    reasoning_chain: str = Field(..., description="Chain-of-Thought (CoT): OBRIGATÓRIO. O passo-a-passo detalhado do raciocínio antes de dar a nota.")
+
+    # Some model outputs omit agent_id; we inject it at runtime in the agent.
+    agent_id: Optional[AgentID] = None
+
+    # LLMs often return a list of steps; normalize to a single string.
+    reasoning_chain: str = Field(
+        ..., description="Chain-of-Thought (CoT): OBRIGATÓRIO. O passo-a-passo detalhado do raciocínio antes de dar a nota."
+    )
+
     total_score: Optional[float] = None
     feedback_text: str = Field(default="Feedback não gerado.", description="Feedback pedagógico para o aluno")
-    criteria_scores: Dict[str, float] = Field(default_factory=dict, description="Notas quebradas por critério")
-    
-    @model_validator(mode='after')
+
+    # Accept either a dict (legacy) or a list of criterion objects (preferred)
+    criteria_scores: List[CriterionScore] = Field(default_factory=list, description="Notas quebradas por critério")
+
+    @field_validator("reasoning_chain", mode="before")
+    @classmethod
+    def normalize_reasoning_chain(cls, v):
+        if isinstance(v, list):
+            return "\n".join(str(x) for x in v)
+        return v
+
+    @field_validator("criteria_scores", mode="before")
+    @classmethod
+    def normalize_criteria_scores(cls, v):
+        # Legacy format: {"Crit": 2.0, ...}
+        if isinstance(v, dict):
+            return [{"criterion": k, "score": float(val)} for k, val in v.items()]
+        return v
+
+    @model_validator(mode="after")
     def calculate_total_if_missing(self):
-        # Sempre recalcula o total baseado nas parciais para evitar erros de cálculo do LLM
+        # Always recompute total based on per-criterion scores to avoid LLM math errors.
         if self.criteria_scores:
-            self.total_score = sum(self.criteria_scores.values())
+            self.total_score = float(sum(cs.score for cs in self.criteria_scores))
         elif self.total_score is None:
             self.total_score = 0.0
         return self
