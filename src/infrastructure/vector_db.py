@@ -15,7 +15,7 @@ def get_vector_store() -> Chroma:
     com o modelo de raciocínio, usando embeddings gratuitos se possível.
     """
     embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/text-embedding-005", # Modelo mais recente de embeddings do Google
+        model="models/gemini-embedding-001", # Modelo mais recente de embeddings do Google
         google_api_key=settings.GOOGLE_API_KEY
     )
     
