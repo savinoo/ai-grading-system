@@ -8,6 +8,24 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# Simple in-process cache (Streamlit-friendly).
+# Keyed by a truncated query + discipline + k. Keeps reruns fast.
+_RAG_CACHE: dict[tuple[str, str, int], List[RetrievedContext]] = {}
+_RAG_CACHE_MAX = 128
+
+
+def _cache_get(key):
+    return _RAG_CACHE.get(key)
+
+
+def _cache_set(key, value):
+    if len(_RAG_CACHE) >= _RAG_CACHE_MAX:
+        # FIFO eviction (good enough)
+        oldest = next(iter(_RAG_CACHE.keys()))
+        _RAG_CACHE.pop(oldest, None)
+    _RAG_CACHE[key] = value
+
+
 def search_context(query: str, discipline: str, topic: str, k: int = 4) -> List[RetrievedContext]:
     """
     Executa a busca RAG com 'Metadata Filtering' (TCC Seção 2.2).
@@ -20,9 +38,15 @@ def search_context(query: str, discipline: str, topic: str, k: int = 4) -> List[
     Returns:
         Lista de contextos estruturados para o LLM.
     """
+    cache_key = (query[:160], discipline, int(k))
+    cached = _cache_get(cache_key)
+    if cached is not None:
+        logger.info("RAG: cache hit")
+        return cached
+
     with measure_time("RAG Retrieval (Similarity Search)"):
         vector_store = get_vector_store()
-        
+
         logger.info(f"RAG Search: Query='{query[:50]}...' | Discipline='{discipline}' | Topic='{topic}'")
         
         # Filtro de Metadados: 
@@ -70,5 +94,6 @@ def search_context(query: str, discipline: str, topic: str, k: int = 4) -> List[
         
         if not results:
             logger.warning("No relevant context found after filtering and thresholding.")
-            
+
+        _cache_set(cache_key, results)
         return results

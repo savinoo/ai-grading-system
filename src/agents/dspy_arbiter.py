@@ -85,7 +85,7 @@ class DSPyArbiterAgent:
             div_text = f"Divergência detectada: {abs(c1_correction.total_score - c2_correction.total_score)} pontos."
 
             # Execução síncrona encapsulada (mesmo padrão do Examiner)
-            loop = asyncio.get_event_loop()
+            loop = asyncio.get_running_loop()
             
             def run_arbitration():
                 return self.module(
@@ -106,12 +106,19 @@ class DSPyArbiterAgent:
             if isinstance(raw_result, AgentCorrection):
                 result = raw_result
             elif isinstance(raw_result, str):
+                import json as _json
                 clean_json = raw_result.replace("```json", "").replace("```", "").strip()
-                result = AgentCorrection.model_validate_json(clean_json)
+                data = _json.loads(clean_json)
+                if isinstance(data, dict) and "agent_id" not in data:
+                    data["agent_id"] = AgentID.ARBITER
+                result = AgentCorrection.model_validate(data)
             elif isinstance(raw_result, dict):
-                 result = AgentCorrection.model_validate(raw_result)
+                if "agent_id" not in raw_result:
+                    raw_result["agent_id"] = AgentID.ARBITER
+                result = AgentCorrection.model_validate(raw_result)
             else:
-                 result = AgentCorrection.model_validate(raw_result)
+                # Try validating unknown shapes
+                result = AgentCorrection.model_validate(raw_result)
 
             if hasattr(prediction, 'rationale') and not result.reasoning_chain:
                 result.reasoning_chain = prediction.rationale

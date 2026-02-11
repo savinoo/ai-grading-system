@@ -76,7 +76,7 @@ class DSPyExaminerAgent:
         logger.info(f"[{agent_id}] (DSPy) Iniciando avaliação da questão {question.id}...")
 
         # Execução síncrona do DSPy encapsulada em thread para não bloquear o loop async
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         
         def run_prediction():
             return self.module(
