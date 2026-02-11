@@ -8,7 +8,7 @@ from src.infrastructure.dspy_config import configure_dspy
 settings.MODEL_NAME = "gemini-2.0-flash"
 configure_dspy()
 
-async def test_connection():
+def test_connection():
     print(f"Testing Model: {settings.MODEL_NAME}")
     try:
         # Tenta gerar algo simples

@@ -12,21 +12,16 @@ from src.agents.arbiter import ArbiterAgent
 from src.agents.dspy_arbiter import DSPyArbiterAgent
 from src.config.settings import settings
 from src.utils.helpers import measure_time
-from src.infrastructure.llm_factory import get_chat_model
+# from src.infrastructure.llm_factory import get_chat_model  # (legacy LangChain agents)
 
 logger = logging.getLogger(__name__)
 
-# Instanciação dos Agentes (Em produção, usaria Injeção de Dependência)
-# Factory decide se usa GPT ou Gemini baseado no .env
-llm = get_chat_model(temperature=0)
-
-# [MODIFICADO] Usando DSPy para o Agente Examinador (Corretores 1 e 2)
+# Instanciação dos Agentes
+# NOTE: avoid creating LLM clients at import time.
+# Streamlit/test runners import modules without keys, and async/event-loop context can differ.
+# DSPy agents manage their own LLM configuration globally.
 examiner = DSPyExaminerAgent()
-# examiner = ExaminerAgent(llm) # Versão anterior (LangChain)
-
-# [MODIFICADO] Usando DSPy para o Agente Árbitro
 arbiter = DSPyArbiterAgent()
-# arbiter = ArbiterAgent(llm) # Versão anterior
 
 from src.rag.retriever import search_context # Importar a nova função
 
