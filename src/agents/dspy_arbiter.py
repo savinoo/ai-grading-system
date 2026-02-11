@@ -7,6 +7,7 @@ from src.domain.schemas import AgentCorrection, AgentID
 from src.domain.state import GraphState
 from src.config.settings import settings
 from src.config.prompts import format_rubric_text, format_rag_context
+from src.utils.helpers import measure_time
 # from src.infrastructure.dspy_config import configure_dspy # REMOVIDO
 
 logger = logging.getLogger(__name__)
@@ -88,15 +89,16 @@ class DSPyArbiterAgent:
             loop = asyncio.get_running_loop()
             
             def run_arbitration():
-                return self.module(
-                    question_statement=question.statement,
-                    rubric_formatted=formatted_rubric,
-                    rag_context_formatted=formatted_context,
-                    student_answer=student_answer.text,
-                    corrector_1_evaluation=c1_text,
-                    corrector_2_evaluation=c2_text,
-                    divergence_context=div_text
-                )
+                with measure_time(f"DSPy Arbiter - Question {question.id}"):
+                    return self.module(
+                        question_statement=question.statement,
+                        rubric_formatted=formatted_rubric,
+                        rag_context_formatted=formatted_context,
+                        student_answer=student_answer.text,
+                        corrector_1_evaluation=c1_text,
+                        corrector_2_evaluation=c2_text,
+                        divergence_context=div_text
+                    )
 
             prediction = await loop.run_in_executor(None, run_arbitration)
             

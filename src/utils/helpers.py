@@ -18,10 +18,10 @@ _api_semaphores: dict[int, asyncio.Semaphore] = {}
 def get_api_semaphore(limit: int | None = None) -> asyncio.Semaphore:
     """Return a per-event-loop semaphore to avoid cross-loop binding errors.
 
-    Limit can be set via env var API_CONCURRENCY (default 2).
+    Limit can be set via env var API_CONCURRENCY (default 10).
     """
     if limit is None:
-        limit = int(os.getenv("API_CONCURRENCY", "2"))
+        limit = int(os.getenv("API_CONCURRENCY", "10"))
 
     try:
         loop = asyncio.get_running_loop()
