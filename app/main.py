@@ -112,6 +112,7 @@ with st.sidebar:
     
     # LangSmith Status
     st.header("📊 Observabilidade")
+    st.caption(f"LLM model: {settings.MODEL_NAME}")
     if is_langsmith_enabled():
         st.success("✓ LangSmith Ativo", icon="🔍")
         st.caption(f"Projeto: {settings.LANGSMITH_PROJECT_NAME}")

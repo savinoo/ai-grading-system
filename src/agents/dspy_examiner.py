@@ -26,7 +26,7 @@ class GradingSignature(dspy.Signature):
     rag_context_formatted = dspy.InputField(desc="Trechos relevantes do material didático (RAG)")
     student_answer = dspy.InputField(desc="A resposta discursiva submetida pelo aluno")
     
-    correction = dspy.OutputField(desc="A correção estruturada (JSON)", type=AgentCorrection)
+    correction = dspy.OutputField(desc="A correção estruturada (JSON)")
 
 class DSPyExaminerModule(dspy.Module):
     def __init__(self):

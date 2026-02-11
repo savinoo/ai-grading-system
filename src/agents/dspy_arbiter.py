@@ -30,7 +30,7 @@ class ArbitrationSignature(dspy.Signature):
     corrector_2_evaluation = dspy.InputField(desc="Argumentos e nota do Corretor 2")
     divergence_context = dspy.InputField(desc="Cálculo da divergência encontrada entre os corretores")
     
-    arbitration = dspy.OutputField(desc="O veredito final estruturado contendo a nova correção de desempate", type=AgentCorrection)
+    arbitration = dspy.OutputField(desc="O veredito final estruturado contendo a nova correção de desempate")
 
 class DSPyArbiterModule(dspy.Module):
     def __init__(self):
