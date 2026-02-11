@@ -388,7 +388,7 @@ elif operation_mode == "Batch Processing (Turma)":
                                 
                                 async def process_q_batch():
                                     results = []
-                                    chunk_size = 3
+                                    chunk_size = int(os.getenv("BATCH_CHUNK_SIZE", "4"))
                                     total = len(tasks)
                                     
                                     for i in range(0, total, chunk_size):
@@ -396,8 +396,10 @@ elif operation_mode == "Batch Processing (Turma)":
                                         status_container.write(f"Corrigindo Q{q_idx+1}: Lote {i//chunk_size + 1}/{(total//chunk_size)+1}...")
                                         chunk_results = await safe_gather(*chunk)
                                         results.extend(chunk_results)
-                                        # Pequena pausa para 'esfriar' a API
-                                        await asyncio.sleep(1) 
+                                        # Optional cooldown between chunks (avoid 429s)
+                                        cooldown = float(os.getenv("BATCH_COOLDOWN_SLEEP", "0.0"))
+                                        if cooldown > 0:
+                                            await asyncio.sleep(cooldown)
                                     return results
                                 
                                 batch_results = run_async(process_q_batch())

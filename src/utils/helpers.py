@@ -15,18 +15,23 @@ logger = logging.getLogger(__name__)
 _api_semaphores: dict[int, asyncio.Semaphore] = {}
 
 
-def get_api_semaphore(limit: int = 1) -> asyncio.Semaphore:
-    """Return a per-event-loop semaphore to avoid cross-loop binding errors."""
+def get_api_semaphore(limit: int | None = None) -> asyncio.Semaphore:
+    """Return a per-event-loop semaphore to avoid cross-loop binding errors.
+
+    Limit can be set via env var API_CONCURRENCY (default 2).
+    """
+    if limit is None:
+        limit = int(os.getenv("API_CONCURRENCY", "2"))
+
     try:
         loop = asyncio.get_running_loop()
     except RuntimeError:
-        # Fallback: use current loop if available (older asyncio usage)
         loop = asyncio.get_event_loop()
 
     key = id(loop)
     sem = _api_semaphores.get(key)
     if sem is None:
-        sem = asyncio.Semaphore(limit)
+        sem = asyncio.Semaphore(int(limit))
         _api_semaphores[key] = sem
     return sem
 
@@ -61,7 +66,7 @@ async def safe_gather(*tasks):
     Wrapper seguro para asyncio.gather que respeita o semáforo global.
     Substitui chamadas diretas para garantir controle de taxa.
     """
-    sem = get_api_semaphore(1)
+    sem = get_api_semaphore()
 
     async def semaphore_wrapper(task):
         async with sem:
