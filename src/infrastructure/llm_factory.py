@@ -4,6 +4,7 @@ from langchain_core.language_models import BaseChatModel
 from src.config.settings import settings
 
 def get_chat_model(temperature: float = None, model_name: str = None) -> BaseChatModel:
+    # Debug: print which model is being instantiated (useful in Streamlit logs/terminal)
     """
     Factory para criar instâncias de LLM (ChatOpenAI ou Gemni) 
     baseado na configuração e disponibilidade de chaves.
@@ -13,6 +14,8 @@ def get_chat_model(temperature: float = None, model_name: str = None) -> BaseCha
     
     if model_name is None:
         model_name = settings.MODEL_NAME
+
+    print(f"[llm_factory] Using model={model_name} temperature={temperature}")
 
     # Checa se é um modelo Gemini
     if "gemini" in model_name.lower():
