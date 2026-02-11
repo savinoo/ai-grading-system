@@ -200,12 +200,116 @@ logger.info(f"Cache keys: {list(_RAG_CACHE.keys())}")
 
 ## 📝 Changelog
 
-### 2026-02-10
-- ✅ Aumentado `API_CONCURRENCY` de 2 → 10
-- ✅ Adicionado `measure_time` em DSPy Examiner e Arbiter
-- ✅ Cache RAG já estava implementado (verificado)
-- ✅ Streamlit progress já estava implementado (verificado)
-- ✅ Documentação criada (este arquivo)
+### 2026-02-10 - Session 3: Bug Fixes (23:00-23:12)
+
+#### Fix #3: Robust JSON Parsing Fallback (`6d47c56`)
+**Problema:** `JSONDecodeError: Expecting value: line 1 column 1 (char 0)` no DSPy Arbiter
+
+**Causa:**
+- LLM retornando string vazia ou texto não-JSON
+- Código tentava `json.loads()` sem validação prévia
+
+**Solução:**
+- Validação antes do parsing: checa se string vazia ou não começa com `{`
+- Fallback gracioso:
+  - **Arbiter:** usa média das 2 correções anteriores (nota justa)
+  - **Examiner:** retorna 0.0 com mensagem de erro
+- Try-catch em JSON parsing com fallback
+- Logs detalhados para debug
+
+**Arquivos modificados:**
+- `src/agents/dspy_arbiter.py`
+- `src/agents/dspy_examiner.py`
+
+---
+
+#### Fix #2: Normalize Grades to 0-10 Scale (`fd4b42e`)
+**Problema:** Notas aparecendo de 0-1 em vez de 0-10
+
+**Causa:**
+- LLM retornando notas normalizadas (0-1) em vez de absolutas (0-10)
+- Prompts não eram explícitos sobre a escala
+
+**Solução:**
+- Prompts atualizados com instruções explícitas: "Use escala ABSOLUTA (0 até peso máximo), NÃO normalizada (0-1)"
+- Auto-detecção no schema: se todas as notas ≤ 1.5, multiplica por 10
+- Log de warning quando normalização automática é aplicada
+
+**Exemplo de instrução adicionada:**
+> "Se o critério vale 4.0 pontos e o aluno acertou parcialmente (75%), atribua 3.0 pontos, NÃO 0.75."
+
+**Arquivos modificados:**
+- `src/config/prompts.py` (CORRECTOR_SYSTEM_PROMPT, ARBITER_SYSTEM_PROMPT)
+- `src/domain/schemas.py` (AgentCorrection.calculate_total_if_missing)
+
+---
+
+### 2026-02-10 - Session 2: Performance Optimization (`1e3b2f0`)
+
+#### Otimização #1: Increased Parallelism (5x speedup)
+**Mudanças:**
+- `API_CONCURRENCY` default: 2 → 10
+- Configurável via env var `API_CONCURRENCY`
+
+**Impacto:**
+- 5x mais requisições simultâneas
+- Tempo estimado: 10 alunos × 3 questões de ~10min → ~2-3min
+
+---
+
+#### Otimização #2: Performance Logging
+**Mudanças:**
+- Adicionado `measure_time` context manager em:
+  - `src/agents/dspy_examiner.py` (tempo por correção)
+  - `src/agents/dspy_arbiter.py` (tempo por arbitragem)
+  - `src/rag/retriever.py` (já tinha)
+
+**Logs gerados:**
+```
+⏳ Iniciando: DSPy Examiner CORRETOR_1 - Question Q1...
+✅ Concluído: DSPy Examiner CORRETOR_1 - Question Q1 em 3.2456 segundos.
+```
+
+---
+
+#### Otimização #3: Documentation
+**Criado:**
+- `PERFORMANCE.md` (este arquivo)
+  - Benchmarks esperados
+  - Configuração de env vars
+  - Troubleshooting de rate limits
+  - Próximas otimizações
+
+---
+
+### 2026-02-10 - Session 1: Bug Fixes Anteriores
+
+#### Fixes realizados antes desta sessão:
+- ✅ Fixed asyncio Semaphore cross-event-loop error (per-loop semaphore)
+- ✅ Fixed LLM import-time creation (lazy init in workflow nodes)
+- ✅ Fixed DSPy examiner validation loop (schema normalization)
+- ✅ Fixed test: `test_connection()` sync (DSPy predict is sync)
+- ✅ Cleaned `requirements.txt` (removed pytest-asyncio)
+
+---
+
+## 🎯 Resumo de Melhorias
+
+### Performance
+- **5x paralelização** (API_CONCURRENCY 2 → 10)
+- **RAG Cache** (já implementado, verificado)
+- **Streamlit Progress** (já implementado, verificado)
+- **Performance logging** (adicionado em agents DSPy)
+
+### Qualidade
+- **Notas normalizadas 0-10** (auto-detecção + prompts explícitos)
+- **JSON parsing robusto** (fallbacks graciosos, sem crashes)
+- **Observabilidade** (logs detalhados, measure_time)
+
+### Resultados Esperados
+- **Velocidade:** 10 alunos × 3 questões de ~10min → ~2-3min
+- **Confiabilidade:** Sem crashes em respostas inválidas do LLM
+- **Precisão:** Notas sempre na escala correta (0-10)
 
 ---
 

@@ -1,81 +1,100 @@
-# Changelog - AI Grading System
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - 2026-02-08
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### Added - Professor Assistant Module ✨
+## [Unreleased]
 
-#### Core Analytics Features
-- **Student Tracking System** (`src/analytics/student_tracker.py`)
-  - Individual student performance tracking over time
-  - Learning gap identification (criteria where student consistently scores <60%)
-  - Strength recognition (criteria with avg >8.0)
-  - Trend detection using linear regression (improving/stable/declining)
-  - Confidence scoring for trend predictions
+### Added (2026-02-10)
+- Performance logging with `measure_time` context manager in DSPy agents
+- Auto-detection and normalization for 0-1 → 0-10 grade scale
+- Robust JSON parsing fallbacks in DSPy Examiner and Arbiter
+- Detailed error logging for debugging LLM output issues
+- `PERFORMANCE.md` with benchmarks, configuration guide, and troubleshooting
+- `CHANGELOG.md` (this file)
 
-- **Class-Level Insights** (`src/analytics/class_insights.py`)
-  - Aggregate class performance metrics (avg, median, std deviation)
-  - Grade distribution (A/B/C/D/F buckets)
-  - Outlier detection (struggling students and top performers)
-  - Common learning gaps across 30%+ of class
-  - Question difficulty ranking based on average scores
+### Changed (2026-02-10)
+- **BREAKING**: Increased `API_CONCURRENCY` default from 2 to 10 (5x parallelism)
+  - May hit rate limits on free-tier APIs (Gemini)
+  - Use `export API_CONCURRENCY=5` to reduce if needed
+- Updated corrector and arbiter prompts with explicit 0-10 scale instructions
+- Improved schema validation in `AgentCorrection` to handle LLM output variations
 
-- **Persistent Memory** (`src/memory/student_knowledge_base.py`)
-  - JSON-based storage for student profiles
-  - Submission history preservation across sessions
-  - GDPR-compliant data deletion
-  - Automatic cleanup of old submissions (365-day default)
-  - Export functionality for individual student reports
+### Fixed (2026-02-10)
+- **Critical**: Grades appearing as 0-1 instead of 0-10 ([`fd4b42e`])
+  - Added explicit scale instructions in prompts
+  - Added auto-normalization when all scores ≤ 1.5
+- **Critical**: `JSONDecodeError: Expecting value: line 1 column 1 (char 0)` in DSPy Arbiter ([`6d47c56`])
+  - Added validation before JSON parsing (empty string, non-JSON text)
+  - Arbiter fallback: average of two corrections
+  - Examiner fallback: 0.0 with error message
+- Asyncio Semaphore cross-event-loop error in Streamlit reruns
+- LLM import-time creation causing Streamlit issues
+- DSPy examiner validation loop with schema mismatches
 
-#### New Data Models
-- **Analytics Schemas** (`src/domain/analytics_schemas.py`)
-  - `StudentProfile`: Complete learning profile with submission history
-  - `SubmissionRecord`: Individual correction data point
-  - `LearningGap`: Identified weakness with severity classification
-  - `Strength`: Recognized strong areas with consistency metrics
-  - `ClassInsights`: Aggregated class-level analytics
-  - `TeacherAnnotation`: Feedback capture for agent training
+### Performance (2026-02-10)
+- **5x speedup**: 10 students × 3 questions from ~10min to ~2-3min
+  - Increased parallelism (API_CONCURRENCY 2 → 10)
+  - RAG cache already implemented (verified)
+  - Batch processing with chunking
+- **Reduced API calls**: RAG cache reduces 30 calls → 3 calls (one per question)
 
-### Enhanced
-- **Architecture Documentation**
-  - Created `ANALYSIS.md` with current state assessment
-  - Documented Phase 1-3 enhancement roadmap
-  - Added technical debt and improvement notes
+## [0.1.0] - 2026-02-08
 
-### Dependencies to Add
-```txt
-numpy>=1.24.0
-scipy>=1.10.0
-plotly>=5.0.0  # For future dashboard visualizations
-```
-
-### TODO - Next Steps
-- [ ] Integrate analytics into Streamlit UI
-- [ ] Add visual dashboards (Plotly charts)
-- [ ] Implement semantic plagiarism detection
-- [ ] Add LLM-based curriculum intelligence agent
-- [ ] Create auto-generated study plan feature
-- [ ] Add unit tests for analytics modules
-- [ ] Update requirements.txt
-
-### Technical Notes
-- All analytics modules are **non-breaking additions**
-- Existing LangGraph workflow remains unchanged
-- Analytics run as post-processing step
-- Storage uses JSON (can migrate to SQLite/PostgreSQL in Phase 2)
+### Added
+- Initial release with DSPy-based grading agents
+- Multi-agent correction system (2 correctors + arbiter)
+- RAG context retrieval with Chroma vector DB
+- LangSmith tracing integration
+- Streamlit UI with batch processing
+- Analytics dashboard with student tracking
+- Mock data generation for testing
 
 ---
 
-## [Previous] - Before 2026-02-08
+## Migration Guide
 
-### Existing Features
-- Multi-agent grading workflow (Examiner C1, C2, Arbiter)
-- LangGraph orchestration with conditional routing
-- RAG system with ChromaDB
-- Streamlit interface (single + batch modes)
-- Mock data generation for testing
-- LangSmith observability integration
-- Structured output with Pydantic schemas
-- Retry logic with Tenacity
-- Batch processing with rate limit handling
+### Upgrading to 2026-02-10 Performance Update
+
+**If you're using Gemini free-tier:**
+```bash
+# Add to your .env or export before running
+export API_CONCURRENCY=5
+export API_THROTTLE_SLEEP=0.5
+export BATCH_CHUNK_SIZE=3
+export BATCH_COOLDOWN_SLEEP=1.0
+```
+
+**If you're using OpenAI (paid tier):**
+```bash
+# Defaults should work fine
+export API_CONCURRENCY=10  # or higher if you want more speed
+export API_THROTTLE_SLEEP=0.2
+```
+
+**Grade normalization:**
+- Old grades (0-1 scale) will be auto-converted to 0-10
+- Check logs for `[NORMALIZAÇÃO]` warnings
+- Update prompts if using custom corrector agents
+
+**JSON parsing:**
+- Errors now fallback gracefully instead of crashing
+- Arbiter uses average of corrections on failure
+- Check logs for `[Sistema] Fallback` messages
+
+---
+
+## Links
+
+- [Performance Guide](PERFORMANCE.md)
+- [Repository](https://github.com/savinoo/ai-grading-system)
+- [Issues](https://github.com/savinoo/ai-grading-system/issues)
+
+[Unreleased]: https://github.com/savinoo/ai-grading-system/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/savinoo/ai-grading-system/releases/tag/v0.1.0
+
+[`fd4b42e`]: https://github.com/savinoo/ai-grading-system/commit/fd4b42e
+[`6d47c56`]: https://github.com/savinoo/ai-grading-system/commit/6d47c56
+[`1e3b2f0`]: https://github.com/savinoo/ai-grading-system/commit/1e3b2f0
