@@ -26,8 +26,10 @@ def get_vector_store() -> Chroma:
     embeddings = None
     if settings.GOOGLE_API_KEY:
         try:
+            # NOTE: model names vary by account/API version. The most common Gemini embeddings
+            # model name is: models/gemini-embedding-001
             embeddings = GoogleGenerativeAIEmbeddings(
-                model=os.getenv("EMBEDDINGS_MODEL", "models/embedding-001"),
+                model=os.getenv("EMBEDDINGS_MODEL", "models/gemini-embedding-001"),
                 google_api_key=settings.GOOGLE_API_KEY,
             )
             logger.info("VectorDB: using Gemini embeddings")

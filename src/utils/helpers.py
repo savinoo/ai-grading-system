@@ -65,8 +65,10 @@ async def safe_gather(*tasks):
 
     async def semaphore_wrapper(task):
         async with sem:
-            # Pequeno delay para garantir que o rate limit resete
-            await asyncio.sleep(2.0)
+            # Optional throttle (avoid fixed 2s latency). If you hit 429s, increase this.
+            throttle = float(os.getenv("API_THROTTLE_SLEEP", "0.2"))
+            if throttle > 0:
+                await asyncio.sleep(throttle)
             return await task
 
     # Envolve cada task original com o wrapper do semáforo
