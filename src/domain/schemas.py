@@ -2,6 +2,9 @@
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, Field, field_validator, model_validator
 from enum import Enum
+import logging
+
+logger = logging.getLogger(__name__)
 
 class AgentID(str, Enum):
     """Identificadores únicos para os agentes do sistema"""
@@ -86,6 +89,18 @@ class AgentCorrection(BaseModel):
     def calculate_total_if_missing(self):
         # Always recompute total based on per-criterion scores to avoid LLM math errors.
         if self.criteria_scores:
+            # Detecta se o LLM retornou notas normalizadas (0-1) em vez de absolutas (0-10)
+            # Heurística: se TODAS as notas são <= 1.5, provavelmente está normalizado
+            all_scores = [cs.score for cs in self.criteria_scores]
+            if all_scores and all(score <= 1.5 for score in all_scores):
+                # Assume que deveria ser escala 0-10 e multiplica por 10
+                logger.warning(
+                    f"[NORMALIZAÇÃO] Detectadas notas normalizadas (0-1): {all_scores}. "
+                    f"Convertendo para escala 0-10 (multiplicando por 10)."
+                )
+                for cs in self.criteria_scores:
+                    cs.score = cs.score * 10.0
+            
             self.total_score = float(sum(cs.score for cs in self.criteria_scores))
         elif self.total_score is None:
             self.total_score = 0.0

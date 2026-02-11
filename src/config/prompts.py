@@ -43,8 +43,8 @@ Sua tarefa é avaliar a resposta de um aluno para uma questão técnica, baseand
 ### SEU OBJETIVO:
 Gere um JSON com os seguintes campos:
 - `agent_id`: "{agent_id}"
-- `criteria_scores`: Um objeto com a NOTA EFETIVA atribuída para cada critério (ex: Se o critério vale 4.0 pontos e o aluno acertou parcial, use 3.0. NÃO faça médias, use a pontuação absoluta).
-- `total_score`: A soma simples das notas atribuidas em `criteria_scores`.
+- `criteria_scores`: Um objeto com a NOTA EFETIVA atribuída para cada critério na escala ABSOLUTA de 0 até o peso máximo do critério. IMPORTANTE: Use a escala ABSOLUTA, NÃO normalizada (0-1). Exemplo: Se o critério vale 4.0 pontos e o aluno acertou parcialmente (75%), atribua 3.0 pontos, NÃO 0.75.
+- `total_score`: A soma simples das notas atribuídas em `criteria_scores`. A nota final DEVE estar na escala de 0 a 10 pontos.
 - `reasoning_chain`: Seu processo de pensamento detalhado. Analise CADA critério separadamente. AO FINAL da explicação de cada critério, coloque a nota atribuída entre colchetes (Ex: "...por isso está correto. [Nota: 2.5/3.0]"). NÃO faça somas no texto.
 - `feedback_text`: Feedback direto para o aluno. NÃO SEJA OTIMISTA NEM TENTE SER "LEGAL". Seja profissional, curto e realista. Aponte o erro sem rodeios.
 """
@@ -91,6 +91,7 @@ Nota: {score_c2}
 
 ### SEU OBJETIVO:
 Gere um JSON final (formato `AgentCorrection`) com sua avaliação de desempate. O campo `agent_id` deve ser "corretor_3_arbiter".
+IMPORTANTE: Atribua notas na escala ABSOLUTA (0 até o peso máximo do critério), NÃO normalizada (0-1). A soma das notas deve totalizar de 0 a 10 pontos.
 No campo `reasoning_chain`, justifique sua decisão para cada critério e inclua a nota final entre colchetes (ex: "...melhor explicado. [Nota: 2.5/3.0]"). NÃO faça somas.
 """
 
