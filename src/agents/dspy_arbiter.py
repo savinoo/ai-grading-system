@@ -105,15 +105,46 @@ class DSPyArbiterAgent:
             # Tratamento robusto para retorno do DSPy
             raw_result = prediction.arbitration
             
+            logger.info(f"[ARBITER] RAW RESULT TYPE: {type(raw_result)}")
+            logger.info(f"[ARBITER] RAW RESULT CONTENT: {raw_result}")
+            
             if isinstance(raw_result, AgentCorrection):
                 result = raw_result
             elif isinstance(raw_result, str):
                 import json as _json
+                import re
+                
                 clean_json = raw_result.replace("```json", "").replace("```", "").strip()
-                data = _json.loads(clean_json)
-                if isinstance(data, dict) and "agent_id" not in data:
-                    data["agent_id"] = AgentID.ARBITER
-                result = AgentCorrection.model_validate(data)
+                
+                # Fallback se string vazia ou não é JSON
+                if not clean_json or not clean_json.startswith("{"):
+                    logger.warning(f"[ARBITER] Modelo retornou texto inválido: '{clean_json[:100]}...'")
+                    # Cria fallback usando média das duas correções
+                    avg_score = (c1_correction.total_score + c2_correction.total_score) / 2.0
+                    result = AgentCorrection(
+                        agent_id=AgentID.ARBITER,
+                        reasoning_chain=f"[Sistema] Fallback aplicado. LLM retornou resposta inválida. Média das correções: {avg_score:.2f}",
+                        criteria_scores=[],
+                        total_score=avg_score,
+                        feedback_text=f"Nota arbitrada pela média das correções anteriores: {avg_score:.2f}/10.0"
+                    )
+                else:
+                    try:
+                        data = _json.loads(clean_json)
+                        if isinstance(data, dict) and "agent_id" not in data:
+                            data["agent_id"] = AgentID.ARBITER
+                        result = AgentCorrection.model_validate(data)
+                    except _json.JSONDecodeError as je:
+                        logger.error(f"[ARBITER] JSON decode error: {je}. Raw: '{clean_json[:200]}'")
+                        # Fallback com média
+                        avg_score = (c1_correction.total_score + c2_correction.total_score) / 2.0
+                        result = AgentCorrection(
+                            agent_id=AgentID.ARBITER,
+                            reasoning_chain=f"[Sistema] Fallback JSON. Erro: {str(je)}. Média: {avg_score:.2f}",
+                            criteria_scores=[],
+                            total_score=avg_score,
+                            feedback_text=f"Nota arbitrada pela média: {avg_score:.2f}/10.0"
+                        )
             elif isinstance(raw_result, dict):
                 if "agent_id" not in raw_result:
                     raw_result["agent_id"] = AgentID.ARBITER

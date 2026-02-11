@@ -102,30 +102,42 @@ class DSPyExaminerAgent:
             elif isinstance(raw_result, str):
                 # Se voltou string (às vezes acontece em fallbacks), parseamos manualmente
                 # Remove markdown code blocks se houver
+                import json as _json
+                import re
+                
                 clean_json = raw_result.replace("```json", "").replace("```", "").strip()
                 
-                # Tentativa de 'Rescue': Se não começar com '{', é texto solto (Markdown do Gemini).
-                if not clean_json.strip().startswith("{"):
-                    logger.warning(f"[{agent_id}] Modelo retornou texto livre. Tentando estruturar manual.")
+                # Tentativa de 'Rescue': Se vazio ou não começar com '{', é texto solto/inválido
+                if not clean_json or not clean_json.strip().startswith("{"):
+                    logger.warning(f"[{agent_id}] Modelo retornou texto livre/vazio. Tentando estruturar manual.")
                     # Cria um objeto 'pobre' mas funcional para não quebrar o fluxo
-                    import re
                     # Tenta achar nota tipo "Nota: 0.8/2.0" ou "Total: 10"
-                    score_match = re.search(r"(?:Nota|Total|Score)[:\s]*(\d+[\.,]?\d*)", clean_json, re.IGNORECASE)
+                    score_match = re.search(r"(?:Nota|Total|Score)[:\s]*(\d+[\.,]?\d*)", clean_json, re.IGNORECASE) if clean_json else None
                     score = float(score_match.group(1).replace(",", ".")) if score_match else 0.0
                     
                     result = AgentCorrection(
                         agent_id=agent_id,
-                        reasoning_chain=clean_json, # O texto todo vira o raciocínio
+                        reasoning_chain=clean_json if clean_json else "[Sistema] Resposta vazia do LLM",
                         criteria_scores=[],
                         total_score=score,
                         feedback_text="[Sistema] Correção gerada em formato texto (fallback aplicado)."
                     )
                 else:
-                    import json as _json
-                    data = _json.loads(clean_json)
-                    if isinstance(data, dict) and "agent_id" not in data:
-                        data["agent_id"] = agent_id
-                    result = AgentCorrection.model_validate(data)
+                    try:
+                        data = _json.loads(clean_json)
+                        if isinstance(data, dict) and "agent_id" not in data:
+                            data["agent_id"] = agent_id
+                        result = AgentCorrection.model_validate(data)
+                    except _json.JSONDecodeError as je:
+                        logger.error(f"[{agent_id}] JSON decode error: {je}. Raw: '{clean_json[:200]}'")
+                        # Fallback com nota 0
+                        result = AgentCorrection(
+                            agent_id=agent_id,
+                            reasoning_chain=f"[Sistema] Erro de parsing JSON: {str(je)}",
+                            criteria_scores=[],
+                            total_score=0.0,
+                            feedback_text="[Sistema] Erro na avaliação (fallback aplicado)."
+                        )
                     
             else:
                 # Fallback universal para Dict ou Objetos DSPy
