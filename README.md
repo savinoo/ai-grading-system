@@ -342,7 +342,7 @@ Computer Engineering - Instituto Federal Fluminense (IFF)
 
 Issues? Questions?
 - Open a GitHub issue
-- Contact: [Your contact info]
+- Contact: github.com/savinoo
 
 ---
 
