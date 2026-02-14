@@ -1,5 +1,5 @@
 """
-Handler singleton para ChromaDB com embeddings Google.
+Handler singleton para ChromaDB com embeddings (Google ou OpenAI).
 Gerencia conexão persistente ao vector store.
 """
 
@@ -7,6 +7,7 @@ import logging
 from chromadb.config import Settings as ChromaSettings
 from langchain_community.vectorstores import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from src.core.settings import settings
 
 logger = logging.getLogger(__name__)
@@ -16,23 +17,20 @@ _vector_store = None
 
 def get_vector_store() -> Chroma:
     """
-    Singleton para ChromaDB com embeddings Google.
+    Singleton para ChromaDB com embeddings (Google ou OpenAI).
     Persiste no path configurado via settings.CHROMA_PERSIST_DIRECTORY.
     
     Returns:
         Chroma: Instância singleton do vector store
         
     Raises:
-        ValueError: Se GOOGLE_API_KEY não estiver configurada
+        ValueError: Se as API keys necessárias não estiverem configuradas
     """
     global _vector_store
     
     if _vector_store is not None:
         logger.debug("Reutilizando instância existente do ChromaDB")
         return _vector_store
-    
-    if not settings.GOOGLE_API_KEY:
-        raise ValueError("GOOGLE_API_KEY não configurada para embeddings")
     
     logger.info(
         "Inicializando ChromaDB",
@@ -43,11 +41,23 @@ def get_vector_store() -> Chroma:
         }
     )
     
-    # Setup embeddings
-    embeddings = GoogleGenerativeAIEmbeddings(
-        model=settings.EMBEDDING_MODEL,
-        google_api_key=settings.GOOGLE_API_KEY
-    )
+    # Setup embeddings baseado no provider
+    if settings.EMBEDDING_PROVIDER.lower() == "openai":
+        if not settings.OPENAI_API_KEY:
+            raise ValueError("OPENAI_API_KEY não configurada para embeddings")
+        embeddings = OpenAIEmbeddings(
+            model=settings.EMBEDDING_MODEL,
+            openai_api_key=settings.OPENAI_API_KEY
+        )
+        logger.info(f"Usando OpenAI embeddings: {settings.EMBEDDING_MODEL}")
+    else:
+        if not settings.GOOGLE_API_KEY:
+            raise ValueError("GOOGLE_API_KEY não configurada para embeddings")
+        embeddings = GoogleGenerativeAIEmbeddings(
+            model=settings.EMBEDDING_MODEL,
+            google_api_key=settings.GOOGLE_API_KEY
+        )
+        logger.info(f"Usando Google embeddings: {settings.EMBEDDING_MODEL}")
     
     # Setup ChromaDB
     _vector_store = Chroma(

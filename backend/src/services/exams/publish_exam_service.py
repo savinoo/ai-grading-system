@@ -191,11 +191,14 @@ class PublishExamService(PublishExamServiceInterface):
                 self.__logger.info("📄 Encontrados %d PDFs para indexar", len(attachments))
                                 
                 for attachment in attachments:
+                    # Usar class_name se disponível, caso contrário "Geral"
+                    discipline = getattr(exam, 'class_name', None) or "Geral"
+                    
                     await self.__index_attachment(
                         db=db,
                         exam_uuid=exam_uuid,
                         attachment=attachment,
-                        discipline=exam.class_obj.discipline if exam.class_obj else "Geral",
+                        discipline=discipline,
                         topic=exam.description or "Sem tópico"
                     )
             

@@ -26,8 +26,8 @@ class Settings(BaseSettings):
     
     # === RAG & Vector Database ===
     CHROMA_PERSIST_DIRECTORY: str = Field(default="./data/chromadb", description="Diretório de persistência do ChromaDB")
-    EMBEDDING_MODEL: str = Field(default="text-embedding-004", description="Modelo de embeddings")
-    EMBEDDING_PROVIDER: str = Field(default="google", description="Provedor de embeddings (google, openai)")
+    EMBEDDING_MODEL: str = Field(default="text-embedding-3-small", description="Modelo de embeddings")
+    EMBEDDING_PROVIDER: str = Field(default="openai", description="Provedor de embeddings (google, openai)")
     
     # === LLM Configuration ===
     LLM_PROVIDER: str = Field(default="gemini", description="Provedor de LLM (openai, gemini, litellm)")

@@ -10,7 +10,6 @@ from src.domain.requests.exams.exam_create_request import ExamCreateRequest
 from src.domain.requests.exams.exam_update_request import ExamUpdateRequest
 
 # Response Models
-from src.domain.responses.exams.exam_create_response import ExamCreateResponse
 from src.domain.responses.exams.exam_response import ExamResponse
 from src.domain.responses.exams.exams_list_response import ExamsListResponse
 from src.domain.responses.exams.publish_exam_response import PublishExamResponse
@@ -40,7 +39,6 @@ router = APIRouter(
 
 @router.post(
     "",
-    response_model=ExamCreateResponse,
     status_code=201,
     summary="Criar uma nova prova",
     description="Endpoint para professores criarem novas provas. Requer autenticação."

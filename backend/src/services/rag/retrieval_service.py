@@ -16,7 +16,7 @@ from src.errors.domain.sql_error import SqlError
 
 class RetrievalService(RetrievalServiceInterface):
     """
-    Serviço de busca semântica com filtros rígidos de metadados.
+    Serviço de busca semântica com filtro rígido de exam_uuid.
     
     CRÍTICO: SEMPRE filtra por exam_uuid para garantir isolamento
     entre provas (RAG de uma prova NÃO retorna material de outra).
@@ -40,14 +40,13 @@ class RetrievalService(RetrievalServiceInterface):
         Busca RAG com filtros rígidos.
         
         Garante que:
-        1. Apenas chunks da prova especificada são retornados
-        2. Disciplina corresponde exatamente
-        3. Tópico é informativo (não filtra)
+        1. Apenas chunks da prova especificada são retornados (filtro por exam_uuid)
+        2. Disciplina e tópico são informativos (não filtram)
         
         Args:
             query: Texto da questão ou resposta do aluno
             exam_uuid: FILTRO OBRIGATÓRIO (garante isolamento entre provas)
-            discipline: FILTRO OBRIGATÓRIO (garante contexto relevante)
+            discipline: Informativo (não filtra, apenas metadado)
             topic: Informativo (não filtra, apenas metadado)
             k: Top-K resultados (padrão: settings.RAG_TOP_K)
             min_relevance: Score mínimo para incluir resultado (0.0 a 1.0)
@@ -87,11 +86,10 @@ class RetrievalService(RetrievalServiceInterface):
             return []
         
         # Filtros de metadados (ChromaDB where clause)
+        # CRÍTICO: Filtrar apenas por exam_uuid garante isolamento total entre provas
+        # (discipline pode variar e não é necessário para isolamento)
         metadata_filter = {
-            "$and": [
-                {"exam_uuid": {"$eq": str(exam_uuid)}},
-                {"discipline": {"$eq": discipline}}
-            ]
+            "exam_uuid": {"$eq": str(exam_uuid)}
         }
         
         try:
