@@ -10,13 +10,15 @@ interface ExamCardProps {
 const statusConfig: Record<ExamStatus, { label: string; className: string }> = {
   DRAFT: { label: 'Rascunho', className: 'bg-slate-100 text-slate-700' },
   PUBLISHED: { label: 'Publicada', className: 'bg-emerald-100 text-emerald-700' },
-  ARCHIVED: { label: 'Arquivada', className: 'bg-amber-100 text-amber-700' },
-  FINISHED: { label: 'Finalizada', className: 'bg-blue-100 text-blue-700' },
+  GRADED: { label: 'Corrigida', className: 'bg-blue-100 text-blue-700' },
+  WARNING: { label: 'Aviso de Correção', className: 'bg-amber-100 text-amber-700' },
+  ARCHIVED: { label: 'Arquivada', className: 'bg-slate-200 text-slate-700' },
+  FINISHED: { label: 'Finalizada', className: 'bg-slate-200 text-slate-700' },
 };
 
 export const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
   const navigate = useNavigate();
-  const { deleteExam, updateExamData, isLoading } = useExams();
+  const { deleteExam, publishExam, isLoading } = useExams();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const handleViewDetails = () => {
@@ -25,8 +27,7 @@ export const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
 
   const handlePublish = async () => {
     try {
-      await updateExamData(exam.uuid, { status: 'PUBLISHED' });
-      // O estado será atualizado automaticamente através do store
+      await publishExam(exam.uuid);
     } catch (error) {
       console.error('Erro ao publicar prova:', error);
       alert('Erro ao publicar prova. Tente novamente.');
@@ -51,7 +52,10 @@ export const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
     setShowDeleteConfirm(false);
   };
 
-  const statusInfo = statusConfig[exam.status];
+  const statusInfo = statusConfig[exam.status] || {
+    label: exam.status || 'Desconhecido',
+    className: 'bg-slate-100 text-slate-700',
+  };
 
   return (
     <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">

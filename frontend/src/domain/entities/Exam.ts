@@ -1,4 +1,4 @@
-export type ExamStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' | 'FINISHED';
+export type ExamStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' | 'FINISHED' | 'GRADED' | 'WARNING';
 
 export interface Exam {
   uuid: string;
@@ -36,4 +36,11 @@ export interface UpdateExamDTO {
 export interface ExamListResponse {
   exams: Exam[];
   total: number;
+}
+
+export interface PublishExamResponse {
+  message: string;
+  exam_uuid: string;
+  status: ExamStatus;
+  next_steps: string[];
 }

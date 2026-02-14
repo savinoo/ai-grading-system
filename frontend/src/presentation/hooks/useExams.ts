@@ -8,6 +8,7 @@ import { GetTeacherExamsUseCase } from '@application/use-cases/exams/GetTeacherE
 import { GetExamByUuidUseCase } from '@application/use-cases/exams/GetExamByUuidUseCase';
 import { UpdateExamUseCase } from '@application/use-cases/exams/UpdateExamUseCase';
 import { DeleteExamUseCase } from '@application/use-cases/exams/DeleteExamUseCase';
+import { PublishExamUseCase } from '@application/use-cases/exams/PublishExamUseCase';
 
 // Use Cases - Criteria
 import { ListGradingCriteriaUseCase } from '@application/use-cases/criteria/ListGradingCriteriaUseCase';
@@ -26,6 +27,9 @@ import { LocalStorageService } from '@infrastructure/services/LocalStorageServic
 import { CreateExamDTO, UpdateExamDTO } from '@domain/entities/Exam';
 import { CreateExamCriteriaDTO, UpdateExamCriteriaDTO } from '@domain/entities/Criteria';
 
+// Utils
+import { extractErrorMessage } from '@infrastructure/utils/errorUtils';
+
 // Dependency Injection
 const storageService = new LocalStorageService();
 const httpClient = new HttpClient(storageService);
@@ -38,6 +42,7 @@ const getTeacherExamsUseCase = new GetTeacherExamsUseCase(examRepository);
 const getExamByUuidUseCase = new GetExamByUuidUseCase(examRepository);
 const updateExamUseCase = new UpdateExamUseCase(examRepository);
 const deleteExamUseCase = new DeleteExamUseCase(examRepository);
+const publishExamUseCase = new PublishExamUseCase(examRepository);
 
 // Criteria Use Cases
 const listGradingCriteriaUseCase = new ListGradingCriteriaUseCase(criteriaRepository);
@@ -81,7 +86,7 @@ export const useExams = () => {
       addExam(newExam);
       return newExam;
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || 'Erro ao criar prova';
+      const errorMessage = extractErrorMessage(err, 'Erro ao criar prova');
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
@@ -103,7 +108,7 @@ export const useExams = () => {
       setExams(response.exams);
       return response;
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || 'Erro ao carregar provas';
+      const errorMessage = extractErrorMessage(err, 'Erro ao carregar provas');
       setError(errorMessage);
       console.error('Erro ao carregar provas:', err);
     } finally {
@@ -120,7 +125,7 @@ export const useExams = () => {
       setCurrentExam(exam);
       return exam;
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || 'Erro ao carregar detalhes da prova';
+      const errorMessage = extractErrorMessage(err, 'Erro ao carregar detalhes da prova');
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
@@ -142,7 +147,7 @@ export const useExams = () => {
       
       return updatedExam;
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || 'Erro ao atualizar prova';
+      const errorMessage = extractErrorMessage(err, 'Erro ao atualizar prova');
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
@@ -165,13 +170,35 @@ export const useExams = () => {
         setCurrentExam(null);
       }
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || 'Erro ao deletar prova';
+      const errorMessage = extractErrorMessage(err, 'Erro ao deletar prova');
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
       setLoading(false);
     }
   }, [currentExam, setExams, setCurrentExam, setLoading, setError]);
+
+  const publishExam = useCallback(async (examUuid: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await publishExamUseCase.execute(examUuid);
+      updateExam(examUuid, { status: response.status });
+
+      if (currentExam?.uuid === examUuid) {
+        setCurrentExam({ ...currentExam, status: response.status });
+      }
+
+      return response;
+    } catch (err: any) {
+      const errorMessage = extractErrorMessage(err, 'Erro ao publicar prova');
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  }, [currentExam, updateExam, setCurrentExam, setLoading, setError]);
 
   // ==================== GRADING CRITERIA OPERATIONS ====================
 
@@ -184,7 +211,7 @@ export const useExams = () => {
       setGradingCriteria(criteria);
       return criteria;
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || 'Erro ao carregar critérios de avaliação';
+      const errorMessage = extractErrorMessage(err, 'Erro ao carregar critérios de avaliação');
       setError(errorMessage);
       console.error('Erro ao carregar critérios:', err);
       throw new Error(errorMessage);
@@ -206,7 +233,7 @@ export const useExams = () => {
       setExamCriteria(criteria);
       return criteria;
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || 'Erro ao carregar critérios da prova';
+      const errorMessage = extractErrorMessage(err, 'Erro ao carregar critérios da prova');
       setError(errorMessage);
       console.error('Erro ao carregar critérios da prova:', err);
       throw new Error(errorMessage);
@@ -226,7 +253,7 @@ export const useExams = () => {
       addExamCriteria(newCriteria);
       return newCriteria;
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || 'Erro ao adicionar critério';
+      const errorMessage = extractErrorMessage(err, 'Erro ao adicionar critério');
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
@@ -243,7 +270,7 @@ export const useExams = () => {
       updateExamCriteria(criteriaUuid, updatedCriteria);
       return updatedCriteria;
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || 'Erro ao atualizar critério';
+      const errorMessage = extractErrorMessage(err, 'Erro ao atualizar critério');
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
@@ -259,7 +286,7 @@ export const useExams = () => {
       await deleteExamCriteriaUseCase.execute(criteriaUuid);
       removeExamCriteria(criteriaUuid);
     } catch (err: any) {
-      const errorMessage = err.response?.data?.detail || 'Erro ao remover critério';
+      const errorMessage = extractErrorMessage(err, 'Erro ao remover critério');
       setError(errorMessage);
       throw new Error(errorMessage);
     } finally {
@@ -282,6 +309,7 @@ export const useExams = () => {
     loadExamDetails,
     updateExamData,
     deleteExam,
+    publishExam,
     
     // Grading Criteria Operations
     loadGradingCriteria,

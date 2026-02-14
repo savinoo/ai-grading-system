@@ -3,6 +3,7 @@ import {
   CreateExamDTO,
   UpdateExamDTO,
   ExamListResponse,
+  PublishExamResponse,
 } from '../entities/Exam';
 
 export interface IExamRepository {
@@ -20,6 +21,8 @@ export interface IExamRepository {
   getExamByUuid(examUuid: string): Promise<Exam>;
 
   updateExam(examUuid: string, data: UpdateExamDTO): Promise<Exam>;
+
+  publishExam(examUuid: string): Promise<PublishExamResponse>;
 
   deleteExam(examUuid: string): Promise<void>;
 }

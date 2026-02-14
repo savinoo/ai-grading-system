@@ -5,6 +5,7 @@ import {
   CreateExamDTO,
   UpdateExamDTO,
   ExamListResponse,
+  PublishExamResponse,
 } from '../../domain/entities/Exam';
 
 export class ExamRepository implements IExamRepository {
@@ -47,6 +48,13 @@ export class ExamRepository implements IExamRepository {
 
   async updateExam(examUuid: string, data: UpdateExamDTO): Promise<Exam> {
     const response = await this.httpClient.patch<Exam>(`/exams/${examUuid}`, data);
+    return response;
+  }
+
+  async publishExam(examUuid: string): Promise<PublishExamResponse> {
+    const response = await this.httpClient.post<PublishExamResponse>(
+      `/exams/${examUuid}/publish`
+    );
     return response;
   }
 

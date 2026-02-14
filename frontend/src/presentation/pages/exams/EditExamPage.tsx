@@ -6,6 +6,7 @@ import { QuestionsStep } from '@presentation/components/exams/QuestionsStep';
 import { useExams, useClasses, useQuestions, useStudents, useAttachments } from '@presentation/hooks';
 import { FileUpload } from '@presentation/components/attachments/FileUpload';
 import { AttachmentList } from '@presentation/components/attachments/AttachmentList';
+import { PublishSuccessModal } from '@presentation/components/exams/PublishSuccessModal';
 import { GradingCriteria } from '@domain/models';
 
 interface CriteriaFormItem {
@@ -22,6 +23,7 @@ export const EditExamPage: React.FC = () => {
 
   const {
     createExam,
+    publishExam,
     createCriteria,
     updateCriteria,
     deleteCriteria,
@@ -75,6 +77,8 @@ export const EditExamPage: React.FC = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [isUploadingFile, setIsUploadingFile] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [publishMessage, setPublishMessage] = useState<string | null>(null);
+  const [publishNextSteps, setPublishNextSteps] = useState<string[]>([]);
 
   // Carregar dados iniciais
   useEffect(() => {
@@ -337,7 +341,16 @@ export const EditExamPage: React.FC = () => {
       return;
     }
 
-    navigate(`/dashboard/exams/${createdExamUuid}`);
+    try {
+      setIsSaving(true);
+      const response = await publishExam(createdExamUuid);
+      setPublishMessage(response.message);
+      setPublishNextSteps(response.next_steps);
+    } catch (error) {
+      console.error('Erro ao publicar prova:', error);
+      alert('Erro ao publicar prova. Tente novamente.');
+      setIsSaving(false);
+    }
   };
 
   const handleCreateQuestion = async (questionData: any) => {
@@ -936,6 +949,22 @@ export const EditExamPage: React.FC = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Modal de Sucesso na Publicação */}
+      {publishMessage && createdExamUuid && (
+        <PublishSuccessModal
+          message={publishMessage}
+          nextSteps={publishNextSteps}
+          examUuid={createdExamUuid}
+          onClose={() => navigate('/dashboard/exams')}
+          onStatusChange={(newStatus) => {
+            console.log('Status da prova atualizado para:', newStatus);
+            if (newStatus === 'WARNING') {
+              // Manter a modal aberta para o usuário ver o aviso
+            }
+          }}
+        />
       )}
     </DashboardLayout>
   );
