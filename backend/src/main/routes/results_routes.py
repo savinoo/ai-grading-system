@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
-from typing import List
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse

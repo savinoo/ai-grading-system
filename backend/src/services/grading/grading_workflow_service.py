@@ -462,16 +462,16 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             # exam_criterion.grading_criteria já vem carregado (lazy="joined")
             grading_criterion = exam_criterion.grading_criteria
             
-            # Calcular max_score: usar max_points se definido, senão weight * points da questão
+            # Calcular max_score: usar max_points se definido, senão (weight/100) * points da questão
             max_score = exam_criterion.max_points if exam_criterion.max_points else (
-                float(exam_criterion.weight) * float(question_entity.points)
+                (float(exam_criterion.weight) / 100.0) * float(question_entity.points)
             )
             
             rubric.append(
                 EvaluationCriterion(
                     name=grading_criterion.code,  # Usar code como identificador
                     description=grading_criterion.description or grading_criterion.name,
-                    weight=float(exam_criterion.weight),
+                    weight=float(exam_criterion.weight) / 100.0,  # Converter porcentagem para decimal
                     max_score=float(max_score)
                 )
             )

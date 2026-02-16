@@ -263,23 +263,14 @@ class ResultsService(ResultsServiceInterface):
         # Esta funcionalidade será implementada quando a persistência do RAG for adicionada
         rag_context = []
         
-        # Calcular max_score da questão baseado nos critérios
-        try:
-            exam_criteria_list = self.__exam_criteria_repository.get_by_exam(db, answer.exam_uuid)
-            total_max_score = sum(
-                float(ec.max_points) if ec.max_points else 0.0
-                for ec in exam_criteria_list
-            )
-            question_max_score = total_max_score if total_max_score > 0 else 10.0
-        except Exception:
-            question_max_score = 10.0
-            logger.warning("Não foi possível calcular max_score da questão: %s", question.uuid)
+        # Usar pontuação da questão (não somar critérios)
+        question_max_score = float(question.points) if question.points else 10.0
         
         return GradingDetailsResponse(
             answer_uuid=answer_uuid,
             student=StudentInfo(
                 uuid=student.uuid,
-                name=student.name,
+                name=student.full_name,
                 email=student.email
             ),
             question=QuestionInfo(
@@ -340,17 +331,8 @@ class ResultsService(ResultsServiceInterface):
             scores = [a.score for a in answers if a.score is not None]
             
             if scores:
-                # Calcular max_score da questão baseado nos critérios
-                try:
-                    exam_criteria_list = self.__exam_criteria_repository.get_by_exam(db, exam_uuid)
-                    total_max_score = sum(
-                        float(ec.max_points) if ec.max_points else 0.0
-                        for ec in exam_criteria_list
-                    )
-                    question_max_score = total_max_score if total_max_score > 0 else 10.0
-                except Exception:
-                    question_max_score = 10.0
-                    logger.warning("Não foi possível calcular max_score da questão %s", question.uuid)
+                # Usar pontuação da questão
+                question_max_score = float(question.points) if question.points else 10.0
                 
                 # NOTA: arbiter_count requer tabela de logs de arbitração
                 arbiter_count_question = 0
