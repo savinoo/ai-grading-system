@@ -26,6 +26,7 @@ from src.main.routes.exam_criteria_routes import router as exam_criteria_router
 from src.main.routes.exam_questions_routes import router as exam_questions_router
 from src.main.routes.exam_question_criteria_override_routes import router as question_criteria_override_router
 from src.main.routes.student_answers_routes import router as student_answers_router
+from src.main.routes.results_routes import router as results_router
 
 # Configura o logging conforme as configurações
 setup_logging()
@@ -139,3 +140,4 @@ app.include_router(student_answers_router)
 app.include_router(attachments_router)
 app.include_router(grading_criteria_router)
 app.include_router(exam_criteria_router)
+app.include_router(results_router)

@@ -39,8 +39,9 @@ class ChunkingService(ChunkingServiceInterface):
             is_separator_regex=False
         )
         
-        self.__logger.info(
-            "ChunkingService inicializado",
+        # Log movido para primeiro uso (evita log antes de background task)
+        self.__logger.debug(
+            "ChunkingService configurado",
             extra={
                 "chunk_size": chunk_size,
                 "chunk_overlap": chunk_overlap

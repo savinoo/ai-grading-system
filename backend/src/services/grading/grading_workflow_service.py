@@ -58,8 +58,13 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
         self.__exam_question_repository = exam_question_repository
         self.__grading_criteria_repository = grading_criteria_repository
         self.__exam_criteria_repository = exam_criteria_repository
-        self.__graph = get_grading_graph()
+        self.__graph = None  # Lazy initialization
         self.__logger = get_logger(__name__)
+    
+    def _ensure_graph_initialized(self):
+        """Lazy initialization do grafo (só compila quando usar)."""
+        if self.__graph is None:
+            self.__graph = get_grading_graph()
     
     async def grade_single_answer(
         self,
@@ -96,6 +101,9 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             "Iniciando workflow LangGraph: aluno=%s, questão=%s",
             student_answer.student_id, question.id
         )
+        
+        # === Garantir que o grafo está inicializado ===
+        self._ensure_graph_initialized()
         
         # === Criar estado inicial ===
         initial_state: GradingState = {
