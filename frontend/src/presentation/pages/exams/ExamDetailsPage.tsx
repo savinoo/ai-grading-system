@@ -209,8 +209,18 @@ export const ExamDetailsPage: React.FC = () => {
               </div>
             </div>
 
-            {isDraft && (
-              <div className="flex gap-3">
+            <div className="flex gap-3">
+              {(currentExam.status === 'GRADED' || currentExam.status === 'WARNING') && (
+                <Button
+                  onClick={() => navigate(`/dashboard/exams/${examUuid}/review`)}
+                  variant="primary"
+                >
+                  <span className="material-symbols-outlined mr-2">rate_review</span>
+                  Revisar Correção
+                </Button>
+              )}
+              
+              {isDraft && (
                 <Button
                   onClick={() => navigate(`/dashboard/exams/${examUuid}/edit`)}
                   variant="secondary"
@@ -218,8 +228,8 @@ export const ExamDetailsPage: React.FC = () => {
                   <span className="material-symbols-outlined mr-2">edit</span>
                   Editar Prova
                 </Button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
 

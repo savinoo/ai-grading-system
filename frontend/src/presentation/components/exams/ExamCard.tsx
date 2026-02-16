@@ -97,6 +97,17 @@ export const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
             Ver Detalhes
           </button>
           
+          {(exam.status === 'GRADED' || exam.status === 'WARNING') && (
+            <button
+              onClick={() => navigate(`/dashboard/exams/${exam.uuid}/review`)}
+              className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors flex items-center gap-2"
+              title="Revisar correção da IA"
+            >
+              <span className="material-symbols-outlined text-base">rate_review</span>
+              Revisar Correção
+            </button>
+          )}
+          
           {exam.status === 'DRAFT' && (
             <>
               <button
