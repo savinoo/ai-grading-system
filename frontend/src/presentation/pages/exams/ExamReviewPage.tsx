@@ -40,22 +40,6 @@ export const ExamReviewPage: React.FC = () => {
     enabled: !!examUuid,
   });
 
-  // Mutation para aceitar sugestão
-  const acceptSuggestionMutation = useMutation({
-    mutationFn: reviewService.acceptSuggestion,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['exam-review', examUuid] });
-    },
-  });
-
-  // Mutation para rejeitar sugestão
-  const rejectSuggestionMutation = useMutation({
-    mutationFn: reviewService.rejectSuggestion,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['exam-review', examUuid] });
-    },
-  });
-
   // Mutation para ajustar nota
   const adjustGradeMutation = useMutation({
     mutationFn: reviewService.adjustGrade,
@@ -73,21 +57,6 @@ export const ExamReviewPage: React.FC = () => {
     },
   });
 
-  // Handlers
-  const handleAcceptSuggestion = (answerUuid: string, suggestionId: string) => {
-    console.log('🟢 Aceitar sugestão clicado:', { answerUuid, suggestionId });
-    acceptSuggestionMutation.mutate({ answer_uuid: answerUuid, suggestion_id: suggestionId });
-  };
-
-  const handleRejectSuggestion = (answerUuid: string, suggestionId: string) => {
-    console.log('🔴 Rejeitar sugestão clicado:', { answerUuid, suggestionId });
-    const reason = prompt('Motivo da rejeição (opcional):');
-    rejectSuggestionMutation.mutate({
-      answer_uuid: answerUuid,
-      suggestion_id: suggestionId,
-      reason: reason || undefined,
-    });
-  };
 
   const handleOpenAdjustModal = (answer: StudentAnswerReview) => {
     setNewScore(answer.score || 0);
@@ -357,59 +326,7 @@ export const ExamReviewPage: React.FC = () => {
         {/* Coluna Direita - Análise */}
         <aside className="w-[480px] bg-slate-50 dark:bg-slate-900 flex flex-col border-l border-slate-200 dark:border-slate-700 overflow-y-auto">
           <div className="p-6 space-y-6">
-            {/* Sugestões da IA */}
-            {currentAnswer.ai_suggestions.length > 0 ? (
-              currentAnswer.ai_suggestions.map((suggestion) => (
-                <div key={suggestion.suggestion_id} className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 rounded-xl p-5">
-                  <div className="flex justify-between items-start mb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="material-symbols-outlined text-indigo-600 text-sm">info</span>
-                      <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">
-                        {suggestion.type === 'feedback' ? 'Sugestão de Feedback' : 'Ajuste de Nota'}
-                      </span>
-                    </div>
-                    <span className="text-xs font-semibold text-slate-500">
-                      Confiança: {Math.round(suggestion.confidence * 100)}%
-                    </span>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="p-2.5 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700 text-sm">
-                      {suggestion.content}
-                    </div>
-                    {suggestion.reasoning && (
-                      <div>
-                        <p className="text-xs font-semibold text-slate-500 uppercase mb-1">Raciocínio da IA</p>
-                        <p className="text-sm text-slate-700 dark:text-slate-400 leading-relaxed">
-                          {suggestion.reasoning}
-                        </p>
-                      </div>
-                    )}
-                    <div className="flex gap-2 pt-2">
-                      <button
-                        onClick={() => handleAcceptSuggestion(currentAnswer.answer_uuid, suggestion.suggestion_id)}
-                        disabled={acceptSuggestionMutation.isPending || suggestion.accepted}
-                        className="flex-1 py-1.5 bg-white dark:bg-slate-800 border border-green-500 text-green-600 rounded text-xs font-bold hover:bg-green-50 transition-colors disabled:opacity-50"
-                      >
-                        {suggestion.accepted ? 'Aceita' : 'Aceitar'}
-                      </button>
-                      <button
-                        onClick={() => handleRejectSuggestion(currentAnswer.answer_uuid, suggestion.suggestion_id)}
-                        disabled={rejectSuggestionMutation.isPending || suggestion.accepted}
-                        className="flex-1 py-1.5 bg-white dark:bg-slate-800 border border-red-500 text-red-600 rounded text-xs font-bold hover:bg-red-50 transition-colors disabled:opacity-50"
-                      >
-                        Rejeitar
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="text-center py-8 text-slate-500">
-                <span className="material-symbols-outlined text-4xl mb-2 block">check_circle</span>
-                <p className="text-sm">Nenhuma sugestão da IA para esta resposta</p>
-              </div>
-            )}
-
+            
             {/* Rubrica Dinâmica */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
