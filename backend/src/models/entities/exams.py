@@ -28,7 +28,7 @@ class Exams(Base):
     __tablename__ = "exams"
     __table_args__ = (
         CheckConstraint(
-            "status IN ('DRAFT','PUBLISHED','ARCHIVED','FINISHED','WARNING','GRADED')",
+            "status IN ('DRAFT','ACTIVE','GRADING','GRADED','FINALIZED','PUBLISHED','ARCHIVED')",
             "chk_exams_status",
         ), 
         CheckConstraint(

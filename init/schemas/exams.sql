@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS public.exams (
   description TEXT NULL,
 
   created_by UUID NULL, -- opcional: users.uuid (quem criou)
-  status VARCHAR(50) NOT NULL DEFAULT 'DRAFT', -- DRAFT, PUBLISHED, ARCHIVED, FINISHED
+  status VARCHAR(50) NOT NULL DEFAULT 'DRAFT', -- DRAFT, ACTIVE, GRADING, GRADED, FINALIZED, PUBLISHED, ARCHIVED
   class_uuid UUID null,
 
   starts_at TIMESTAMPTZ NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS public.exams (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   
   CONSTRAINT uq_exams_uuid UNIQUE (uuid),
-  CONSTRAINT chk_exams_status CHECK (status IN ('DRAFT','PUBLISHED','ARCHIVED', 'FINISHED')),
+  CONSTRAINT chk_exams_status CHECK (status IN ('DRAFT','ACTIVE','GRADING','GRADED','FINALIZED','PUBLISHED','ARCHIVED')),
   CONSTRAINT chk_exams_window CHECK (
     starts_at IS NULL OR ends_at IS NULL OR starts_at < ends_at
   ),

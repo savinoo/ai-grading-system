@@ -1,13 +1,8 @@
-"""
-Controller para rejeitar sugestão da IA.
-"""
-
 from uuid import UUID
 from typing import Any, Dict
 from sqlalchemy.orm import Session
 
-from src.interfaces.services.reviews.review_service_interface import ReviewServiceInterface
-from src.domain.requests.reviews import RejectSuggestionRequest
+from src.interfaces.services.reviews.answer_approval_service_interface import AnswerApprovalServiceInterface
 from src.core.logging_config import get_logger
 from src.domain.http.caller_domains import CallerMeta
 
@@ -15,30 +10,30 @@ from src.domain.http.caller_domains import CallerMeta
 logger = get_logger(__name__)
 
 
-class RejectSuggestionController:
-    """Controller para POST /reviews/suggestions/reject"""
+class ApproveAnswerController:
+    """Controller para POST /reviews/approve-answer/{answer_uuid}"""
     
-    def __init__(self, review_service: ReviewServiceInterface):
-        self.__review_service = review_service
+    def __init__(self, approval_service: AnswerApprovalServiceInterface):
+        self.__approval_service = approval_service
     
     def handle(
         self,
         db: Session,
-        request: RejectSuggestionRequest,
+        answer_uuid: str,
         token_infos: Dict[str, Any],
         caller_meta: CallerMeta
     ) -> dict:
         """
-        Rejeita uma sugestão da IA.
+        Aprova uma resposta individual, marcando como finalizada.
         
         Args:
             db: Sessão do banco de dados
-            request: Dados da solicitação
+            answer_uuid: UUID da resposta a ser aprovada
             token_infos: Informações do token JWT
             caller_meta: Metadados da chamada
             
         Returns:
-            Dict com mensagem de sucesso
+            Dict com mensagem de sucesso e dados da resposta
         """
         
         user_uuid = token_infos.get("sub")
@@ -47,19 +42,18 @@ class RejectSuggestionController:
             raise ValueError("Token inválido")
         
         logger.info(
-            "Rejeitando sugestão %s para resposta %s - Usuário: %s - IP: %s",
-            request.suggestion_id,
-            request.answer_uuid,
+            "Aprovando resposta %s - Usuário: %s - IP: %s",
+            answer_uuid,
             user_uuid,
             caller_meta.ip
         )
         
-        response = self.__review_service.reject_suggestion(
+        response = self.__approval_service.approve_answer(
             db=db,
-            request=request,
+            answer_uuid=UUID(answer_uuid),
             user_uuid=UUID(user_uuid)
         )
         
-        logger.info("Sugestão rejeitada com sucesso")
+        logger.info("Resposta aprovada com sucesso")
         
         return response

@@ -7,22 +7,6 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
-
-class AcceptSuggestionRequest(BaseModel):
-    """Request para aceitar uma sugestão da IA."""
-    
-    answer_uuid: UUID = Field(..., description="UUID da resposta")
-    suggestion_id: str = Field(..., description="ID da sugestão", examples=["sug_1"])
-
-
-class RejectSuggestionRequest(BaseModel):
-    """Request para rejeitar uma sugestão da IA."""
-    
-    answer_uuid: UUID = Field(..., description="UUID da resposta")
-    suggestion_id: str = Field(..., description="ID da sugestão", examples=["sug_1"])
-    reason: Optional[str] = Field(None, description="Motivo da rejeição")
-
-
 class AdjustGradeRequest(BaseModel):
     """Request para ajustar nota manualmente."""
     

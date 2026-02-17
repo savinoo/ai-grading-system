@@ -1,7 +1,3 @@
-"""
-Rotas para dashboard do professor.
-"""
-
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Request, Query
 
@@ -11,7 +7,7 @@ from src.core.logging_config import get_logger
 # Response Models
 from src.domain.responses.dashboard.dashboard_stats_response import DashboardStatsResponse
 
-from src.main.composers.dashboard.get_dashboard_stats_composer import make_get_dashboard_stats_controller
+from src.main.composer.dashboard_composer import make_get_dashboard_stats_controller
 
 from src.main.dependencies.request_meta import get_caller_meta
 from src.main.dependencies.get_db_session import get_db

@@ -1,12 +1,8 @@
-"""
-Controller para buscar dados de revisão de uma prova.
-"""
-
 from uuid import UUID
 from typing import Any, Dict
 from sqlalchemy.orm import Session
 
-from src.interfaces.services.reviews.review_service_interface import ReviewServiceInterface
+from src.interfaces.services.reviews.exam_review_query_service_interface import ExamReviewQueryServiceInterface
 from src.domain.responses.reviews import ExamReviewResponse
 from src.core.logging_config import get_logger
 from src.domain.http.caller_domains import CallerMeta
@@ -18,8 +14,8 @@ logger = get_logger(__name__)
 class GetExamReviewController:
     """Controller para GET /exams/{exam_uuid}/review"""
     
-    def __init__(self, review_service: ReviewServiceInterface):
-        self.__review_service = review_service
+    def __init__(self, query_service: ExamReviewQueryServiceInterface):
+        self.__query_service = query_service
     
     def handle(
         self,
@@ -53,7 +49,7 @@ class GetExamReviewController:
             caller_meta.ip
         )
         
-        response = self.__review_service.get_exam_review(
+        response = self.__query_service.get_exam_review(
             db=db,
             exam_uuid=exam_uuid,
             user_uuid=UUID(user_uuid)

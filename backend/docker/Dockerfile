@@ -53,7 +53,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 # Labels
 LABEL maintainer="lulosavino@gmail.com, maycon.fernandes9@gmail.com" \
     version="1.0" \
-    description="AvaliaAI Backend API"
+    description="CorretumAI Backend API"
 
 CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", \
     "src.main.server.server:app", \

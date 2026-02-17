@@ -1,7 +1,3 @@
-"""
-Composer para controller de estatísticas do dashboard.
-"""
-
 from src.controllers.dashboard.get_dashboard_stats_controller import GetDashboardStatsController
 from src.services.dashboard.dashboard_service import DashboardService
 

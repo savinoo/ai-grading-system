@@ -36,7 +36,7 @@ logger = get_logger(__name__)
 
 
 app = FastAPI(
-    title="AvaliaAI API",
+    title="CorretumAI API",
     version="1.0.0",
     debug=(settings.ENV != "prd")
 )
@@ -48,7 +48,7 @@ async def startup_event():
     """
     Inicialização de recursos ao iniciar a aplicação.
     """
-    logger.info("Iniciando aplicação AvaliaAI")
+    logger.info("Iniciando aplicação CorretumAI")
     
     # Configurar DSPy globalmente
     try:

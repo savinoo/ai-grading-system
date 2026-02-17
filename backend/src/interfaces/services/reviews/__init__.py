@@ -1,7 +1,9 @@
-"""
-Review service interfaces.
-"""
+from .exam_review_query_service_interface import ExamReviewQueryServiceInterface
+from .grade_adjustment_service_interface import GradeAdjustmentServiceInterface
+from .review_finalization_service_interface import ReviewFinalizationServiceInterface
 
-from .review_service_interface import ReviewServiceInterface
-
-__all__ = ["ReviewServiceInterface"]
+__all__ = [
+    "ExamReviewQueryServiceInterface",
+    "GradeAdjustmentServiceInterface",
+    "ReviewFinalizationServiceInterface"
+]

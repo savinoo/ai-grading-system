@@ -21,18 +21,6 @@ class CriterionScore(BaseModel):
     weighted_score: Optional[float] = Field(None, description="Pontuação ponderada")
     feedback: Optional[str] = Field(None, description="Feedback específico do critério")
 
-
-class AISuggestion(BaseModel):
-    """Sugestão da IA para uma resposta."""
-    
-    suggestion_id: str = Field(..., description="ID da sugestão", examples=["sug_1"])
-    type: str = Field(..., description="Tipo de sugestão", examples=["feedback", "score_adjustment"])
-    content: str = Field(..., description="Conteúdo da sugestão")
-    confidence: float = Field(..., description="Nível de confiança (0-1)", examples=[0.85])
-    reasoning: Optional[str] = Field(None, description="Raciocínio da IA")
-    accepted: bool = Field(False, description="Se foi aceita pelo professor")
-
-
 class StudentAnswerReview(BaseModel):
     """Resposta de um aluno para revisão."""
     
@@ -50,12 +38,7 @@ class StudentAnswerReview(BaseModel):
         default_factory=list,
         description="Scores por critério"
     )
-    
-    ai_suggestions: List[AISuggestion] = Field(
-        default_factory=list,
-        description="Sugestões da IA"
-    )
-    
+        
     graded_at: Optional[datetime] = Field(None, description="Data/hora da correção")
 
 

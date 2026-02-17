@@ -29,7 +29,7 @@ class StudentAnswer(Base):
     __tablename__ = "student_answers"
     __table_args__ = (
         CheckConstraint(
-            "status IN ('SUBMITTED','GRADED','INVALID')",
+            "status IN ('SUBMITTED','GRADED','FINALIZED','INVALID')",
             name="chk_student_answers_status",
         ),
         CheckConstraint(

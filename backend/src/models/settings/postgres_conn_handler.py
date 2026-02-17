@@ -21,7 +21,7 @@ engine = create_engine(
     echo=False,  # Desabilitar logging SQL em produção
     future=True,  # Usar SQLAlchemy 2.0 style
     connect_args={
-        "application_name": "AvaliaAI",  # Identificação da aplicação
+        "application_name": "CorretumAI",  # Identificação da aplicação
         "connect_timeout": 10,  # Timeout de conexão em segundos
         "options": "-c statement_timeout=30000",  # Timeout de statement (30s)
     },

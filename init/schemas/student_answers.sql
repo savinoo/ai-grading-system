@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS public.student_answers (
 
   answer TEXT NULL,
 
-  status VARCHAR(20) NOT NULL DEFAULT 'SUBMITTED', -- SUBMITTED, GRADED, INVALID
+  status VARCHAR(20) NOT NULL DEFAULT 'SUBMITTED', -- SUBMITTED, GRADED, FINALIZED, INVALID
   score NUMERIC(8,2) NULL,
   feedback TEXT NULL,
   graded_at TIMESTAMPTZ NULL,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS public.student_answers (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
   CONSTRAINT uq_student_answers_uuid UNIQUE (uuid),
-  CONSTRAINT chk_student_answers_status CHECK (status IN ('SUBMITTED','GRADED','INVALID')),
+  CONSTRAINT chk_student_answers_status CHECK (status IN ('SUBMITTED','GRADED','FINALIZED','INVALID')),
   CONSTRAINT chk_student_answers_score CHECK (score IS NULL OR score >= 0),
 
   CONSTRAINT fk_student_answers_exam

@@ -1,12 +1,8 @@
-"""
-Controller para ajustar nota manualmente.
-"""
-
 from uuid import UUID
 from typing import Any, Dict
 from sqlalchemy.orm import Session
 
-from src.interfaces.services.reviews.review_service_interface import ReviewServiceInterface
+from src.interfaces.services.reviews.grade_adjustment_service_interface import GradeAdjustmentServiceInterface
 from src.domain.requests.reviews import AdjustGradeRequest
 from src.core.logging_config import get_logger
 from src.domain.http.caller_domains import CallerMeta
@@ -18,8 +14,8 @@ logger = get_logger(__name__)
 class AdjustGradeController:
     """Controller para PUT /reviews/grades/adjust"""
     
-    def __init__(self, review_service: ReviewServiceInterface):
-        self.__review_service = review_service
+    def __init__(self, adjustment_service: GradeAdjustmentServiceInterface):
+        self.__adjustment_service = adjustment_service
     
     def handle(
         self,
@@ -54,7 +50,7 @@ class AdjustGradeController:
             caller_meta.ip
         )
         
-        response = self.__review_service.adjust_grade(
+        response = self.__adjustment_service.adjust_grade(
             db=db,
             request=request,
             user_uuid=UUID(user_uuid)

@@ -1,7 +1,3 @@
-"""
-Rotas para revisão de provas corrigidas.
-"""
-
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Request
 
@@ -13,18 +9,16 @@ from src.domain.responses.reviews import ExamReviewResponse
 
 # Request Models
 from src.domain.requests.reviews import (
-    AcceptSuggestionRequest,
-    RejectSuggestionRequest,
     AdjustGradeRequest,
     FinalizeReviewRequest
 )
 
 from src.main.composer.reviews_composer import (
     make_get_exam_review_controller,
-    make_accept_suggestion_controller,
-    make_reject_suggestion_controller,
     make_adjust_grade_controller,
-    make_finalize_review_controller
+    make_approve_answer_controller,
+    make_finalize_review_controller,
+    make_download_report_controller
 )
 
 from src.main.dependencies.request_meta import get_caller_meta
@@ -99,112 +93,9 @@ def get_exam_review(
         raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
 
 
-@router.post(
-    "/suggestions/accept",
-    status_code=200,
-    summary="Aceitar sugestão da IA",
-    description="Aceita uma sugestão da IA para uma resposta específica. Requer autenticação de professor."
-)
-def accept_suggestion(
-    request_body: AcceptSuggestionRequest,
-    request: Request,
-    caller: CallerMeta = Depends(get_caller_meta),
-    db=Depends(get_db),
-):
-    """
-    Endpoint para aceitar uma sugestão da IA.
-    
-    Args:
-        request_body: Dados da solicitação
-        request: Objeto de requisição FastAPI
-        caller: Metadados do chamador
-        db: Sessão do banco de dados
-        
-    Returns:
-        Dict com mensagem de sucesso
-    """
-    headers = request.headers
-    try:
-        auth_header = headers.get("Authorization") or headers.get("authorization") or ""
-        if not auth_header.startswith("Bearer "):
-            raise HTTPException(status_code=401, detail="Credenciais ausentes ou inválidas.")
-        token = auth_header.split(" ", 1)[1].strip()
-
-        token_infos = auth_jwt_verify(token, db, scope="teacher")
-    except HTTPException as e:
-        logger.error("Erro de autenticação: %s", str(e))
-        raise
-
-    controller = make_accept_suggestion_controller()
-
-    try:
-        response = controller.handle(
-            db=db,
-            request=request_body,
-            token_infos=token_infos,
-            caller_meta=caller
-        )
-        return response
-    except HTTPException as e:
-        logger.error("Erro ao aceitar sugestão: %s", str(e.detail))
-        raise
-    except Exception as e:
-        logger.exception("Erro inesperado ao aceitar sugestão")
-        raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
-
-
-@router.post(
-    "/suggestions/reject",
-    status_code=200,
-    summary="Rejeitar sugestão da IA",
-    description="Rejeita uma sugestão da IA para uma resposta específica. Requer autenticação de professor."
-)
-def reject_suggestion(
-    request_body: RejectSuggestionRequest,
-    request: Request,
-    caller: CallerMeta = Depends(get_caller_meta),
-    db=Depends(get_db),
-):
-    """
-    Endpoint para rejeitar uma sugestão da IA.
-    
-    Args:
-        request_body: Dados da solicitação
-        request: Objeto de requisição FastAPI
-        caller: Metadados do chamador
-        db: Sessão do banco de dados
-        
-    Returns:
-        Dict com mensagem de sucesso
-    """
-    headers = request.headers
-    try:
-        auth_header = headers.get("Authorization") or headers.get("authorization") or ""
-        if not auth_header.startswith("Bearer "):
-            raise HTTPException(status_code=401, detail="Credenciais ausentes ou inválidas.")
-        token = auth_header.split(" ", 1)[1].strip()
-
-        token_infos = auth_jwt_verify(token, db, scope="teacher")
-    except HTTPException as e:
-        logger.error("Erro de autenticação: %s", str(e))
-        raise
-
-    controller = make_reject_suggestion_controller()
-
-    try:
-        response = controller.handle(
-            db=db,
-            request=request_body,
-            token_infos=token_infos,
-            caller_meta=caller
-        )
-        return response
-    except HTTPException as e:
-        logger.error("Erro ao rejeitar sugestão: %s", str(e.detail))
-        raise
-    except Exception as e:
-        logger.exception("Erro inesperado ao rejeitar sugestão")
-        raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
+# TODO: Implementar accept_suggestion e reject_suggestion quando houver persistência de sugestões
+# @router.post("/suggestions/accept", ...)
+# @router.post("/suggestions/reject", ...)
 
 
 @router.put(
@@ -262,6 +153,63 @@ def adjust_grade(
 
 
 @router.post(
+    "/approve-answer/{answer_uuid}",
+    status_code=200,
+    summary="Aprovar resposta individual",
+    description="Aprova uma resposta individual, marcando-a como finalizada. Requer autenticação de professor."
+)
+def approve_answer(
+    answer_uuid: str,
+    request: Request,
+    caller: CallerMeta = Depends(get_caller_meta),
+    db=Depends(get_db),
+):
+    """
+    Endpoint para aprovar uma resposta individual.
+    
+    Args:
+        answer_uuid: UUID da resposta a ser aprovada
+        request: Objeto de requisição FastAPI
+        caller: Metadados do chamador
+        db: Sessão do banco de dados
+        
+    Returns:
+        Dict com mensagem de sucesso e dados da resposta
+    """
+    headers = request.headers
+    try:
+        auth_header = headers.get("Authorization") or headers.get("authorization") or ""
+        if not auth_header.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Credenciais ausentes ou inválidas.")
+        token = auth_header.split(" ", 1)[1].strip()
+
+        token_infos = auth_jwt_verify(token, db, scope="teacher")
+    except HTTPException as e:
+        logger.error("Erro de autenticação: %s", str(e))
+        raise
+
+    controller = make_approve_answer_controller()
+
+    try:
+        response = controller.handle(
+            db=db,
+            answer_uuid=answer_uuid,
+            token_infos=token_infos,
+            caller_meta=caller
+        )
+        return response
+    except HTTPException as e:
+        logger.error("Erro ao aprovar resposta: %s", str(e.detail))
+        raise
+    except ValueError as e:
+        logger.error("UUID inválido: %s", str(e))
+        raise HTTPException(status_code=400, detail="UUID inválido") from e
+    except Exception as e:
+        logger.exception("Erro inesperado ao aprovar resposta")
+        raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
+
+
+@router.post(
     "/finalize",
     status_code=200,
     summary="Finalizar revisão",
@@ -312,4 +260,31 @@ def finalize_review(
         raise
     except Exception as e:
         logger.exception("Erro inesperado ao finalizar revisão")
+        raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
+
+
+@router.get(
+    "/download/{filename}",
+    status_code=200,
+    summary="Download de relatório de notas",
+    description="Faz download de um relatório Excel com as notas dos alunos."
+)
+def download_report(filename: str):
+    """
+    Endpoint para download de relatório.
+    
+    Args:
+        filename: Nome do arquivo a ser baixado
+        
+    Returns:
+        FileResponse com arquivo Excel
+    """
+    controller = make_download_report_controller()
+    
+    try:
+        return controller.handle(filename=filename)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.exception("Erro inesperado ao fazer download de relatório")
         raise HTTPException(status_code=500, detail="Erro interno do servidor") from e

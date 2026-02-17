@@ -7,7 +7,6 @@ from .exam_review_response import (
     QuestionReview,
     StudentAnswerReview,
     CriterionScore,
-    AISuggestion
 )
 
 __all__ = [
@@ -15,5 +14,4 @@ __all__ = [
     "QuestionReview",
     "StudentAnswerReview",
     "CriterionScore",
-    "AISuggestion"
 ]
