@@ -138,6 +138,80 @@ class StudentAnswerRepositoryInterface(ABC):
         raise NotImplementedError()
 
     @abstractmethod
+    def count_by_exam_and_graded(self, db: Session, exam_uuid: UUID, is_graded: bool) -> int:
+        """
+        Conta respostas de uma prova por status de correção.
+        
+        Args:
+            db: Sessão do banco de dados
+            exam_uuid: UUID da prova
+            is_graded: True para contar corrigidas, False para não corrigidas
+            
+        Returns:
+            int: Total de respostas
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def count_by_exam_and_status(self, db: Session, exam_uuid: UUID, status: str) -> int:
+        """
+        Conta respostas de uma prova por status.
+        
+        Args:
+            db: Sessão do banco de dados
+            exam_uuid: UUID da prova
+            status: Status da resposta
+            
+        Returns:
+            int: Total de respostas com o status especificado
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def count_by_teacher(self, db: Session, teacher_uuid: UUID) -> int:
+        """
+        Conta total de respostas de provas de um professor.
+        
+        Args:
+            db: Sessão do banco de dados
+            teacher_uuid: UUID do professor
+            
+        Returns:
+            int: Total de respostas
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def count_by_teacher_and_graded(self, db: Session, teacher_uuid: UUID, is_graded: bool) -> int:
+        """
+        Conta respostas de provas de um professor por status de correção.
+        
+        Args:
+            db: Sessão do banco de dados
+            teacher_uuid: UUID do professor
+            is_graded: True para contar corrigidas, False para não corrigidas, None para todas
+            
+        Returns:
+            int: Total de respostas
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def count_by_teacher_and_status(self, db: Session, teacher_uuid: UUID, status: str) -> int:
+        """
+        Conta respostas de provas de um professor por status.
+        
+        Args:
+            db: Sessão do banco de dados
+            teacher_uuid: UUID do professor
+            status: Status da resposta
+            
+        Returns:
+            int: Total de respostas com o status especificado
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
     def has_answers_for_exam(self, db: Session, exam_uuid: UUID) -> bool:
         """
         Verifica se existem respostas para uma prova.

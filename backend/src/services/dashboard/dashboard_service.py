@@ -5,7 +5,6 @@ Serviço para estatísticas do dashboard do professor.
 from typing import List
 from uuid import UUID
 from sqlalchemy.orm import Session
-from sqlalchemy import func, or_
 
 from src.interfaces.services.dashboard.dashboard_service_interface import DashboardServiceInterface
 from src.domain.responses.dashboard.dashboard_stats_response import (
@@ -19,13 +18,7 @@ from src.domain.responses.dashboard.dashboard_stats_response import (
 from src.interfaces.repositories.exams_repository_interfaces import ExamsRepositoryInterface
 from src.interfaces.repositories.student_answer_repository_interface import StudentAnswerRepositoryInterface
 from src.interfaces.repositories.exam_question_repository_interface import ExamQuestionRepositoryInterface
-from src.interfaces.repositories.classes_repository_interface import ClassesRepositoryInterface
 from src.interfaces.repositories.class_student_repository_interface import ClassStudentRepositoryInterface
-
-from src.models.entities.exams import Exams
-from src.models.entities.student_answers import StudentAnswer
-from src.models.entities.exam_questions import ExamQuestion
-from src.models.entities.class_student import ClassStudent
 
 from src.core.logging_config import get_logger
 
@@ -40,13 +33,11 @@ class DashboardService(DashboardServiceInterface):
         exam_repository: ExamsRepositoryInterface,
         student_answer_repository: StudentAnswerRepositoryInterface,
         exam_question_repository: ExamQuestionRepositoryInterface,
-        class_repository: ClassesRepositoryInterface,
         class_student_repository: ClassStudentRepositoryInterface
     ):
         self.__exam_repository = exam_repository
         self.__student_answer_repository = student_answer_repository
         self.__exam_question_repository = exam_question_repository
-        self.__class_repository = class_repository
         self.__class_student_repository = class_student_repository
     
     def get_teacher_dashboard_stats(
@@ -61,7 +52,7 @@ class DashboardService(DashboardServiceInterface):
         logger.info("Buscando estatísticas do dashboard para professor: %s", teacher_uuid)
         
         # 1. Contar provas por status
-        exam_stats = self._get_exam_stats(db, teacher_uuid)
+        exam_stats = self.__get_exam_stats(db, teacher_uuid)
         
         # 2. Contar respostas
         answer_stats = self._get_answer_stats(db, teacher_uuid)
@@ -70,7 +61,7 @@ class DashboardService(DashboardServiceInterface):
         recent_exams = self._get_recent_exams(db, teacher_uuid, limit_recent_exams)
         
         # 4. Buscar ações pendentes
-        pending_actions = self._get_pending_actions(db, teacher_uuid)
+        pending_actions = self.__get_pending_actions(db, teacher_uuid)
         
         return DashboardStatsResponse(
             exam_stats=exam_stats,
@@ -79,19 +70,14 @@ class DashboardService(DashboardServiceInterface):
             pending_actions=pending_actions
         )
     
-    def _get_exam_stats(self, db: Session, teacher_uuid: UUID) -> ExamStatsCount:
+    def __get_exam_stats(self, db: Session, teacher_uuid: UUID) -> ExamStatsCount:
         """Conta provas por status."""
-        base_query = db.query(Exams).filter(
-            Exams.created_by == teacher_uuid,
-            Exams.active.is_(True)
-        )
-        
-        draft = base_query.filter(Exams.status == "DRAFT").count()
-        active = base_query.filter(Exams.status == "ACTIVE").count()
-        grading = base_query.filter(Exams.status == "GRADING").count()
-        graded = base_query.filter(Exams.status == "GRADED").count()
-        finalized = base_query.filter(Exams.status == "FINALIZED").count()
-        total = base_query.count()
+        draft = self.__exam_repository.count_by_teacher_and_status(db, teacher_uuid, "DRAFT")
+        active = self.__exam_repository.count_by_teacher_and_status(db, teacher_uuid, "ACTIVE")
+        grading = self.__exam_repository.count_by_teacher_and_status(db, teacher_uuid, "GRADING")
+        graded = self.__exam_repository.count_by_teacher_and_status(db, teacher_uuid, "GRADED")
+        finalized = self.__exam_repository.count_by_teacher_and_status(db, teacher_uuid, "FINALIZED")
+        total = self.__exam_repository.count_by_teacher(db, teacher_uuid)
         
         return ExamStatsCount(
             draft=draft,
@@ -104,35 +90,18 @@ class DashboardService(DashboardServiceInterface):
     
     def _get_answer_stats(self, db: Session, teacher_uuid: UUID) -> AnswerStatsCount:
         """Conta respostas por status."""
-        # Buscar apenas respostas de provas do professor
-        base_query = db.query(StudentAnswer).join(
-            Exams,
-            StudentAnswer.exam_uuid == Exams.uuid
-        ).filter(
-            Exams.created_by == teacher_uuid,
-            Exams.active.is_(True)
-        )
+        total = self.__student_answer_repository.count_by_teacher(db, teacher_uuid)
         
-        total = base_query.count()
-        
-        # Respostas não corrigidas (is_graded = False ou NULL)
-        pending = base_query.filter(
-            or_(
-                StudentAnswer.is_graded.is_(False),
-                StudentAnswer.is_graded.is_(None)
-            )
-        ).count()
+        # Respostas não corrigidas (is_graded = False)
+        pending = self.__student_answer_repository.count_by_teacher_and_graded(db, teacher_uuid, False)
         
         # Respostas corrigidas
-        graded = base_query.filter(
-            StudentAnswer.is_graded.is_(True)
-        ).count()
+        graded = self.__student_answer_repository.count_by_teacher_and_graded(db, teacher_uuid, True)
         
-        # Respostas aguardando revisão (status GRADED mas não finalized)
-        pending_review = base_query.filter(
-            StudentAnswer.status == "GRADED",
-            Exams.status != "FINALIZED"
-        ).count()
+        # Respostas aguardando revisão (status GRADED)
+        pending_review = self.__student_answer_repository.count_by_teacher_and_status(
+            db, teacher_uuid, "GRADED"
+        )
         
         return AnswerStatsCount(
             total=total,
@@ -149,50 +118,52 @@ class DashboardService(DashboardServiceInterface):
     ) -> List[RecentExam]:
         """Busca provas recentes com estatísticas de progresso."""
         # Buscar provas ordenadas por data de criação (mais recentes primeiro)
-        exams = db.query(Exams).filter(
-            Exams.created_by == teacher_uuid,
-            Exams.active.is_(True)
-        ).order_by(Exams.created_at.desc()).limit(limit).all()
+        exams = self.__exam_repository.get_by_teacher(
+            db,
+            teacher_uuid,
+            limit=limit,
+            active_only=True
+        )
         
         result = []
         
         for exam in exams:
-            # Buscar turma
-            class_name = None
+            # Buscar turma (class_name já vem populado do repositório)
+            class_name = getattr(exam, 'class_name', None)
             total_students = 0
             
             if exam.class_uuid:
                 try:
-                    class_obj = self.__class_repository.get_by_uuid(db, exam.class_uuid)
-                    class_name = class_obj.name if class_obj else None
                     # Contar alunos na turma
-                    total_students = db.query(ClassStudent).filter(
-                        ClassStudent.class_uuid == exam.class_uuid,
-                        ClassStudent.active.is_(True)
-                    ).count()
+                    total_students = self.__class_student_repository.count_students_in_class(
+                        db,
+                        exam.class_uuid,
+                        active_only=True
+                    )
                 except Exception:
-                    logger.warning("Não foi possível buscar turma: %s", exam.class_uuid)
+                    logger.warning("Não foi possível contar alunos da turma: %s", exam.class_uuid)
             
             # Contar questões
-            total_questions = db.query(ExamQuestion).filter(
-                ExamQuestion.exam_uuid == exam.uuid,
-                ExamQuestion.active.is_(True)
-            ).count()
+            total_questions = self.__exam_question_repository.count_by_exam(
+                db,
+                exam.uuid,
+                active_only=True
+            )
             
             # Contar respostas
-            answers_submitted = db.query(StudentAnswer).filter(
-                StudentAnswer.exam_uuid == exam.uuid
-            ).count()
+            answers_submitted = self.__student_answer_repository.count_by_exam(db, exam.uuid)
             
-            answers_graded = db.query(StudentAnswer).filter(
-                StudentAnswer.exam_uuid == exam.uuid,
-                StudentAnswer.is_graded.is_(True)
-            ).count()
+            answers_graded = self.__student_answer_repository.count_by_exam_and_graded(
+                db,
+                exam.uuid,
+                is_graded=True
+            )
             
-            pending_review = db.query(StudentAnswer).filter(
-                StudentAnswer.exam_uuid == exam.uuid,
-                StudentAnswer.status == "GRADED"
-            ).count()
+            pending_review = self.__student_answer_repository.count_by_exam_and_status(
+                db,
+                exam.uuid,
+                status="GRADED"
+            )
             
             result.append(
                 RecentExam(
@@ -213,7 +184,7 @@ class DashboardService(DashboardServiceInterface):
         
         return result
     
-    def _get_pending_actions(
+    def __get_pending_actions(
         self,
         db: Session,
         teacher_uuid: UUID
@@ -221,84 +192,69 @@ class DashboardService(DashboardServiceInterface):
         """Identifica ações pendentes para o professor."""
         actions = []
         
-        # 1. Provas em rascunho (alta prioridade se criadas há mais de 7 dias)
-        draft_exams = db.query(Exams).filter(
-            Exams.created_by == teacher_uuid,
-            Exams.status == "DRAFT",
-            Exams.active.is_(True)
-        ).all()
+        # 1. Provas em rascunho
+        draft_exams = self.__exam_repository.get_by_teacher(
+            db,
+            teacher_uuid,
+            limit=100,
+            active_only=True
+        )
         
         for exam in draft_exams:
-            actions.append(
-                PendingAction(
-                    type="draft",
-                    exam_uuid=exam.uuid,
-                    exam_title=exam.title,
-                    description=f"Finalizar rascunho da prova '{exam.title}'",
-                    count=1,
-                    priority="normal",
-                    created_at=exam.created_at
+            if exam.status == "DRAFT":
+                actions.append(
+                    PendingAction(
+                        type="draft",
+                        exam_uuid=exam.uuid,
+                        exam_title=exam.title,
+                        description=f"Finalizar rascunho da prova '{exam.title}'",
+                        count=1,
+                        priority="normal",
+                        created_at=exam.created_at
+                    )
                 )
-            )
         
         # 2. Provas com respostas aguardando revisão (alta prioridade)
-        graded_exams = db.query(
-            Exams.uuid,
-            Exams.title,
-            Exams.created_at,
-            func.count(StudentAnswer.uuid).label('pending_count')  # pylint: disable=not-callable
-        ).join(
-            StudentAnswer,
-            StudentAnswer.exam_uuid == Exams.uuid
-        ).filter(
-            Exams.created_by == teacher_uuid,
-            Exams.status != "FINALIZED",
-            StudentAnswer.status == "GRADED"
-        ).group_by(Exams.uuid, Exams.title, Exams.created_at).all()
+        exams_not_finalized = [e for e in draft_exams if e.status != "FINALIZED"]
         
-        for exam_uuid, exam_title, created_at, count in graded_exams:
+        for exam in exams_not_finalized:
+            count = self.__student_answer_repository.count_by_exam_and_status(
+                db,
+                exam.uuid,
+                status="GRADED"
+            )
             if count > 0:
                 actions.append(
                     PendingAction(
                         type="review",
-                        exam_uuid=exam_uuid,
-                        exam_title=exam_title,
+                        exam_uuid=exam.uuid,
+                        exam_title=exam.title,
                         description=f"Revisar {count} resposta(s) corrigida(s) pela IA",
                         count=count,
                         priority="high",
-                        created_at=created_at
+                        created_at=exam.created_at
                     )
                 )
         
         # 3. Provas ativas com respostas não corrigidas
-        pending_grading = db.query(
-            Exams.uuid,
-            Exams.title,
-            Exams.created_at,
-            func.count(StudentAnswer.uuid).label('pending_count')  # pylint: disable=not-callable
-        ).join(
-            StudentAnswer,
-            StudentAnswer.exam_uuid == Exams.uuid
-        ).filter(
-            Exams.created_by == teacher_uuid,
-            Exams.status.in_(["ACTIVE", "GRADING"]),
-            or_(
-                StudentAnswer.is_graded.is_(False),
-                StudentAnswer.is_graded.is_(None)
-            )
-        ).group_by(Exams.uuid, Exams.title, Exams.created_at).all()
+        active_exams = [e for e in draft_exams if e.status in ["ACTIVE", "GRADING"]]
         
-        for exam_uuid, exam_title, created_at, count in pending_grading:
+        for exam in active_exams:
+            count = self.__student_answer_repository.count_by_exam_and_graded(
+                db,
+                exam.uuid,
+                is_graded=False
+            )
             if count > 0:
                 actions.append(
                     PendingAction(
                         type="grading",
-                        exam_uuid=exam_uuid,
-                        exam_title=exam_title,
+                        exam_uuid=exam.uuid,
+                        exam_title=exam.title,
                         description=f"Corrigir {count} resposta(s) pendente(s)",
                         count=count,
                         priority="normal",
-                        created_at=created_at
+                        created_at=exam.created_at
                     )
                 )
         
@@ -306,4 +262,4 @@ class DashboardService(DashboardServiceInterface):
         priority_order = {"high": 0, "normal": 1, "low": 2}
         actions.sort(key=lambda x: (priority_order.get(x.priority, 1), x.created_at))
         
-        return actions[:10]  # Limitar a 10 ações mais importantes
+        return actions[:10]

@@ -279,6 +279,68 @@ class ExamsRepository(ExamsRepositoryInterface):
             self.__logger.error("Erro ao contar provas: %s", e, exc_info=True)
             raise
 
+    def count_by_teacher(self, db: Session, teacher_uuid: UUID, *, active_only: bool = True) -> int:
+        """
+        Conta total de provas de um professor.
+        
+        Args:
+            db: Sessão do banco de dados
+            teacher_uuid: UUID do professor
+            active_only: Se deve contar apenas provas ativas
+            
+        Returns:
+            int: Total de provas do professor
+        """
+        try:
+            stmt = select(func.count(Exams.id)).where(Exams.created_by == teacher_uuid)  # pylint: disable=not-callable
+            if active_only:
+                stmt = stmt.where(Exams.active == True)
+            result = db.execute(stmt).scalar()
+            self.__logger.debug("Total de provas do professor %s: %d", teacher_uuid, result)
+            return result or 0
+
+        except SQLAlchemyError as e:
+            self.__logger.error("Erro ao contar provas do professor: %s", e, exc_info=True)
+            raise
+
+    def count_by_teacher_and_status(
+        self,
+        db: Session,
+        teacher_uuid: UUID,
+        status: str,
+        *,
+        active_only: bool = True
+    ) -> int:
+        """
+        Conta provas de um professor por status.
+        
+        Args:
+            db: Sessão do banco de dados
+            teacher_uuid: UUID do professor
+            status: Status da prova (DRAFT, ACTIVE, GRADING, GRADED, FINALIZED)
+            active_only: Se deve contar apenas provas ativas
+            
+        Returns:
+            int: Total de provas com o status especificado
+        """
+        try:
+            stmt = select(func.count(Exams.id)).where(  # pylint: disable=not-callable
+                Exams.created_by == teacher_uuid,
+                Exams.status == status
+            )
+            if active_only:
+                stmt = stmt.where(Exams.active == True)
+            result = db.execute(stmt).scalar()
+            self.__logger.debug(
+                "Total de provas do professor %s com status %s: %d",
+                teacher_uuid, status, result
+            )
+            return result or 0
+
+        except SQLAlchemyError as e:
+            self.__logger.error("Erro ao contar provas por professor e status: %s", e, exc_info=True)
+            raise
+
     # ==================== CREATE OPERATIONS ====================
 
     def create(

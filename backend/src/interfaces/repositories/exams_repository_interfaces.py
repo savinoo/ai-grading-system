@@ -164,6 +164,44 @@ class ExamsRepositoryInterface(ABC):
         """
         raise NotImplementedError()
 
+    @abstractmethod
+    def count_by_teacher(self, db: Session, teacher_uuid: UUID, *, active_only: bool = True) -> int:
+        """
+        Conta total de provas de um professor.
+        
+        Args:
+            db: Sessão do banco de dados
+            teacher_uuid: UUID do professor
+            active_only: Se deve contar apenas provas ativas
+            
+        Returns:
+            int: Total de provas do professor
+        """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def count_by_teacher_and_status(
+        self,
+        db: Session,
+        teacher_uuid: UUID,
+        status: str,
+        *,
+        active_only: bool = True
+    ) -> int:
+        """
+        Conta provas de um professor por status.
+        
+        Args:
+            db: Sessão do banco de dados
+            teacher_uuid: UUID do professor
+            status: Status da prova (DRAFT, ACTIVE, GRADING, GRADED, FINALIZED)
+            active_only: Se deve contar apenas provas ativas
+            
+        Returns:
+            int: Total de provas com o status especificado
+        """
+        raise NotImplementedError()
+
     # ==================== CREATE OPERATIONS ====================
 
     @abstractmethod

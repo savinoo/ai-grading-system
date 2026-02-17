@@ -226,6 +226,170 @@ class StudentAnswerRepository(StudentAnswerRepositoryInterface):
             self.__logger.error("Erro ao verificar respostas da prova: %s", e, exc_info=True)
             raise
 
+    def count_by_exam_and_graded(self, db: Session, exam_uuid: UUID, is_graded: bool) -> int:
+        """
+        Conta respostas de uma prova por status de correção.
+        
+        Args:
+            db: Sessão do banco de dados
+            exam_uuid: UUID da prova
+            is_graded: True para contar corrigidas, False para não corrigidas
+            
+        Returns:
+            int: Total de respostas
+        """
+        try:
+            stmt = select(func.count(StudentAnswer.id)).where(  # pylint: disable=not-callable
+                StudentAnswer.exam_uuid == exam_uuid,
+                StudentAnswer.is_graded == is_graded
+            )
+            result = db.execute(stmt).scalar()
+            self.__logger.debug(
+                "Total de respostas %s da prova %s: %d",
+                "corrigidas" if is_graded else "não corrigidas",
+                exam_uuid,
+                result
+            )
+            return result or 0
+
+        except SQLAlchemyError as e:
+            self.__logger.error("Erro ao contar respostas por status de correção: %s", e, exc_info=True)
+            raise
+
+    def count_by_exam_and_status(self, db: Session, exam_uuid: UUID, status: str) -> int:
+        """
+        Conta respostas de uma prova por status.
+        
+        Args:
+            db: Sessão do banco de dados
+            exam_uuid: UUID da prova
+            status: Status da resposta
+            
+        Returns:
+            int: Total de respostas com o status especificado
+        """
+        try:
+            stmt = select(func.count(StudentAnswer.id)).where(  # pylint: disable=not-callable
+                StudentAnswer.exam_uuid == exam_uuid,
+                StudentAnswer.status == status
+            )
+            result = db.execute(stmt).scalar()
+            self.__logger.debug(
+                "Total de respostas da prova %s com status %s: %d",
+                exam_uuid,
+                status,
+                result
+            )
+            return result or 0
+
+        except SQLAlchemyError as e:
+            self.__logger.error("Erro ao contar respostas por status: %s", e, exc_info=True)
+            raise
+
+    def count_by_teacher(self, db: Session, teacher_uuid: UUID) -> int:
+        """
+        Conta total de respostas de provas de um professor.
+        
+        Args:
+            db: Sessão do banco de dados
+            teacher_uuid: UUID do professor
+            
+        Returns:
+            int: Total de respostas
+        """
+        try:
+            from src.models.entities.exams import Exams
+            
+            stmt = select(func.count(StudentAnswer.id)).join(  # pylint: disable=not-callable
+                Exams,
+                StudentAnswer.exam_uuid == Exams.uuid
+            ).where(
+                Exams.created_by == teacher_uuid,
+                Exams.active == True
+            )
+            result = db.execute(stmt).scalar()
+            self.__logger.debug("Total de respostas para professor %s: %d", teacher_uuid, result)
+            return result or 0
+
+        except SQLAlchemyError as e:
+            self.__logger.error("Erro ao contar respostas do professor: %s", e, exc_info=True)
+            raise
+
+    def count_by_teacher_and_graded(self, db: Session, teacher_uuid: UUID, is_graded: bool) -> int:
+        """
+        Conta respostas de provas de um professor por status de correção.
+        
+        Args:
+            db: Sessão do banco de dados
+            teacher_uuid: UUID do professor
+            is_graded: True para contar corrigidas, False para não corrigidas
+            
+        Returns:
+            int: Total de respostas
+        """
+        try:
+            from src.models.entities.exams import Exams
+            
+            stmt = select(func.count(StudentAnswer.id)).join(  # pylint: disable=not-callable
+                Exams,
+                StudentAnswer.exam_uuid == Exams.uuid
+            ).where(
+                Exams.created_by == teacher_uuid,
+                Exams.active == True
+            )
+            
+            if is_graded is not None:
+                stmt = stmt.where(StudentAnswer.is_graded == is_graded)
+                
+            result = db.execute(stmt).scalar()
+            self.__logger.debug(
+                "Total de respostas %s para professor %s: %d",
+                "corrigidas" if is_graded else "não corrigidas",
+                teacher_uuid,
+                result
+            )
+            return result or 0
+
+        except SQLAlchemyError as e:
+            self.__logger.error("Erro ao contar respostas do professor por correção: %s", e, exc_info=True)
+            raise
+
+    def count_by_teacher_and_status(self, db: Session, teacher_uuid: UUID, status: str) -> int:
+        """
+        Conta respostas de provas de um professor por status.
+        
+        Args:
+            db: Sessão do banco de dados
+            teacher_uuid: UUID do professor
+            status: Status da resposta
+            
+        Returns:
+            int: Total de respostas com o status especificado
+        """
+        try:
+            from src.models.entities.exams import Exams
+            
+            stmt = select(func.count(StudentAnswer.id)).join(  # pylint: disable=not-callable
+                Exams,
+                StudentAnswer.exam_uuid == Exams.uuid
+            ).where(
+                Exams.created_by == teacher_uuid,
+                Exams.active == True,
+                StudentAnswer.status == status
+            )
+            result = db.execute(stmt).scalar()
+            self.__logger.debug(
+                "Total de respostas para professor %s com status %s: %d",
+                teacher_uuid,
+                status,
+                result
+            )
+            return result or 0
+
+        except SQLAlchemyError as e:
+            self.__logger.error("Erro ao contar respostas do professor por status: %s", e, exc_info=True)
+            raise
+
     # ==================== CREATE OPERATIONS ====================
 
     def create(
