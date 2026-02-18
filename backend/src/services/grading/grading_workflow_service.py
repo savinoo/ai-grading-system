@@ -212,6 +212,16 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                 student_answer_uuid, final_score
             )
             
+            # === 2.5. Deletar scores antigos (caso seja uma recorreção) ===
+            db.query(StudentAnswerCriteriaScore).filter(
+                StudentAnswerCriteriaScore.student_answer_uuid == student_answer_uuid
+            ).delete()
+            
+            self.__logger.info(
+                "Scores antigos removidos para resposta %s",
+                student_answer_uuid
+            )
+            
             # === 3. Preparar mapeamento de critérios (nome → UUID + peso) ===
             # Usamos a última correção (árbitro se existir, senão C2)
             final_correction = corrections[-1]

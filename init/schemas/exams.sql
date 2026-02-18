@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS public.exams (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   
   CONSTRAINT uq_exams_uuid UNIQUE (uuid),
-  CONSTRAINT chk_exams_status CHECK (status IN ('DRAFT','ACTIVE','GRADING','GRADED','FINALIZED','PUBLISHED','ARCHIVED')),
+  CONSTRAINT chk_exams_status CHECK (status IN ('DRAFT','ACTIVE','GRADING','GRADED','FINALIZED','PUBLISHED','ARCHIVED','WARNING')),
   CONSTRAINT chk_exams_window CHECK (
     starts_at IS NULL OR ends_at IS NULL OR starts_at < ends_at
   ),

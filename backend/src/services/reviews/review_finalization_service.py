@@ -90,13 +90,17 @@ class ReviewFinalizationService(ReviewFinalizationServiceInterface):
         
         # Gerar arquivo Excel com as notas
         excel_path = None
+        self.__logger.info("🔍 generate_pdf flag: %s", request.generate_pdf)
         if request.generate_pdf:  # Usando generate_pdf como flag para gerar relatório
+            self.__logger.info("📊 Iniciando geração de relatório Excel...")
             try:
                 excel_path = generate_grades_report(db, exam, all_answers)
-                self.__logger.info("Relatório Excel gerado: %s", excel_path)
+                self.__logger.info("✅ Relatório Excel gerado: %s", excel_path)
             except Exception as e:
-                self.__logger.error("Erro ao gerar relatório Excel: %s", e, exc_info=True)
+                self.__logger.error("❌ Erro ao gerar relatório Excel: %s", e, exc_info=True)
                 # Não falhar a operação se o Excel falhar
+        else:
+            self.__logger.warning("⚠️ Geração de Excel NÃO solicitada (generate_pdf=False)")
         
         # TODO: Implementar envio de notificações
         if request.send_notifications:

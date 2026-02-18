@@ -2,7 +2,7 @@ from src.controllers.reviews.get_exam_review_controller import GetExamReviewCont
 from src.controllers.reviews.adjust_grade_controller import AdjustGradeController
 from src.controllers.reviews.finalize_review_controller import FinalizeReviewController
 from src.controllers.reviews.approve_answer_controller import ApproveAnswerController
-from src.controllers.reviews.download_report_controller import DownloadReportController
+from src.controllers.reviews.download_exam_report_controller import DownloadExamReportController
 
 from src.services.reviews.exam_review_query_service import ExamReviewQueryService
 from src.services.reviews.grade_adjustment_service import GradeAdjustmentService
@@ -86,6 +86,6 @@ def make_approve_answer_controller() -> ApproveAnswerController:
     return ApproveAnswerController(approval_service=approval_service)
 
 
-def make_download_report_controller() -> DownloadReportController:
-    """Factory para DownloadReportController."""
-    return DownloadReportController()
+def make_download_exam_report_controller() -> DownloadExamReportController:
+    """Factory para DownloadExamReportController."""
+    return DownloadExamReportController()

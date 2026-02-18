@@ -12,6 +12,8 @@ from fastapi import BackgroundTasks
 
 from src.interfaces.repositories.exams_repository_interfaces import ExamsRepositoryInterface
 from src.interfaces.repositories.attachments_repository_interfaces import AttachmentsRepositoryInterface
+from src.interfaces.repositories.exam_question_repository_interface import ExamQuestionRepositoryInterface
+from src.interfaces.repositories.student_answer_repository_interface import StudentAnswerRepositoryInterface
 
 from src.interfaces.services.exams.publish_exam_service_interface import PublishExamServiceInterface
 from src.interfaces.services.rag.chunking_service_interface import ChunkingServiceInterface
@@ -19,6 +21,7 @@ from src.interfaces.services.rag.indexing_service_interface import IndexingServi
 from src.interfaces.services.grading.grading_workflow_service_interface import GradingWorkflowServiceInterface
 
 from src.domain.responses.exams.publish_exam_response import PublishExamResponse
+from src.domain.ai.schemas import StudentAnswer
 
 from src.errors.domain.not_found import NotFoundError
 from src.errors.domain.validate_error import ValidateError
@@ -42,6 +45,8 @@ class PublishExamService(PublishExamServiceInterface):
         self,
         exam_repository: ExamsRepositoryInterface,
         attachment_repository: AttachmentsRepositoryInterface,
+        exam_question_repository: ExamQuestionRepositoryInterface,
+        student_answer_repository: StudentAnswerRepositoryInterface,
         chunking_service: ChunkingServiceInterface,
         indexing_service: IndexingServiceInterface,
         grading_service: GradingWorkflowServiceInterface
@@ -52,12 +57,16 @@ class PublishExamService(PublishExamServiceInterface):
         Args:
             exam_repository: Repositório de provas
             attachment_repository: Repositório de anexos
+            exam_question_repository: Repositório de questões
+            student_answer_repository: Repositório de respostas de alunos
             chunking_service: Serviço de chunking de PDFs
             indexing_service: Serviço de indexação de vetores
             grading_service: Serviço de workflow de correção automática
         """
         self.__exam_repo = exam_repository
         self.__attachment_repo = attachment_repository
+        self.__exam_question_repo = exam_question_repository
+        self.__student_answer_repo = student_answer_repository
         self.__chunking_service = chunking_service
         self.__indexing_service = indexing_service
         self.__grading_service = grading_service
@@ -119,6 +128,9 @@ class PublishExamService(PublishExamServiceInterface):
                 context={"exam_uuid": str(exam_uuid), "current_status": exam.status}
             )
         
+        # === ETAPA 2.5: Validar dados da prova (questões e respostas) ===
+        self._validate_exam_data(db, exam_uuid)
+        
         # === ETAPA 3: Atualizar status para PUBLISHED ===
         self.__exam_repo.update_status_by_uuid(db, exam_uuid, 'PUBLISHED')
         db.commit()
@@ -151,6 +163,98 @@ class PublishExamService(PublishExamServiceInterface):
                 "Acompanhe o status da prova para verificar conclusão"
             ]
         )
+    
+    def _validate_exam_data(self, db: Session, exam_uuid: UUID) -> None:
+        """
+        Valida os dados da prova antes de publicar.
+        
+        Verifica:
+        1. Se há pelo menos uma questão na prova
+        2. Se todas as respostas dos alunos são válidas (não vazias)
+        
+        Args:
+            db: Sessão do banco de dados
+            exam_uuid: UUID da prova a ser validada
+            
+        Raises:
+            ValidateError: Se houver dados inválidos
+        """
+        self.__logger.info("🔍 Validando dados da prova %s antes de publicar...", exam_uuid)
+        
+        # Buscar todas as questões da prova
+        questions = self.__exam_question_repo.get_by_exam(db, exam_uuid, active_only=True)
+        
+        if not questions:
+            self.__logger.warning("❌ Prova sem questões: %s", exam_uuid)
+            raise ValidateError(
+                message="Não é possível publicar prova sem questões",
+                context={"exam_uuid": str(exam_uuid)}
+            )
+        
+        self.__logger.info("✓ Prova possui %d questão(ões)", len(questions))
+        
+        # Validar respostas de cada questão
+        invalid_answers = []
+        
+        for question in questions:
+            # Buscar todas as respostas desta questão
+            answers = self.__student_answer_repo.get_by_question(
+                db,
+                question.uuid,
+                limit=1000
+            )
+            
+            if not answers:
+                self.__logger.info("⚠️ Questão %s não possui respostas ainda", question.uuid)
+                continue
+            
+            # Tentar validar cada resposta usando o schema Pydantic
+            for answer_entity in answers:
+                try:
+                    # Tentar criar o schema - vai falhar se a resposta for inválida
+                    StudentAnswer(
+                        id=answer_entity.uuid,
+                        student_id=answer_entity.student_uuid,
+                        question_id=answer_entity.question_uuid,
+                        text=answer_entity.answer or ""
+                    )
+                except Exception as e:
+                    # Se falhar a validação, registrar o erro
+                    invalid_answers.append({
+                        "answer_uuid": str(answer_entity.uuid),
+                        "student_uuid": str(answer_entity.student_uuid),
+                        "question_uuid": str(answer_entity.question_uuid),
+                        "error": str(e)
+                    })
+        
+        # Se houver respostas inválidas, impedir a publicação
+        if invalid_answers:
+            self.__logger.warning(
+                "❌ Encontradas %d resposta(s) inválida(s): %s",
+                len(invalid_answers),
+                invalid_answers
+            )
+            
+            error_details = []
+            for invalid in invalid_answers:
+                error_details.append(
+                    f"Aluno {invalid['student_uuid'][:8]}... tem resposta vazia ou inválida"
+                )
+            
+            raise ValidateError(
+                message=(
+                    f"Não é possível publicar prova com {len(invalid_answers)} "
+                    f"resposta(s) vazia(s) ou inválida(s). "
+                    f"Por favor, peça aos alunos para preencher suas respostas antes de publicar."
+                ),
+                context={
+                    "exam_uuid": str(exam_uuid),
+                    "invalid_count": len(invalid_answers),
+                    "details": error_details[:5]  # Limitar a 5 exemplos
+                }
+            )
+        
+        self.__logger.info("✅ Validação concluída: todos os dados estão válidos")
     
     async def _background_process_exam(self, exam_uuid: UUID):
         """

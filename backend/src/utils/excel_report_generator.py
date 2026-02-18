@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 from src.models.entities.exams import Exams
 from src.models.entities.student_answers import StudentAnswer
 from src.models.entities.exam_questions import ExamQuestion
-from src.models.entities.user import User
+from src.models.entities.student import Student
 
 from src.core.logging_config import get_logger
 
@@ -35,8 +35,12 @@ def generate_grades_report(
         str: Caminho relativo do arquivo Excel gerado
     """
     
+    logger.info("📊 INICIANDO generate_grades_report para exam %s", exam.uuid)
+    logger.info("📝 Total de respostas recebidas: %d", len(student_answers))
+    
     # Criar diretório de relatórios se não existir
     reports_dir = Path("data/reports")
+    logger.info("📁 Criando diretório: %s", reports_dir.absolute())
     reports_dir.mkdir(parents=True, exist_ok=True)
     
     # Nome do arquivo com timestamp
@@ -62,7 +66,7 @@ def generate_grades_report(
     # Cabeçalhos
     headers = ["Aluno"]
     for i, question in enumerate(questions, 1):
-        max_score = question.max_score or 10.0
+        max_score = question.points or 10.0
         headers.append(f"Q{i} (/{max_score:.1f})")
     headers.append("Total")
     
@@ -79,8 +83,8 @@ def generate_grades_report(
         student_uuid = answer.student_uuid
         if student_uuid not in student_grades:
             # Buscar nome do aluno
-            student = db.query(User).filter(User.uuid == student_uuid).first()
-            student_name = student.name if student else str(student_uuid)
+            student = db.query(Student).filter(Student.uuid == student_uuid).first()
+            student_name = student.full_name if student else str(student_uuid)
             student_grades[student_uuid] = {
                 "name": student_name,
                 "questions": {},
@@ -94,10 +98,10 @@ def generate_grades_report(
         )
         
         if question_idx is not None:
-            # Usar nota final se existir, senão nota da IA
-            score = answer.final_score if answer.final_score is not None else answer.ai_score
-            student_grades[student_uuid]["questions"][question_idx] = score or 0.0
-            student_grades[student_uuid]["total"] += score or 0.0
+            # Usar score (nota final após revisão)
+            score = float(answer.score or 0.0)
+            student_grades[student_uuid]["questions"][question_idx] = score
+            student_grades[student_uuid]["total"] += score
     
     # Escrever dados dos alunos
     row_idx = 2
@@ -125,9 +129,18 @@ def generate_grades_report(
         ws.column_dimensions[col_letter].width = 12
     
     # Salvar arquivo
+    logger.info("💾 Salvando arquivo em: %s", filepath.absolute())
     wb.save(filepath)
+    logger.info("✅ Arquivo salvo com sucesso!")
     
-    logger.info("Relatório Excel gerado: %s", filepath)
+    # Verificar se o arquivo existe
+    if filepath.exists():
+        file_size = filepath.stat().st_size
+        logger.info("✅ Arquivo confirmado! Tamanho: %d bytes", file_size)
+    else:
+        logger.error("❌ ERRO: Arquivo não encontrado após salvar!")
     
-    # Retornar caminho relativo para download
-    return str(filepath.relative_to(Path.cwd()))
+    logger.info("📄 Relatório Excel gerado: %s", filepath)
+    
+    # Retornar caminho relativo (já está relativo ao cwd)
+    return str(filepath)

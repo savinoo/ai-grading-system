@@ -92,7 +92,7 @@ class ExamQuestion(BaseModel):
     statement: str = Field(
         ...,
         description="O enunciado completo da questão",
-        min_length=10
+        min_length=5
     )
     rubric: List[EvaluationCriterion] = Field(
         ...,

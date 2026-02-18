@@ -1,5 +1,6 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Request
+from sqlalchemy.orm import Session
 
 from src.domain.http.caller_domains import CallerMeta
 from src.core.logging_config import get_logger
@@ -18,7 +19,7 @@ from src.main.composer.reviews_composer import (
     make_adjust_grade_controller,
     make_approve_answer_controller,
     make_finalize_review_controller,
-    make_download_report_controller
+    make_download_exam_report_controller
 )
 
 from src.main.dependencies.request_meta import get_caller_meta
@@ -92,10 +93,6 @@ def get_exam_review(
         logger.exception("Erro inesperado ao buscar dados de revisão")
         raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
 
-
-# TODO: Implementar accept_suggestion e reject_suggestion quando houver persistência de sugestões
-# @router.post("/suggestions/accept", ...)
-# @router.post("/suggestions/reject", ...)
 
 
 @router.put(
@@ -264,27 +261,27 @@ def finalize_review(
 
 
 @router.get(
-    "/download/{filename}",
+    "/exams/{exam_uuid}/report",
     status_code=200,
-    summary="Download de relatório de notas",
-    description="Faz download de um relatório Excel com as notas dos alunos."
+    summary="Download de relatório de notas por prova",
+    description="Faz download do relatório Excel mais recente de uma prova específica."
 )
-def download_report(filename: str):
+def download_exam_report(exam_uuid: str):
     """
-    Endpoint para download de relatório.
+    Endpoint para download de relatório por prova.
     
     Args:
-        filename: Nome do arquivo a ser baixado
+        exam_uuid: UUID da prova
         
     Returns:
         FileResponse com arquivo Excel
     """
-    controller = make_download_report_controller()
+    controller = make_download_exam_report_controller()
     
     try:
-        return controller.handle(filename=filename)
+        return controller.handle(exam_uuid=exam_uuid)
     except HTTPException:
         raise
     except Exception as e:
-        logger.exception("Erro inesperado ao fazer download de relatório")
+        logger.exception("Erro inesperado ao fazer download de relatório da prova")
         raise HTTPException(status_code=500, detail="Erro interno do servidor") from e

@@ -137,6 +137,8 @@ def make_publish_exam_controller() -> PublishExamController:
     publish_exam_service = PublishExamService(
         exam_repository,
         attachments_repository,
+        exam_question_repository,
+        student_answer_repository,
         chunking_service,
         indexing_service,
         grading_service
