@@ -75,17 +75,17 @@ export const ExamsPage: React.FC = () => {
 
           <div className="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <span className="material-symbols-outlined text-slate-600 dark:text-slate-400 text-2xl">
-                  edit_note
+              <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                <span className="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">
+                  fact_check
                 </span>
               </div>
               <div>
                 <div className="text-2xl font-bold text-slate-900 dark:text-white">
-                  {exams.filter((e) => e.status === 'DRAFT').length}
+                  {exams.filter((e) => e.status === 'GRADED').length}
                 </div>
                 <div className="text-xs text-slate-500 uppercase tracking-wider">
-                  Rascunhos
+                  Corrigidas
                 </div>
               </div>
             </div>
@@ -93,14 +93,14 @@ export const ExamsPage: React.FC = () => {
 
           <div className="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                <span className="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">
+              <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                <span className="material-symbols-outlined text-purple-600 dark:text-purple-400 text-2xl">
                   done_all
                 </span>
               </div>
               <div>
                 <div className="text-2xl font-bold text-slate-900 dark:text-white">
-                  {exams.filter((e) => e.status === 'FINISHED').length}
+                  {exams.filter((e) => e.status === 'FINALIZED').length}
                 </div>
                 <div className="text-xs text-slate-500 uppercase tracking-wider">
                   Finalizadas

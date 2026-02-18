@@ -9,11 +9,13 @@ interface ExamCardProps {
 
 const statusConfig: Record<ExamStatus, { label: string; className: string }> = {
   DRAFT: { label: 'Rascunho', className: 'bg-slate-100 text-slate-700' },
+  ACTIVE: { label: 'Ativa', className: 'bg-blue-100 text-blue-700' },
+  GRADING: { label: 'Em Correção', className: 'bg-yellow-100 text-yellow-700' },
   PUBLISHED: { label: 'Publicada', className: 'bg-emerald-100 text-emerald-700' },
   GRADED: { label: 'Corrigida', className: 'bg-blue-100 text-blue-700' },
   WARNING: { label: 'Aviso de Correção', className: 'bg-amber-100 text-amber-700' },
   ARCHIVED: { label: 'Arquivada', className: 'bg-slate-200 text-slate-700' },
-  FINISHED: { label: 'Finalizada', className: 'bg-slate-200 text-slate-700' },
+  FINALIZED: { label: 'Finalizada', className: 'bg-purple-100 text-purple-700' },
 };
 
 export const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
@@ -50,6 +52,19 @@ export const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
 
   const handleCancelDelete = () => {
     setShowDeleteConfirm(false);
+  };
+
+  const handleDownloadReport = () => {
+    const downloadUrl = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/reviews/exams/${exam.uuid}/report`;
+    
+    console.log('📥 Iniciando download do relatório:', downloadUrl);
+    
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = `relatorio_notas_${exam.uuid}.xlsx`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const statusInfo = statusConfig[exam.status] || {
@@ -97,14 +112,25 @@ export const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
             Ver Detalhes
           </button>
           
-          {(exam.status === 'GRADED' || exam.status === 'WARNING') && (
+          {exam.status === 'GRADED' && (
             <button
               onClick={() => navigate(`/dashboard/exams/${exam.uuid}/review`)}
-              className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors flex items-center gap-2"
+              className="px-3 py-1.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-lg transition-colors flex items-center gap-2 shadow-lg shadow-primary/20"
               title="Revisar correção da IA"
             >
               <span className="material-symbols-outlined text-base">rate_review</span>
               Revisar Correção
+            </button>
+          )}
+
+          {exam.status === 'FINALIZED' && (
+            <button
+              onClick={handleDownloadReport}
+              className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg transition-colors flex items-center gap-2 shadow-lg shadow-emerald-600/20"
+              title="Baixar relatório em Excel"
+            >
+              <span className="material-symbols-outlined text-base">download</span>
+              Baixar Relatório
             </button>
           )}
           

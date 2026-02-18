@@ -51,10 +51,10 @@ export const DashboardPage: React.FC = () => {
   // Configuração de status com cores
   const statusConfig: Record<string, { label: string; className: string }> = {
     'DRAFT': { label: 'Rascunho', className: 'bg-slate-100 text-slate-700 border-slate-200' },
-    'ACTIVE': { label: 'Ativa', className: 'bg-emerald-100 text-emerald-700 border-emerald-200' },
+    'PUBLISHED': { label: 'Publicada', className: 'bg-emerald-100 text-emerald-700 border-emerald-200' },
     'GRADING': { label: 'Corrigindo', className: 'bg-amber-100 text-amber-700 border-amber-200' },
     'GRADED': { label: 'Corrigida', className: 'bg-blue-100 text-blue-700 border-blue-200' },
-    'FINALIZED': { label: 'Finalizada', className: 'bg-slate-200 text-slate-700 border-slate-300' }
+    'FINALIZED': { label: 'Finalizada', className: 'bg-purple-100 text-purple-700 border-purple-200' }
   };
 
   const getStatusInfo = (status: string) => {
@@ -155,9 +155,6 @@ export const DashboardPage: React.FC = () => {
             <div className="flex items-center justify-between px-2">
               <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 Atividades Recentes
-                <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] px-2 py-0.5 rounded-full">
-                  Progresso de Inserção Manual
-                </span>
               </h3>
             </div>
 

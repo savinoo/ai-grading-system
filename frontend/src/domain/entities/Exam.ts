@@ -1,4 +1,4 @@
-export type ExamStatus = 'DRAFT' | 'PUBLISHED' | 'ARCHIVED' | 'FINISHED' | 'GRADED' | 'WARNING';
+export type ExamStatus = 'DRAFT' | 'ACTIVE' | 'GRADING' | 'GRADED' | 'FINALIZED' | 'PUBLISHED' | 'ARCHIVED' | 'WARNING';
 
 export interface Exam {
   uuid: string;

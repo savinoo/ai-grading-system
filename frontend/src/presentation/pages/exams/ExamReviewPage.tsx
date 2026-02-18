@@ -7,6 +7,15 @@ import type { StudentAnswerReview } from '@domain/types/review';
 // 🔥 TESTE: Verificar se imports estão funcionando
 console.log('📦 reviewService importado:', reviewService);
 console.log('📦 reviewService.getExamReview existe?', typeof reviewService.getExamReview === 'function');
+
+// Configuração de status das respostas
+const answerStatusConfig: Record<string, { label: string; className: string }> = {
+  SUBMITTED: { label: 'Enviada', className: 'bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400' },
+  GRADED: { label: 'Corrigida', className: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' },
+  FINALIZED: { label: 'Aprovada', className: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' },
+  INVALID: { label: 'Inválida', className: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' },
+};
+
 export const ExamReviewPage: React.FC = () => {
   const { examUuid } = useParams<{ examUuid: string }>();
   const navigate = useNavigate();
@@ -49,10 +58,21 @@ export const ExamReviewPage: React.FC = () => {
     },
   });
 
+  // Mutation para aprovar resposta individual
+  const approveAnswerMutation = useMutation({
+    mutationFn: reviewService.approveAnswer,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['exam-review', examUuid] });
+    },
+  });
+
   // Mutation para finalizar revisão
   const finalizeReviewMutation = useMutation({
     mutationFn: reviewService.finalizeReview,
     onSuccess: () => {
+      console.log('✅ Revisão finalizada com sucesso');
+      // Navegar para a página de detalhes da prova
+      // O relatório pode ser baixado de lá através do botão "Baixar Relatório"
       navigate(`/dashboard/exams/${examUuid}`);
     },
   });
@@ -72,6 +92,20 @@ export const ExamReviewPage: React.FC = () => {
       new_score: newScore,
       feedback: newFeedback,
     });
+  };
+
+  const handleApproveAnswer = () => {
+    if (!currentAnswer) return;
+    console.log('✅ Aprovar resposta clicado:', currentAnswer.answer_uuid);
+    const confirmed = window.confirm(
+      `Tem certeza que deseja aprovar a resposta de ${currentAnswer.student_name}? A nota será marcada como finalizada.`
+    );
+    if (confirmed) {
+      console.log('✅ Confirmado - aprovando resposta');
+      approveAnswerMutation.mutate(currentAnswer.answer_uuid);
+    } else {
+      console.log('❌ Cancelado pelo usuário');
+    }
   };
 
   const handleFinalizeReview = () => {
@@ -143,7 +177,7 @@ export const ExamReviewPage: React.FC = () => {
     currentAnswer: currentAnswer ? {
       uuid: currentAnswer.answer_uuid,
       studentName: currentAnswer.student_name,
-      totalSuggestions: currentAnswer.ai_suggestions.length,
+      totalSuggestions: currentAnswer.ai_suggestions?.length || 0,
       totalCriteria: currentAnswer.criteria_scores.length
     } : null
   });
@@ -162,28 +196,35 @@ export const ExamReviewPage: React.FC = () => {
     return currentAnswer.criteria_scores.reduce((sum, c) => sum + c.raw_score, 0);
   };
 
+  const getAnswerStatusInfo = (status: string) => {
+    return answerStatusConfig[status] || {
+      label: status,
+      className: 'bg-slate-100 text-slate-700 dark:bg-slate-900/30 dark:text-slate-400',
+    };
+  };
+
   return (
     <DashboardLayout>
       {/* Header */}
       <div className="px-8 pt-4 pb-2 border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
         <div className="flex items-center gap-2 mb-2 text-xs">
-          <button onClick={() => navigate('/dashboard/exams')} className="text-slate-500 hover:text-indigo-600 transition-colors">
+          <button onClick={() => navigate('/dashboard/exams')} className="text-slate-500 hover:text-primary transition-colors">
             Exames
           </button>
           <span className="material-symbols-outlined text-xs text-slate-400">chevron_right</span>
-          <button onClick={() => navigate(`/dashboard/exams/${examUuid}`)} className="text-slate-500 hover:text-indigo-600 transition-colors">
+          <button onClick={() => navigate(`/dashboard/exams/${examUuid}`)} className="text-slate-500 hover:text-primary transition-colors">
             {reviewData.exam_title}
           </button>
           <span className="material-symbols-outlined text-xs text-slate-400">chevron_right</span>
-          <span className="text-indigo-600 font-semibold">Revisão de Correção AI</span>
+          <span className="text-primary font-semibold">Revisão de Correção AI</span>
         </div>
 
         <div className="flex flex-wrap justify-between items-start gap-4 pb-3">
           <div className="flex flex-col">
             <div className="flex items-center gap-3 mb-2">
               <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{currentAnswer.student_name}</h1>
-              <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400">
-                {currentAnswer.status === 'GRADED' ? 'CORRIGIDA' : currentAnswer.status}
+              <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${getAnswerStatusInfo(currentAnswer.status).className}`}>
+                {getAnswerStatusInfo(currentAnswer.status).label}
               </span>
             </div>
             <div className="flex flex-wrap gap-4 text-slate-600 dark:text-slate-400 text-xs">
@@ -213,12 +254,18 @@ export const ExamReviewPage: React.FC = () => {
               Ajustar nota
             </button>
             <button
-              onClick={handleFinalizeReview}
-              disabled={finalizeReviewMutation.isPending}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition-colors shadow-sm disabled:opacity-50"
+              onClick={handleApproveAnswer}
+              disabled={approveAnswerMutation.isPending || currentAnswer.status === 'FINALIZED'}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span className="material-symbols-outlined text-sm">picture_as_pdf</span>
-              {finalizeReviewMutation.isPending ? 'Finalizando...' : 'Aprovar e gerar relatório'}
+              <span className="material-symbols-outlined text-sm">
+                {currentAnswer.status === 'FINALIZED' ? 'check_circle' : 'task_alt'}
+              </span>
+              {approveAnswerMutation.isPending
+                ? 'Aprovando...'
+                : currentAnswer.status === 'FINALIZED'
+                ? 'Aprovada'
+                : 'Aprovar Resposta'}
             </button>
           </div>
         </div>
@@ -233,8 +280,8 @@ export const ExamReviewPage: React.FC = () => {
               onClick={() => setActiveQuestionIndex(idx)}
               className={`py-3 px-2 border-b-2 text-sm font-medium whitespace-nowrap transition-colors ${
                 activeQuestionIndex === idx
-                  ? 'border-indigo-600 text-indigo-600'
-                  : 'border-transparent text-slate-500 hover:text-indigo-600'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-slate-500 hover:text-primary'
               }`}
             >
               Questão {q.question_number}
@@ -279,7 +326,7 @@ export const ExamReviewPage: React.FC = () => {
             <details className="bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-200 dark:border-slate-600 p-4" open>
               <summary className="flex items-center justify-between cursor-pointer list-none">
                 <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-indigo-600">quiz</span>
+                  <span className="material-symbols-outlined text-primary">quiz</span>
                   <span className="font-semibold text-sm uppercase text-slate-600 dark:text-slate-400">Enunciado</span>
                 </div>
                 <span className="material-symbols-outlined">expand_more</span>
@@ -300,7 +347,7 @@ export const ExamReviewPage: React.FC = () => {
             {/* Resposta do Aluno */}
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <span className="material-symbols-outlined text-indigo-600">description</span>
+                <span className="material-symbols-outlined text-primary">description</span>
                 <h3 className="text-lg font-semibold text-slate-900 dark:text-white uppercase tracking-wide">Resposta do Aluno</h3>
               </div>
               <div className="prose dark:prose-invert max-w-none">
@@ -331,7 +378,7 @@ export const ExamReviewPage: React.FC = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">Rubrica Dinâmica</h4>
-                <span className="text-xs font-semibold text-indigo-600 bg-indigo-100 dark:bg-indigo-900/30 px-2 py-0.5 rounded">
+                <span className="text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded">
                   CORREÇÃO AUTOMÁTICA
                 </span>
               </div>
@@ -342,13 +389,13 @@ export const ExamReviewPage: React.FC = () => {
                   <div key={criterion.criterion_uuid} className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm">
                     <div className="flex justify-between items-center mb-2">
                       <span className="font-semibold text-sm text-slate-900 dark:text-white">{criterion.criterion_name}</span>
-                      <span className="text-sm font-bold text-indigo-600">
+                      <span className="text-sm font-bold text-primary">
                         {criterion.raw_score.toFixed(1)}
                         <span className="text-slate-400 font-normal">/{criterion.max_score.toFixed(1)}</span>
                       </span>
                     </div>
                     <div className="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mb-2">
-                      <div className="bg-indigo-600 h-full rounded-full transition-all" style={{ width: `${percentage}%` }}></div>
+                      <div className="bg-primary h-full rounded-full transition-all" style={{ width: `${percentage}%` }}></div>
                     </div>
                     <div className="flex justify-between text-xs text-slate-500">
                       <span>Peso: {criterion.weight.toFixed(1)}%</span>
@@ -373,7 +420,7 @@ export const ExamReviewPage: React.FC = () => {
                 <p className="text-xs text-slate-400">Questão {currentQuestion.question_number}</p>
               </div>
               <div className="text-right">
-                <span className="text-3xl font-bold text-indigo-600">
+                <span className="text-3xl font-bold text-primary">
                   {currentAnswer.score?.toFixed(1) || calculateTotalScore().toFixed(1)}
                 </span>
                 <span className="text-lg text-slate-400 font-semibold">/{currentQuestion.max_score.toFixed(1)}</span>
@@ -384,33 +431,20 @@ export const ExamReviewPage: React.FC = () => {
       </div>
 
       {/* Footer */}
-      <div className="h-14 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-8 flex items-center justify-between">
-        <div className="flex items-center gap-6 text-xs text-slate-500">
-          <div className="flex items-center gap-2">
-            <span className="size-2 rounded-full bg-green-500"></span>
-            AvaliaAI: v1.0.0
-          </div>
-          <div className="h-4 w-px bg-slate-300 dark:bg-slate-600"></div>
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-sm">save_as</span>
-            Sincronizado
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => navigate(`/dashboard/exams/${examUuid}`)}
-            className="text-sm font-semibold text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
-          >
-            Voltar
-          </button>
-          <button
-            onClick={handleFinalizeReview}
-            disabled={finalizeReviewMutation.isPending}
-            className="px-6 py-1.5 bg-indigo-600 text-white rounded-lg text-sm font-semibold hover:bg-indigo-700 transition-all shadow-sm disabled:opacity-50"
-          >
-            {finalizeReviewMutation.isPending ? 'Finalizando...' : 'Finalizar Revisão'}
-          </button>
-        </div>
+      <div className="h-14 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-8 flex items-center justify-end gap-3">
+        <button
+          onClick={() => navigate(`/dashboard/exams/${examUuid}`)}
+          className="text-sm font-semibold text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
+        >
+          Voltar
+        </button>
+        <button
+          onClick={handleFinalizeReview}
+          disabled={finalizeReviewMutation.isPending}
+          className="px-6 py-1.5 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 disabled:opacity-50"
+        >
+          {finalizeReviewMutation.isPending ? 'Finalizando...' : 'Finalizar Revisão'}
+        </button>
       </div>
 
       {/* Modal de Ajuste de Nota */}
@@ -418,8 +452,8 @@ export const ExamReviewPage: React.FC = () => {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white dark:bg-slate-900 rounded-xl p-8 max-w-md w-full mx-4 shadow-2xl border border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-full">
-                <span className="material-symbols-outlined text-indigo-600 dark:text-indigo-400 text-2xl">edit</span>
+              <div className="p-3 bg-primary/10 rounded-full">
+                <span className="material-symbols-outlined text-primary text-2xl">edit</span>
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white">Ajustar Nota</h3>
             </div>
@@ -436,7 +470,7 @@ export const ExamReviewPage: React.FC = () => {
                   max={currentQuestion.max_score}
                   value={newScore}
                   onChange={(e) => setNewScore(parseFloat(e.target.value))}
-                  className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary"
                 />
                 <p className="text-xs text-slate-500 mt-1">Nota máxima: {currentQuestion.max_score.toFixed(1)}</p>
               </div>
@@ -449,7 +483,7 @@ export const ExamReviewPage: React.FC = () => {
                   rows={4}
                   value={newFeedback}
                   onChange={(e) => setNewFeedback(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary"
                   placeholder="Adicione um comentário sobre o ajuste..."
                 />
               </div>
@@ -466,7 +500,7 @@ export const ExamReviewPage: React.FC = () => {
               <button
                 onClick={handleAdjustGrade}
                 disabled={adjustGradeMutation.isPending}
-                className="px-6 py-2 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-700 rounded-lg transition-colors disabled:opacity-50 flex items-center gap-2"
+                className="px-6 py-2 text-sm font-bold text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors shadow-lg shadow-primary/20 disabled:opacity-50 flex items-center gap-2"
               >
                 {adjustGradeMutation.isPending ? (
                   <>

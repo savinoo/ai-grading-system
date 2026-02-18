@@ -37,10 +37,10 @@ export interface StudentAnswerReview {
   student_email?: string;
   answer_text: string;
   score?: number;
-  status: 'SUBMITTED' | 'GRADED' | 'INVALID';
+  status: 'SUBMITTED' | 'GRADED' | 'FINALIZED' | 'INVALID';
   feedback?: string;
   criteria_scores: CriterionScore[];
-  ai_suggestions: AISuggestion[];
+  ai_suggestions?: AISuggestion[]; // Opcional - funcionalidade descontinuada
   graded_at?: string;
 }
 
@@ -72,16 +72,7 @@ export interface ExamReview {
 
 // ========== Request Types ==========
 
-export interface AcceptSuggestionRequest {
-  answer_uuid: string;
-  suggestion_id: string;
-}
-
-export interface RejectSuggestionRequest {
-  answer_uuid: string;
-  suggestion_id: string;
-  reason?: string;
-}
+// AcceptSuggestionRequest e RejectSuggestionRequest removidos - funcionalidade descontinuada
 
 export interface AdjustGradeRequest {
   answer_uuid: string;
@@ -96,13 +87,13 @@ export interface FinalizeReviewRequest {
   generate_pdf?: boolean;
 }
 
-// ========== Response Types para Actions ==========
-
-export interface SuggestionActionResponse {
-  message: string;
-  suggestion_id: string;
+export interface ApproveAnswerRequest {
   answer_uuid: string;
 }
+
+// ========== Response Types para Actions ==========
+
+// SuggestionActionResponse removido - funcionalidade descontinuada
 
 export interface AdjustGradeResponse {
   message: string;
@@ -113,8 +104,18 @@ export interface AdjustGradeResponse {
 export interface FinalizeReviewResponse {
   message: string;
   exam_uuid: string;
-  pdf_url?: string;
+  excel_report?: string | null;
   notifications_sent: boolean;
+  total_answers_finalized: number;
+}
+
+export interface ApproveAnswerResponse {
+  message: string;
+  answer_uuid: string;
+  status: string;
+  score: number | null;
+  graded_by: string;
+  graded_at: string | null;
 }
 
 // ========== Response Types API ==========

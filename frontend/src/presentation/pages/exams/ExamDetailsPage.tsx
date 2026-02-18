@@ -55,6 +55,23 @@ export const ExamDetailsPage: React.FC = () => {
 
   const isDraft = currentExam?.status === 'DRAFT';
 
+  // Função para download do relatório Excel
+  const handleDownloadExcelReport = () => {
+    if (!examUuid) return;
+    
+    const downloadUrl = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'}/reviews/exams/${examUuid}/report`;
+    
+    console.log('📥 Iniciando download do relatório:', downloadUrl);
+    
+    // Criar link temporário e clicar
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = `relatorio_notas_${examUuid}.xlsx`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   // Função para expandir/colapsar questão e carregar respostas
   const handleToggleQuestion = async (questionUuid: string) => {
     const newExpanded = new Set(expandedQuestions);
@@ -137,7 +154,8 @@ export const ExamDetailsPage: React.FC = () => {
     GRADED: { label: 'Corrigida', className: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' },
     WARNING: { label: 'Aviso de Correção', className: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' },
     ARCHIVED: { label: 'Arquivada', className: 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300' },
-    FINISHED: { label: 'Finalizada', className: 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-300' },
+    FINISHED: { label: 'Finalizada', className: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' },
+    FINALIZED: { label: 'Finalizada', className: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' },
   };
 
   const status = statusConfig[currentExam.status] || {
@@ -210,10 +228,19 @@ export const ExamDetailsPage: React.FC = () => {
             </div>
 
             <div className="flex gap-3">
+              {currentExam.status === 'FINALIZED' && (
+                <Button
+                  onClick={handleDownloadExcelReport}
+                  variant="primary"
+                >
+                  <span className="material-symbols-outlined mr-2">download</span>
+                  Baixar Relatório Excel
+                </Button>
+              )}
+              
               {(currentExam.status === 'GRADED' || currentExam.status === 'WARNING') && (
                 <Button
                   onClick={() => navigate(`/dashboard/exams/${examUuid}/review`)}
-                  variant="primary"
                 >
                   <span className="material-symbols-outlined mr-2">rate_review</span>
                   Revisar Correção
