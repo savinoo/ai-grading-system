@@ -11,8 +11,11 @@ from src.interfaces.services.agents.examiner_agent_interface import ExaminerAgen
 
 from src.domain.ai.schemas import ExamQuestion, StudentAnswer
 from src.domain.ai.rag_schemas import RetrievedContext
-from src.domain.ai.agent_schemas import AgentCorrection, AgentID, CriterionScore
+from src.domain.ai.agent_schemas import AgentCorrection, AgentID
 from src.domain.ai.prompts import format_rubric_text, format_rag_context
+
+from src.services.agents.dspy_output_parser import parse_dspy_correction_output
+from src.utils.timing import measure_time
 
 from src.errors.domain.sql_error import SqlError
 
@@ -115,7 +118,7 @@ class ExaminerAgent(ExaminerAgentInterface):
     @traceable(run_type="chain", name="Examiner Agent Evaluation")
     @retry(
         stop=stop_after_attempt(settings.LLM_MAX_RETRIES),
-        wait=wait_exponential(multiplier=1, min=2, max=10),
+        wait=wait_exponential(multiplier=1, min=4, max=60),
         reraise=True
     )
     async def evaluate(  # type: ignore[override]  # pylint: disable=arguments-differ
@@ -150,50 +153,42 @@ class ExaminerAgent(ExaminerAgentInterface):
         rag_text = format_rag_context(rag_contexts)
         
         # DSPy é síncrono - executamos em thread pool para não bloquear o loop
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         
         def run_dspy_prediction():
             """Closure para executar DSPy de forma síncrona."""
-            return self.__dspy_module(
-                question_statement=question.statement,
-                rubric_formatted=rubric_text,
-                rag_context_formatted=rag_text,
-                student_answer=student_answer.text
-            )
+            with measure_time(f"DSPy Examiner {agent_id} - Questão {question.id}"):
+                return self.__dspy_module(
+                    question_statement=question.statement,
+                    rubric_formatted=rubric_text,
+                    rag_context_formatted=rag_text,
+                    student_answer=student_answer.text
+                )
         
         try:
             # Executa DSPy em thread separada
             prediction = await loop.run_in_executor(None, run_dspy_prediction)
             
             self.__logger.debug("[%s] DSPy prediction type: %s", agent_id, type(prediction))
+            self.__logger.debug("[%s] DSPy raw fields: reasoning=%s | scores=%s | total=%s",
+                agent_id,
+                type(prediction.reasoning_chain),
+                type(prediction.criteria_scores),
+                type(prediction.total_score),
+            )
             
-            # Extrair dados da predição DSPy
-            raw_reasoning = prediction.reasoning_chain
-            raw_criteria_scores = prediction.criteria_scores
-            raw_total_score = prediction.total_score
+            # Monta dict bruto e delega todo o parsing/fallback ao parser robusto
+            raw_result = {
+                "reasoning_chain": prediction.reasoning_chain,
+                "criteria_scores": prediction.criteria_scores,
+                "total_score": prediction.total_score,
+            }
             
-            # Converter criteria_scores para CriterionScore Pydantic
-            criteria_scores = []
-            for item in raw_criteria_scores:
-                if isinstance(item, dict):
-                    criteria_scores.append(CriterionScore(**item))
-                else:
-                    # Fallback: tentar extrair campos manualmente
-                    self.__logger.warning("[%s] Formato inesperado em criteria_scores: %s", agent_id, item)
-                    criteria_scores.append(
-                        CriterionScore(
-                            criterion=str(getattr(item, 'criterion', getattr(item, 'criterion_name', 'Unknown'))),
-                            score=float(getattr(item, 'score', 0.0)),
-                            feedback=str(getattr(item, 'feedback', ''))
-                        )
-                    )
-            
-            # Criar AgentCorrection estruturado
-            correction = AgentCorrection(
+            correction = parse_dspy_correction_output(
+                raw_result=raw_result,
                 agent_id=agent_id,
-                reasoning_chain=raw_reasoning,
-                criteria_scores=criteria_scores,
-                total_score=raw_total_score  # Validadores do Pydantic vão recalcular se necessário
+                fallback_score=0.0,
+                prediction=prediction,
             )
             
             self.__logger.info(

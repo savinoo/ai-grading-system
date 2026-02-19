@@ -11,10 +11,11 @@ from src.interfaces.services.agents.arbiter_agent_interface import ArbiterAgentI
 
 from src.domain.ai.schemas import ExamQuestion, StudentAnswer
 from src.domain.ai.rag_schemas import RetrievedContext
-from src.domain.ai.agent_schemas import AgentCorrection, AgentID, CriterionScore
+from src.domain.ai.agent_schemas import AgentCorrection, AgentID
 from src.domain.ai.prompts import format_rubric_text, format_rag_context
 
-from src.errors.domain.sql_error import SqlError
+from src.services.agents.dspy_output_parser import parse_dspy_correction_output
+from src.utils.timing import measure_time
 
 from src.core.settings import settings
 from src.core.logging_config import get_logger
@@ -116,7 +117,7 @@ class ArbiterAgent(ArbiterAgentInterface):
     @traceable(run_type="chain", name="Arbiter Agent Decision")
     @retry(
         stop=stop_after_attempt(settings.LLM_MAX_RETRIES),
-        wait=wait_exponential(multiplier=1, min=2, max=10),
+        wait=wait_exponential(multiplier=1, min=4, max=60),
         reraise=True
     )
     async def evaluate(  # type: ignore[override]  # pylint: disable=arguments-differ
@@ -180,53 +181,49 @@ class ArbiterAgent(ArbiterAgentInterface):
         )
         
         # DSPy é síncrono - executamos em thread pool
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         
         def run_dspy_arbitration():
             """Closure para executar DSPy de forma síncrona."""
-            return self.__dspy_module(
-                question_statement=question.statement,
-                rubric_formatted=rubric_text,
-                rag_context_formatted=rag_text,
-                student_answer=student_answer.text,
-                corrector_1_evaluation=c1_text,
-                corrector_2_evaluation=c2_text,
-                divergence_context=div_text
-            )
+            with measure_time(f"DSPy Arbiter - Questão {question.id}"):
+                return self.__dspy_module(
+                    question_statement=question.statement,
+                    rubric_formatted=rubric_text,
+                    rag_context_formatted=rag_text,
+                    student_answer=student_answer.text,
+                    corrector_1_evaluation=c1_text,
+                    corrector_2_evaluation=c2_text,
+                    divergence_context=div_text
+                )
         
         try:
             # Executa DSPy em thread separada
             prediction = await loop.run_in_executor(None, run_dspy_arbitration)
             
             self.__logger.debug("[ARBITER] DSPy prediction type: %s", type(prediction))
+            self.__logger.debug("[ARBITER] DSPy raw fields: reasoning=%s | scores=%s | total=%s",
+                type(prediction.reasoning_chain),
+                type(prediction.criteria_scores),
+                type(prediction.total_score),
+            )
             
-            # Extrair dados da predição DSPy
-            raw_reasoning = prediction.reasoning_chain
-            raw_criteria_scores = prediction.criteria_scores
-            raw_total_score = prediction.total_score
+            # Tenta primeiro o campo 'arbitration' (formato legacy do backend_old)
+            # Se não existir, usa os campos estruturados individuais
+            if hasattr(prediction, "arbitration") and prediction.arbitration:
+                raw_result = prediction.arbitration
+                self.__logger.debug("[ARBITER] Usando campo 'arbitration' como raw_result.")
+            else:
+                raw_result = {
+                    "reasoning_chain": prediction.reasoning_chain,
+                    "criteria_scores": prediction.criteria_scores,
+                    "total_score": prediction.total_score,
+                }
             
-            # Converter criteria_scores para CriterionScore Pydantic
-            criteria_scores = []
-            for item in raw_criteria_scores:
-                if isinstance(item, dict):
-                    criteria_scores.append(CriterionScore(**item))
-                else:
-                    # Fallback: tentar extrair campos manualmente
-                    self.__logger.warning("[ARBITER] Formato inesperado em criteria_scores: %s", item)
-                    criteria_scores.append(
-                        CriterionScore(
-                            criterion=str(getattr(item, 'criterion', getattr(item, 'criterion_name', 'Unknown'))),
-                            score=float(getattr(item, 'score', 0.0)),
-                            feedback=str(getattr(item, 'feedback', ''))
-                        )
-                    )
-            
-            # Criar AgentCorrection estruturado com agent_id=ARBITER
-            correction = AgentCorrection(
+            correction = parse_dspy_correction_output(
+                raw_result=raw_result,
                 agent_id=AgentID.ARBITER,
-                reasoning_chain=raw_reasoning,
-                criteria_scores=criteria_scores,
-                total_score=raw_total_score
+                fallback_score=(correction_1.total_score + correction_2.total_score) / 2.0,
+                prediction=prediction,
             )
             
             self.__logger.info(
@@ -240,18 +237,26 @@ class ArbiterAgent(ArbiterAgentInterface):
             
             return correction
             
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-except
+            # Fallback de último recurso: evita que o fluxo LangGraph trave
+            avg_score = (correction_1.total_score + correction_2.total_score) / 2.0
             self.__logger.error(
-                "[ARBITER] Erro durante arbitragem da questão %s: %s",
-                question.id, e,
-                exc_info=True
+                "[ARBITER] Erro crítico durante arbitragem da questão %s: %s. "
+                "Aplicando fallback com média das correções (%.2f).",
+                question.id, e, avg_score,
+                exc_info=True,
             )
-            raise SqlError(
-                message="Erro ao arbitrar avaliações divergentes",
-                context={
-                    "question_id": str(question.id),
-                    "student_id": str(student_answer.student_id),
-                    "divergence": abs(correction_1.total_score - correction_2.total_score)
-                },
-                cause=e
-            ) from e
+            # Não propaga o erro — retorna correção mínima baseada na média
+            return AgentCorrection(
+                agent_id=AgentID.ARBITER,
+                reasoning_chain=(
+                    f"[Sistema] Fallback de arbitragem ativado devido a erro crítico: {e}. "
+                    f"Média das correções aplicada."
+                ).ljust(50),
+                criteria_scores=[],
+                total_score=avg_score,
+                feedback_text=(
+                    f"Nota arbitrada pela média das correções anteriores: {avg_score:.2f}/10.0 "
+                    f"(fallback por falha do agente árbitro)."
+                ),
+            )
