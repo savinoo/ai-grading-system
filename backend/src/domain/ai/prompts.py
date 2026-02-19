@@ -117,7 +117,7 @@ def format_rubric_text(rubric_list: List[EvaluationCriterion]) -> str:
     """
     text = ""
     for criterion in rubric_list:
-        text += f"- Critério: {criterion.name} (Peso: {criterion.weight} pontos, Nota Máxima: {criterion.max_score})\n"
+        text += f"- Critério: {criterion.name} (Valendo até: {criterion.max_score} pontos)\n"
         text += f"  Descrição: {criterion.description}\n"
     return text
 
