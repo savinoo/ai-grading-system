@@ -14,6 +14,30 @@ from src.domain.ai.rag_schemas import RetrievedContext
 from src.errors.domain.sql_error import SqlError
 
 
+# ---------------------------------------------------------------------------
+# Cache in-process FIFO (limpo ao reiniciar o processo)
+# Chave: (query[:160], str(exam_uuid), k) → lista de RetrievedContext
+# ---------------------------------------------------------------------------
+_RAG_CACHE: dict[tuple[str, str, int], list] = {}
+_RAG_CACHE_MAX = 128
+
+
+def _cache_get(key: tuple) -> list | None:
+    """Retorna resultado cacheado ou None se ausente."""
+    return _RAG_CACHE.get(key)
+
+
+def _cache_set(key: tuple, value: list) -> None:
+    """
+    Insere no cache FIFO.
+    Se o limite for atingido, remove a entrada mais antiga (inserção mais velha).
+    """
+    if len(_RAG_CACHE) >= _RAG_CACHE_MAX:
+        oldest = next(iter(_RAG_CACHE.keys()))
+        _RAG_CACHE.pop(oldest, None)
+    _RAG_CACHE[key] = value
+
+
 class RetrievalService(RetrievalServiceInterface):
     """
     Serviço de busca semântica com filtro rígido de exam_uuid.
@@ -69,6 +93,16 @@ class RetrievalService(RetrievalServiceInterface):
         """
         k = k or settings.RAG_TOP_K
         
+        # --- Cache lookup ---
+        cache_key = (query[:160], str(exam_uuid), int(k))
+        cached = _cache_get(cache_key)
+        if cached is not None:
+            self.__logger.debug(
+                "RAG: cache hit (exam_uuid=%s, k=%d, query_prefix='%s...')",
+                exam_uuid, k, query[:40]
+            )
+            return cached
+        
         self.__logger.info(
             "RAG Query",
             extra={
@@ -99,6 +133,18 @@ class RetrievalService(RetrievalServiceInterface):
                 k=k,
                 filter=metadata_filter
             )
+            
+            # Fallback global: se nenhum chunk foi indexado para este exam_uuid,
+            # busca sem filtro para não deixar o fluxo sem contexto algum
+            if not results_with_score:
+                self.__logger.warning(
+                    "RAG: sem resultados para exam_uuid=%s. Buscando globalmente (sem filtro).",
+                    exam_uuid
+                )
+                results_with_score = self.__vector_store.similarity_search_with_score(
+                    query=query,
+                    k=k
+                )
             
             self.__logger.debug(
                 "ChromaDB retornou %d resultados antes de filtro de score",
@@ -133,6 +179,9 @@ class RetrievalService(RetrievalServiceInterface):
             
             # Ordenar por relevância (descendente)
             contexts.sort(key=lambda x: x.relevance_score, reverse=True)
+            
+            # Salvar no cache antes de retornar
+            _cache_set(cache_key, contexts)
             
             self.__logger.info(
                 "RAG retornou contextos",
