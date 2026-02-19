@@ -26,8 +26,8 @@ class Settings(BaseSettings):
     
     # === RAG & Vector Database ===
     CHROMA_PERSIST_DIRECTORY: str = Field(default="./data/chromadb", description="Diretório de persistência do ChromaDB")
-    EMBEDDING_MODEL: str = Field(default="text-embedding-3-small", description="Modelo de embeddings")
-    EMBEDDING_PROVIDER: str = Field(default="openai", description="Provedor de embeddings (google, openai)")
+    EMBEDDING_MODEL: str = Field(default="models/gemini-embedding-001", description="Modelo de embeddings")
+    EMBEDDING_PROVIDER: str = Field(default="google", description="Provedor de embeddings (google, openai)")
     
     # === LLM Configuration ===
     LLM_PROVIDER: str = Field(default="gemini", description="Provedor de LLM (openai, gemini, litellm)")
@@ -42,6 +42,7 @@ class Settings(BaseSettings):
     
     # === LangSmith (Observability) ===
     LANGSMITH_API_KEY: Optional[str] = Field(default=None, description="Chave da API LangSmith")
+    LANGSMITH_ENDPOINT: str = Field(default="https://api.smith.langchain.com", description="Endpoint da API LangSmith")
     LANGSMITH_PROJECT_NAME: str = Field(default="ai-grading-backend", description="Nome do projeto no LangSmith")
     LANGSMITH_TRACING_ENABLED: bool = Field(default=False, description="Habilitar rastreamento no LangSmith")
     

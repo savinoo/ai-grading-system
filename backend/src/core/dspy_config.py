@@ -50,7 +50,14 @@ def configure_dspy() -> None:
         if not settings.GOOGLE_API_KEY:
             raise ValueError("GOOGLE_API_KEY não configurada para DSPy")
         api_key = settings.GOOGLE_API_KEY
-        model_string = f"gemini/{settings.LLM_MODEL_NAME}"
+        # LiteLLM não aceita prefixos como "models/" ou "google/" no nome do modelo
+        clean_model = (
+            settings.LLM_MODEL_NAME
+            .replace("models/", "")
+            .replace("google/", "")
+            .replace("gemini/", "")
+        )
+        model_string = f"gemini/{clean_model}"
     elif provider == "openai":
         if not settings.OPENAI_API_KEY:
             raise ValueError("OPENAI_API_KEY não configurada para DSPy")
@@ -64,7 +71,7 @@ def configure_dspy() -> None:
         model=model_string,
         api_key=api_key,
         temperature=settings.LLM_TEMPERATURE,
-        cache=False  # Evitar cache em produção para garantir respostas frescas
+        cache=True  # Cache habilitado para reutilizar respostas idênticas (economia de tokens)
     )
     
     dspy.settings.configure(lm=lm)
