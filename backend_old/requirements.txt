@@ -1,0 +1,24 @@
+langchain
+langchain-community
+langchain-core
+langchain-openai
+langchain-chroma
+chromadb
+pypdf
+python-dotenv
+pydantic
+streamlit
+pandas
+langgraph
+openai
+langsmith
+tenacity
+dspy-ai
+google-generativeai
+langchain-google-genai
+
+# Analytics & Professor Assistant Module
+numpy>=1.24.0
+scipy>=1.10.0
+plotly>=5.0.0
+pytest>=7.0.0
