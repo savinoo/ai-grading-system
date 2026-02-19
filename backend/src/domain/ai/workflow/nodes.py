@@ -7,6 +7,7 @@ from src.domain.ai.utils.divergence_checker import DivergenceChecker
 from src.domain.ai.utils.consensus_builder import ConsensusBuilder
 from src.domain.ai.agent_schemas import AgentID
 from src.domain.ai.workflow.state import GradingState
+from src.utils.concurrency import get_api_semaphore
 
 from src.core.logging_config import get_logger
 
@@ -53,12 +54,13 @@ async def examiner_1_node(state: GradingState) -> dict:
     logger.info("[Corretor 1 Node] Iniciando avaliação")
     
     agent = ExaminerAgent()
-    correction = await agent.evaluate(
-        agent_id=AgentID.CORRETOR_1,
-        question=state['question'],
-        student_answer=state['student_answer'],
-        rag_contexts=state['rag_contexts']
-    )
+    async with get_api_semaphore():
+        correction = await agent.evaluate(
+            agent_id=AgentID.CORRETOR_1,
+            question=state['question'],
+            student_answer=state['student_answer'],
+            rag_contexts=state['rag_contexts']
+        )
     
     logger.info(
         "[Corretor 1 Node] Nota: %.2f",
@@ -81,12 +83,13 @@ async def examiner_2_node(state: GradingState) -> dict:
     logger.info("[Corretor 2 Node] Iniciando avaliação")
     
     agent = ExaminerAgent()
-    correction = await agent.evaluate(
-        agent_id=AgentID.CORRETOR_2,
-        question=state['question'],
-        student_answer=state['student_answer'],
-        rag_contexts=state['rag_contexts']
-    )
+    async with get_api_semaphore():
+        correction = await agent.evaluate(
+            agent_id=AgentID.CORRETOR_2,
+            question=state['question'],
+            student_answer=state['student_answer'],
+            rag_contexts=state['rag_contexts']
+        )
     
     logger.info(
         "[Corretor 2 Node] Nota: %.2f",
@@ -144,13 +147,14 @@ async def arbiter_node(state: GradingState) -> dict:
     )
     
     agent = ArbiterAgent()
-    correction = await agent.evaluate(
-        question=state['question'],
-        student_answer=state['student_answer'],
-        rag_contexts=state['rag_contexts'],
-        correction_1=state['correction_1'],
-        correction_2=state['correction_2']
-    )
+    async with get_api_semaphore():
+        correction = await agent.evaluate(
+            question=state['question'],
+            student_answer=state['student_answer'],
+            rag_contexts=state['rag_contexts'],
+            correction_1=state['correction_1'],
+            correction_2=state['correction_2']
+        )
     
     logger.info(
         "[Arbitro Node] Nota do árbitro: %.2f",

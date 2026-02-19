@@ -49,6 +49,10 @@ class Settings(BaseSettings):
     # === Grading Workflow ===
     DIVERGENCE_THRESHOLD: float = Field(default=2.0, ge=0.0, description="Limiar de divergência entre avaliadores")
     RAG_TOP_K: int = Field(default=4, ge=1, le=20, description="Número de documentos recuperados pelo RAG")
+
+    # === Concorrência de API ===
+    API_CONCURRENCY: int = Field(default=10, ge=1, description="Máximo de chamadas simultâneas à API do LLM")
+    API_THROTTLE_SLEEP: float = Field(default=0.2, ge=0.0, description="Segundos de espera entre chamadas dentro do semáforo")
     
     # === BCRYPT ===
     BCRYPT_ROUNDS: int = Field(default=12, ge=4, le=31, description="Número de rounds para bcrypt")
