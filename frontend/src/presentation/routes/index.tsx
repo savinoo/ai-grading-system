@@ -17,9 +17,9 @@ import { ExamDetailsPage } from '@presentation/pages/exams/ExamDetailsPage';
 import { ExamReviewPage } from '@presentation/pages/exams/ExamReviewPage';
 import { ClassesPage } from '@presentation/pages/classes/ClassesPage';
 import { StudentsPage } from '@presentation/pages/students/StudentsPage';
-import { ResultsPage } from '@presentation/pages/results/ResultsPage';
-import { ExamResultsPage } from '@presentation/pages/results/ExamResultsPage';
-import { GradingDetailsPage } from '@presentation/pages/results/GradingDetailsPage';
+import { AnalyticsPage } from '@presentation/pages/analytics/AnalyticsPage';
+import { ClassAnalyticsPage } from '@presentation/pages/analytics/ClassAnalyticsPage';
+import { StudentPerformancePage } from '@presentation/pages/analytics/StudentPerformancePage';
 import { SettingsPage } from '@presentation/pages/settings/SettingsPage';
 import { NotFoundPage } from '@presentation/pages/error/NotFoundPage';
 import { PrivateRoute } from '@presentation/components/auth/PrivateRoute';
@@ -50,9 +50,9 @@ export const AppRoutes: React.FC = () => {
           <Route path="/exams" element={<ExamsPage />} />
           <Route path="/classes" element={<ClassesPage />} />
           <Route path="/students" element={<StudentsPage />} />
-          <Route path="/results" element={<ResultsPage />} />
-          <Route path="/results/exams/:examId" element={<ExamResultsPage />} />
-          <Route path="/results/answers/:answerId" element={<GradingDetailsPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/analytics/classes/:classUuid" element={<ClassAnalyticsPage />} />
+          <Route path="/analytics/classes/:classUuid/students/:studentUuid" element={<StudentPerformancePage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
         

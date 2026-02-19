@@ -15,7 +15,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
     { path: '/dashboard', icon: 'dashboard', label: 'Dashboard' },
     { path: '/exams', icon: 'description', label: 'Provas' },
     { path: '/classes', icon: 'groups', label: 'Turmas' },
-    { path: '/results', icon: 'analytics', label: 'Resultados' },
+    { path: '/analytics', icon: 'insights', label: 'Análise Pedagógica' },
   ];
 
   const handleLogout = async () => {
@@ -44,7 +44,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
         {/* Navigation */}
         <nav className="flex flex-col gap-1">
           {menuItems.map((item) => {
-            const isActive = location.pathname === item.path;
+            const isActive =
+              item.path === '/analytics'
+                ? location.pathname.startsWith('/analytics')
+                : location.pathname === item.path;
             return (
               <Link
                 key={item.path}
