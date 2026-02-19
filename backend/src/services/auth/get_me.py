@@ -67,6 +67,8 @@ class GetMeService(GetMeServiceInterface):
             "id": user.id,
             "uuid": str(user.uuid),
             "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
             "user_type": user.user_type,
             "active": user.active,
             "created_at": user.created_at.isoformat() if user.created_at else None,

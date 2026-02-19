@@ -92,11 +92,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
       {/* User Profile */}
       <div className="flex items-center gap-3 p-2 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
         <div className="size-9 rounded-full bg-primary flex items-center justify-center text-white font-bold">
-          {user?.email?.charAt(0).toUpperCase() || 'U'}
+          {user?.first_name?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || 'U'}
         </div>
         <div className="flex flex-col overflow-hidden">
           <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
-            {user?.email || 'Usuário'}
+            {user?.first_name && user?.last_name
+              ? `${user.first_name} ${user.last_name}`
+              : user?.email || 'Usuário'}
           </p>
           <p className="text-[10px] text-slate-500 truncate font-medium">
             {user?.user_type === 'teacher' ? 'Professor' : 'Usuário'}

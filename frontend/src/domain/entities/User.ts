@@ -3,6 +3,8 @@ export interface User {
   id: number;
   uuid: string;
   email: string;
+  first_name: string;
+  last_name: string;
   user_type: 'admin' | 'teacher' | 'student';
   active: boolean;
   created_at: string;

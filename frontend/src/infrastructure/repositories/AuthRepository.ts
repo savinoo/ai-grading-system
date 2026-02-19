@@ -96,20 +96,25 @@ export class AuthRepository implements IAuthRepository {
 
   async getCurrentUser(): Promise<User | null> {
     const userJson = this.storageService.getItem('user');
-    if (!userJson) {
-      // Se não tem dados locais, tenta buscar do backend
+    if (userJson) {
       try {
-        const response = await this.httpClient.getClient().get<User>('/auth/me');
-        const userData = response.data;
-        this.storageService.setItem('user', JSON.stringify(userData));
-        return userData;
+        const userData = JSON.parse(userJson);
+        // Se o cache já contém first_name, retorna diretamente
+        if (userData?.first_name) {
+          return userData;
+        }
+        // Cache antigo sem first_name — invalida para re-buscar do backend
+        this.storageService.removeItem('user');
       } catch {
-        return null;
+        this.storageService.removeItem('user');
       }
     }
 
+    // Busca dados atualizados do backend
     try {
-      const userData = JSON.parse(userJson);
+      const response = await this.httpClient.getClient().get<User>('/auth/me');
+      const userData = response.data;
+      this.storageService.setItem('user', JSON.stringify(userData));
       return userData;
     } catch {
       return null;
