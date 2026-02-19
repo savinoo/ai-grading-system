@@ -1,5 +1,6 @@
 
 # FastAPI imports
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,6 +15,7 @@ from src.main.middlewares.security_headers import SecurityHeadersMiddleware
 from src.core.settings import settings
 from src.core.logging_config import setup_logging, get_logger
 from src.core.dspy_config import configure_dspy
+from src.core.langsmith_config import initialize_langsmith
 
 # Rotas
 from src.main.routes.auth_routes import router as auth_router
@@ -35,29 +37,39 @@ setup_logging()
 logger = get_logger(__name__)
 
 
-app = FastAPI(
-    title="CorretumAI API",
-    version="1.0.0",
-    debug=(settings.ENV != "prd")
-)
-
-
-# ===== EVENTOS DE STARTUP =====
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
     """
-    Inicialização de recursos ao iniciar a aplicação.
+    Gerencia o ciclo de vida da aplicação (startup / shutdown).
+    Substitui o padrão depreciado @app.on_event.
     """
+    # --- STARTUP ---
     logger.info("Iniciando aplicação CorretumAI")
-    
+
+    # Inicializar LangSmith tracing (não crítico)
+    initialize_langsmith()
+
     # Configurar DSPy globalmente
     try:
         configure_dspy()
         logger.info("DSPy configurado no startup")
     except Exception as e:
         logger.warning("Falha ao configurar DSPy (não crítico): %s", e)
-    
+
     logger.info("Aplicação inicializada com sucesso")
+
+    yield  # aplicação rodando
+
+    # --- SHUTDOWN ---
+    logger.info("Encerrando aplicação CorretumAI")
+
+
+app = FastAPI(
+    title="CorretumAI API",
+    version="1.0.0",
+    debug=(settings.ENV != "prd"),
+    lifespan=lifespan,
+)
 
 
 # ===== MIDDLEWARES =====
