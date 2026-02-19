@@ -250,13 +250,13 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             
             # === 4. Inserir criteria_scores ===
             for criterion_score in final_correction.criteria_scores:
-                criteria_uuid = criteria_map.get(criterion_score.criterion_name)
-                criterion_weight = weight_map.get(criterion_score.criterion_name, 1.0)
+                criteria_uuid = criteria_map.get(criterion_score.criterion)
+                criterion_weight = weight_map.get(criterion_score.criterion, 1.0)
                 
                 if not criteria_uuid:
                     self.__logger.warning(
                         "UUID não encontrado para critério '%s' - pulando",
-                        criterion_score.criterion_name
+                        criterion_score.criterion
                     )
                     continue
                 

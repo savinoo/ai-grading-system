@@ -55,13 +55,15 @@ class ArbitrationSignature(dspy.Signature):
         desc="Informação sobre a divergência detectada entre os corretores"
     )
     
+    arbitration = dspy.OutputField(desc="O veredito final estruturado contendo a nova correção de desempate")
+    
     # Outputs estruturados
     reasoning_chain: str = dspy.OutputField(
         desc="Raciocínio do árbitro analisando os argumentos de ambos os corretores "
              "e justificando a decisão final (mínimo 50 caracteres)."
     )
     criteria_scores: List[dict] = dspy.OutputField(
-        desc="Lista de dicionários com {criterion_name: str, score: float, max_score: float, feedback: str} "
+        desc="Lista de dicionários com {criterion: str, score: float, max_score: float, feedback: str} "
              "para cada critério da rubrica, com a decisão independente do árbitro. "
              "O max_score deve ser extraído da rubrica fornecida (campo 'Nota Máxima')."
     )
@@ -156,7 +158,7 @@ class ArbiterAgent(ArbiterAgentInterface):
             f"Raciocínio:\n{correction_1.reasoning_chain}\n"
             f"Notas por Critério:\n" +
             "\n".join([
-                f"  - {cs.criterion_name}: {cs.score:.2f} ({cs.feedback})"
+                f"  - {cs.criterion}: {cs.score:.2f} ({cs.feedback})"
                 for cs in correction_1.criteria_scores
             ])
         )
@@ -166,7 +168,7 @@ class ArbiterAgent(ArbiterAgentInterface):
             f"Raciocínio:\n{correction_2.reasoning_chain}\n"
             f"Notas por Critério:\n" +
             "\n".join([
-                f"  - {cs.criterion_name}: {cs.score:.2f} ({cs.feedback})"
+                f"  - {cs.criterion}: {cs.score:.2f} ({cs.feedback})"
                 for cs in correction_2.criteria_scores
             ])
         )
@@ -213,7 +215,7 @@ class ArbiterAgent(ArbiterAgentInterface):
                     self.__logger.warning("[ARBITER] Formato inesperado em criteria_scores: %s", item)
                     criteria_scores.append(
                         CriterionScore(
-                            criterion_name=str(getattr(item, 'criterion_name', 'Unknown')),
+                            criterion=str(getattr(item, 'criterion', getattr(item, 'criterion_name', 'Unknown'))),
                             score=float(getattr(item, 'score', 0.0)),
                             feedback=str(getattr(item, 'feedback', ''))
                         )

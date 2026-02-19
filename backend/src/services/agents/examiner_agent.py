@@ -51,7 +51,7 @@ class GradingSignature(dspy.Signature):
              "Analise cada critério separadamente (mínimo 50 caracteres)."
     )
     criteria_scores: List[dict] = dspy.OutputField(
-        desc="Lista de dicionários com {criterion_name: str, score: float, max_score: float, feedback: str} "
+        desc="Lista de dicionários com {criterion: str, score: float, max_score: float, feedback: str} "
              "para cada critério da rubrica. Use pontuação ABSOLUTA, não percentual. "
              "O max_score deve ser extraído da rubrica fornecida (campo 'Nota Máxima')."
     )
@@ -182,7 +182,7 @@ class ExaminerAgent(ExaminerAgentInterface):
                     self.__logger.warning("[%s] Formato inesperado em criteria_scores: %s", agent_id, item)
                     criteria_scores.append(
                         CriterionScore(
-                            criterion_name=str(getattr(item, 'criterion_name', 'Unknown')),
+                            criterion=str(getattr(item, 'criterion', getattr(item, 'criterion_name', 'Unknown'))),
                             score=float(getattr(item, 'score', 0.0)),
                             feedback=str(getattr(item, 'feedback', ''))
                         )

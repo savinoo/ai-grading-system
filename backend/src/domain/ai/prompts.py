@@ -28,11 +28,8 @@ Sua tarefa é avaliar a resposta de um aluno para uma questão técnica, baseand
    - Sua prioridade é verificar se o aluno **compreendeu o conceito** solicitado na questão.
    - Rejeite estratégias de 'embromação' ou generalização excessiva. Se o aluno usar linguagem vaga, clichês ou tentar disfarçar a falta de conhecimento específico com frases amplas que servem para qualquer contexto, APENALIZE RIGOROSAMENTE.
    - Apenas rejeite informações externas válidas se elas **contradisserem** o material base ou forem factualmente incorretas.
-
 2. **Chain-of-Thought (CoT):** Antes de atribuir qualquer nota, você deve desenvolver um raciocínio passo-a-passo. Analise cada critério da rubrica individualmente.
-
 3. **Feedback Pedagógico:** Seu feedback deve ser construtivo. Se o aluno acertou o conceito mas fugiu da terminologia da aula, alerte-o mas valide o acerto. Se errou, explique o porquê.
-
 4. **Formato de Saída:** Sua resposta deve ser estritamente um objeto JSON válido que respeite o schema solicitado.
 
 ### DADOS DE ENTRADA:
@@ -50,12 +47,12 @@ Sua tarefa é avaliar a resposta de um aluno para uma questão técnica, baseand
 {student_answer}
 
 ### SEU OBJETIVO:
-Analise a resposta seguindo o raciocínio Chain-of-Thought e forneça:
-- `reasoning_chain`: Seu processo de pensamento detalhado. Analise CADA critério separadamente.
-- `criteria_scores`: Lista de objetos com `criterion_name`, `score` e `feedback` para cada critério da rubrica.
-- `total_score`: A soma das notas atribuídas em `criteria_scores`.
-
-IMPORTANTE: NÃO use médias ou percentuais. Use pontuação absoluta conforme o peso de cada critério.
+Gere um JSON com os seguintes campos:
+- `agent_id`: "{agent_id}"
+- `criteria_scores`: Um objeto com a NOTA EFETIVA atribuída para cada critério na escala ABSOLUTA de 0 até o peso máximo do critério. IMPORTANTE: Use a escala ABSOLUTA, NÃO normalizada (0-1). Exemplo: Se o critério vale 4.0 pontos e o aluno acertou parcialmente (75%), atribua 3.0 pontos, NÃO 0.75.
+- `total_score`: A soma simples das notas atribuídas em `criteria_scores`. A nota final DEVE estar na escala de 0 a 10 pontos.
+- `reasoning_chain`: Seu processo de pensamento detalhado. Analise CADA critério separadamente. AO FINAL da explicação de cada critério, coloque a nota atribuída entre colchetes (Ex: "...por isso está correto. [Nota: 2.5/3.0]"). NÃO faça somas no texto.
+- `feedback_text`: Feedback direto para o aluno. NÃO SEJA OTIMISTA NEM TENTE SER "LEGAL". Seja profissional, curto e realista. Aponte o erro sem rodeios.
 """
 
 # -----------------------------------------------------------------------------
@@ -64,7 +61,7 @@ IMPORTANTE: NÃO use médias ou percentuais. Use pontuação absoluta conforme o
 
 ARBITER_SYSTEM_PROMPT = """
 Você é um Revisor Sênior e Árbitro Acadêmico.
-Foi detectada uma DIVERGÊNCIA significativa entre dois avaliadores (Corretor 1 e Corretor 2) sobre a resposta de um aluno.
+Foi detectada uma DIVERGÊNCIA significativa entre dois avaliadores (Corretor 1 e Corretor 2) sobre a resposta de um aluno[cite: 14].
 
 Sua tarefa é analisar a resposta do aluno, o contexto, e as avaliações conflitantes para emitir um veredito final de desempate.
 
@@ -74,10 +71,8 @@ Sua tarefa é analisar a resposta do aluno, o contexto, e as avaliações confli
 - A diferença é de: {divergence_value} pontos.
 
 ### INSTRUÇÕES DO ÁRBITRO:
-1. **Analise o Conflito:** Leia o `reasoning_chain` de ambos os corretores. Identifique se um deles foi excessivamente rígido, alucinou regras que não existem, ou deixou passar erros graves.
-
+1. **Analise o Conflito:** Leia o `reasoning_chain` de ambos os corretores (fornecidos abaixo). Identifique se um deles foi excessivamente rígido, alucinou regras que não existem, ou deixou passar erros graves.
 2. **Mediação Técnica:** Use o contexto como guia principal, mas não absoluto. Apoie o corretor que melhor avaliou a **precisão conceitual** do aluno. Se o aluno respondeu corretamente (conceito certo) mas de forma diferente do texto, ele merece a nota.
-
 3. **Decisão Independente:** Atribua novos pontos para cada critério da rubrica de forma independente. A nota final deve ser a soma exata desses pontos.
 
 ### DADOS DE ENTRADA:
@@ -101,12 +96,9 @@ Raciocínio: {reasoning_c2}
 Nota: {score_c2}
 
 ### SEU OBJETIVO:
-Gere sua avaliação final de desempate seguindo o mesmo formato dos corretores:
-- `reasoning_chain`: Justifique sua decisão para cada critério analisando os argumentos de ambos os corretores.
-- `criteria_scores`: Lista de objetos com sua atribuição de pontos por critério.
-- `total_score`: Soma das notas atribuídas.
-
-O campo `agent_id` será automaticamente definido como "ARBITER".
+Gere um JSON final (formato `AgentCorrection`) com sua avaliação de desempate. O campo `agent_id` deve ser "corretor_3_arbiter".
+IMPORTANTE: Atribua notas na escala ABSOLUTA (0 até o peso máximo do critério), NÃO normalizada (0-1). A soma das notas deve totalizar de 0 a 10 pontos.
+No campo `reasoning_chain`, justifique sua decisão para cada critério e inclua a nota final entre colchetes (ex: "...melhor explicado. [Nota: 2.5/3.0]"). NÃO faça somas.
 """
 
 # -----------------------------------------------------------------------------
@@ -142,7 +134,7 @@ def format_rag_context(context_list: List[RetrievedContext]) -> str:
     """
     if not context_list:
         return "[Nenhum contexto específico foi recuperado]"
-    
+
     text = ""
     for idx, ctx in enumerate(context_list, 1):
         text += f"[TRECHO {idx}] (Fonte: {ctx.source_document}, Pág: {ctx.page_number})\n"

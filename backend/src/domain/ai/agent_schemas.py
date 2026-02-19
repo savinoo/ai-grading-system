@@ -6,6 +6,9 @@ Define estruturas de saída dos agentes e tipos de correção.
 from enum import Enum
 from typing import List, Optional
 from pydantic import BaseModel, Field, field_validator, model_validator
+from src.core.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 class AgentID(str, Enum):
@@ -28,7 +31,7 @@ class CriterionScore(BaseModel):
     Permite rastreamento granular da nota por aspecto.
     """
     
-    criterion_name: str = Field(
+    criterion: str = Field(
         ...,
         description="Nome do critério avaliado",
         min_length=1
@@ -38,10 +41,9 @@ class CriterionScore(BaseModel):
         description="Pontuação obtida neste critério",
         ge=0.0
     )
-    max_score: float = Field(
-        ...,
-        description="Pontuação máxima possível neste critério",
-        gt=0.0
+    max_score: Optional[float] = Field(
+        default=None,
+        description="Pontuação máxima possível neste critério"
     )
     feedback: Optional[str] = Field(
         default=None,
@@ -51,18 +53,10 @@ class CriterionScore(BaseModel):
     @field_validator('score')
     @classmethod
     def validate_score_not_exceeds_max(cls, v: float) -> float:
-        """Valida que score não excede max_score."""
-        # Validação adicional ocorre no model_validator
+        """Clamp defensivo: garante score >= 0."""
         if v < 0:
             return 0.0
         return v
-    
-    @model_validator(mode='after')
-    def check_score_range(self):
-        """Garante que score não exceda max_score."""
-        if self.score > self.max_score:
-            self.score = self.max_score
-        return self
 
 
 class AgentCorrection(BaseModel):
@@ -73,8 +67,8 @@ class AgentCorrection(BaseModel):
     garantindo avaliações mais consistentes e explicáveis.
     """
     
-    agent_id: AgentID = Field(
-        ...,
+    agent_id: Optional[AgentID] = Field(
+        default=None,
         description="Identificador do agente que gerou esta correção"
     )
     
@@ -89,13 +83,12 @@ class AgentCorrection(BaseModel):
     )
     
     criteria_scores: List[CriterionScore] = Field(
-        ...,
-        description="Lista de scores por critério avaliado",
-        min_length=1
+        default_factory=list,
+        description="Lista de scores por critério avaliado"
     )
     
-    total_score: float = Field(
-        ...,
+    total_score: Optional[float] = Field(
+        default=None,
         description="Nota total calculada (soma ponderada dos critérios)",
         ge=0.0
     )
@@ -117,35 +110,63 @@ class AgentCorrection(BaseModel):
         """Configuração Pydantic."""
         use_enum_values = True
     
+    @field_validator('reasoning_chain', mode='before')
+    @classmethod
+    def coerce_reasoning_chain(cls, v) -> str:
+        """Converte lista de strings em string única, se necessário."""
+        if isinstance(v, list):
+            return ' '.join(str(item) for item in v)
+        return str(v) if v is not None else ''
+    
+    @field_validator('criteria_scores', mode='before')
+    @classmethod
+    def coerce_criteria_scores(cls, v):
+        """Converte dict único em lista com um elemento, se necessário."""
+        if isinstance(v, dict):
+            return [v]
+        if v is None:
+            return []
+        return v
+    
+    @field_validator('total_score', mode='before')
+    @classmethod
+    def check_score_range(cls, v) -> Optional[float]:
+        """Clamp defensivo: garante total_score no intervalo 0-10."""
+        if v is None:
+            return v
+        v = float(v)
+        return max(0.0, min(v, 10.0))
+    
     @model_validator(mode='after')
-    def recalculate_total_score(self):
+    def calculate_total_if_missing(self):
         """
-        Recalcula total_score baseado em criteria_scores.
-        Previne erros de cálculo do LLM.
+        Calcula total_score se ausente; detecta automaticamente escala 0-1.
+        
+        Se todos os criteria_scores individuais forem ≤ 1.0,
+        assume-se que o LLM utilizou escala 0-1 (ex: 0.8 em vez de 8.0)
+        e multiplica por 10 para normalizar à escala 0-10.
         """
-        if self.criteria_scores:
-            calculated_total = sum(cs.score for cs in self.criteria_scores)
-            
-            # Se o LLM forneceu um total muito diferente, corrigir
-            if abs(calculated_total - self.total_score) > 0.5:
-                self.total_score = calculated_total
+        if not self.criteria_scores:
+            if self.total_score is None:
+                self.total_score = 0.0
+            return self
+        
+        calculated = sum(cs.score for cs in self.criteria_scores)
+        
+        # Detecção de escala 0-1: todos os scores individuais ≤ 1.0
+        if all(cs.score <= 1.0 for cs in self.criteria_scores):
+            logger.warning(
+                "Escala 0-1 detectada: %d critérios com scores ≤ 1.0 "
+                "(soma=%.4f). Multiplicando por 10 para normalizar à escala 0-10.",
+                len(self.criteria_scores),
+                calculated,
+            )
+            calculated = calculated * 10.0
+        
+        if self.total_score is None:
+            self.total_score = min(calculated, 10.0)
         
         return self
-    
-    @field_validator('total_score')
-    @classmethod
-    def check_score_range(cls, v: float) -> float:
-        """
-        Validação defensiva: corrige alucinações de escala.
-        Ex: LLM confunde 18/20 com 18/10 → normaliza para 10.0
-        """
-        if v < 0.0:
-            return 0.0
-        if v > 100.0:  # Alucinação comum: 90/100 em vez de 9/10
-            return min(v / 10.0, 10.0)
-        if v > 20.0:  # Pode estar usando escala 0-20
-            return min(v / 2.0, 10.0)
-        return v
 
 
 class DivergenceAnalysis(BaseModel):
