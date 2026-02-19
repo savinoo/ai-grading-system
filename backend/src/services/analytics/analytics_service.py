@@ -28,7 +28,6 @@ from src.domain.responses.analytics import (
 )
 from src.errors.domain.not_found import NotFoundError
 from src.interfaces.repositories.classes_repository_interface import ClassesRepositoryInterface
-from src.interfaces.repositories.exams_repository_interfaces import ExamsRepositoryInterface
 from src.interfaces.repositories.student_repository_interface import StudentRepositoryInterface
 from src.interfaces.services.analytics.analytics_service_interface import AnalyticsServiceInterface
 from src.models.entities.class_student import ClassStudent
