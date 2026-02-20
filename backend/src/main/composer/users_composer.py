@@ -7,6 +7,7 @@ from src.services.users.resend_verification_email_service import ResendVerificat
 from src.services.users.generate_recovery_code_service import GenerateRecoveryCodeService
 from src.services.users.validate_recovery_code_service import ValidateRecoveryCodeService
 from src.services.users.reset_password_service import ResetPasswordService
+from src.services.users.change_password_service import ChangePasswordService
 
 from src.controllers.users.create_user_controller import CreateUserController
 from src.controllers.users.verify_email_controller import VerifyEmailController
@@ -14,6 +15,7 @@ from src.controllers.users.resend_verification_email_controller import ResendVer
 from src.controllers.users.generate_recovery_code_controller import GenerateRecoveryCodeController
 from src.controllers.users.validate_recovery_code_controller import ValidateRecoveryCodeController
 from src.controllers.users.reset_password_controller import ResetPasswordController
+from src.controllers.users.change_password_controller import ChangePasswordController
 
 def make_create_user_controller() -> CreateUserController:
     """
@@ -99,3 +101,15 @@ def make_reset_password_controller() -> ResetPasswordController:
     reset_password_controller = ResetPasswordController(reset_password_service)
     
     return reset_password_controller
+
+def make_change_password_controller() -> ChangePasswordController:
+    """
+    Factory para criar uma instância de ChangePasswordController
+    com suas dependências injetadas.
+    
+    Returns:
+        ChangePasswordController: Instância do controlador de troca de senha autenticada
+    """
+    user_repository = UserRepository()
+    change_password_service = ChangePasswordService(user_repository)
+    return ChangePasswordController(change_password_service)

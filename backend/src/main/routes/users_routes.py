@@ -20,7 +20,9 @@ from src.main.composer.users_composer import (
     make_generate_recovery_code_controller,
     make_validate_recovery_code_controller,
     make_reset_password_controller,
+    make_change_password_controller,
 )
+from src.main.dependencies.auth_jwt import auth_jwt_verify
 
 from src.main.dependencies.request_meta import get_caller_meta
 from src.main.dependencies.get_db_session import get_db
@@ -310,4 +312,54 @@ def reset_password(
         raise e
     except Exception as e:
         logger.exception("Erro inesperado ao resetar senha")
+        raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
+
+@router.patch(
+    "/me/password",
+    status_code=200,
+    summary="Trocar senha",
+    description="Troca a senha do usuário autenticado verificando a senha atual."
+)
+def change_password(
+    request: Request,
+    body: dict = Body(..., examples={"current_password": "senhaAtual123", "new_password": "novaSenha456"}),
+    db=Depends(get_db),
+    meta: CallerMeta = Depends(get_caller_meta),
+):
+    """
+    Endpoint para trocar a senha do usuário logado.
+
+    Requer autenticação via Bearer token.
+    Valida a senha atual antes de atualizar.
+    """
+    try:
+        auth_header = request.headers.get("Authorization") or ""
+        token = auth_header.split(" ", 1)[1].strip() if auth_header.startswith("Bearer ") else ""
+        token_infos = auth_jwt_verify(token, db, scope=None)
+    except HTTPException as e:
+        raise HTTPException(status_code=e.status_code, detail=e.detail) from e
+    except Exception as e:
+        raise HTTPException(status_code=401, detail="Token inválido") from e
+
+    http_request = HttpRequest(
+        db=db,
+        headers=request.headers,
+        body=body,
+        caller=meta,
+        token_infos=token_infos,
+    )
+
+    controller = make_change_password_controller()
+
+    try:
+        http_response: HttpResponse = controller.handle(http_request)
+        return JSONResponse(
+            status_code=http_response.status_code,
+            content=http_response.body
+        )
+    except HTTPException as e:
+        logger.error("Erro ao trocar senha: %s", str(e.detail))
+        raise e
+    except Exception as e:
+        logger.exception("Erro inesperado ao trocar senha")
         raise HTTPException(status_code=500, detail="Erro interno do servidor") from e
