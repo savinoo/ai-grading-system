@@ -300,8 +300,8 @@ This project is licensed under the **MIT License** – see [LICENSE](LICENSE) fo
 
 ## 👥 Authors
 
-- **Lucas Lorenzo Savino**
-- **Maycon Mendes**
+- [**Lucas Lorenzo Savino**](https://github.com/savinoo)
+- [**Maycon Mendes**](https://github.com/Maycon-M)
 
 ---
 
