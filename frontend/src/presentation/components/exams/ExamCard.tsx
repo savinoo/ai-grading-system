@@ -107,7 +107,7 @@ export const ExamCard: React.FC<ExamCardProps> = ({ exam }) => {
         <div className="flex items-center justify-end gap-2">
           <button
             onClick={handleViewDetails}
-            className="text-primary hover:text-primary/80 font-semibold text-sm"
+            className="text-primary dark:text-primary-light hover:text-primary/80 dark:hover:text-primary-light/80 font-semibold text-sm"
           >
             Ver Detalhes
           </button>

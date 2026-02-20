@@ -100,7 +100,7 @@ export const LoginPage: React.FC = () => {
                 </label>
                 <Link
                   to="/forgot-password"
-                  className="text-primary text-xs font-bold hover:underline transition-all"
+                  className="text-primary dark:text-primary-light text-xs font-bold hover:underline transition-all"
                 >
                   Esqueceu a senha?
                 </Link>
@@ -135,7 +135,7 @@ export const LoginPage: React.FC = () => {
         <div className="mt-8 text-center flex flex-col items-center gap-4">
           <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
             Novo na plataforma?{' '}
-            <Link to="/signup" className="text-primary font-bold hover:underline transition-all px-1">
+            <Link to="/signup" className="text-primary dark:text-primary-light font-bold hover:underline transition-all px-1">
               Criar uma conta
             </Link>
           </p>

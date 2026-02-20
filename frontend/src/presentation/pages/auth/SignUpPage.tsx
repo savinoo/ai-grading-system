@@ -188,11 +188,11 @@ export const SignUpPage: React.FC = () => {
           {/* Terms */}
           <p className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
             Ao criar uma conta, você concorda com nossos{' '}
-            <Link to="/terms" className="text-primary font-bold hover:underline">
+            <Link to="/terms" className="text-primary dark:text-primary-light font-bold hover:underline">
               Termos de Serviço
             </Link>{' '}
             e{' '}
-            <Link to="/privacy" className="text-primary font-bold hover:underline">
+            <Link to="/privacy" className="text-primary dark:text-primary-light font-bold hover:underline">
               Política de Privacidade
             </Link>
           </p>
@@ -202,7 +202,7 @@ export const SignUpPage: React.FC = () => {
         <div className="mt-8 text-center">
           <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
             Já tem uma conta?{' '}
-            <Link to="/login" className="text-primary font-bold hover:underline transition-all px-1">
+            <Link to="/login" className="text-primary dark:text-primary-light font-bold hover:underline transition-all px-1">
               Fazer login
             </Link>
           </p>

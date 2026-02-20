@@ -125,7 +125,7 @@ const StudentRow: React.FC<{
       <td className="py-3 px-4 text-right">
         <button
           onClick={onViewProfile}
-          className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
+          className="text-xs text-primary dark:text-primary-light hover:underline font-medium"
         >
           Ver perfil
         </button>
@@ -155,7 +155,7 @@ export const ClassAnalyticsPage: React.FC = () => {
         <DashboardHeader title="Análise da Turma" actions={<BackButton onClick={goBack} />} />
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4" />
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
             <p className="text-slate-600 dark:text-slate-400">Calculando análise pedagógica...</p>
           </div>
         </div>
@@ -196,8 +196,8 @@ export const ClassAnalyticsPage: React.FC = () => {
               label: 'Alunos',
               value: analytics.total_students,
               icon: 'group',
-              color: 'text-indigo-600 dark:text-indigo-400',
-              bg: 'bg-indigo-50 dark:bg-indigo-900/20',
+              color: 'text-primary dark:text-primary-light',
+              bg: 'bg-primary/5 dark:bg-primary/10',
             },
             {
               label: 'Média da Turma',
@@ -250,7 +250,7 @@ export const ClassAnalyticsPage: React.FC = () => {
           {/* Distribuição de Notas */}
           <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5">
             <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-              <span className="material-symbols-outlined text-base text-indigo-500">
+              <span className="material-symbols-outlined text-base text-primary">
                 bar_chart
               </span>
               Distribuição de Notas
@@ -366,7 +366,7 @@ export const ClassAnalyticsPage: React.FC = () => {
         <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
           <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
             <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-              <span className="material-symbols-outlined text-base text-indigo-500">people</span>
+              <span className="material-symbols-outlined text-base text-primary">people</span>
               Todos os Alunos
             </h3>
           </div>

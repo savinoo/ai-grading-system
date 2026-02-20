@@ -192,7 +192,7 @@ export const EmailVerificationPage: React.FC = () => {
             <button 
               onClick={handleResendEmail}
               disabled={countdown > 0 || isResending || !email}
-              className="text-primary font-bold hover:underline transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
+              className="text-primary dark:text-primary-light font-bold hover:underline transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
             >
               {isResending 
                 ? 'Enviando...' 

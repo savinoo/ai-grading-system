@@ -6,7 +6,7 @@ import { CreateClassDTO } from '@domain/entities/Class';
 interface CreateClassModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: CreateClassDTO) => Promise<void>;
+  onSubmit: (data: CreateClassDTO) => Promise<unknown>;
 }
 
 export const CreateClassModal: React.FC<CreateClassModalProps> = ({ isOpen, onClose, onSubmit }) => {

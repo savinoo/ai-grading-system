@@ -491,7 +491,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
               disabled={isLoading || isRemoved || autoDistributeWeights}
               step="0.1"
               min="0"
-              className="w-full rounded px-2 py-1.5 text-sm font-bold text-center border border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary disabled:opacity-50"
+              className="w-full rounded px-2 py-1.5 text-sm font-bold text-center border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:ring-primary focus:border-primary disabled:opacity-50"
             />
           </div>
 
@@ -514,7 +514,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
               disabled={isLoading || isRemoved}
               step="0.1"
               min="0"
-              className="w-full rounded px-2 py-1.5 text-sm font-bold text-center border border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary"
+              className="w-full rounded px-2 py-1.5 text-sm font-bold text-center border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:ring-primary focus:border-primary"
             />
           </div>
         </div>
@@ -603,7 +603,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
         <button
           onClick={handleAddQuestion}
           disabled={isAddingQuestion || isLoading}
-          className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-bold text-primary hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-bold text-primary dark:text-primary-light hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50 dark:disabled:opacity-70 disabled:cursor-not-allowed"
         >
           <span className="material-symbols-outlined text-lg">add</span>
           Adicionar Questão
@@ -629,7 +629,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-xs font-bold text-slate-400 uppercase">Questão {question.question_order}</span>
-                    <span className="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded">
+                    <span className="px-2 py-0.5 bg-primary/10 dark:bg-primary-light/20 text-primary dark:text-primary-light text-[10px] font-bold rounded">
                       {question.points} ponto{question.points !== 1 ? 's' : ''}
                     </span>
                   </div>
@@ -678,7 +678,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                 placeholder="Ex: Explique o conceito de polimorfismo em programação orientada a objetos..."
                 rows={4}
                 disabled={isLoading}
-                className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-sm focus:ring-primary focus:border-primary p-3"
+                className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary p-3"
               />
             </div>
 
@@ -695,7 +695,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                   disabled={isLoading}
                   step="0.5"
                   min="0"
-                  className="w-32 rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-center font-bold text-primary focus:ring-primary focus:border-primary p-2"
+                  className="w-32 rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-primary-light text-center font-bold text-primary focus:ring-primary focus:border-primary p-2"
                 />
                 <span className="text-sm font-medium text-slate-400">ponto{newQuestion.points !== 1 ? 's' : ''}</span>
               </div>
@@ -788,7 +788,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                       }
                     }}
                     disabled={isLoading}
-                    className="w-full rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-sm p-2"
+                    className="w-full rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white text-sm p-2"
                   >
                     <option value="">+ Adicionar critério</option>
                     {gradingCriteria
@@ -814,7 +814,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                 <h5 className="text-sm font-bold text-slate-900 dark:text-white">
                   Respostas dos Alunos
                 </h5>
-                <span className="text-xs font-semibold px-2 py-1 rounded-full bg-primary/10 text-primary">
+                <span className="text-xs font-semibold px-2 py-1 rounded-full bg-primary/10 dark:bg-primary-light/20 text-primary dark:text-primary-light">
                   {newQuestion.studentAnswers.length}/{students.length}
                 </span>
               </div>
@@ -824,7 +824,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                 className={`text-xs font-bold flex items-center gap-1 ${
                   newQuestion.studentAnswers.length === students.length && students.length > 0
                     ? 'text-slate-300 dark:text-slate-600 cursor-not-allowed'
-                    : 'text-primary hover:text-primary/80'
+                    : 'text-primary dark:text-primary-light hover:text-primary/80 dark:hover:text-primary-light/80'
                 }`}
               >
                 <span className="material-symbols-outlined text-sm">add</span>
@@ -851,7 +851,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                       <select
                         value={answer.student_uuid}
                         onChange={(e) => handleUpdateStudentAnswer(answer.tempId!, 'student_uuid', e.target.value)}
-                        className="flex-1 rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-sm focus:ring-primary focus:border-primary p-2 mr-2"
+                        className="flex-1 rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary p-2 mr-2"
                       >
                         <option value="">-- Selecione o aluno --</option>
                         {availableStudents.map((student) => (
@@ -880,7 +880,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                     onChange={(e) => handleUpdateStudentAnswer(answer.tempId!, 'answer_text', e.target.value)}
                     placeholder="Cole a resposta do aluno aqui..."
                     rows={5}
-                    className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-900 text-sm focus:ring-primary focus:border-primary p-3"
+                    className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-white text-sm focus:ring-primary focus:border-primary p-3"
                   />
                 </div>
                 );

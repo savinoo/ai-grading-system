@@ -258,6 +258,38 @@ export const useAuth = () => {
     }
   }, [setLoading, setError]);
 
+  const changePassword = useCallback(async (currentPassword: string, newPassword: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      await httpClient.getClient().patch('/users/me/password', {
+        current_password: currentPassword,
+        new_password: newPassword,
+      });
+    } catch (err: any) {
+      const status = err.response?.status;
+      let errorMessage = 'Erro ao alterar senha';
+
+      if (status === 401) {
+        errorMessage = err.response?.data?.error || 'Senha atual incorreta.';
+      } else if (status === 400) {
+        errorMessage = err.response?.data?.error || 'Dados inválidos.';
+      } else if (status === 500) {
+        errorMessage = 'Erro no servidor. Tente novamente mais tarde.';
+      } else if (err.response?.data?.error) {
+        errorMessage = err.response.data.error;
+      } else if (err instanceof Error && err.message) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  }, [setLoading, setError]);
+
   const resetPassword = useCallback(async (email: string, code: string, newPassword: string) => {
     try {
       setLoading(true);
@@ -302,5 +334,6 @@ export const useAuth = () => {
     generateRecoveryCode,
     validateRecoveryCode,
     resetPassword,
+    changePassword,
   };
 };

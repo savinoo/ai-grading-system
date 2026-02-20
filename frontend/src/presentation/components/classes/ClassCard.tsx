@@ -10,13 +10,13 @@ interface ClassCardProps {
 
 export const ClassCard: React.FC<ClassCardProps> = ({ classData, onView, onDeactivate }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+    <div className="bg-white dark:bg-slate-800 border border-transparent dark:border-slate-700 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
       <div className="mb-4">
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">{classData.name}</h3>
-        <p className="text-gray-600 text-sm">{classData.description}</p>
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{classData.name}</h3>
+        <p className="text-gray-600 dark:text-slate-400 text-sm">{classData.description}</p>
       </div>
       
-      <div className="flex items-center gap-4 mb-4 text-sm text-gray-500">
+      <div className="flex items-center gap-4 mb-4 text-sm text-gray-500 dark:text-slate-400">
         <div className="flex items-center gap-1">
           <span className="font-medium">Ano:</span>
           <span>{classData.year}</span>

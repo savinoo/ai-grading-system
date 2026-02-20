@@ -85,7 +85,7 @@ export const ClassesPage: React.FC = () => {
           // Lista de turmas
           <div>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Minhas Turmas</h2>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Minhas Turmas</h2>
               <Button onClick={() => setIsCreateModalOpen(true)} variant="primary">
                 + Nova Turma
               </Button>
@@ -93,17 +93,17 @@ export const ClassesPage: React.FC = () => {
 
             {isLoading ? (
               <div className="text-center py-12">
-                <p className="text-gray-500">Carregando turmas...</p>
+                <p className="text-gray-500 dark:text-slate-400">Carregando turmas...</p>
               </div>
             ) : classes.length === 0 ? (
-              <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
-                <span className="material-symbols-outlined text-6xl text-gray-300 mb-4">
+              <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-12 text-center">
+                <span className="material-symbols-outlined text-6xl text-gray-300 dark:text-slate-600 mb-4">
                   groups
                 </span>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                   Nenhuma turma cadastrada
                 </h3>
-                <p className="text-gray-500 mb-4">
+                <p className="text-gray-500 dark:text-slate-400 mb-4">
                   Comece criando sua primeira turma
                 </p>
                 <Button onClick={() => setIsCreateModalOpen(true)} variant="primary">
@@ -136,13 +136,13 @@ export const ClassesPage: React.FC = () => {
                   ← Voltar para Turmas
                 </Button>
 
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <div className="bg-white dark:bg-slate-800 border border-transparent dark:border-slate-700 rounded-lg shadow-md p-6">
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                         {currentClass.name}
                       </h2>
-                      <p className="text-gray-600">{currentClass.description}</p>
+                      <p className="text-gray-600 dark:text-slate-400">{currentClass.description}</p>
                     </div>
                     <Button
                       onClick={() => handleDeactivate(currentClass.uuid)}
@@ -152,7 +152,7 @@ export const ClassesPage: React.FC = () => {
                     </Button>
                   </div>
 
-                  <div className="flex gap-6 text-sm text-gray-600 mb-6">
+                  <div className="flex gap-6 text-sm text-gray-600 dark:text-slate-400 mb-6">
                     <div>
                       <span className="font-medium">Ano:</span> {currentClass.year}
                     </div>
@@ -165,9 +165,9 @@ export const ClassesPage: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="border-t pt-6">
+                  <div className="border-t border-slate-200 dark:border-slate-700 pt-6">
                     <div className="flex justify-between items-center mb-4">
-                      <h3 className="text-xl font-semibold text-gray-900">Alunos</h3>
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Alunos</h3>
                       <Button
                         onClick={() => setIsAddStudentsModalOpen(true)}
                         variant="primary"

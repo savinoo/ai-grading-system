@@ -241,7 +241,7 @@ export const DashboardPage: React.FC = () => {
                                 navigate(`/dashboard/exams/${activity.id}`);
                               }
                             }}
-                            className="text-primary hover:underline text-xs font-bold"
+                            className="text-primary dark:text-primary-light hover:underline text-xs font-bold"
                           >
                             {activity.reviewPending > 0 
                               ? 'Revisar' 
@@ -301,7 +301,7 @@ export const DashboardPage: React.FC = () => {
 
                   <button 
                     onClick={() => navigate('/dashboard/exams')}
-                    className="mt-2 w-full text-center py-2 text-xs font-bold text-primary bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-primary hover:text-white transition-all"
+                    className="mt-2 w-full text-center py-2 text-xs font-bold text-primary dark:text-primary-light bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-primary hover:text-white transition-all"
                   >
                     Ver Todas as Tarefas
                   </button>

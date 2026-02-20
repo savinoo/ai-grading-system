@@ -36,7 +36,7 @@ export const AnalyticsPage: React.FC = () => {
         <DashboardHeader title="Análise Pedagógica" />
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4" />
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
             <p className="text-slate-600 dark:text-slate-400">Carregando turmas...</p>
           </div>
         </div>
@@ -92,16 +92,16 @@ export const AnalyticsPage: React.FC = () => {
 
       <div className="p-8 max-w-7xl mx-auto space-y-6">
         {/* Header descritivo */}
-        <div className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 border border-indigo-200 dark:border-indigo-800 rounded-xl p-5">
+        <div className="bg-primary/5 dark:bg-primary/10 border border-primary/20 dark:border-primary/30 rounded-xl p-5">
           <div className="flex items-start gap-3">
-            <span className="material-symbols-outlined text-indigo-600 dark:text-indigo-400 text-2xl mt-0.5">
+            <span className="material-symbols-outlined text-primary dark:text-primary-light text-2xl mt-0.5">
               insights
             </span>
             <div>
-              <h2 className="text-sm font-semibold text-indigo-900 dark:text-indigo-200 mb-1">
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-white mb-1">
                 Visão Geral das Turmas
               </h2>
-              <p className="text-xs text-indigo-700 dark:text-indigo-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300">
                 Selecione uma turma para ver análise detalhada: tendência de desempenho, alunos em
                 dificuldade, pontos fortes e gaps de aprendizado mais comuns.
               </p>
@@ -115,12 +115,12 @@ export const AnalyticsPage: React.FC = () => {
             <div
               key={cls.class_uuid}
               onClick={() => navigate(`/analytics/classes/${cls.class_uuid}`)}
-              className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-500 hover:shadow-md transition-all group"
+              className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 cursor-pointer hover:border-primary dark:hover:border-primary-light hover:shadow-md transition-all group"
             >
               {/* Nome da turma */}
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h3 className="text-base font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-1">
+                  <h3 className="text-base font-semibold text-slate-900 dark:text-white group-hover:text-primary dark:group-hover:text-primary-light transition-colors line-clamp-1">
                     {cls.class_name}
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -128,7 +128,7 @@ export const AnalyticsPage: React.FC = () => {
                     {cls.total_submissions} correç{cls.total_submissions !== 1 ? 'ões' : 'ão'}
                   </p>
                 </div>
-                <span className="material-symbols-outlined text-slate-400 group-hover:text-indigo-500 transition-colors">
+                <span className="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">
                   arrow_forward
                 </span>
               </div>

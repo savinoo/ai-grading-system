@@ -130,7 +130,7 @@ export const PrivacyPage: React.FC = () => {
               </ul>
               <p className="mt-4">
                 Para exercer seus direitos, entre em contato através de:{' '}
-                <a href="mailto:privacidade@corretum.ai" className="text-primary font-bold hover:underline">
+                <a href="mailto:privacidade@corretum.ai" className="text-primary dark:text-primary-light font-bold hover:underline">
                   privacidade@corretum.ai
                 </a>
               </p>
@@ -180,7 +180,7 @@ export const PrivacyPage: React.FC = () => {
                 Para questões relacionadas à proteção de dados, entre em contato com nosso Encarregado de Proteção de Dados:
               </p>
               <ul className="list-none space-y-1 mt-4">
-                <li><strong>Email:</strong> <a href="mailto:dpo@corretum.ai" className="text-primary font-bold hover:underline">dpo@corretum.ai</a></li>
+                <li><strong>Email:</strong> <a href="mailto:dpo@corretum.ai" className="text-primary dark:text-primary-light font-bold hover:underline">dpo@corretum.ai</a></li>
                 <li><strong>Endereço:</strong> [Endereço da empresa]</li>
               </ul>
             </section>
@@ -191,8 +191,8 @@ export const PrivacyPage: React.FC = () => {
                 Para dúvidas sobre esta Política de Privacidade ou sobre o tratamento de seus dados pessoais:
               </p>
               <ul className="list-none space-y-1 mt-4">
-                <li><strong>Email:</strong> <a href="mailto:privacidade@corretum.ai" className="text-primary font-bold hover:underline">privacidade@corretum.ai</a></li>
-                <li><strong>Suporte:</strong> <a href="mailto:suporte@corretum.ai" className="text-primary font-bold hover:underline">suporte@corretum.ai</a></li>
+                <li><strong>Email:</strong> <a href="mailto:privacidade@corretum.ai" className="text-primary dark:text-primary-light font-bold hover:underline">privacidade@corretum.ai</a></li>
+                <li><strong>Suporte:</strong> <a href="mailto:suporte@corretum.ai" className="text-primary dark:text-primary-light font-bold hover:underline">suporte@corretum.ai</a></li>
               </ul>
             </section>
           </div>
@@ -201,7 +201,7 @@ export const PrivacyPage: React.FC = () => {
           <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 text-primary font-bold hover:underline"
+              className="inline-flex items-center gap-2 text-primary dark:text-primary-light font-bold hover:underline"
             >
               <span className="material-symbols-outlined text-lg">arrow_back</span>
               Voltar para o Login

@@ -7,6 +7,7 @@ import { useExams, useClasses, useQuestions, useStudents, useAttachments } from 
 import { FileUpload } from '@presentation/components/attachments/FileUpload';
 import { AttachmentList } from '@presentation/components/attachments/AttachmentList';
 import { PublishSuccessModal } from '@presentation/components/exams/PublishSuccessModal';
+import { useToast } from '@presentation/components/ui/Toast';
 
 interface CriteriaFormItem {
   criteria_uuid: string;
@@ -17,6 +18,7 @@ interface CriteriaFormItem {
 
 export const CreateExamPage: React.FC = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const {
     createExam,
     publishExam,
@@ -262,17 +264,17 @@ export const CreateExamPage: React.FC = () => {
     if (currentStep === 1) {
       // Validar Passo 1
       if (!title.trim()) {
-        alert('Preencha o título da prova');
+        toast({ variant: 'warning', title: 'Campo obrigatório', description: 'Preencha o título da prova.' });
         return;
       }
 
       if (!classUuid) {
-        alert('Selecione uma turma para criar a prova');
+        toast({ variant: 'warning', title: 'Turma não selecionada', description: 'Selecione uma turma para criar a prova.' });
         return;
       }
 
       if (selectedCriteria.length === 0) {
-        alert('Adicione pelo menos um critério de avaliação');
+        toast({ variant: 'warning', title: 'Rubrica vazia', description: 'Adicione pelo menos um critério de avaliação.' });
         return;
       }
 
@@ -292,7 +294,7 @@ export const CreateExamPage: React.FC = () => {
 
   const handleFinish = async () => {
     if (!createdExamUuid) {
-      alert('Erro: Prova não foi criada');
+      toast({ variant: 'error', title: 'Erro', description: 'Prova não foi criada.' });
       return;
     }
 
@@ -303,14 +305,14 @@ export const CreateExamPage: React.FC = () => {
       setPublishNextSteps(response.next_steps);
     } catch (error) {
       console.error('Erro ao publicar prova:', error);
-      alert('Erro ao publicar prova. Tente novamente.');
+      toast({ variant: 'error', title: 'Erro ao publicar', description: 'Não foi possível publicar a prova. Tente novamente.' });
       setIsSaving(false);
     }
   };
 
   const handleCreateQuestion = async (questionData: any) => {
     if (!createdExamUuid) {
-      alert('Erro: Prova não foi criada');
+      toast({ variant: 'error', title: 'Erro', description: 'Prova não foi criada.' });
       return;
     }
 
@@ -380,23 +382,23 @@ export const CreateExamPage: React.FC = () => {
       await deleteQuestion(questionUuid);
     } catch (error) {
       console.error('Erro ao deletar questão:', error);
-      alert('Erro ao deletar questão');
+      toast({ variant: 'error', title: 'Erro', description: 'Não foi possível remover a questão.' });
     }
   };
 
   const handleFileUpload = async (file: File) => {
     if (!createdExamUuid) {
-      alert('A prova precisa ser criada antes de anexar arquivos');
+      toast({ variant: 'warning', title: 'Prova não criada', description: 'A prova precisa ser criada antes de anexar arquivos.' });
       return;
     }
 
     try {
       setIsUploadingFile(true);
       await uploadAttachment(createdExamUuid, file);
-      alert('Arquivo anexado com sucesso!');
+      toast({ variant: 'success', title: 'Arquivo anexado', description: 'O arquivo foi adicionado com sucesso.' });
     } catch (error) {
       console.error('Erro ao fazer upload:', error);
-      alert('Erro ao fazer upload do arquivo. Tente novamente.');
+      toast({ variant: 'error', title: 'Erro no upload', description: 'Não foi possível enviar o arquivo. Tente novamente.' });
     } finally {
       setIsUploadingFile(false);
     }
@@ -408,16 +410,16 @@ export const CreateExamPage: React.FC = () => {
 
     try {
       await deleteAttachment(attachmentUuid);
-      alert('Arquivo removido com sucesso!');
+      toast({ variant: 'success', title: 'Arquivo removido', description: 'O arquivo foi removido com sucesso.' });
     } catch (error) {
       console.error('Erro ao deletar anexo:', error);
-      alert('Erro ao remover arquivo. Tente novamente.');
+      toast({ variant: 'error', title: 'Erro ao remover', description: 'Não foi possível remover o arquivo. Tente novamente.' });
     }
   };
 
   const handleSaveDraft = async () => {
     if (!title.trim()) {
-      alert('Preencha o título da prova');
+      toast({ variant: 'warning', title: 'Campo obrigatório', description: 'Preencha o título da prova.' });
       return;
     }
 
@@ -432,13 +434,12 @@ export const CreateExamPage: React.FC = () => {
           class_uuid: classUuid || null,
         });
         setHasUnsavedChanges(false);
-        alert('Rascunho salvo com sucesso!');
+        toast({ variant: 'success', title: 'Rascunho salvo', description: 'As alterações foram salvas com sucesso.' });
       }
     } catch (error: any) {
       console.error('Erro ao salvar rascunho:', error);
-      // Mostrar a mensagem de erro real que veio do backend
       const errorMessage = error?.message || 'Erro ao salvar rascunho';
-      alert(errorMessage);
+      toast({ variant: 'error', title: 'Erro ao salvar', description: errorMessage });
     } finally {
       setIsSaving(false);
     }
@@ -459,7 +460,7 @@ export const CreateExamPage: React.FC = () => {
       navigate('/dashboard/exams');
     } catch (error) {
       console.error('Erro ao excluir prova:', error);
-      alert('Erro ao excluir prova. Tente novamente.');
+      toast({ variant: 'error', title: 'Erro ao excluir', description: 'Não foi possível excluir a prova. Tente novamente.' });
     }
   };
 
@@ -516,7 +517,7 @@ export const CreateExamPage: React.FC = () => {
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Ex: Análise Histórica: Revolução Industrial"
                     disabled={isLoading}
-                    className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary text-base p-3"
+                    className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:ring-primary focus:border-primary text-base p-3"
                   />
                 </div>
 
@@ -528,7 +529,7 @@ export const CreateExamPage: React.FC = () => {
                     value={classUuid}
                     onChange={(e) => setClassUuid(e.target.value)}
                     disabled={isLoading || isLoadingClasses}
-                    className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary text-base p-3"
+                    className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:ring-primary focus:border-primary text-base p-3"
                   >
                     <option value="">-- Selecione uma turma --</option>
                     {classes.map((cls) => (
@@ -549,7 +550,7 @@ export const CreateExamPage: React.FC = () => {
                     placeholder="Descrição da prova (opcional)"
                     rows={4}
                     disabled={isLoading}
-                    className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary text-base p-3"
+                    className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:ring-primary focus:border-primary text-base p-3"
                   />
                 </div>
               </div>
@@ -718,7 +719,7 @@ export const CreateExamPage: React.FC = () => {
                           }
                         }}
                         disabled={isLoading}
-                        className="flex-1 rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-primary focus:border-primary text-sm p-2"
+                        className="flex-1 rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:ring-primary focus:border-primary text-sm p-2"
                       >
                         <option value="">-- Selecione um critério --</option>
                         {gradingCriteria.filter(gc => !selectedCriteria.some(sc => sc.criteria_uuid === gc.uuid)).map((criteria) => (

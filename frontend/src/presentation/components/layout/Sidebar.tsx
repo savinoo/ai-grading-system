@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@presentation/hooks/useAuth';
+import { useTheme } from '@presentation/hooks/useTheme';
 
 interface SidebarProps {
   className?: string;
@@ -10,6 +11,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   const menuItems = [
     { path: '/dashboard', icon: 'dashboard', label: 'Dashboard' },
@@ -78,6 +80,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
             <span className="material-symbols-outlined">settings</span>
             <span className="text-sm text-slate-900 dark:text-slate-300">Configurações</span>
           </Link>
+
+          <button
+            onClick={toggleTheme}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors font-medium w-full"
+          >
+            <span className="material-symbols-outlined">
+              {theme === 'dark' ? 'light_mode' : 'dark_mode'}
+            </span>
+            <span className="text-sm text-slate-900 dark:text-slate-300">
+              {theme === 'dark' ? 'Modo claro' : 'Modo escuro'}
+            </span>
+          </button>
 
           <button
             onClick={handleLogout}

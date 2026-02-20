@@ -84,7 +84,7 @@ export const TermsPage: React.FC = () => {
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">6. Privacidade e Proteção de Dados</h2>
               <p>
                 O uso de suas informações pessoais é regido por nossa{' '}
-                <Link to="/privacy" className="text-primary font-bold hover:underline">
+                <Link to="/privacy" className="text-primary dark:text-primary-light font-bold hover:underline">
                   Política de Privacidade
                 </Link>
                 . Estamos comprometidos com a proteção de dados conforme a Lei Geral de Proteção de Dados (LGPD).
@@ -144,7 +144,7 @@ export const TermsPage: React.FC = () => {
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">12. Contato</h2>
               <p>
                 Se você tiver alguma dúvida sobre estes Termos de Serviço, entre em contato conosco através do 
-                email: <a href="mailto:suporte@corretum.ai" className="text-primary font-bold hover:underline">suporte@corretum.ai</a>
+                email: <a href="mailto:suporte@corretum.ai" className="text-primary dark:text-primary-light font-bold hover:underline">suporte@corretum.ai</a>
               </p>
             </section>
           </div>
@@ -153,7 +153,7 @@ export const TermsPage: React.FC = () => {
           <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-800">
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 text-primary font-bold hover:underline"
+              className="inline-flex items-center gap-2 text-primary dark:text-primary-light font-bold hover:underline"
             >
               <span className="material-symbols-outlined text-lg">arrow_back</span>
               Voltar para o Login

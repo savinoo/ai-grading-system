@@ -5,13 +5,15 @@ interface ErrorAlertProps {
   type?: 'error' | 'warning' | 'info';
   onAction?: () => void;
   actionLabel?: string;
+  onClose?: () => void;
 }
 
 export const ErrorAlert: React.FC<ErrorAlertProps> = ({ 
   message, 
   type = 'error',
   onAction,
-  actionLabel
+  actionLabel,
+  onClose,
 }) => {
   const styles = {
     error: {
@@ -55,6 +57,15 @@ export const ErrorAlert: React.FC<ErrorAlertProps> = ({
             </button>
           )}
         </div>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className={`${style.text} hover:opacity-70 transition-opacity flex-shrink-0`}
+            aria-label="Fechar"
+          >
+            <span className="material-symbols-outlined text-lg">close</span>
+          </button>
+        )}
       </div>
     </div>
   );

@@ -165,7 +165,7 @@ export const StudentPerformancePage: React.FC = () => {
         <DashboardHeader title="Desempenho do Aluno" actions={<BackButton onClick={goBack} />} />
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4" />
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
             <p className="text-slate-600 dark:text-slate-400">Calculando perfil do aluno...</p>
           </div>
         </div>
@@ -215,7 +215,7 @@ export const StudentPerformancePage: React.FC = () => {
             <p className="text-xs text-slate-500 mt-1">Média geral</p>
           </div>
           <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 text-center">
-            <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
+            <p className="text-3xl font-bold text-primary dark:text-primary-light">
               {performance.submission_count}
             </p>
             <p className="text-xs text-slate-500 mt-1">Respostas corrigidas</p>
@@ -237,7 +237,7 @@ export const StudentPerformancePage: React.FC = () => {
         {/* Tendência */}
         <div>
           <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3 flex items-center gap-2">
-            <span className="material-symbols-outlined text-base text-indigo-500">show_chart</span>
+              <span className="material-symbols-outlined text-base text-primary">show_chart</span>
             Tendência de Evolução
           </h2>
           <TrendCard trend={performance.trend} confidence={performance.trend_confidence} />
@@ -292,7 +292,7 @@ export const StudentPerformancePage: React.FC = () => {
         <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
           <div className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
             <h3 className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-              <span className="material-symbols-outlined text-base text-indigo-500">history</span>
+              <span className="material-symbols-outlined text-base text-primary">history</span>
               Histórico de Correções
             </h3>
           </div>

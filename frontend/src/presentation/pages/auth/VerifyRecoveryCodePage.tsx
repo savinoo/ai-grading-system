@@ -198,7 +198,7 @@ export const VerifyRecoveryCodePage: React.FC = () => {
                   type="button"
                   onClick={handleResendCode}
                   disabled={countdown > 0 || isResending}
-                  className="text-sm text-primary font-bold hover:underline transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
+                  className="text-sm text-primary dark:text-primary-light font-bold hover:underline transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
                 >
                   {isResending 
                     ? 'Reenviando...' 
