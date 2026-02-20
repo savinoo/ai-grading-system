@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { DashboardLayout } from '@presentation/components/layout/DashboardLayout';
-import { DashboardHeader } from '@presentation/components/dashboard/DashboardHeader';
+
 import { analyticsService } from '@infrastructure/api/analyticsService';
 import { ClassAnalyticsSummary } from '@domain/types/analytics';
 
@@ -33,11 +33,16 @@ export const AnalyticsPage: React.FC = () => {
   if (isLoading) {
     return (
       <DashboardLayout>
-        <DashboardHeader title="Análise Pedagógica" />
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
-            <p className="text-slate-600 dark:text-slate-400">Carregando turmas...</p>
+        <div className="p-8 max-w-7xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Análise Pedagógica</h1>
+            <p className="text-slate-500 dark:text-slate-400">Monitoramento do desempenho pedagógico das turmas</p>
+          </div>
+          <div className="flex items-center justify-center min-h-[300px]">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
+              <p className="text-slate-600 dark:text-slate-400">Carregando turmas...</p>
+            </div>
           </div>
         </div>
       </DashboardLayout>
@@ -47,8 +52,11 @@ export const AnalyticsPage: React.FC = () => {
   if (error) {
     return (
       <DashboardLayout>
-        <DashboardHeader title="Análise Pedagógica" />
-        <div className="p-8">
+        <div className="p-8 max-w-7xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Análise Pedagógica</h1>
+            <p className="text-slate-500 dark:text-slate-400">Monitoramento do desempenho pedagógico das turmas</p>
+          </div>
           <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-center">
             <span className="material-symbols-outlined text-5xl text-red-600 dark:text-red-400 mb-4 block">
               error
@@ -68,8 +76,11 @@ export const AnalyticsPage: React.FC = () => {
   if (!classes || classes.length === 0) {
     return (
       <DashboardLayout>
-        <DashboardHeader title="Análise Pedagógica" />
         <div className="p-8 max-w-7xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Análise Pedagógica</h1>
+            <p className="text-slate-500 dark:text-slate-400">Monitoramento do desempenho pedagógico das turmas</p>
+          </div>
           <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-12 text-center">
             <span className="material-symbols-outlined text-6xl text-slate-300 dark:text-slate-600 mb-4 block">
               school
@@ -88,9 +99,11 @@ export const AnalyticsPage: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <DashboardHeader title="Análise Pedagógica" />
-
       <div className="p-8 max-w-7xl mx-auto space-y-6">
+        <div className="mb-2">
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Análise Pedagógica</h1>
+          <p className="text-slate-500 dark:text-slate-400">Monitoramento do desempenho pedagógico das turmas</p>
+        </div>
         {/* Header descritivo */}
         <div className="bg-primary/5 dark:bg-primary/10 border border-primary/20 dark:border-primary/30 rounded-xl p-5">
           <div className="flex items-start gap-3">

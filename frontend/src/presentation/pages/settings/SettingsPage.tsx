@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DashboardLayout } from '@presentation/components/layout/DashboardLayout';
-import { DashboardHeader } from '@presentation/components/dashboard/DashboardHeader';
+
 import { useAuth } from '@presentation/hooks/useAuth';
 import { useToast } from '@presentation/components/ui/Toast';
 
@@ -96,9 +96,11 @@ export const SettingsPage: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <DashboardHeader title="Configurações" />
-
       <div className="p-6 max-w-5xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Configurações</h1>
+          <p className="text-slate-500 dark:text-slate-400">Gerencie sua conta e preferências de segurança</p>
+        </div>
         {/* Layout com aside + conteúdo */}
         <div className="flex gap-6">
           {/* Sidebar de abas */}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DashboardLayout } from '@presentation/components/layout/DashboardLayout';
-import { DashboardHeader } from '@presentation/components/dashboard/DashboardHeader';
+
 import { useClasses } from '@presentation/hooks/useClasses';
 import { ClassCard } from '@presentation/components/classes/ClassCard';
 import { CreateClassModal } from '@presentation/components/classes/CreateClassModal';
@@ -76,20 +76,25 @@ export const ClassesPage: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <DashboardHeader title="Gerenciar Turmas" />
-      
       <div className="p-8 max-w-7xl mx-auto">
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Gerenciar Turmas</h1>
+              <p className="text-slate-500 dark:text-slate-400">Crie e gerencie suas turmas de alunos</p>
+            </div>
+            {viewMode === 'list' && (
+              <Button onClick={() => setIsCreateModalOpen(true)} variant="primary">
+                + Nova Turma
+              </Button>
+            )}
+          </div>
+        </div>
         {error && <ErrorAlert message={error} onClose={clearError} />}
 
         {viewMode === 'list' ? (
           // Lista de turmas
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Minhas Turmas</h2>
-              <Button onClick={() => setIsCreateModalOpen(true)} variant="primary">
-                + Nova Turma
-              </Button>
-            </div>
 
             {isLoading ? (
               <div className="text-center py-12">

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { DashboardLayout } from '@presentation/components/layout/DashboardLayout';
-import { DashboardHeader } from '@presentation/components/dashboard/DashboardHeader';
+
 
 const BackButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
   <button
@@ -152,11 +152,16 @@ export const ClassAnalyticsPage: React.FC = () => {
   if (isLoading) {
     return (
       <DashboardLayout>
-        <DashboardHeader title="Análise da Turma" actions={<BackButton onClick={goBack} />} />
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
-            <p className="text-slate-600 dark:text-slate-400">Calculando análise pedagógica...</p>
+        <div className="p-8 max-w-7xl mx-auto">
+          <div className="mb-8">
+            <BackButton onClick={goBack} />
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mt-4 mb-2">Análise da Turma</h1>
+          </div>
+          <div className="flex items-center justify-center min-h-[300px]">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
+              <p className="text-slate-600 dark:text-slate-400">Calculando análise pedagógica...</p>
+            </div>
           </div>
         </div>
       </DashboardLayout>
@@ -166,8 +171,11 @@ export const ClassAnalyticsPage: React.FC = () => {
   if (error || !analytics) {
     return (
       <DashboardLayout>
-        <DashboardHeader title="Análise da Turma" actions={<BackButton onClick={goBack} />} />
-        <div className="p-8">
+        <div className="p-8 max-w-7xl mx-auto">
+          <div className="mb-8">
+            <BackButton onClick={goBack} />
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mt-4 mb-2">Análise da Turma</h1>
+          </div>
           <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-center">
             <span className="material-symbols-outlined text-5xl text-red-600 dark:text-red-400 mb-4 block">
               error
@@ -186,9 +194,11 @@ export const ClassAnalyticsPage: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <DashboardHeader title={analytics.class_name} actions={<BackButton onClick={goBack} />} />
-
       <div className="p-8 max-w-7xl mx-auto space-y-6">
+        <div className="mb-2">
+          <BackButton onClick={goBack} />
+          <h1 className="text-3xl font-bold text-slate-900 dark:text-white mt-4 mb-2">{analytics.class_name}</h1>
+        </div>
         {/* Cards de métricas principais */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[

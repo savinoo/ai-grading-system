@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { DashboardLayout } from '@presentation/components/layout/DashboardLayout';
-import { DashboardHeader } from '@presentation/components/dashboard/DashboardHeader';
+
 import { StatCard } from '@presentation/components/dashboard/StatCard';
 import dashboardService from '@infrastructure/api/dashboardService';
 import { useAuth } from '@presentation/hooks/useAuth';
@@ -104,10 +104,17 @@ export const DashboardPage: React.FC = () => {
 
   return (
     <DashboardLayout>
-      <DashboardHeader 
-        title="Dashboard do Instrutor" 
-        actions={headerActions}
-      />
+      <div className="px-8 pt-8 max-w-7xl mx-auto">
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Dashboard do Instrutor</h1>
+              <p className="text-slate-500 dark:text-slate-400">Visão geral das suas provas e atividades</p>
+            </div>
+            {headerActions}
+          </div>
+        </div>
+      </div>
       {/* Loading State */}
       {isLoading && (
         <div className="flex items-center justify-center h-96">
