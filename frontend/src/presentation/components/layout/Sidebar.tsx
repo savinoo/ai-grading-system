@@ -30,8 +30,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
       {/* Logo e Header */}
       <div className="flex flex-col gap-8">
         <div className="flex items-center gap-3 px-2">
-          <div className="bg-primary rounded-lg size-10 flex items-center justify-center text-white">
-            <span className="material-symbols-outlined">auto_awesome</span>
+          <div className="rounded-lg size-10 flex items-center justify-center overflow-hidden">
+            <img src="/logo.svg" alt="Corretum AI" className="size-10" />
           </div>
           <div className="flex flex-col">
             <h1 className="text-slate-900 dark:text-white text-base font-bold leading-tight">

@@ -5,8 +5,8 @@ export const Header: React.FC = () => {
   return (
     <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 px-6 md:px-10 py-4 bg-background-light dark:bg-background-dark sticky top-0 z-50">
       <div className="flex items-center gap-3 text-primary">
-        <div className="size-8 flex items-center justify-center bg-primary text-white rounded-lg">
-          <span className="material-symbols-outlined text-xl">school</span>
+        <div className="size-8 flex items-center justify-center rounded-lg overflow-hidden">
+          <img src="/logo.svg" alt="Corretum AI" className="size-8" />
         </div>
         <h2 className="text-slate-900 dark:text-white text-xl font-extrabold leading-tight tracking-[-0.015em]">
           Corretum AI
