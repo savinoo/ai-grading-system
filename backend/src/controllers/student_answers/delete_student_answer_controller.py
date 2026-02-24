@@ -41,7 +41,7 @@ class DeleteStudentAnswerController(ControllerInterface):
 
         db = http_request.db
         caller = http_request.caller
-        answer_uuid: UUID = http_request.path_params.get("answer_uuid")
+        answer_uuid: UUID = http_request.param.get("answer_uuid")
 
         self.__logger.debug(
             "Handling delete student answer request from caller: %s - %s - %s", 

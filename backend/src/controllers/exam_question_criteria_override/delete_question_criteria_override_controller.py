@@ -34,7 +34,7 @@ class DeleteQuestionCriteriaOverrideController(ControllerInterface):
 
         db = http_request.db
         caller = http_request.caller
-        override_uuid: UUID = http_request.path_params.get("override_uuid")
+        override_uuid: UUID = http_request.param.get("override_uuid")
 
         self.__logger.debug(
             "Handling delete criteria override request from caller: %s - %s - %s", 

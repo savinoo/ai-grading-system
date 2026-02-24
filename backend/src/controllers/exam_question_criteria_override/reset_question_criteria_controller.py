@@ -41,7 +41,7 @@ class ResetQuestionCriteriaController(ControllerInterface):
 
         db = http_request.db
         caller = http_request.caller
-        question_uuid: UUID = http_request.path_params.get("question_uuid")
+        question_uuid: UUID = http_request.param.get("question_uuid")
 
         self.__logger.debug(
             "Handling reset question criteria request from caller: %s - %s - %s", 
