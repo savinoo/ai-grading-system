@@ -193,7 +193,15 @@ export const ExamReviewPage: React.FC = () => {
   }
 
   const calculateTotalScore = () => {
-    return currentAnswer.criteria_scores.reduce((sum, c) => sum + c.raw_score, 0);
+    // Usa weighted_score quando disponível (raw_score × peso decimal).
+    // Fallback: recalcula manualmente com o peso percentual do critério.
+    return currentAnswer.criteria_scores.reduce((sum, c) => {
+      const contribution =
+        c.weighted_score !== undefined && c.weighted_score !== null
+          ? c.weighted_score
+          : c.raw_score * (c.weight / 100);
+      return sum + contribution;
+    }, 0);
   };
 
   const getAnswerStatusInfo = (status: string) => {

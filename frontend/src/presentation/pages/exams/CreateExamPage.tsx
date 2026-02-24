@@ -124,7 +124,6 @@ export const CreateExamPage: React.FC = () => {
     const newMaxPoints = 10;
 
     if (createdExamUuid) {
-      // Se já tem prova criada, cria o critério no backend
       try {
         const newCriteria = await createCriteria({
           exam_uuid: createdExamUuid,
@@ -146,10 +145,9 @@ export const CreateExamPage: React.FC = () => {
           const distributedWeight = 100 / newList.length;
           newList = newList.map(c => ({ ...c, weight: distributedWeight }));
 
-          // Atualizar pesos no backend
           for (const item of newList) {
             if (item.uuid && item.uuid !== newCriteria.uuid) {
-              await updateCriteria(item.uuid, { weight: distributedWeight });
+              await updateCriteria(item.uuid, { weight: item.weight });
             }
           }
         }
@@ -161,13 +159,13 @@ export const CreateExamPage: React.FC = () => {
       }
     } else {
       // Modo local (antes de criar prova)
-      const newCriteria = [...selectedCriteria, { criteria_uuid: criteriaUuid, weight: newWeight, max_points: newMaxPoints }];
+      const newList = [...selectedCriteria, { criteria_uuid: criteriaUuid, weight: newWeight, max_points: newMaxPoints }];
 
       if (autoDistribute) {
-        const distributedWeight = 100 / newCriteria.length;
-        setSelectedCriteria(newCriteria.map(c => ({ ...c, weight: distributedWeight })));
+        const distributedWeight = 100 / newList.length;
+        setSelectedCriteria(newList.map(c => ({ ...c, weight: distributedWeight })));
       } else {
-        setSelectedCriteria(newCriteria);
+        setSelectedCriteria(newList);
       }
       setHasUnsavedChanges(true);
     }
@@ -177,21 +175,20 @@ export const CreateExamPage: React.FC = () => {
     const item = selectedCriteria[index];
 
     if (item.uuid) {
-      // Remover do backend
       try {
         await deleteCriteria(item.uuid);
-        const newCriteria = selectedCriteria.filter((_, i) => i !== index);
+        const newList = selectedCriteria.filter((_, i) => i !== index);
 
-        if (autoDistribute && newCriteria.length > 0) {
-          const distributedWeight = 100 / newCriteria.length;
-          for (const c of newCriteria) {
+        if (autoDistribute && newList.length > 0) {
+          const distributedWeight = 100 / newList.length;
+          for (const c of newList) {
             if (c.uuid) {
               await updateCriteria(c.uuid, { weight: distributedWeight });
             }
           }
-          setSelectedCriteria(newCriteria.map(c => ({ ...c, weight: distributedWeight })));
+          setSelectedCriteria(newList.map(c => ({ ...c, weight: distributedWeight })));
         } else {
-          setSelectedCriteria(newCriteria);
+          setSelectedCriteria(newList);
         }
       } catch (error) {
         console.error('Erro ao remover critério:', error);
@@ -246,12 +243,11 @@ export const CreateExamPage: React.FC = () => {
 
     if (newValue && selectedCriteria.length > 0) {
       const distributedWeight = 100 / selectedCriteria.length;
-      const newCriteria = selectedCriteria.map(c => ({ ...c, weight: distributedWeight }));
-      setSelectedCriteria(newCriteria);
+      const newList = selectedCriteria.map(c => ({ ...c, weight: distributedWeight }));
+      setSelectedCriteria(newList);
 
-      // Atualizar no backend se já existe
       if (createdExamUuid) {
-        for (const item of newCriteria) {
+        for (const item of newList) {
           if (item.uuid) {
             await updateCriteria(item.uuid, { weight: distributedWeight });
           }

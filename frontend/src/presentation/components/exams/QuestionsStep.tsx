@@ -67,6 +67,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
   const [isAddingQuestion, setIsAddingQuestion] = useState(false);
   const [editingQuestion, setEditingQuestion] = useState<ExamQuestion | null>(null);
   const [autoDistributeWeights, setAutoDistributeWeights] = useState(true);
+  const [autoNormalizeMaxPoints, setAutoNormalizeMaxPoints] = useState(true);
   const [originalCriteriaOverrides, setOriginalCriteriaOverrides] = useState<QuestionCriteriaOverride[]>([]);
   const [originalStudentAnswers, setOriginalStudentAnswers] = useState<StudentAnswer[]>([]);
   const [newQuestion, setNewQuestion] = useState<QuestionFormData>({
@@ -80,6 +81,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
   const handleAddQuestion = () => {
     setIsAddingQuestion(true);
     setAutoDistributeWeights(true);
+    setAutoNormalizeMaxPoints(true);
     setNewQuestion({
       statement: '',
       points: 10,
@@ -95,6 +97,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
     setOriginalCriteriaOverrides([]);
     setOriginalStudentAnswers([]);
     setAutoDistributeWeights(true);
+    setAutoNormalizeMaxPoints(true);
     setNewQuestion({
       statement: '',
       points: 10,
@@ -274,6 +277,7 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
       setOriginalCriteriaOverrides([]);
       setOriginalStudentAnswers([]);
       setAutoDistributeWeights(true);
+      setAutoNormalizeMaxPoints(true);
       setNewQuestion({
         statement: '',
         points: 10,
@@ -287,8 +291,34 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
     }
   };
 
+  const computeAutoMaxPoints = (weight: number, n: number): number => {
+    if (weight <= 0 || n <= 0) return 10;
+    const weightDecimal = weight / 100;
+    return Math.round((10 / (n * weightDecimal)) * 10) / 10;
+  };
+
+  // Escala ponderada efetiva: Σ(max_points_i × weight_i / 100) para critérios ativos
+  const effectiveWeightedMax = (() => {
+    let total = 0;
+    examCriteria.forEach(ec => {
+      const override = newQuestion.criteriaOverrides.find(co => co.criteria_uuid === ec.criteria_uuid);
+      if (override?.active === false) return;
+      const weight = override?.weight ?? ec.weight;
+      const maxPoints = override?.max_points ?? ec.max_points;
+      total += maxPoints * weight / 100;
+    });
+    newQuestion.criteriaOverrides
+      .filter(co => !examCriteria.some(ec => ec.criteria_uuid === co.criteria_uuid) && co.active !== false)
+      .forEach(co => {
+        const weight = co.weight ?? 0;
+        const maxPoints = co.max_points ?? 10;
+        total += maxPoints * weight / 100;
+      });
+    return total;
+  })();
+
   const recalculateWeightsIfAuto = (overridesToRecalculate: typeof newQuestion.criteriaOverrides) => {
-    if (!autoDistributeWeights) return overridesToRecalculate;
+    if (!autoDistributeWeights && !autoNormalizeMaxPoints) return overridesToRecalculate;
 
     // Ensure all exam criteria have entries in overrides
     let allOverrides = [...overridesToRecalculate];
@@ -312,10 +342,18 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
     const totalActive = activeExamCriteria.length + activeAddedCriteria.length;
 
     if (totalActive > 0) {
-      const evenWeight = 100 / totalActive;
-      return allOverrides.map(co =>
-        co.active === false ? co : { ...co, weight: evenWeight }
-      );
+      const evenWeight = autoDistributeWeights ? 100 / totalActive : undefined;
+      return allOverrides.map(co => {
+        if (co.active === false) return co;
+        const newWeight = evenWeight ?? (co.weight ?? 0);
+        return {
+          ...co,
+          weight: evenWeight ?? co.weight,
+          max_points: autoNormalizeMaxPoints
+            ? computeAutoMaxPoints(newWeight, totalActive)
+            : co.max_points,
+        };
+      });
     }
 
     return allOverrides;
@@ -498,6 +536,9 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
           <div>
             <label className="text-[10px] font-bold text-slate-400 uppercase block mb-1">
               Pontos Máx
+              {autoNormalizeMaxPoints && (
+                <span className="ml-1 text-emerald-500" title="Auto-ajustado">✓</span>
+              )}
             </label>
             <input
               type="number"
@@ -511,10 +552,14 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                   handleUpdateCriteriaOverride(overrideIndex, 'max_points', value);
                 }
               }}
-              disabled={isLoading || isRemoved}
+              disabled={isLoading || isRemoved || autoNormalizeMaxPoints}
               step="0.1"
               min="0"
-              className="w-full rounded px-2 py-1.5 text-sm font-bold text-center border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:ring-primary focus:border-primary"
+              className={`w-full rounded px-2 py-1.5 text-sm font-bold text-center border focus:ring-primary focus:border-primary disabled:opacity-60 ${
+                autoNormalizeMaxPoints
+                  ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-700 dark:text-white'
+                  : 'border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white'
+              }`}
             />
           </div>
         </div>
@@ -714,11 +759,13 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                     Edite os pesos e pontuações conforme necessário, ou remova critérios que não se aplicam a esta questão.
                   </p>
                 </div>
-                <div className="flex items-center gap-2 ml-4">
-                  <span className="text-xs font-bold text-slate-500 uppercase">AUTO-DISTRIBUIR PESOS</span>
-                  <button
-                    onClick={() => {
-                      const newAutoState = !autoDistributeWeights;
+                <div className="flex items-center gap-2 ml-4 flex-wrap">
+                  {/* Toggle: auto-distribuir pesos */}
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-slate-500 uppercase">AUTO-DISTRIBUIR PESOS</span>
+                    <button
+                      onClick={() => {
+                        const newAutoState = !autoDistributeWeights;
                       setAutoDistributeWeights(newAutoState);
                       
                       if (newAutoState) {
@@ -738,13 +785,20 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                             }
                           });
 
-                          // Calcular pesos
+                          // Calcular pesos (e max_points se autoNormalizeMaxPoints ativo)
                           const activeCount = allOverrides.filter(co => co.active !== false).length;
                           if (activeCount > 0) {
                             const evenWeight = 100 / activeCount;
-                            allOverrides = allOverrides.map(co =>
-                              co.active === false ? co : { ...co, weight: evenWeight }
-                            );
+                            allOverrides = allOverrides.map(co => {
+                              if (co.active === false) return co;
+                              return {
+                                ...co,
+                                weight: evenWeight,
+                                max_points: autoNormalizeMaxPoints
+                                  ? computeAutoMaxPoints(evenWeight, activeCount)
+                                  : co.max_points,
+                              };
+                            });
                           }
 
                           return { ...prev, criteriaOverrides: allOverrides };
@@ -752,17 +806,61 @@ export const QuestionsStep: React.FC<QuestionsStepProps> = ({
                       }
                     }}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      autoDistributeWeights
-                        ? 'bg-primary'
-                        : 'bg-slate-300 dark:bg-slate-600'
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        autoDistributeWeights ? 'translate-x-6' : 'translate-x-1'
+                        autoDistributeWeights
+                          ? 'bg-primary'
+                          : 'bg-slate-300 dark:bg-slate-600'
                       }`}
-                    />
-                  </button>
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          autoDistributeWeights ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Toggle: auto-ajustar pontuação máxima */}
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-slate-500 uppercase">AUTO-AJUSTAR MÁX.</span>
+                    <button
+                      onClick={() => {
+                        const newValue = !autoNormalizeMaxPoints;
+                        setAutoNormalizeMaxPoints(newValue);
+                        if (newValue) {
+                          setNewQuestion(prev => ({
+                            ...prev,
+                            criteriaOverrides: recalculateWeightsIfAuto(prev.criteriaOverrides),
+                          }));
+                        }
+                      }}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        autoNormalizeMaxPoints
+                          ? 'bg-primary'
+                          : 'bg-slate-300 dark:bg-slate-600'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          autoNormalizeMaxPoints ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Indicador: escala ponderada */}
+                  {examCriteria.length > 0 && (
+                    <div className="flex flex-col items-end ml-2">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Escala</span>
+                      <span
+                        className={`text-base font-black ${
+                          Math.abs(effectiveWeightedMax - 10) < 0.1 ? 'text-emerald-500' : 'text-amber-500'
+                        }`}
+                        title="Σ(pontuação_máxima_i × peso_i / 100) — ideal = 10"
+                      >
+                        {effectiveWeightedMax.toFixed(1)}<span className="text-slate-400 font-normal text-xs">/10</span>
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
 
