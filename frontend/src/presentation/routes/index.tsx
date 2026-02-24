@@ -16,7 +16,6 @@ import { EditExamPage } from '@presentation/pages/exams/EditExamPage';
 import { ExamDetailsPage } from '@presentation/pages/exams/ExamDetailsPage';
 import { ExamReviewPage } from '@presentation/pages/exams/ExamReviewPage';
 import { ClassesPage } from '@presentation/pages/classes/ClassesPage';
-import { StudentsPage } from '@presentation/pages/students/StudentsPage';
 import { AnalyticsPage } from '@presentation/pages/analytics/AnalyticsPage';
 import { ClassAnalyticsPage } from '@presentation/pages/analytics/ClassAnalyticsPage';
 import { StudentPerformancePage } from '@presentation/pages/analytics/StudentPerformancePage';
@@ -49,7 +48,6 @@ export const AppRoutes: React.FC = () => {
           <Route path="/dashboard/exams/:examUuid/review" element={<ExamReviewPage />} />
           <Route path="/exams" element={<ExamsPage />} />
           <Route path="/classes" element={<ClassesPage />} />
-          <Route path="/students" element={<StudentsPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/analytics/classes/:classUuid" element={<ClassAnalyticsPage />} />
           <Route path="/analytics/classes/:classUuid/students/:studentUuid" element={<StudentPerformancePage />} />
