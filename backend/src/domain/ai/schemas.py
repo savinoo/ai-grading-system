@@ -94,6 +94,11 @@ class ExamQuestion(BaseModel):
         description="O enunciado completo da questão",
         min_length=5
     )
+    total_points: float = Field(
+        10.0,
+        description="Pontuação máxima desta questão (usada para normalizar a nota final)",
+        gt=0.0
+    )
     rubric: List[EvaluationCriterion] = Field(
         ...,
         description="Critérios de avaliação definidos pelo professor",

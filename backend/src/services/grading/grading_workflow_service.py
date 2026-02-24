@@ -196,42 +196,29 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                 db,
                 student_answer_uuid
             )
-            
-            # === 2. Atualizar student_answers ===
-            self.__student_answer_repository.update(
-                db,
-                answer_entity.id,
-                score=final_score,
-                is_graded=True,
-                graded_at=datetime.utcnow(),
-                status="GRADED"
-            )
-            
-            self.__logger.info(
-                "Resposta atualizada: UUID=%s, nota=%.2f",
-                student_answer_uuid, final_score
-            )
-            
-            # === 2.5. Deletar scores antigos (caso seja uma recorreção) ===
+
+            # === 2. Deletar scores antigos (caso seja uma recorreção) ===
             db.query(StudentAnswerCriteriaScore).filter(
                 StudentAnswerCriteriaScore.student_answer_uuid == student_answer_uuid
             ).delete()
-            
+
             self.__logger.info(
                 "Scores antigos removidos para resposta %s",
                 student_answer_uuid
             )
-            
+
             # === 3. Preparar mapeamento de critérios (nome → UUID + peso) ===
             # Usamos a última correção (árbitro se existir, senão C2)
             final_correction = corrections[-1]
-            
-            # Mapear critérios: nome → (uuid, weight)
+
+            # Mapear critérios: nome → (uuid, weight_decimal)
+            # weight na rubrica já está em decimal (ex: 0.40 para 40%),
+            # convertido em __convert_question_to_schema via weight/100.
             criteria_map = {}
             weight_map = {}
-            
+
             for rubric_criterion in question.rubric:
-                # Buscar UUID do critério no banco pelo nome
+                # Buscar UUID do critério no banco pelo nome/code
                 try:
                     criteria_entity = self.__grading_criteria_repository.get_by_code(
                         db,
@@ -247,40 +234,99 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                     # Se não encontrar, criar UUID temporário e usar peso da rubrica
                     criteria_map[rubric_criterion.name] = uuid4()
                     weight_map[rubric_criterion.name] = rubric_criterion.weight
-            
-            # === 4. Inserir criteria_scores ===
+
+            # === 4. Calcular weighted_score por critério e acumular nota final normalizada ===
+            #
+            # Fórmula correta:
+            #   raw_weighted_sum   = Σ (raw_score_i × weight_decimal_i)
+            #   total_max_weighted = Σ (max_score_i  × weight_decimal_i)  ← máximo possível da IA
+            #   question_points    = pontuação máxima real da questão
+            #
+            #   nota_final = raw_weighted_sum / total_max_weighted × question_points
+            #
+            # Isso garante que a nota final nunca ultrapasse question_points,
+            # independentemente da escala definida em max_points por critério.
+
+            # Calcular total_max_weighted a partir da rubrica da questão
+            total_max_weighted = sum(
+                c.max_score * c.weight
+                for c in question.rubric
+            )
+            question_points = question.total_points
+
+            if total_max_weighted <= 0:
+                self.__logger.warning(
+                    "total_max_weighted inválido (%.4f) — usando scale=1.0",
+                    total_max_weighted
+                )
+                total_max_weighted = 1.0
+
+            raw_weighted_sum = 0.0
+            criteria_score_entities = []
+
             for criterion_score in final_correction.criteria_scores:
                 criteria_uuid = criteria_map.get(criterion_score.criterion)
                 criterion_weight = weight_map.get(criterion_score.criterion, 1.0)
-                
+
                 if not criteria_uuid:
                     self.__logger.warning(
                         "UUID não encontrado para critério '%s' - pulando",
                         criterion_score.criterion
                     )
                     continue
-                
-                # Calcular weighted_score = raw_score * weight
-                weighted_score = criterion_score.score * criterion_weight
-                
-                # Criar registro de score por critério
-                score_entity = StudentAnswerCriteriaScore(
-                    uuid=uuid4(),
-                    student_answer_uuid=student_answer_uuid,
-                    criteria_uuid=criteria_uuid,
-                    raw_score=criterion_score.score,
-                    weighted_score=weighted_score,
-                    feedback=criterion_score.feedback
+
+                raw_weighted = criterion_score.score * criterion_weight
+                raw_weighted_sum += raw_weighted
+
+                criteria_score_entities.append(
+                    StudentAnswerCriteriaScore(
+                        uuid=uuid4(),
+                        student_answer_uuid=student_answer_uuid,
+                        criteria_uuid=criteria_uuid,
+                        raw_score=criterion_score.score,
+                        weighted_score=raw_weighted,  # será atualizado abaixo após normalização
+                        feedback=criterion_score.feedback
+                    )
                 )
-                
+
+            # Normalizar para a escala real da questão
+            scale_factor = question_points / total_max_weighted
+            corrected_final_score = raw_weighted_sum * scale_factor
+
+            # Atualizar weighted_score de cada entidade com o valor normalizado
+            for entity in criteria_score_entities:
+                entity.weighted_score = entity.weighted_score * scale_factor
+
+            self.__logger.info(
+                "Nota normalizada: raw_weighted=%.2f / max_weighted=%.2f × question_pts=%.2f = %.2f (IA reportou: %.2f)",
+                raw_weighted_sum, total_max_weighted, question_points, corrected_final_score, final_score
+            )
+
+            # === 5. Atualizar student_answers com a nota corretamente ponderada ===
+            self.__student_answer_repository.update(
+                db,
+                answer_entity.id,
+                score=corrected_final_score,
+                is_graded=True,
+                graded_at=datetime.utcnow(),
+                status="GRADED"
+            )
+
+            self.__logger.info(
+                "Resposta atualizada: UUID=%s, nota=%.2f",
+                student_answer_uuid, corrected_final_score
+            )
+
+            # === 6. Inserir criteria_scores ===
+            for score_entity in criteria_score_entities:
                 db.add(score_entity)
-            
-            # === 5. Commit da transação ===
+
+            # === 7. Commit da transação ===
             db.commit()
-            
+
             self.__logger.info(
                 "Persistência concluída: %d critérios salvos para resposta %s",
-                len(final_correction.criteria_scores),
+                len(criteria_score_entities),
                 student_answer_uuid
             )
             
@@ -371,18 +417,20 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                     question_entity.uuid, len(answers)
                 )
                 
+                # Pré-converter schema da questão (evita re-conversão a cada resposta)
+                question_schema = self.__convert_question_to_schema(db, question_entity)
+                question_graded_successfully = False
+
                 for answer_entity in answers:
                     total_answers += 1
-                    
-                    # Converter entidades DB → schemas Pydantic
-                    question_schema = self.__convert_question_to_schema(db, question_entity)
+
                     answer_schema = StudentAnswer(
                         id=answer_entity.uuid,
                         student_id=answer_entity.student_uuid,
                         question_id=answer_entity.question_uuid,
                         text=answer_entity.answer or ""
                     )
-                    
+
                     try:
                         # Executar workflow de correção
                         result = await self.grade_single_answer(
@@ -391,15 +439,16 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                             question=question_schema,
                             student_answer=answer_schema
                         )
-                        
+
                         graded_answers += 1
+                        question_graded_successfully = True
                         scores.append(result['final_score'])
-                        
+
                         self.__logger.debug(
                             "Resposta %s corrigida: nota=%.2f",
                             answer_entity.uuid, result['final_score']
                         )
-                        
+
                     except Exception as e:
                         failed_answers += 1
                         self.__logger.error(
@@ -407,6 +456,26 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                             answer_entity.uuid, str(e),
                             exc_info=True
                         )
+
+                # Marcar questão como corrigida se ao menos uma resposta foi processada
+                if question_graded_successfully:
+                    try:
+                        self.__exam_question_repository.update(
+                            db,
+                            question_entity.id,
+                            is_graded=True
+                        )
+                        db.commit()
+                        self.__logger.info(
+                            "Questão %s marcada como corrigida (is_graded=True)",
+                            question_entity.uuid
+                        )
+                    except Exception as e:
+                        self.__logger.warning(
+                            "Erro ao marcar questão %s como corrigida: %s",
+                            question_entity.uuid, str(e)
+                        )
+                        db.rollback()
             
             # === 4. Calcular estatísticas agregadas ===
             avg_score = sum(scores) / len(scores) if scores else 0.0
@@ -512,6 +581,7 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
         return ExamQuestion(
             id=question_entity.uuid,
             statement=question_entity.statement or "Questão sem enunciado",
+            total_points=float(question_entity.points) if question_entity.points else 10.0,
             rubric=rubric,
             metadata=metadata
         )
