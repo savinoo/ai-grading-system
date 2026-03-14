@@ -1,19 +1,17 @@
-import dspy
-import logging
 import asyncio
+import logging
+
+import dspy
 from langsmith import traceable
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from tenacity import retry, stop_after_attempt, wait_exponential
+
+from src.config.prompts import format_rag_context, format_rubric_text
 from src.domain.schemas import AgentCorrection, AgentID
 from src.domain.state import GraphState
 from src.config.settings import settings
-from src.config.prompts import format_rubric_text, format_rag_context
 from src.utils.helpers import measure_time
-# from src.infrastructure.dspy_config import configure_dspy # REMOVIDO: Configuração deve ser global no main
 
 logger = logging.getLogger(__name__)
-
-# Garante a configuração
-# configure_dspy()
 
 class GradingSignature(dspy.Signature):
     """
@@ -26,7 +24,7 @@ class GradingSignature(dspy.Signature):
     rubric_formatted = dspy.InputField(desc="A rubrica de avaliação detalhada com critérios e pesos")
     rag_context_formatted = dspy.InputField(desc="Trechos relevantes do material didático (RAG)")
     student_answer = dspy.InputField(desc="A resposta discursiva submetida pelo aluno")
-    
+
     correction = dspy.OutputField(desc="A correção estruturada (JSON)")
 
 class DSPyExaminerModule(dspy.Module):
@@ -78,7 +76,7 @@ class DSPyExaminerAgent:
 
         # Execução síncrona do DSPy encapsulada em thread para não bloquear o loop async
         loop = asyncio.get_running_loop()
-        
+
         def run_prediction():
             with measure_time(f"DSPy Examiner {agent_id} - Question {question.id}"):
                 return self.module(
@@ -91,12 +89,12 @@ class DSPyExaminerAgent:
         try:
             prediction = await loop.run_in_executor(None, run_prediction)
             raw_result = prediction.correction
-            
+
             # --- DEBUG LOGGING ---
             logger.info(f"[{agent_id}] RAW RESULT TYPE: {type(raw_result)}")
             logger.info(f"[{agent_id}] RAW RESULT CONTENT: {raw_result}")
             # ---------------------
-            
+
             if isinstance(raw_result, AgentCorrection):
                 result = raw_result
             elif isinstance(raw_result, str):
@@ -104,9 +102,9 @@ class DSPyExaminerAgent:
                 # Remove markdown code blocks se houver
                 import json as _json
                 import re
-                
+
                 clean_json = raw_result.replace("```json", "").replace("```", "").strip()
-                
+
                 # Tentativa de 'Rescue': Se vazio ou não começar com '{', é texto solto/inválido
                 if not clean_json or not clean_json.strip().startswith("{"):
                     logger.warning(f"[{agent_id}] Modelo retornou texto livre/vazio. Tentando estruturar manual.")
@@ -114,7 +112,7 @@ class DSPyExaminerAgent:
                     # Tenta achar nota tipo "Nota: 0.8/2.0" ou "Total: 10"
                     score_match = re.search(r"(?:Nota|Total|Score)[:\s]*(\d+[\.,]?\d*)", clean_json, re.IGNORECASE) if clean_json else None
                     score = float(score_match.group(1).replace(",", ".")) if score_match else 0.0
-                    
+
                     result = AgentCorrection(
                         agent_id=agent_id,
                         reasoning_chain=clean_json if clean_json else "[Sistema] Resposta vazia do LLM",
@@ -138,7 +136,7 @@ class DSPyExaminerAgent:
                             total_score=0.0,
                             feedback_text="[Sistema] Erro na avaliação (fallback aplicado)."
                         )
-                    
+
             else:
                 # Fallback universal para Dict ou Objetos DSPy
                 # Converte para dict se não for
@@ -155,7 +153,7 @@ class DSPyExaminerAgent:
                 # 1. Reasoning Chain (Lista -> String)
                 if "reasoning_chain" in data and isinstance(data["reasoning_chain"], list):
                     data["reasoning_chain"] = "\n".join(data["reasoning_chain"])
-                
+
                 # 2. Criteria Scores (Lista de Dicts -> Dict)
                 if "criteria_scores" in data and isinstance(data["criteria_scores"], list):
                     new_scores = {}
@@ -181,16 +179,16 @@ class DSPyExaminerAgent:
             # Se usou ChainOfThought, o raciocínio pode estar em prediction.rationale ou prediction.reasoning
             if hasattr(prediction, 'rationale'):
                  # Se o reasoning dentro do JSON estiver vazio, usamos o do DSPy
-                 if not result.reasoning_chain: 
+                 if not result.reasoning_chain:
                      result.reasoning_chain = prediction.rationale
 
             result.agent_id = agent_id
-            
+
             # Recalcula total score por segurança (via validador do Pydantic)
             result.calculate_total_if_missing()
-            
+
             return result
-            
+
         except Exception as e:
             logger.error(f"Erro no DSPy Examiner: {e}")
             raise e

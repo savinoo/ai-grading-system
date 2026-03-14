@@ -1,24 +1,17 @@
-import sys
-import os
 
 
 import logging
+
 import openai
-from typing import Any
-from langsmith import traceable
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from langchain_core.language_models import BaseChatModel
 from langchain_core.prompts import ChatPromptTemplate
+from langsmith import traceable
+from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
 
+from src.config.prompts import CORRECTOR_SYSTEM_PROMPT, format_rag_context, format_rubric_text
+from src.config.settings import settings
 from src.domain.schemas import AgentCorrection, AgentID
 from src.domain.state import GraphState
-from src.config.settings import settings
-from src.config.prompts import (
-    CORRECTOR_SYSTEM_PROMPT, 
-    format_rubric_text, 
-    format_rag_context
-)
-
 
 # Configuração de Logs para observabilidade
 logger = logging.getLogger(__name__)
@@ -67,7 +60,7 @@ class ExaminerAgent:
             # Usamos ChatPromptTemplate para separar System de Human (se necessário)
             # Aqui, como o prompt é denso, passamos tudo como System/Instruction
             prompt = ChatPromptTemplate.from_template(CORRECTOR_SYSTEM_PROMPT)
-            
+
             chain = prompt | self.structured_llm
 
             logger.info(f"[{agent_id}] Iniciando avaliação da questão {question.id}...")
@@ -84,9 +77,9 @@ class ExaminerAgent:
             # Override de segurança: Garante que o ID no JSON bate com o argumento
             # Isso evita que o LLM alucine o ID errado (ex: C1 dizer que é C2)
             result.agent_id = agent_id
-            
+
             logger.info(f"[{agent_id}] Avaliação concluída. Nota: {result.total_score}")
-            
+
             return result
 
         except Exception as e:
@@ -98,14 +91,14 @@ class ExaminerAgent:
 # --- Exemplo de Uso (Unit Test simulado) ---
 if __name__ == "__main__":
     # Este bloco só roda se executarmos o arquivo diretamente para teste manual
-    import asyncio
     from langchain_openai import ChatOpenAI
+
     from src.config.settings import settings
 
 
     # Mock simples
     mock_llm = ChatOpenAI(model=settings.MODEL_NAME, temperature=settings.TEMPERATURE) # Baixa temperatura para determinismo
     agent = ExaminerAgent(mock_llm)
-    
+
     # O state teria que ser mockado aqui para testar
     print("Módulo ExaminerAgent carregado com sucesso.")

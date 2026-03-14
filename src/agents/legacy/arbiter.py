@@ -1,20 +1,11 @@
-import sys
-import os
-
-# Add project root to sys.path to allow imports from src
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
-
 import logging
+
 from langchain_core.language_models import BaseChatModel
 from langchain_core.prompts import ChatPromptTemplate
 
+from src.config.prompts import ARBITER_SYSTEM_PROMPT, format_rag_context, format_rubric_text
 from src.domain.schemas import AgentCorrection, AgentID
 from src.domain.state import GraphState
-from src.config.prompts import (
-    ARBITER_SYSTEM_PROMPT, 
-    format_rubric_text, 
-    format_rag_context
-)
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +34,7 @@ class ArbiterAgent:
             # Precisamos encontrar quem é quem na lista de correções
             c1_correction = next(c for c in state["individual_corrections"] if c.agent_id == AgentID.CORRETOR_1)
             c2_correction = next(c for c in state["individual_corrections"] if c.agent_id == AgentID.CORRETOR_2)
-            
+
             question = state["question"]
             student_answer = state["student_answer"]
             rag_context = state["rag_context"]
@@ -51,7 +42,7 @@ class ArbiterAgent:
             # 2. Preparação do Prompt
             # Aqui está a 'mágica' do SMA: O árbitro vê o raciocínio dos outros.
             prompt = ChatPromptTemplate.from_template(ARBITER_SYSTEM_PROMPT)
-            
+
             chain = prompt | self.structured_llm
 
             # 3. Invocação
@@ -61,22 +52,22 @@ class ArbiterAgent:
                 "rubric_formatted": format_rubric_text(question.rubric),
                 "rag_context_formatted": format_rag_context(rag_context),
                 "student_answer": student_answer.text,
-                
+
                 # Contexto do Conflito (Meta-Avaliação)
                 "score_c1": c1_correction.total_score,
                 "reasoning_c1": c1_correction.reasoning_chain,
-                
+
                 "score_c2": c2_correction.total_score,
                 "reasoning_c2": c2_correction.reasoning_chain,
-                
+
                 "divergence_value": state["divergence_value"]
             })
 
             # Força a identidade do Árbitro
             result.agent_id = AgentID.ARBITER
-            
+
             logger.info(f"[ARBITER] Veredito final: {result.total_score}. Feedback: {result.feedback_text[:50]}...")
-            
+
             return result
 
         except StopIteration:
@@ -89,15 +80,15 @@ class ArbiterAgent:
 # --- Exemplo de Uso (Unit Test simulado) ---
 if __name__ == "__main__":
     # Este bloco só roda se executarmos o arquivo diretamente para teste manual
-    import asyncio
     from langchain_openai import ChatOpenAI
+
     from src.config.settings import settings
-    
+
     # Ensure environment variables are loaded
     settings.validate()
 
     # Mock simples
     mock_llm = ChatOpenAI(model=settings.MODEL_NAME, temperature=settings.TEMPERATURE)
     agent = ArbiterAgent(mock_llm)
-    
+
     print("Módulo ArbiterAgent carregado com sucesso.")

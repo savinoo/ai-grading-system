@@ -1,19 +1,17 @@
-import dspy
-import logging
 import asyncio
+import logging
+
+import dspy
 from langsmith import traceable
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from tenacity import retry, stop_after_attempt, wait_exponential
+
+from src.config.prompts import format_rag_context, format_rubric_text
 from src.domain.schemas import AgentCorrection, AgentID
 from src.domain.state import GraphState
 from src.config.settings import settings
-from src.config.prompts import format_rubric_text, format_rag_context
 from src.utils.helpers import measure_time
-# from src.infrastructure.dspy_config import configure_dspy # REMOVIDO
 
 logger = logging.getLogger(__name__)
-
-# Garante a configuração
-# configure_dspy()
 
 class ArbitrationSignature(dspy.Signature):
     """
@@ -25,12 +23,12 @@ class ArbitrationSignature(dspy.Signature):
     rubric_formatted = dspy.InputField(desc="A rubrica de avaliação detalhada")
     rag_context_formatted = dspy.InputField(desc="Trechos relevantes do material didático (referência a seguir)")
     student_answer = dspy.InputField(desc="A resposta do aluno sob disputa")
-    
+
     # Inputs específicos do árbitro
     corrector_1_evaluation = dspy.InputField(desc="Argumentos e nota do Corretor 1")
     corrector_2_evaluation = dspy.InputField(desc="Argumentos e nota do Corretor 2")
     divergence_context = dspy.InputField(desc="Cálculo da divergência encontrada entre os corretores")
-    
+
     arbitration = dspy.OutputField(desc="O veredito final estruturado contendo a nova correção de desempate")
 
 class DSPyArbiterModule(dspy.Module):
@@ -71,15 +69,15 @@ class DSPyArbiterAgent:
             question = state["question"]
             student_answer = state["student_answer"]
             rag_context = state["rag_context"]
-            
+
             # Encontra as correções anteriores
             c1_correction = next(c for c in state["individual_corrections"] if c.agent_id == AgentID.CORRETOR_1)
             c2_correction = next(c for c in state["individual_corrections"] if c.agent_id == AgentID.CORRETOR_2)
-            
+
             # Formatações
             formatted_rubric = format_rubric_text(question.rubric)
             formatted_context = format_rag_context(rag_context)
-            
+
             # Prepara o resumo das avaliações anteriores para o Árbitro
             c1_text = f"Nota Total: {c1_correction.total_score}\nRaciocínio: {c1_correction.reasoning_chain}"
             c2_text = f"Nota Total: {c2_correction.total_score}\nRaciocínio: {c2_correction.reasoning_chain}"
@@ -87,7 +85,7 @@ class DSPyArbiterAgent:
 
             # Execução síncrona encapsulada (mesmo padrão do Examiner)
             loop = asyncio.get_running_loop()
-            
+
             def run_arbitration():
                 with measure_time(f"DSPy Arbiter - Question {question.id}"):
                     return self.module(
@@ -101,21 +99,20 @@ class DSPyArbiterAgent:
                     )
 
             prediction = await loop.run_in_executor(None, run_arbitration)
-            
+
             # Tratamento robusto para retorno do DSPy
             raw_result = prediction.arbitration
-            
+
             logger.info(f"[ARBITER] RAW RESULT TYPE: {type(raw_result)}")
             logger.info(f"[ARBITER] RAW RESULT CONTENT: {raw_result}")
-            
+
             if isinstance(raw_result, AgentCorrection):
                 result = raw_result
             elif isinstance(raw_result, str):
                 import json as _json
-                import re
-                
+
                 clean_json = raw_result.replace("```json", "").replace("```", "").strip()
-                
+
                 # Fallback se string vazia ou não é JSON
                 if not clean_json or not clean_json.startswith("{"):
                     logger.warning(f"[ARBITER] Modelo retornou texto inválido: '{clean_json[:100]}...'")
@@ -158,11 +155,11 @@ class DSPyArbiterAgent:
 
             result.agent_id = AgentID.ARBITER
             result.calculate_total_if_missing()
-            
+
             return result
-            
+
         except Exception as e:
             logger.error(f"Erro no DSPy Arbiter: {e}")
-            # Em caso de falha crítica do DSPy, poderíamos ter um fallback aqui, 
+            # Em caso de falha crítica do DSPy, poderíamos ter um fallback aqui,
             # mas vamos apenas propagar o erro por enquanto.
             raise e

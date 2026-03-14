@@ -1,44 +1,50 @@
+
 import dspy
-import os
+
 from src.config.settings import settings
+
 
 def configure_dspy():
     """
     Configura o backend do DSPy com o modelo LM definido nas settings.
-    Suporta OpenAI, Google Gemini e outros via LiteLLM.
+    Suporta Local (Ollama), Google Gemini e OpenAI via LiteLLM.
     """
-    model_name = settings.MODEL_NAME.lower()
-    
-    # Limpeza básica de prefixos legados
-    clean_name = model_name.replace("models/", "").replace("google/", "").replace("gemini/", "")
-    
-    if "gemini" in model_name:
-        # Configuração para Gemini via LiteLLM (dspy.LM)
-        # Formato esperado: gemini/gemini-2.0-flash
+    provider = (settings.LLM_PROVIDER or "local").lower()
+
+    if provider == "local":
+        # Ollama local via LiteLLM integration
+        # Format: ollama_chat/<model_name> for chat models
+        model_id = f"ollama_chat/{settings.LOCAL_MODEL_NAME}"
+        lm = dspy.LM(
+            model=model_id,
+            api_base=settings.OLLAMA_BASE_URL,
+            temperature=settings.TEMPERATURE,
+        )
+
+    elif provider == "gemini" or "gemini" in (settings.MODEL_NAME or "").lower():
+        model_name = settings.MODEL_NAME.lower()
+        clean_name = model_name.replace("models/", "").replace("google/", "").replace("gemini/", "")
         provider_model = f"gemini/{clean_name}"
-        
-        # dspy.LM é a interface moderna (v2.5+) que usa LiteLLM por baixo dos panos
-        # e suporta async nativo melhor que dspy.Google
         lm = dspy.LM(model=provider_model, api_key=settings.GOOGLE_API_KEY, temperature=settings.TEMPERATURE)
 
-    elif "gpt" in model_name:
-        # Configuração OpenAI
+    elif provider == "openai" or "gpt" in (settings.MODEL_NAME or "").lower():
+        model_name = settings.MODEL_NAME.lower()
+        clean_name = model_name.replace("models/", "").replace("openai/", "")
         lm = dspy.LM(model=f"openai/{clean_name}", api_key=settings.OPENAI_API_KEY, temperature=settings.TEMPERATURE)
-        
+
     else:
-        # Fallback genérico (tenta usar como está ou assume OpenAI)
+        # Fallback generico
         try:
-            lm = dspy.LM(model=model_name)
-        except:
-            # Último recurso: dspy.OpenAI legado
-            lm = dspy.OpenAI(model=model_name, api_key=settings.OPENAI_API_KEY)
-        
+            lm = dspy.LM(model=settings.MODEL_NAME)
+        except Exception:
+            lm = dspy.LM(model=f"openai/{settings.MODEL_NAME}", api_key=settings.OPENAI_API_KEY)
+
     try:
         dspy.settings.configure(lm=lm)
     except RuntimeError as e:
         # Streamlit re-run safety:
-        # Se o DSPy já foi configurado em outra thread (execução anterior),
-        # ele bloqueia reconfiguração. Ignoramos pois a config global persiste.
+        # Se o DSPy ja foi configurado em outra thread (execucao anterior),
+        # ele bloqueia reconfiguracao. Ignoramos pois a config global persiste.
         if "thread that initially configured it" in str(e):
             pass
         else:

@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 
@@ -30,11 +31,21 @@ load_dotenv(dotenv_path=env_path, override=True)
 class Settings:
     """Centralized configuration management."""
 
-    # Keys
+    # LLM Provider Selection: local | gemini | openai
+    # "local" uses Ollama (free, recommended for benchmarking)
+    # "gemini" uses Google Gemini API
+    # "openai" uses OpenAI API
+    LLM_PROVIDER = _get_secret("LLM_PROVIDER", "local")
+
+    # Keys (required only for cloud providers)
     OPENAI_API_KEY = _get_secret("OPENAI_API_KEY")
     GOOGLE_API_KEY = _get_secret("GOOGLE_API_KEY")  # Gemini
 
-    # Model Selection
+    # Local LLM (Ollama) — free, recommended for benchmarking
+    OLLAMA_BASE_URL = _get_secret("OLLAMA_BASE_URL", "http://localhost:11434")
+    LOCAL_MODEL_NAME = _get_secret("LOCAL_MODEL_NAME", "llama3.2")
+
+    # Model Selection (used for cloud providers)
     # Default: Gemini (cheap/fast). If you deploy without Gemini, set MODEL_NAME=gpt-4o-mini (or similar)
     MODEL_NAME = _get_secret("MODEL_NAME", "gemini-2.0-flash")
 
@@ -46,6 +57,12 @@ class Settings:
     INITIAL_RETRY_DELAY = float(_get_secret("INITIAL_RETRY_DELAY", "2.0") or "2.0")
     MAX_RETRY_DELAY = float(_get_secret("MAX_RETRY_DELAY", "30.0") or "30.0")
 
+    # Analytics Thresholds (Phase 2)
+    GAP_THRESHOLD = float(_get_secret("GAP_THRESHOLD", "6.0") or "6.0")
+    STRENGTH_THRESHOLD = float(_get_secret("STRENGTH_THRESHOLD", "8.0") or "8.0")
+    PLAGIARISM_THRESHOLD = float(_get_secret("PLAGIARISM_THRESHOLD", "0.90") or "0.90")
+    DATA_RETENTION_DAYS = int(_get_secret("DATA_RETENTION_DAYS", "365") or "365")
+
     # LangSmith
     LANGSMITH_API_KEY = _get_secret("LANGSMITH_API_KEY", "") or ""
     LANGSMITH_TRACING_ENABLED = (_get_secret("LANGSMITH_TRACING_ENABLED", "false") or "false").lower() == "true"
@@ -54,10 +71,14 @@ class Settings:
 
     @classmethod
     def validate(cls):
-        if "gemini" in (cls.MODEL_NAME or "").lower():
+        provider = (cls.LLM_PROVIDER or "local").lower()
+        if provider == "local":
+            # No API key needed for local Ollama
+            return
+        elif provider == "gemini" or "gemini" in (cls.MODEL_NAME or "").lower():
             if not cls.GOOGLE_API_KEY:
                 raise ValueError("GOOGLE_API_KEY not found. Required for Gemini models.")
-        elif "gpt" in (cls.MODEL_NAME or "").lower():
+        elif provider == "openai" or "gpt" in (cls.MODEL_NAME or "").lower():
             if not cls.OPENAI_API_KEY:
                 raise ValueError("OPENAI_API_KEY not found. Required for GPT models.")
 
