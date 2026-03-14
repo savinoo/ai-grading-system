@@ -1,6 +1,6 @@
+
 import streamlit as st
-import pandas as pd
-import json
+
 
 def setup_page():
     st.set_page_config(page_title="AI Grading System (TCC)", layout="wide", page_icon="📝")
@@ -12,7 +12,7 @@ def render_custom_css():
     .block-container {
         padding-top: 2rem;
         padding-bottom: 2rem;
-        max-width: 95% !important; 
+        max-width: 95% !important;
     }
 
     /* Cards de Métricas */
@@ -47,7 +47,7 @@ def render_custom_css():
         font-weight: 600;
         color: #495057;
     }
-    
+
     /* Destaque para notas */
     .grade-badge-pass {
         background-color: #d4edda;
@@ -75,36 +75,36 @@ def render_student_report(student_data):
         # Define cor do header baseado na nota da questão
         q_grade = q_res['grade']
         icon = "✅" if q_grade >= 6 else "❌"
-        
+
         with st.expander(f"{icon} Questão {idx+1} | Nota: {q_grade:.1f} | {q_res['question_text'][:60]}..."):
-            
+
             # Layout em 2 colunas dentro do card da questão
             c_left, c_right = st.columns([1, 1], gap="medium")
-            
+
             with c_left:
                 st.markdown("#### 📝 Resposta do Aluno")
                 st.markdown(f"> *{q_res['answer_text']}*")
-                
+
                 st.markdown("#### 📌 Enunciado Completo")
                 st.caption(q_res['question_text'])
-                
+
             with c_right:
                 st.markdown(f"#### 🔍 Correção Detalhada (Nota: {q_grade:.1f})")
-                
+
                 full_state = q_res['state']
                 corrections = full_state.get('individual_corrections', [])
-                
+
                 # Tabs para Deep Dive
                 t_overview, t_rag, t_agents, t_arbiter = st.tabs(["📝 Resultado", "📚 Contexto (RAG)", "🤖 Agentes (Thinking)", "⚖️ Árbitro"])
-                
+
                 with t_overview:
                     # Verifica se houve divergência
                     if q_res['divergence']:
-                            st.error(f"⚠️ **Divergência Detectada!**")
+                            st.error("⚠️ **Divergência Detectada!**")
                             st.markdown("A IA detectou desacordo entre corretores e acionou o Árbitro.")
                     else:
                             st.success("**Consenso Atingido**")
-                    
+
                     # Feedback Final (Usar o do árbitro ou do C1 como representativo)
                     final_feedback = ""
                     if corrections:
@@ -118,11 +118,11 @@ def render_student_report(student_data):
                             # Usando popover ou markdown para evitar erro de nested expander
                             with st.popover(f"Chunk (Score: {r.relevance_score:.2f})"):
                                 st.write(r.content)
-                
+
                 with t_agents:
                         c1 = next((c for c in corrections if c.agent_id == 'corretor_1'), None)
                         c2 = next((c for c in corrections if c.agent_id == 'corretor_2'), None)
-                        
+
                         col_a1, col_a2 = st.columns(2)
                         with col_a1:
                             st.markdown("##### 🤖 Corretor 1")
@@ -132,7 +132,7 @@ def render_student_report(student_data):
                                     st.write(c1.reasoning_chain)
                             else:
                                 st.warning("Não executou.")
-                                
+
                         with col_a2:
                             st.markdown("##### 🤖 Corretor 2")
                             if c2:
@@ -156,11 +156,11 @@ def render_student_report(student_data):
 
 def render_global_kpis(df_res):
     col_kpi1, col_kpi2, col_kpi3 = st.columns(3)
-        
+
     avg_grade = df_res['grade'].mean()
     max_grade = df_res['grade'].max()
     pass_rate = (df_res['grade'] >= 6.0).mean()
-    
+
     col_kpi1.metric("Média Geral", f"{avg_grade:.1f}", delta=f"{avg_grade-6.0:.1f} vs Meta" if avg_grade >=6 else f"{avg_grade-6.0:.1f}")
     col_kpi2.metric("Maior Nota", f"{max_grade:.1f}")
     col_kpi3.metric("Aprovação", f"{pass_rate*100:.0f}%")

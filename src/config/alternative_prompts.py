@@ -1,11 +1,11 @@
 # src/config/alternative_prompts.py
 
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.prompts import ChatPromptTemplate
 
 """
 ALTERNATIVE PROMPTS (Caminho 'Mais Leve')
 -----------------------------------------
-Se não quisermos usar frameworks complexos como DSPy, podemos usar 
+Se não quisermos usar frameworks complexos como DSPy, podemos usar
 ChatPromptTemplates modulares com 'partials' e injeção de constantes.
 
 Vantagens:

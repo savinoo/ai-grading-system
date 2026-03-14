@@ -1,12 +1,12 @@
 # src/domain/schemas.py
-from typing import List, Optional, Dict, Any
-from pydantic import BaseModel, Field, field_validator, model_validator
-from enum import Enum
 import logging
+from enum import StrEnum
+
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 logger = logging.getLogger(__name__)
 
-class AgentID(str, Enum):
+class AgentID(StrEnum):
     """Identificadores únicos para os agentes do sistema"""
     CORRETOR_1 = "corretor_1"
     CORRETOR_2 = "corretor_2"
@@ -23,13 +23,13 @@ class QuestionMetadata(BaseModel):
     """Metadados para filtragem avançada no RAG"""
     discipline: str = Field(..., description="Disciplina (ex: Estrutura de Dados)")
     topic: str = Field(..., description="Tópico específico (ex: Árvores Binárias)")
-    difficulty_level: Optional[str] = None
+    difficulty_level: str | None = None
 
 class ExamQuestion(BaseModel):
     """Estrutura da questão da prova"""
     id: str
     statement: str = Field(..., description="O enunciado da questão")
-    rubric: List[EvaluationCriterion] = Field(..., description="Critérios de avaliação definidos pelo professor")
+    rubric: list[EvaluationCriterion] = Field(..., description="Critérios de avaliação definidos pelo professor")
     metadata: QuestionMetadata
 
 class StudentAnswer(BaseModel):
@@ -42,7 +42,7 @@ class RetrievedContext(BaseModel):
     """Contexto recuperado via RAG (Chunk + Metadados)"""
     content: str
     source_document: str
-    page_number: Optional[int] = None
+    page_number: int | None = None
     relevance_score: float = Field(..., description="Score de similaridade do vector DB")
 
 class CriterionScore(BaseModel):
@@ -50,25 +50,25 @@ class CriterionScore(BaseModel):
 
     criterion: str
     score: float
-    feedback: Optional[str] = None
+    feedback: str | None = None
 
 
 class AgentCorrection(BaseModel):
     """Saída de um único agente corretor (Output Cognitivo)"""
 
     # Some model outputs omit agent_id; we inject it at runtime in the agent.
-    agent_id: Optional[AgentID] = None
+    agent_id: AgentID | None = None
 
     # LLMs often return a list of steps; normalize to a single string.
     reasoning_chain: str = Field(
         ..., description="Chain-of-Thought (CoT): OBRIGATÓRIO. O passo-a-passo detalhado do raciocínio antes de dar a nota."
     )
 
-    total_score: Optional[float] = None
+    total_score: float | None = None
     feedback_text: str = Field(default="Feedback não gerado.", description="Feedback pedagógico para o aluno")
 
     # Accept either a dict (legacy) or a list of criterion objects (preferred)
-    criteria_scores: List[CriterionScore] = Field(default_factory=list, description="Notas quebradas por critério")
+    criteria_scores: list[CriterionScore] = Field(default_factory=list, description="Notas quebradas por critério")
 
     @field_validator("reasoning_chain", mode="before")
     @classmethod
@@ -100,7 +100,7 @@ class AgentCorrection(BaseModel):
                 )
                 for cs in self.criteria_scores:
                     cs.score = cs.score * 10.0
-            
+
             self.total_score = float(sum(cs.score for cs in self.criteria_scores))
         elif self.total_score is None:
             self.total_score = 0.0

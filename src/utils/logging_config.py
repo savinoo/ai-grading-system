@@ -1,6 +1,6 @@
 import logging
 import sys
-from pathlib import Path
+
 
 def setup_logging(level=logging.INFO, log_file="program_flow.log"):
     """

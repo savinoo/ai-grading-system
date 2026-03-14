@@ -1,14 +1,16 @@
 # src/workflow/graph.py
 import logging
-from langgraph.graph import StateGraph, END
+
+from langgraph.graph import END, StateGraph
+
 from src.domain.state import GraphState
 from src.workflow.nodes import (
-    retrieve_context_node,
+    arbiter_node,
+    calculate_divergence_node,
     corrector_1_node,
     corrector_2_node,
-    calculate_divergence_node,
-    arbiter_node,
-    finalize_grade_node
+    finalize_grade_node,
+    retrieve_context_node,
 )
 
 logger = logging.getLogger(__name__)
@@ -29,18 +31,18 @@ def build_grading_workflow():
     workflow.add_node("finalize", finalize_grade_node)
 
     # 2. Definir Arestas (O Fluxo)
-    
+
     # Início -> RAG
     workflow.set_entry_point("retrieve_context")
-    
+
     # RAG -> Paralelismo (C1 e C2 rodam ao mesmo tempo)
     workflow.add_edge("retrieve_context", "corrector_1")
     workflow.add_edge("retrieve_context", "corrector_2")
-    
+
     # Sincronização: Ambos devem terminar antes de checar divergência
     workflow.add_edge("corrector_1", "check_divergence")
     workflow.add_edge("corrector_2", "check_divergence")
-    
+
     # 3. Aresta Condicional (O "Cérebro" do fluxo)
     # Decide se chama o Árbitro ou finaliza
     def router(state: GraphState):
@@ -50,7 +52,7 @@ def build_grading_workflow():
         else:
             logger.info("Fluxo: Consenso -> Roteando para FINALIZE (Caminho Feliz)")
             return "finalize" # Caminho feliz
-            
+
     workflow.add_conditional_edges(
         "check_divergence",
         router,
@@ -59,10 +61,10 @@ def build_grading_workflow():
             "finalize": "finalize"
         }
     )
-    
+
     # Árbitro -> Finalizar
     workflow.add_edge("arbiter", "finalize")
-    
+
     # Finalizar -> Fim
     workflow.add_edge("finalize", END)
 

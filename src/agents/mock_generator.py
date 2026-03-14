@@ -1,13 +1,13 @@
-from typing import List, Optional
-import asyncio
 import uuid
+
 from langchain_core.language_models import BaseChatModel
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from tenacity import retry, stop_after_attempt, wait_exponential
 
-from src.domain.schemas import ExamQuestion, StudentAnswer, QuestionMetadata, EvaluationCriterion
+from src.domain.schemas import EvaluationCriterion, ExamQuestion, QuestionMetadata, StudentAnswer
 from src.utils.helpers import measure_time
+
 
 class MockDataGeneratorAgent:
     """
@@ -27,14 +27,14 @@ class MockDataGeneratorAgent:
         """
         Gera uma questão de prova completa com rubrica baseada no tópico.
         """
-        
+
         # Schema para output estruturado (uma versão wrapper para facilitar a geração)
         class GeneratedQuestionStructure(BaseModel):
             statement: str = Field(..., description="O enunciado da questão discursiva")
-            rubric: List[EvaluationCriterion] = Field(..., description="Critérios de avaliação detalhados")
-            
+            rubric: list[EvaluationCriterion] = Field(..., description="Critérios de avaliação detalhados")
+
         structured_llm = self.llm.with_structured_output(GeneratedQuestionStructure)
-        
+
         prompt = ChatPromptTemplate.from_messages([
             ("system", "Você é um professor técnico criando uma questão de prova. "
                        "A questão deve ser discursiva, mas EXTREMAMENTE ESPECÍFICA e TÉCNICA. "
@@ -46,12 +46,12 @@ class MockDataGeneratorAgent:
                      "Nível de dificuldade: {difficulty}. "
                      "Gere o enunciado e a rubrica.")
         ])
-        
+
         chain = prompt | structured_llm
-        
+
         with measure_time(f"Gerar Questão Individual (Tópico: {topic})"):
             result = await chain.ainvoke({"topic": topic, "discipline": discipline, "difficulty": difficulty})
-        
+
         # Monta o objeto final ExamQuestion
         return ExamQuestion(
             id=str(uuid.uuid4()),
@@ -69,19 +69,19 @@ class MockDataGeneratorAgent:
         stop=stop_after_attempt(10),
         reraise=True
     )
-    async def generate_exam_questions(self, topic: str, discipline: str, difficulty: str = "Medium", count: int = 5) -> List[ExamQuestion]:
+    async def generate_exam_questions(self, topic: str, discipline: str, difficulty: str = "Medium", count: int = 5) -> list[ExamQuestion]:
         """
         Gera uma lista de questões de uma única vez, com RUBRICA UNIFICADA para toda a prova.
         """
-        
+
         # 1. Definição do Schema para Prova (Rubrica Global + Questões)
         class ExamSchema(BaseModel):
-            global_rubric: List[EvaluationCriterion] = Field(..., description="Critérios de avaliação que se aplicam a TODAS as questões da prova (ex: Domínio do Conteúdo, Clareza, Argumentação)")
-            questions: List[str] = Field(..., description=f"Lista contendo exatamente {count} enunciados de questões distintas")
+            global_rubric: list[EvaluationCriterion] = Field(..., description="Critérios de avaliação que se aplicam a TODAS as questões da prova (ex: Domínio do Conteúdo, Clareza, Argumentação)")
+            questions: list[str] = Field(..., description=f"Lista contendo exatamente {count} enunciados de questões distintas")
 
         # 2. Configuração do Modelo
         structured_llm = self.llm.with_structured_output(ExamSchema)
-        
+
         # 3. Prompt Otimizado para Variedade
         prompt = ChatPromptTemplate.from_messages([
             ("system", "Você é um professor exigente elaborando uma prova técnica. "
@@ -98,18 +98,18 @@ class MockDataGeneratorAgent:
                      "Quantidade: {count} questões.\n\n"
                      "Gere a prova agora.")
         ])
-        
+
         # 4. Execução Única (Batch)
         chain = prompt | structured_llm
-        
+
         with measure_time(f"Gerar {count} Questões (Batch)"):
             result = await chain.ainvoke({
-                "topic": topic, 
-                "discipline": discipline, 
+                "topic": topic,
+                "discipline": discipline,
                 "difficulty": difficulty,
                 "count": count
             })
-        
+
         # 5. Conversão para Objetos de Domínio
         # A mesma rubrica global é distribuída para todas as questões (para manter compatibilidade com o schema atual)
         final_questions = []
@@ -117,14 +117,14 @@ class MockDataGeneratorAgent:
             final_questions.append(ExamQuestion(
                 id=str(uuid.uuid4()),
                 statement=q_stmt,
-                rubric=result.global_rubric, 
+                rubric=result.global_rubric,
                 metadata=QuestionMetadata(
                     discipline=discipline,
                     topic=topic,
                     difficulty_level=difficulty
                 )
             ))
-            
+
         return final_questions
 
     @retry(
@@ -137,23 +137,23 @@ class MockDataGeneratorAgent:
         Gera uma resposta de aluno simulada com base na qualidade desejada.
         quality: 'excellent' (nota alta), 'average' (nota média), 'poor' (nota baixa/errada)
         """
-        
+
         # Schema simples apenas para o texto
         class GeneratedAnswerStructure(BaseModel):
             text: str = Field(..., description="A resposta do aluno")
-            
+
         structured_llm = self.llm.with_structured_output(GeneratedAnswerStructure)
-        
+
         quality_prompts = {
             "excellent": "A resposta deve ser exemplar: correta, completa, demonstrando domínio total do conteúdo e usando terminologia técnica adequada. Aborde todos os pontos da rubrica com precisão.",
             "average": "A resposta deve ser mediana: correta no geral, mas superficial. USE ESTRATÉGIAS DE GENERALIZAÇÃO para disfarçar o desconhecimento de detalhes específicos. Substitua termos técnicos precisos por explicações mais amplas e vagas, tentando 'enrolar' um pouco onde faltar profundidade, mas sem cometer erros graves.",
             "poor": "A resposta deve ser insatisfatória: apresente conceitos errados ou confunda fatos. USE ESTRATÉGIAS DE GENERALIZAÇÃO EXCESSIVA ('embromação') para esconder que não sabe a resposta. Tente parecer que sabe falando de coisas vagamente relacionadas ou inventando fatos com confiança para mascarar sua ignorância. Tente enganar o corretor."
         }
-        
+
         instruction = quality_prompts.get(quality, quality_prompts["average"])
-        
+
         rubric_text = "\n".join([f"- {c.name}: {c.description}" for c in question.rubric])
-        
+
         prompt = ChatPromptTemplate.from_messages([
             ("system", f"Você é um aluno fictício chamado {student_name} realizando uma prova.\n"
                        "Sua tarefa é escrever a resposta da questão abaixo.\n\n"
@@ -169,12 +169,12 @@ class MockDataGeneratorAgent:
                      f"INSTRUÇÃO DE PERFORMANCE PARA O ALUNO: {instruction}\n"
                      "Escreva APENAS a resposta do aluno.")
         ])
-        
+
         chain = prompt | structured_llm
-        
+
         with measure_time(f"Gerar Resposta Aluno ({quality} - {student_name})"):
             result = await chain.ainvoke({})
-        
+
         return StudentAnswer(
             student_id=f"simulated_{student_name.lower().replace(' ', '_')}",
             question_id=question.id,

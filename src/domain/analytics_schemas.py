@@ -3,7 +3,8 @@ Analytics Schemas for Professor Assistant Module
 Tracks student performance, learning gaps, and class-level insights.
 """
 from datetime import datetime
-from typing import List, Dict, Optional, Literal, Any
+from typing import Any, Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -16,9 +17,9 @@ class SubmissionRecord(BaseModel):
     grade: float
     max_score: float
     timestamp: datetime = Field(default_factory=datetime.now)
-    criterion_scores: Dict[str, float] = Field(default_factory=dict)
+    criterion_scores: dict[str, float] = Field(default_factory=dict)
     divergence_detected: bool = False
-    feedback: Optional[str] = None
+    feedback: str | None = None
 
 
 class LearningGap(BaseModel):
@@ -28,7 +29,7 @@ class LearningGap(BaseModel):
     severity: Literal["low", "medium", "high"]
     evidence_count: int  # How many times this appeared
     avg_score: float
-    suggestion: Optional[str] = None
+    suggestion: str | None = None
 
 
 class Strength(BaseModel):
@@ -43,19 +44,19 @@ class StudentProfile(BaseModel):
     """Complete student learning profile"""
     student_id: str
     student_name: str
-    submissions_history: List[SubmissionRecord] = Field(default_factory=list)
-    learning_gaps: List[LearningGap] = Field(default_factory=list)
-    strengths: List[Strength] = Field(default_factory=list)
-    
+    submissions_history: list[SubmissionRecord] = Field(default_factory=list)
+    learning_gaps: list[LearningGap] = Field(default_factory=list)
+    strengths: list[Strength] = Field(default_factory=list)
+
     # Computed metrics
     avg_grade: float = 0.0
     submission_count: int = 0
     trend: Literal["improving", "stable", "declining", "insufficient_data"] = "insufficient_data"
     trend_confidence: float = 0.0
-    
+
     # Metadata
-    first_submission: Optional[datetime] = None
-    last_submission: Optional[datetime] = None
+    first_submission: datetime | None = None
+    last_submission: datetime | None = None
     last_updated: datetime = Field(default_factory=datetime.now)
 
 
@@ -64,32 +65,32 @@ class ClassInsights(BaseModel):
     class_id: str
     total_students: int
     total_submissions: int
-    
+
     # Performance metrics
     class_avg_grade: float
     median_grade: float
     std_deviation: float
-    
+
     # Distribution
-    grade_distribution: Dict[str, int] = Field(
+    grade_distribution: dict[str, int] = Field(
         default_factory=dict,
         description="Buckets: A (9-10), B (7-9), C (5-7), D (3-5), F (<3)"
     )
-    
+
     # Common patterns
-    most_difficult_questions: List[Dict[str, Any]] = Field(default_factory=list)
-    most_common_gaps: List[LearningGap] = Field(default_factory=list)
-    
+    most_difficult_questions: list[dict[str, Any]] = Field(default_factory=list)
+    most_common_gaps: list[LearningGap] = Field(default_factory=list)
+
     # Outliers
-    struggling_students: List[str] = Field(
+    struggling_students: list[str] = Field(
         default_factory=list,
         description="Students scoring >1 std dev below mean"
     )
-    top_performers: List[str] = Field(
+    top_performers: list[str] = Field(
         default_factory=list,
         description="Students scoring >1 std dev above mean"
     )
-    
+
     # Temporal
     analysis_timestamp: datetime = Field(default_factory=datetime.now)
 
@@ -99,7 +100,7 @@ class TeacherAnnotation(BaseModel):
     annotation_id: str
     submission_id: str
     agent_grade: float
-    teacher_grade: Optional[float] = None
+    teacher_grade: float | None = None
     agreement: Literal["agree", "disagree", "partial"] = "agree"
-    notes: Optional[str] = None
+    notes: str | None = None
     timestamp: datetime = Field(default_factory=datetime.now)

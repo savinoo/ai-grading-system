@@ -1,8 +1,10 @@
 # src/infrastructure/vector_db.py
-import os
 import logging
+import os
+
 from langchain_chroma import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+
 from src.config.settings import settings
 
 logger = logging.getLogger(__name__)
@@ -13,8 +15,8 @@ _VECTOR_STORE: Chroma | None = None
 def get_vector_store() -> Chroma:
     """
     Inicializa e retorna a conexão com o ChromaDB (Persistente).
-    
-    Técnica: Usamos GoogleGenerativeAIEmbeddings para alinhar a qualidade vetorial 
+
+    Técnica: Usamos GoogleGenerativeAIEmbeddings para alinhar a qualidade vetorial
     com o modelo de raciocínio, usando embeddings gratuitos se possível.
     """
     global _VECTOR_STORE

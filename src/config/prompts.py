@@ -3,8 +3,8 @@
 """
 Centralização dos Prompts do Sistema.
 Aqui aplicamos as técnicas de Engenharia de Prompt definidas na metodologia:
-1. Role Prompting (Atuar como especialista) 
-2. Chain-of-Thought (Raciocínio passo-a-passo) 
+1. Role Prompting (Atuar como especialista)
+2. Chain-of-Thought (Raciocínio passo-a-passo)
 3. Groundedness (Fidelidade ao Contexto RAG) [cite: 63, 102]
 """
 
