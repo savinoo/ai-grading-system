@@ -31,3 +31,4 @@ data/raw/
 data/storage/
 data/vector_store/
 .ipynb_checkpoints/
+.coverage
