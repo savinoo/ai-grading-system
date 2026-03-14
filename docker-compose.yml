@@ -1,0 +1,41 @@
+# ============================================================
+# AI Grading System - Docker Compose
+# ============================================================
+#
+# Usage:
+#   docker compose up -d          # Start in background
+#   docker compose up --build     # Rebuild and start
+#   docker compose logs -f app    # Follow logs
+#   docker compose down           # Stop and remove
+#
+# Prerequisites:
+#   - Create a .env file with at least GOOGLE_API_KEY or
+#     OPENAI_API_KEY depending on MODEL_NAME
+# ============================================================
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-grading-system
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    environment:
+      - PYTHONPATH=/app
+      - STREAMLIT_SERVER_HEADLESS=true
+    volumes:
+      - grading-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 15s
+      retries: 3
+
+volumes:
+  grading-data:
+    driver: local

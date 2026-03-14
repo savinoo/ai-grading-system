@@ -313,6 +313,6 @@ logger.info(f"Cache keys: {list(_RAG_CACHE.keys())}")
 
 ---
 
-**Autor:** Alan Turing (AI Assistant)  
+**Autor:** Lucas Lorenzo Savino & Maycon Mendes
 **Projeto:** ai-grading-system (TCC Lucas Savino)  
 **Repo:** https://github.com/savinoo/ai-grading-system

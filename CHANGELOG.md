@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-02-28) — Phase 2
+- **SQLite storage backend** replacing JSON in `StudentKnowledgeBase`
+  - WAL mode, foreign keys, indexed queries
+  - Auto-migration from existing JSON files (backup created as `.json.bak`)
+- **Configurable thresholds** via `.env`: `GAP_THRESHOLD` (default 6.0), `STRENGTH_THRESHOLD` (default 8.0)
+- **GDPR export + anonymization** (`export_and_anonymize()`) — hashes PII, anonymizes answers, deletes original
+- **Semantic plagiarism detector** (`PlagiarismDetector`) — TF-IDF + cosine similarity, conservative 90%+ threshold
+  - Compares answers within same question only
+  - Skips short answers (< 20 words) to reduce false positives
+  - Similarity heatmap visualization per student
+- **Plagiarism dashboard tab** in Streamlit Analytics ("Similaridade")
+- New settings: `PLAGIARISM_THRESHOLD`, `DATA_RETENTION_DAYS`
+- `scikit-learn` dependency for TF-IDF vectorization
+- 19 new tests covering SQLite, thresholds, plagiarism, GDPR (26 total passing)
+
+### Changed (2026-02-28)
+- `StudentKnowledgeBase` now uses SQLite instead of JSON (non-breaking — auto-migrates)
+- `StudentTracker` now reads `GAP_THRESHOLD`/`STRENGTH_THRESHOLD` from settings (overridable via constructor)
+
 ### Added (2026-02-10)
 - Performance logging with `measure_time` context manager in DSPy agents
 - Auto-detection and normalization for 0-1 → 0-10 grade scale

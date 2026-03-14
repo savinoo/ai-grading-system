@@ -1,0 +1,64 @@
+# ============================================================
+# AI Grading System - .dockerignore
+# ============================================================
+
+# Python bytecode
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Git
+.git/
+.github/
+.gitignore
+
+# Secrets (NEVER include in image)
+.env
+.env.*
+.streamlit/secrets.toml
+
+# Data (mounted as volume at runtime)
+data/
+
+# Notebooks (development only)
+notebooks/
+
+# Tests (not needed in production)
+tests/
+
+# Documentation
+*.md
+!README.md
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Cache directories
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Docker (avoid recursive copy)
+Dockerfile
+docker-compose.yml
+docker-compose.yaml
