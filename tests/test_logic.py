@@ -1,8 +1,10 @@
 import unittest
 from unittest.mock import MagicMock
-from src.domain.schemas import AgentID, AgentCorrection
-from src.workflow.nodes import calculate_divergence_node, finalize_grade_node
+
 from src.config.settings import settings
+from src.domain.schemas import AgentCorrection, AgentID
+from src.workflow.nodes import calculate_divergence_node, finalize_grade_node
+
 
 class TestGradingLogic(unittest.TestCase):
 
@@ -23,7 +25,7 @@ class TestGradingLogic(unittest.TestCase):
             else:
                 mock_correction.agent_id = AgentID.ARBITER
             corrections.append(mock_correction)
-        
+
         return {"individual_corrections": corrections}
 
     def test_divergence_detection_true(self):
