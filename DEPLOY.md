@@ -10,8 +10,7 @@
 
 #### 1. Push to GitHub
 ```bash
-git push origin feature/professor-assistant
-# Or merge to main and push main
+git push origin main
 ```
 
 #### 2. Deploy on Streamlit Cloud
@@ -21,7 +20,7 @@ git push origin feature/professor-assistant
 3. Click "New app"
 4. Configure:
    - **Repository:** `savinoo/ai-grading-system`
-   - **Branch:** `feature/professor-assistant` (or `main` if merged)
+   - **Branch:** `main`
    - **Main file path:** `app/main.py`
 5. Click "Deploy"
 
@@ -65,10 +64,37 @@ brew install ngrok
 streamlit run app/main.py
 
 # In another terminal, expose it
-ngrok http 8502
+ngrok http 8501
 ```
 
 Copy the `https://xxxx.ngrok.io` URL and share it.
+
+---
+
+## Option 3: Docker
+
+```bash
+docker build -t ai-grading-system .
+docker run -p 8501:8501 \
+  -e LLM_PROVIDER=local \
+  -e OLLAMA_BASE_URL=http://host.docker.internal:11434 \
+  ai-grading-system
+```
+
+> Note: Requires Ollama running on host machine. Use `http://host.docker.internal:11434` to reach the host from inside the container.
+
+For cloud LLM providers:
+```bash
+docker run -p 8501:8501 \
+  -e LLM_PROVIDER=gemini \
+  -e GOOGLE_API_KEY=your-key \
+  ai-grading-system
+```
+
+Or use Docker Compose:
+```bash
+docker compose up
+```
 
 ---
 
@@ -79,13 +105,31 @@ The app reads secrets from:
 2. Streamlit Cloud Secrets (cloud)
 3. Environment variables (fallback)
 
-Required:
-- `GOOGLE_API_KEY` - Gemini API key
+### Complete Variables Reference
 
-Optional:
-- `LANGSMITH_API_KEY` - For tracing/observability
-- `MODEL_NAME` - Default: `gemini-2.0-flash`
-- `TEMPERATURE` - Default: `0`
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `LLM_PROVIDER` | `local` | LLM backend: `local` (Ollama), `gemini`, or `openai` |
+| `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama server URL (when `LLM_PROVIDER=local`) |
+| `LOCAL_MODEL_NAME` | `llama3.2` | Ollama model name (when `LLM_PROVIDER=local`) |
+| `GOOGLE_API_KEY` | - | Google Gemini API key (when `LLM_PROVIDER=gemini`) |
+| `OPENAI_API_KEY` | - | OpenAI API key (when `LLM_PROVIDER=openai`) |
+| `MODEL_NAME` | `gemini-2.0-flash` | Model name for cloud providers |
+| `TEMPERATURE` | `0` | LLM temperature |
+| `API_CONCURRENCY` | `10` | Max parallel API calls |
+| `API_THROTTLE_SLEEP` | `0.3` | Delay between API calls (seconds) |
+| `BATCH_CHUNK_SIZE` | `5` | Submissions per batch chunk |
+| `DIVERGENCE_THRESHOLD` | `2.0` | Score diff threshold to trigger Arbiter |
+| `MAX_RETRIES` | `3` | Max retry attempts for failed API calls |
+| `INITIAL_RETRY_DELAY` | `2.0` | Initial retry delay (seconds) |
+| `MAX_RETRY_DELAY` | `30.0` | Max retry delay (seconds) |
+| `GAP_THRESHOLD` | `6.0` | Learning gap detection threshold |
+| `STRENGTH_THRESHOLD` | `8.0` | Strength recognition threshold |
+| `PLAGIARISM_THRESHOLD` | `0.90` | Plagiarism similarity threshold |
+| `DATA_RETENTION_DAYS` | `365` | Days to keep student data |
+| `LANGSMITH_API_KEY` | - | LangSmith tracing key (optional) |
+| `LANGSMITH_TRACING_ENABLED` | `false` | Enable LangSmith tracing |
+| `LANGSMITH_PROJECT_NAME` | `ai-grading-system` | LangSmith project name |
 
 ---
 
@@ -108,7 +152,7 @@ Optional:
 ## Production Considerations
 
 For production deployment:
-1. Use PostgreSQL instead of JSON for student data
+1. Consider PostgreSQL for multi-user concurrent access (current SQLite implementation works well for single-user/small deployments)
 2. Add authentication (Streamlit supports OAuth)
 3. Set up monitoring (Streamlit Cloud has built-in analytics)
 4. Configure custom domain

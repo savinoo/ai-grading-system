@@ -97,10 +97,10 @@ kb.clear_old_submissions(days_to_keep=365)  # Cleanup old data
 ```
 
 **Features:**
-- JSON-based persistence (easy migration to SQL later)
+- SQLite-based persistence (WAL mode, foreign keys, indexed queries)
 - Automatic data retention policies
 - Export functionality for reports
-- GDPR-compliant deletion
+- GDPR-compliant deletion (export, anonymize, delete)
 
 ---
 
@@ -187,11 +187,11 @@ pytest tests/test_analytics.py -v
 
 ---
 
-## Future Enhancements
+## Feature Status
 
+- [x] Visual dashboards with Plotly (10+ interactive charts)
+- [x] Semantic plagiarism detection (TF-IDF + cosine similarity)
 - [ ] LLM-powered curriculum recommendations
-- [ ] Visual dashboards with Plotly
-- [ ] Semantic plagiarism detection
 - [ ] Auto-generated study plans
 - [ ] Predictive modeling (risk of failure)
 - [ ] Teacher annotation system for agent training
@@ -200,11 +200,9 @@ pytest tests/test_analytics.py -v
 
 ## Storage
 
-Profiles are stored in: `data/student_profiles.json`
+Profiles are stored in SQLite: `data/student_profiles.db`
 
-To change storage location:
-```python
-kb = StudentKnowledgeBase(storage_path="custom/path.json")
-```
+The database uses WAL mode for concurrent reads and foreign keys for data integrity.
+Auto-migration from legacy JSON format is supported on first access.
 
-For production, consider migrating to SQLite/PostgreSQL for better concurrency.
+For production with multiple concurrent users, consider migrating to PostgreSQL.

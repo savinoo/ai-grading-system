@@ -14,7 +14,7 @@ An autonomous, multi-agent system designed to automate the grading of complex ac
 
 - **5x throughput improvement** — Grading 30 submissions reduced from 10+ minutes to ~2 minutes
 - **90% reduction in vector DB queries** via intelligent RAG caching
-- **Dual-examiner consensus** — 2 independent Grader agents + 1 Referee reduces bias
+- **Dual-examiner consensus** — 2 independent Examiner agents + 1 Arbiter reduces bias
 - **Full explainability** — Every grade includes written justification traceable to rubric criteria
 - **10+ analytics visualizations** — Student evolution tracking, plagiarism detection, learning gap identification
 
@@ -30,7 +30,7 @@ An autonomous, multi-agent system designed to automate the grading of complex ac
 2. Login with GitHub
 3. Select:
    - **Repository:** `savinoo/ai-grading-system`
-   - **Branch:** `feature/professor-assistant`
+   - **Branch:** `main`
    - **Main file:** `app/main.py`
 4. Click "Deploy"
 5. Add Secrets (Settings > Secrets):
@@ -100,6 +100,8 @@ This system leverages a **Multi-Agent Workflow** orchestrated by **LangGraph** a
 2.  **⚖️ Arbiter Agent:** Activated only when C1 and C2 diverge significantly (e.g., score difference > 1.5). It reviews arguments from both and decides the final grade.
 3.  **🧬 Analytics Engine:** Runs in parallel to detect semantic plagiarism and analyze student evolution trends across submissions.
 
+> **Note:** DSPy agents (`DSPyExaminerAgent`, `DSPyArbiterAgent`) are the active implementation. LangChain agents exist as legacy fallback in `src/agents/legacy/`.
+
 ### Workflow Diagram
 ```mermaid
 graph TD
@@ -147,8 +149,8 @@ graph TD
 - Responsive design with gradient headers
 
 #### 💾 Persistent Memory
-- JSON-based student profile storage
-- GDPR-compliant data deletion
+- SQLite-based student profile storage (WAL mode, foreign keys)
+- GDPR-compliant data deletion (export, anonymize, delete)
 - Automatic 365-day retention policy
 - Export functionality for reports
 
@@ -171,7 +173,7 @@ graph TD
 
 *   **Orchestration:** LangGraph
 *   **Prompt Optimization:** DSPy (Stanford)
-*   **LLM:** Google Gemini 2.0 Flash (via LiteLLM)
+*   **LLM:** Local (Ollama) or Google Gemini 2.0 Flash (configurable)
 *   **Interface:** Streamlit
 *   **Vector DB:** ChromaDB (for RAG)
 *   **Analytics:** Plotly, NumPy, SciPy
@@ -215,7 +217,7 @@ graph TD
 
 5.  **Open Browser:**
     ```
-    http://localhost:8502
+    http://localhost:8501
     ```
 
 ---
@@ -266,7 +268,8 @@ pytest tests/test_analytics.py --cov=src/analytics
 ai-grading-system/
 ├── app/
 │   ├── main.py              # Streamlit entry point
-│   ├── analytics_ui.py      # Analytics visualizations (NEW)
+│   ├── analytics_ui.py      # Analytics visualizations
+│   ├── persistence.py       # Streamlit state persistence
 │   └── ui_components.py     # UI helpers
 ├── src/
 │   ├── agents/              # Examiner, Arbiter agents
@@ -334,7 +337,7 @@ Computer Engineering - Instituto Federal Fluminense (IFF)
 - **DSPy** - Prompt optimization (Stanford)
 - **Google Gemini** - LLM API
 - **Streamlit** - Interactive web framework
-- **OpenClaw** - Development automation
+- **Claude Code** - Development automation
 
 ---
 
@@ -349,7 +352,7 @@ Issues? Questions?
 ## 🔗 Links
 
 - **Live Demo:** [Coming soon - Deploy on Streamlit Cloud]
-- **Documentation:** See `DEPLOY.md`, `ANALYSIS.md`, `IMPLEMENTATION_SUMMARY.md`
+- **Documentation:** See `DEPLOY.md`, `AUDITORIA-COERENCIA.md`, `IMPLEMENTATION_SUMMARY.md`
 - **GitHub:** https://github.com/savinoo/ai-grading-system
 
 ---
