@@ -5,7 +5,9 @@ from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 from tenacity import retry, stop_after_attempt, wait_exponential
 
+from src.config.settings import settings
 from src.domain.schemas import EvaluationCriterion, ExamQuestion, QuestionMetadata, StudentAnswer
+from src.infrastructure.llm_factory import get_chat_model
 from src.utils.helpers import measure_time
 
 
@@ -13,10 +15,21 @@ class MockDataGeneratorAgent:
     """
     Agente responsável por gerar dados sintéticos (Questões e Respostas)
     para fins de teste e desenvolvimento.
+
+    Otimização CPU/Ollama:
+    - llm: usado para geração de questões (num_predict=OLLAMA_NUM_PREDICT_QUESTIONS)
+    - _llm_answer: instância separada com num_predict menor para respostas de alunos
+      (max 5 linhas ≈ 180 tokens — muito menor que o default de correção)
     """
 
     def __init__(self, llm: BaseChatModel):
         self.llm = llm
+        # Instância leve para respostas de alunos (output curto, contexto menor)
+        self._llm_answer = get_chat_model(
+            temperature=1,
+            num_predict=settings.OLLAMA_NUM_PREDICT_ANSWER,
+            num_ctx=settings.OLLAMA_NUM_CTX,
+        )
 
     @retry(
         wait=wait_exponential(multiplier=1, min=4, max=60),
@@ -136,14 +149,10 @@ class MockDataGeneratorAgent:
         """
         Gera uma resposta de aluno simulada com base na qualidade desejada.
         quality: 'excellent' (nota alta), 'average' (nota média), 'poor' (nota baixa/errada)
+
+        Otimização CPU: usa _llm_answer (num_predict=180) em vez de with_structured_output,
+        evitando overhead de JSON mode para output que é apenas texto puro.
         """
-
-        # Schema simples apenas para o texto
-        class GeneratedAnswerStructure(BaseModel):
-            text: str = Field(..., description="A resposta do aluno")
-
-        structured_llm = self.llm.with_structured_output(GeneratedAnswerStructure)
-
         quality_prompts = {
             "excellent": "A resposta deve ser exemplar: correta, completa, demonstrando domínio total do conteúdo e usando terminologia técnica adequada. Aborde todos os pontos da rubrica com precisão.",
             "average": "A resposta deve ser mediana: correta no geral, mas superficial. USE ESTRATÉGIAS DE GENERALIZAÇÃO para disfarçar o desconhecimento de detalhes específicos. Substitua termos técnicos precisos por explicações mais amplas e vagas, tentando 'enrolar' um pouco onde faltar profundidade, mas sem cometer erros graves.",
@@ -151,32 +160,29 @@ class MockDataGeneratorAgent:
         }
 
         instruction = quality_prompts.get(quality, quality_prompts["average"])
-
         rubric_text = "\n".join([f"- {c.name}: {c.description}" for c in question.rubric])
 
+        # Plain text prompt — sem JSON wrapper (menos tokens, sem overhead de structured output)
         prompt = ChatPromptTemplate.from_messages([
-            ("system", f"Você é um aluno fictício chamado {student_name} realizando uma prova.\n"
-                       "Sua tarefa é escrever a resposta da questão abaixo.\n\n"
-                       "REGRA DE OURO (PERSONA):\n"
-                       "- NUNCA escreva 'eu não sei', 'desculpe', 'não entendi' ou comentários sobre a questão.\n"
-                       "- SEMPRE tente responder com convicção, mesmo que esteja falando bobagem (no caso de qualidade ruim).\n"
-                       "- Imite o estilo de escrita de um estudante (pode ser formal ou um pouco coloquial, dependendo do nível).\n\n"
-                       "DIRETRIZES DE TAMANHO:\n"
-                       "- Máximo de 5 linhas.\n"
-                       "- Seja direto."),
-            ("user", f"Questão: {question.statement}\n\n"
-                     f"Critérios de Avaliação (Rubrica):\n{rubric_text}\n\n"
-                     f"INSTRUÇÃO DE PERFORMANCE PARA O ALUNO: {instruction}\n"
-                     "Escreva APENAS a resposta do aluno.")
+            ("system", f"Você é um aluno fictício chamado {student_name} realizando uma prova. "
+                       "Responda a questão abaixo em no MÁXIMO 4 linhas. "
+                       "NUNCA escreva 'eu não sei' ou comentários sobre a questão. "
+                       "Responda diretamente, sem preâmbulos."),
+            ("user", f"Questão: {question.statement}\n"
+                     f"Rubrica: {rubric_text}\n"
+                     f"Instrução de nível: {instruction}\n"
+                     "Sua resposta:")
         ])
 
-        chain = prompt | structured_llm
+        chain = prompt | self._llm_answer
 
         with measure_time(f"Gerar Resposta Aluno ({quality} - {student_name})"):
             result = await chain.ainvoke({})
 
+        # AIMessage.content é o texto direto
+        text = result.content if hasattr(result, "content") else str(result)
         return StudentAnswer(
             student_id=f"simulated_{student_name.lower().replace(' ', '_')}",
             question_id=question.id,
-            text=result.text
+            text=text.strip()
         )

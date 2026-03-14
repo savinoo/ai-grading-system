@@ -44,6 +44,21 @@ class Settings:
     # Local LLM (Ollama) — free, recommended for benchmarking
     OLLAMA_BASE_URL = _get_secret("OLLAMA_BASE_URL", "http://localhost:11434")
     LOCAL_MODEL_NAME = _get_secret("LOCAL_MODEL_NAME", "llama3.2")
+    # Ollama inference limits (CPU optimization — reduce to speed up; increase if quality suffers)
+    # num_ctx: context window (tokens). Smaller = faster. 1024 fits all our prompts safely.
+    OLLAMA_NUM_CTX = int(_get_secret("OLLAMA_NUM_CTX", "1024") or "1024")
+    # num_predict: max output tokens for correction/grading tasks (examiner + arbiter)
+    OLLAMA_NUM_PREDICT = int(_get_secret("OLLAMA_NUM_PREDICT", "450") or "450")
+    # num_predict for mock tasks (student answers = max 5 lines ≈ 150 tok; questions batch = ~700 tok)
+    OLLAMA_NUM_PREDICT_ANSWER = int(_get_secret("OLLAMA_NUM_PREDICT_ANSWER", "180") or "180")
+    OLLAMA_NUM_PREDICT_QUESTIONS = int(_get_secret("OLLAMA_NUM_PREDICT_QUESTIONS", "700") or "700")
+
+    # Embeddings Provider: local | gemini | openai (default: local)
+    # "local" uses Ollama embeddings (free, recommended)
+    # "gemini" uses Google Gemini embeddings API
+    # "openai" uses OpenAI embeddings API
+    EMBEDDINGS_PROVIDER = _get_secret("EMBEDDINGS_PROVIDER", "local")
+    LOCAL_EMBEDDINGS_MODEL = _get_secret("LOCAL_EMBEDDINGS_MODEL", "nomic-embed-text")
 
     # Model Selection (used for cloud providers)
     # Default: Gemini (cheap/fast). If you deploy without Gemini, set MODEL_NAME=gpt-4o-mini (or similar)

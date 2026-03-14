@@ -44,10 +44,28 @@ initialize_langsmith()  # Inicializa LangSmith tracing
 from src.infrastructure.dspy_config import configure_dspy
 
 configure_dspy()
-# Usando temperatura 1 para criatividade na geração de dados (Questões e Respostas)
-# Usa o factory para suportar Gemini ou OpenAI transparentemente
-llm_creation = get_chat_model(temperature=1)
+# LLM para geração de questões — usa num_predict maior (questões são mais longas)
+# num_predict e num_ctx vêm de OLLAMA_NUM_PREDICT_QUESTIONS e OLLAMA_NUM_CTX no .env
+from src.config.settings import settings as _settings
+llm_creation = get_chat_model(
+    temperature=1,
+    num_predict=_settings.OLLAMA_NUM_PREDICT_QUESTIONS,
+)
 mock_agent = MockDataGeneratorAgent(llm_creation)
+# Warmup: pré-carrega o modelo Ollama na RAM para evitar latência na primeira chamada do usuário
+if _settings.LLM_PROVIDER == "local":
+    import threading
+    def _warmup():
+        try:
+            import requests
+            requests.post(
+                f"{_settings.OLLAMA_BASE_URL}/api/generate",
+                json={"model": _settings.LOCAL_MODEL_NAME, "prompt": "ok", "stream": False, "options": {"num_predict": 1}},
+                timeout=30
+            )
+        except Exception:
+            pass
+    threading.Thread(target=_warmup, daemon=True).start()
 
 # Analytics initialization
 tracker = StudentTracker()

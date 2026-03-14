@@ -14,11 +14,14 @@ def configure_dspy():
     if provider == "local":
         # Ollama local via LiteLLM integration
         # Format: ollama_chat/<model_name> for chat models
+        # num_ctx e num_predict passados via extra_body para limitar tokens gerados (otimização CPU)
         model_id = f"ollama_chat/{settings.LOCAL_MODEL_NAME}"
         lm = dspy.LM(
             model=model_id,
             api_base=settings.OLLAMA_BASE_URL,
             temperature=settings.TEMPERATURE,
+            max_tokens=settings.OLLAMA_NUM_PREDICT,
+            extra_body={"num_ctx": settings.OLLAMA_NUM_CTX},
         )
 
     elif provider == "gemini" or "gemini" in (settings.MODEL_NAME or "").lower():
