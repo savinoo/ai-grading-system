@@ -48,7 +48,9 @@ class Settings:
     # num_ctx: context window (tokens). Smaller = faster. 1024 fits all our prompts safely.
     OLLAMA_NUM_CTX = int(_get_secret("OLLAMA_NUM_CTX", "1024") or "1024")
     # num_predict: max output tokens for correction/grading tasks (examiner + arbiter)
-    OLLAMA_NUM_PREDICT = int(_get_secret("OLLAMA_NUM_PREDICT", "450") or "450")
+    # AgentCorrection schema: reasoning_chain (~200tok) + criteria_scores (~120tok) + feedback (~80tok) + JSON overhead (~50tok) ≈ 450-550tok
+    # 600 = safe margin to avoid JSON truncation errors
+    OLLAMA_NUM_PREDICT = int(_get_secret("OLLAMA_NUM_PREDICT", "600") or "600")
     # num_predict for mock tasks (student answers = max 5 lines ≈ 150 tok; questions batch = ~700 tok)
     OLLAMA_NUM_PREDICT_ANSWER = int(_get_secret("OLLAMA_NUM_PREDICT_ANSWER", "180") or "180")
     OLLAMA_NUM_PREDICT_QUESTIONS = int(_get_secret("OLLAMA_NUM_PREDICT_QUESTIONS", "700") or "700")
