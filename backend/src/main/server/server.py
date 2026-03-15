@@ -14,7 +14,6 @@ from src.main.middlewares.security_headers import SecurityHeadersMiddleware
 # Core
 from src.core.settings import settings
 from src.core.logging_config import setup_logging, get_logger
-from src.core.dspy_config import configure_dspy
 from src.core.langsmith_config import initialize_langsmith
 
 # Rotas
@@ -48,13 +47,6 @@ async def lifespan(_app: FastAPI):
 
     # Inicializar LangSmith tracing (não crítico)
     initialize_langsmith()
-
-    # Configurar DSPy globalmente
-    try:
-        configure_dspy()
-        logger.info("DSPy configurado no startup")
-    except Exception as e:
-        logger.warning("Falha ao configurar DSPy (não crítico): %s", e)
 
     logger.info("Aplicação inicializada com sucesso")
 

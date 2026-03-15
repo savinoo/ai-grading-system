@@ -1,127 +1,51 @@
 from __future__ import annotations
 
-import asyncio
 from typing import List
 
-import dspy
+from langchain_core.prompts import ChatPromptTemplate
 from langsmith import traceable
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 from src.interfaces.services.agents.examiner_agent_interface import ExaminerAgentInterface
-
 from src.domain.ai.schemas import ExamQuestion, StudentAnswer
 from src.domain.ai.rag_schemas import RetrievedContext
 from src.domain.ai.agent_schemas import AgentCorrection, AgentID
-from src.domain.ai.prompts import format_rubric_text, format_rag_context
-
-from src.services.agents.dspy_output_parser import parse_dspy_correction_output
-from src.utils.timing import measure_time
-
-from src.errors.domain.sql_error import SqlError
-
+from src.domain.ai.prompts import CORRECTOR_SYSTEM_PROMPT, format_rubric_text, format_rag_context
+from src.core.llm_handler import get_chat_model
 from src.core.settings import settings
 from src.core.logging_config import get_logger
 
+# NOTE: DSPy removido do runtime — DSPy é um framework de OTIMIZAÇÃO de prompts (offline),
+# não de inferência. Usar dspy.TypedPredictor/ChainOfThought a cada correção adicionava
+# 1-3 chamadas extras desnecessárias ao LLM.
+# Arquitetura correta:
+#   - Offline: DSPy BootstrapFewShot otimiza o prompt com exemplos reais
+#   - Runtime: LangChain with_structured_output → 1 chamada garantida, parse direto Pydantic
 
-# =============================================================================
-# DSPy Signature para Correção
-# =============================================================================
-
-class GradingSignature(dspy.Signature):
-    """
-    Assinatura DSPy para correção estruturada de respostas discursivas.
-    
-    O LLM deve analisar a resposta do aluno com base na questão, rubrica e
-    contexto recuperado via RAG, fornecendo raciocínio Chain-of-Thought e
-    notas por critério.
-    """
-    question_statement: str = dspy.InputField(
-        desc="O enunciado completo da questão da prova"
-    )
-    rubric_formatted: str = dspy.InputField(
-        desc="A rubrica de avaliação formatada com critérios e pesos"
-    )
-    rag_context_formatted: str = dspy.InputField(
-        desc="Trechos relevantes do material didático (RAG) como referência"
-    )
-    student_answer: str = dspy.InputField(
-        desc="A resposta discursiva submetida pelo aluno"
-    )
-    
-    # Outputs estruturados
-    reasoning_chain: str = dspy.OutputField(
-        desc="Raciocínio Chain-of-Thought detalhado ANTES de atribuir notas. "
-             "Analise cada critério separadamente (mínimo 50 caracteres)."
-    )
-    criteria_scores: List[dict] = dspy.OutputField(
-        desc="Lista de dicionários com {criterion: str, score: float, max_score: float, feedback: str} "
-             "para cada critério da rubrica. Use pontuação ABSOLUTA, não percentual. "
-             "O max_score deve ser extraído da rubrica fornecida (campo 'Nota Máxima')."
-    )
-    total_score: float = dspy.OutputField(
-        desc="Nota final calculada como SOMA das notas individuais em criteria_scores"
-    )
-
-
-# =============================================================================
-# DSPy Module
-# =============================================================================
-
-class DSPyExaminerModule(dspy.Module):
-    """
-    Módulo DSPy para correção estruturada com Chain-of-Thought.
-    """
-    
-    def __init__(self):
-        super().__init__()
-        # ChainOfThought adiciona raciocínio intermediário antes da resposta final
-        self.predictor = dspy.ChainOfThought(GradingSignature)
-    
-    def forward(
-        self,
-        question_statement: str,
-        rubric_formatted: str,
-        rag_context_formatted: str,
-        student_answer: str
-    ):
-        """
-        Executa a predição do modelo.
-        
-        Returns:
-            Objeto DSPy com campos: reasoning_chain, criteria_scores, total_score
-        """
-        return self.predictor(
-            question_statement=question_statement,
-            rubric_formatted=rubric_formatted,
-            rag_context_formatted=rag_context_formatted,
-            student_answer=student_answer
-        )
-
-
-# =============================================================================
-# Examiner Agent
-# =============================================================================
 
 class ExaminerAgent(ExaminerAgentInterface):
     """
-    Serviço de agente corretor usando DSPy para avaliação estruturada.
-    
-    Pode ser instanciado 2 vezes (CORRETOR_1 e CORRETOR_2) para avaliações
-    independentes da mesma resposta.
+    Agente Corretor Independente (C1 ou C2).
+
+    Usa LangChain with_structured_output(AgentCorrection) para inferência runtime:
+    1 chamada LLM por correção, parse estruturado direto para o schema Pydantic.
     """
-    
+
     def __init__(self) -> None:
-        """Inicializa o módulo DSPy de correção."""
-        self.__dspy_module = DSPyExaminerModule()
+        self.__llm = get_chat_model().with_structured_output(AgentCorrection)
+        self.__prompt = ChatPromptTemplate.from_messages([
+            ("human", CORRECTOR_SYSTEM_PROMPT)
+        ])
+        self.__chain = self.__prompt | self.__llm
         self.__logger = get_logger(__name__)
-    
+
     @traceable(run_type="chain", name="Examiner Agent Evaluation")
     @retry(
         stop=stop_after_attempt(settings.LLM_MAX_RETRIES),
         wait=wait_exponential(multiplier=1, min=4, max=60),
         reraise=True
     )
-    async def evaluate(  # type: ignore[override]  # pylint: disable=arguments-differ
+    async def evaluate(
         self,
         agent_id: AgentID,
         question: ExamQuestion,
@@ -130,87 +54,33 @@ class ExaminerAgent(ExaminerAgentInterface):
     ) -> AgentCorrection:
         """
         Executa correção de uma resposta de aluno.
-        
+
         Args:
             agent_id: Identificador do agente (CORRETOR_1 ou CORRETOR_2)
             question: Questão com enunciado e rubrica
             student_answer: Resposta discursiva do aluno
-            rag_contexts: Contextos recuperados via RAG para fundamentar a correção
-        
+            rag_contexts: Contextos recuperados via RAG
+
         Returns:
             AgentCorrection: Resultado estruturado da avaliação
-        
-        Raises:
-            SqlError: Se houver falha na comunicação com o LLM após retries
         """
         self.__logger.info(
             "[%s] Iniciando avaliação da questão %s para resposta do aluno %s",
             agent_id, question.id, student_answer.student_id
         )
-        
-        # Formatar inputs conforme esperado pelo prompt
-        rubric_text = format_rubric_text(question.rubric)
-        rag_text = format_rag_context(rag_contexts)
-        
-        # DSPy é síncrono - executamos em thread pool para não bloquear o loop
-        loop = asyncio.get_running_loop()
-        
-        def run_dspy_prediction():
-            """Closure para executar DSPy de forma síncrona."""
-            with measure_time(f"DSPy Examiner {agent_id} - Questão {question.id}"):
-                return self.__dspy_module(
-                    question_statement=question.statement,
-                    rubric_formatted=rubric_text,
-                    rag_context_formatted=rag_text,
-                    student_answer=student_answer.text
-                )
-        
-        try:
-            # Executa DSPy em thread separada
-            prediction = await loop.run_in_executor(None, run_dspy_prediction)
-            
-            self.__logger.debug("[%s] DSPy prediction type: %s", agent_id, type(prediction))
-            self.__logger.debug("[%s] DSPy raw fields: reasoning=%s | scores=%s | total=%s",
-                agent_id,
-                type(prediction.reasoning_chain),
-                type(prediction.criteria_scores),
-                type(prediction.total_score),
-            )
-            
-            # Monta dict bruto e delega todo o parsing/fallback ao parser robusto
-            raw_result = {
-                "reasoning_chain": prediction.reasoning_chain,
-                "criteria_scores": prediction.criteria_scores,
-                "total_score": prediction.total_score,
-            }
-            
-            correction = parse_dspy_correction_output(
-                raw_result=raw_result,
-                agent_id=agent_id,
-                fallback_score=0.0,
-                prediction=prediction,
-            )
-            
-            self.__logger.info(
-                "[%s] Avaliação concluída. Nota atribuída: %.2f",
-                agent_id, correction.total_score
-            )
-            self.__logger.debug("[%s] Critérios avaliados: %d", agent_id, len(correction.criteria_scores))
-            
-            return correction
-            
-        except Exception as e:
-            self.__logger.error(
-                "[%s] Erro durante avaliação da questão %s: %s",
-                agent_id, question.id, e,
-                exc_info=True
-            )
-            raise SqlError(
-                message="Erro ao avaliar resposta do aluno",
-                context={
-                    "agent_id": str(agent_id),
-                    "question_id": str(question.id),
-                    "student_id": str(student_answer.student_id)
-                },
-                cause=e
-            ) from e
+
+        result: AgentCorrection = await self.__chain.ainvoke({
+            "question_statement": question.statement,
+            "rubric_formatted": format_rubric_text(question.rubric),
+            "rag_context_formatted": format_rag_context(rag_contexts),
+            "student_answer": student_answer.text,
+            "agent_id": agent_id,
+        })
+
+        result.agent_id = agent_id
+
+        self.__logger.info(
+            "[%s] Avaliação concluída. Nota atribuída: %.2f",
+            agent_id, result.total_score
+        )
+        return result
