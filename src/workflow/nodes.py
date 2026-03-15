@@ -6,20 +6,29 @@ from src.agents.dspy_arbiter import DSPyArbiterAgent
 from src.agents.dspy_examiner import DSPyExaminerAgent
 from src.config.settings import settings
 from src.domain.schemas import AgentID
-
 from src.domain.state import GraphState
+from src.rag.retriever import search_context
 from src.utils.helpers import measure_time
 
 logger = logging.getLogger(__name__)
 
-# Instanciação dos Agentes
-# NOTE: avoid creating LLM clients at import time.
-# Streamlit/test runners import modules without keys, and async/event-loop context can differ.
-# DSPy agents manage their own LLM configuration globally.
-examiner = DSPyExaminerAgent()
-arbiter = DSPyArbiterAgent()
+# Lazy initialization: agents are created on first use, not at import time.
+# Avoids LLM client creation when module is imported by test runners or Streamlit
+# before the environment (keys, event loop) is ready.
+_examiner: DSPyExaminerAgent | None = None
+_arbiter: DSPyArbiterAgent | None = None
 
-from src.rag.retriever import search_context  # Importar a nova função
+def _get_examiner() -> DSPyExaminerAgent:
+    global _examiner
+    if _examiner is None:
+        _examiner = DSPyExaminerAgent()
+    return _examiner
+
+def _get_arbiter() -> DSPyArbiterAgent:
+    global _arbiter
+    if _arbiter is None:
+        _arbiter = DSPyArbiterAgent()
+    return _arbiter
 
 
 async def retrieve_context_node(state: GraphState) -> dict[str, Any]:
@@ -51,14 +60,14 @@ async def corrector_1_node(state: GraphState) -> dict[str, Any]:
     """Executa o Corretor 1"""
     with measure_time("Nó Corretor 1"):
         logger.info("--- AGENTE: CORRETOR 1 ---")
-        result = await examiner.evaluate(state, agent_id=AgentID.CORRETOR_1)
+        result = await _get_examiner().evaluate(state, agent_id=AgentID.CORRETOR_1)
         return {"individual_corrections": [result]}
 
 async def corrector_2_node(state: GraphState) -> dict[str, Any]:
     """Executa o Corretor 2"""
     with measure_time("Nó Corretor 2"):
         logger.info("--- AGENTE: CORRETOR 2 ---")
-        result = await examiner.evaluate(state, agent_id=AgentID.CORRETOR_2)
+        result = await _get_examiner().evaluate(state, agent_id=AgentID.CORRETOR_2)
         return {"individual_corrections": [result]}
 
 def calculate_divergence_node(state: GraphState) -> dict[str, Any]:
@@ -69,13 +78,15 @@ def calculate_divergence_node(state: GraphState) -> dict[str, Any]:
     logger.info("--- CÁLCULO DE DIVERGÊNCIA ---")
     corrections = state["individual_corrections"]
 
-    # Busca segura das notas
-    c1 = next(c for c in corrections if c.agent_id == AgentID.CORRETOR_1)
-    c2 = next(c for c in corrections if c.agent_id == AgentID.CORRETOR_2)
+    c1 = next((c for c in corrections if c.agent_id == AgentID.CORRETOR_1), None)
+    c2 = next((c for c in corrections if c.agent_id == AgentID.CORRETOR_2), None)
+    if c1 is None or c2 is None:
+        raise ValueError(f"Correções incompletas: C1={c1}, C2={c2}. Estado: {[c.agent_id for c in corrections]}")
 
     diff = abs(c1.total_score - c2.total_score)
-    # Limiar configurável (ex: 1.5 pontos em escala de 0-10)
-    threshold = settings.DIVERGENCE_THRESHOLD
+    # Lê do estado do grafo se passado (evita mutar singleton global)
+    # Fallback para settings default se não fornecido
+    threshold = state.get("divergence_threshold") or settings.DIVERGENCE_THRESHOLD
 
     is_divergent = diff > threshold
 
@@ -90,7 +101,7 @@ async def arbiter_node(state: GraphState) -> dict[str, Any]:
     """Executa o Corretor 3 (Árbitro) se necessário"""
     with measure_time("Nó Árbitro (C3)"):
         logger.info("--- AGENTE: ÁRBITRO (C3) ---")
-        result = await arbiter.arbitrate(state)
+        result = await _get_arbiter().arbitrate(state)
         return {"individual_corrections": [result]}
 
 def finalize_grade_node(state: GraphState) -> dict[str, Any]:
@@ -107,26 +118,25 @@ def finalize_grade_node(state: GraphState) -> dict[str, Any]:
     final_score = 0.0
 
     if len(scores) == 2:
-        # Caso sem divergência: Média simples de C1 e C2
+        # Caso sem divergência: média simples de C1 e C2
         final_score = sum(scores) / 2
-        logger.info(f"Consenso Simples (C1+C2)/2: {final_score}")
+        logger.info(f"Consenso simples (C1+C2)/2: {final_score}")
 
     elif len(scores) == 3:
-        # Caso com divergência: Média dos dois mais próximos
-        # Lógica: Ordenar as notas e ver quais pares têm menor distância
-        scores.sort() # Ex: [3.0, 7.0, 8.0]
-
-        diff_low = scores[1] - scores[0]  # Distância entre menor e meio
-        diff_high = scores[2] - scores[1] # Distância entre meio e maior
-
-        if diff_low < diff_high:
-            # Os dois menores estão mais próximos
-            final_score = (scores[0] + scores[1]) / 2
+        # Caso com árbitro (C3): árbitro é especialista designado — sua nota é a final.
+        # Arquitetura intencional: C3 só ativa quando C1 e C2 divergem além do threshold;
+        # nesse cenário, C3 analisa ambos os raciocínios e decide com mais contexto.
+        # Usar média dos "mais próximos" descartaria o julgamento do árbitro.
+        arbiter_correction = next(
+            (c for c in corrections if c.agent_id == AgentID.ARBITER), None
+        )
+        if arbiter_correction is not None:
+            final_score = arbiter_correction.total_score
+            logger.info(f"Consenso via Árbitro (C3): {final_score}")
         else:
-            # Os dois maiores estão mais próximos (ou equidistantes)
-            final_score = (scores[1] + scores[2]) / 2
-
-        logger.info(f"Consenso Avançado (Pares Próximos): {final_score} a partir de {scores}")
+            # Fallback defensivo: árbitro ausente, usa média simples
+            final_score = sum(scores) / len(scores)
+            logger.warning(f"Árbitro esperado mas não encontrado. Média: {final_score}")
 
     return {
         "final_grade": final_score,

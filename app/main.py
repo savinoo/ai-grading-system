@@ -82,6 +82,15 @@ async def run_correction_pipeline(inputs, status_container=None):
     """Executa o LangGraph de forma assíncrona, com streaming de eventos reais"""
     workflow = build_grading_workflow()
 
+    # Injeta o limiar de divergência do session_state para evitar mutação do singleton global
+    import streamlit as _st
+    try:
+        threshold = _st.session_state.get("divergence_threshold")
+        if threshold is not None:
+            inputs = {**inputs, "divergence_threshold": threshold}
+    except Exception:
+        pass
+
     if status_container:
         final_state = inputs.copy()
         async for output in workflow.astream(inputs):
@@ -175,7 +184,8 @@ with st.sidebar:
     st.divider()
     st.header("Parâmetros")
     divergence_threshold = st.slider("Limiar de Divergência", 0.5, 5.0, 1.5, 0.5)
-    settings.DIVERGENCE_THRESHOLD = divergence_threshold
+    # Persiste no session_state em vez de mutar o singleton global (thread-safe)
+    st.session_state["divergence_threshold"] = divergence_threshold
 
 # --- PAGES ---
 

@@ -6,6 +6,7 @@ Migrated from JSON to SQLite for academic robustness (Phase 2).
 import json
 import logging
 import sqlite3
+import threading
 from datetime import datetime
 from pathlib import Path
 
@@ -30,6 +31,7 @@ class StudentKnowledgeBase:
         self.db_path = Path(db_path)
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self._conn: sqlite3.Connection | None = None
+        self._lock = threading.Lock()  # Protege writes concorrentes
         self._init_db()
         self._maybe_migrate_json()
 
@@ -132,7 +134,13 @@ class StudentKnowledgeBase:
             logger.error(f"JSON migration failed: {e}")
 
     def _save_profile(self, profile: StudentProfile):
-        """Insert or replace a full profile into SQLite."""
+        """Insert or replace a full profile into SQLite (thread-safe via lock)."""
+        with self._lock:
+            self._save_profile_unsafe(profile)
+            self.conn.commit()
+
+    def _save_profile_unsafe(self, profile: StudentProfile):
+        """Internal write — must be called with self._lock held."""
         self.conn.execute(
             """INSERT OR REPLACE INTO students
                (student_id, student_name, avg_grade, submission_count, trend,
@@ -207,8 +215,7 @@ class StudentKnowledgeBase:
                     strength.consistency,
                 ),
             )
-
-        self.conn.commit()
+        # commit is done by _save_profile (the thread-safe wrapper)
 
     def _load_profile(self, row: sqlite3.Row) -> StudentProfile:
         """Reconstruct a StudentProfile from DB rows."""
