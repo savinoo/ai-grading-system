@@ -38,6 +38,16 @@ class Settings(BaseSettings):
     LLM_MODEL_NAME: str = Field(default="gemini-2.0-flash-exp", description="Nome do modelo LLM")
     LLM_TEMPERATURE: float = Field(default=0.0, ge=0.0, le=2.0, description="Temperatura do LLM (0=determinístico)")
     LLM_MAX_RETRIES: int = Field(default=3, ge=1, le=10, description="Máximo de tentativas em caso de falha")
+
+    # === Local LLM (Ollama) ===
+    OLLAMA_BASE_URL: str = Field(default="http://localhost:11434", description="Base URL do servidor Ollama")
+    LOCAL_MODEL_NAME: str = Field(default="llama3.2", description="Nome do modelo local (Ollama)")
+    LOCAL_EMBEDDINGS_MODEL: str = Field(default="nomic-embed-text", description="Modelo de embeddings local (Ollama)")
+    OLLAMA_NUM_CTX: int = Field(default=4096, description="Tamanho do contexto do Ollama")
+    OLLAMA_NUM_PREDICT: int = Field(default=600, description="Max tokens de predição do Ollama")
+
+    # === Analytics ===
+    PLAGIARISM_THRESHOLD: float = Field(default=0.90, ge=0.0, le=1.0, description="Limiar de detecção de plágio (0-1)")
     
     # === DSPy ===
     DSPY_CACHE_DIR: str = Field(default="./data/dspy_cache", description="Diretório de cache do DSPy")

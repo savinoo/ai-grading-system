@@ -33,7 +33,7 @@ def _resolve_provider() -> str:
       2. Auto-detect pela presence de API keys
     """
     explicit = (settings.EMBEDDING_PROVIDER or "").strip().lower()
-    if explicit in ("google", "openai"):
+    if explicit in ("google", "openai", "local"):
         return explicit
     # fallback: auto-detect por key disponível
     if settings.GOOGLE_API_KEY:
@@ -42,7 +42,7 @@ def _resolve_provider() -> str:
         return "openai"
     raise ValueError(
         "Nenhuma API key de embeddings configurada. "
-        "Defina GOOGLE_API_KEY ou OPENAI_API_KEY."
+        "Defina GOOGLE_API_KEY, OPENAI_API_KEY, ou use EMBEDDING_PROVIDER=local para Ollama."
     )
 
 
@@ -106,7 +106,17 @@ def get_vector_store() -> Chroma:
     provider = _resolve_provider()
     embedding_model = _resolve_embedding_model(provider)
 
-    if provider == "google":
+    if provider == "local":
+        from langchain_ollama import OllamaEmbeddings
+        local_model = getattr(settings, "LOCAL_EMBEDDINGS_MODEL", "nomic-embed-text")
+        ollama_url = getattr(settings, "OLLAMA_BASE_URL", "http://localhost:11434")
+        embeddings = OllamaEmbeddings(
+            model=local_model,
+            base_url=ollama_url,
+        )
+        embedding_model = local_model
+        logger.info("[ChromaDB] Provider de embeddings: Ollama/Local (%s @ %s)", local_model, ollama_url)
+    elif provider == "google":
         if not settings.GOOGLE_API_KEY:
             raise ValueError("EMBEDDING_PROVIDER=google mas GOOGLE_API_KEY não está configurada.")
         embeddings = GoogleGenerativeAIEmbeddings(
