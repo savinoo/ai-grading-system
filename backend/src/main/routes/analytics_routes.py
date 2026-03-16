@@ -39,6 +39,17 @@ router = APIRouter(
 )
 
 # ---------------------------------------------------------------------------
+# Health check
+# ---------------------------------------------------------------------------
+
+
+@router.get("/health", summary="Health check do módulo analytics")
+async def analytics_health():
+    """Health check do módulo analytics."""
+    return {"status": "ok", "module": "analytics"}
+
+
+# ---------------------------------------------------------------------------
 # Helper de autenticação reutilizável
 # ---------------------------------------------------------------------------
 
