@@ -30,9 +30,11 @@ class Settings(BaseSettings):
     EMBEDDING_PROVIDER: str = Field(default="google", description="Provedor de embeddings (google, openai)")
     
     # === LLM Configuration ===
-    LLM_PROVIDER: str = Field(default="gemini", description="Provedor de LLM (openai, gemini, litellm)")
+    LLM_PROVIDER: str = Field(default="gemini", description="Provedor de LLM (openai, gemini, ollama, groq)")
     OPENAI_API_KEY: Optional[str] = Field(default=None, description="Chave da API OpenAI")
     GOOGLE_API_KEY: Optional[str] = Field(default=None, description="Chave da API Google")
+    GROQ_API_KEY: Optional[str] = Field(default=None, description="Chave da API Groq")
+    LLM_BASE_URL: Optional[str] = Field(default=None, description="Base URL customizada (ex: Ollama)")
     LLM_MODEL_NAME: str = Field(default="gemini-2.0-flash-exp", description="Nome do modelo LLM")
     LLM_TEMPERATURE: float = Field(default=0.0, ge=0.0, le=2.0, description="Temperatura do LLM (0=determinístico)")
     LLM_MAX_RETRIES: int = Field(default=3, ge=1, le=10, description="Máximo de tentativas em caso de falha")

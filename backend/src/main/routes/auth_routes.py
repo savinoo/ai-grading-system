@@ -211,8 +211,8 @@ def user_login(
                 key="refresh_token",
                 value=refresh_token_value, 
                 httponly=True,
-                secure=True,
-                samesite="none",
+                secure=False,
+                samesite="lax",
                 path="/auth",
                 max_age=settings.JWT_REFRESH_TOKEN_TTL,
             )

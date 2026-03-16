@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '@presentation/hooks/useAuth';
 
 export const PrivateRoute: React.FC = () => {
-  const { isAuthenticated, isLoading, loadCurrentUser } = useAuth();
+  const { isAuthenticated, loadCurrentUser } = useAuth();
+  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    loadCurrentUser();
+    loadCurrentUser().finally(() => setChecking(false));
   }, [loadCurrentUser]);
 
-  if (isLoading) {
+  if (checking) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark">
         <div className="flex flex-col items-center gap-4">
