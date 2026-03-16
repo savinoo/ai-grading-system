@@ -118,7 +118,8 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             "divergence_value": None,
             "all_corrections": [],
             "final_score": None,
-            "error": None
+            "error": None,
+            "processing_metadata": None
         }
         
         # === Executar grafo ===
@@ -148,7 +149,8 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             return {
                 "final_score": final_state['final_score'],
                 "all_corrections": final_state['all_corrections'],
-                "divergence_detected": final_state['divergence_detected']
+                "divergence_detected": final_state['divergence_detected'],
+                "processing_metadata": final_state.get('processing_metadata') or {}
             }
             
         except Exception as e:
