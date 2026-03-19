@@ -18,6 +18,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
     { path: '/exams', icon: 'description', label: 'Provas' },
     { path: '/classes', icon: 'groups', label: 'Turmas' },
     { path: '/analytics', icon: 'insights', label: 'Análise Pedagógica' },
+    { path: '/analytics/plagiarism', icon: 'policy', label: 'Detecção de Plágio' },
   ];
 
   const handleLogout = async () => {
@@ -48,8 +49,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ className = '' }) => {
           {menuItems.map((item) => {
             const isActive =
               item.path === '/analytics'
-                ? location.pathname.startsWith('/analytics')
-                : location.pathname === item.path;
+                ? location.pathname === '/analytics' || (location.pathname.startsWith('/analytics') && !location.pathname.startsWith('/analytics/plagiarism'))
+                : item.path === '/analytics/plagiarism'
+                  ? location.pathname.startsWith('/analytics/plagiarism')
+                  : location.pathname === item.path;
             return (
               <Link
                 key={item.path}

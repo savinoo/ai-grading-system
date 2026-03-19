@@ -35,8 +35,11 @@ class GradingState(TypedDict):
     # === Flags de controle ===
     divergence_detected: bool
     divergence_value: Optional[float]
-    
+
     # === Output final ===
     all_corrections: List[AgentCorrection]
     final_score: Optional[float]
     error: Optional[str]
+
+    # === Auditoria ===
+    processing_metadata: Optional[dict]  # timestamps, token usage, node timings

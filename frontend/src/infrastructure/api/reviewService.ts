@@ -64,13 +64,4 @@ export const reviewService = {
   ): Promise<FinalizeReviewResponse> => {
     return apiClient.post<FinalizeReviewResponse>('/reviews/finalize', data);
   },
-
-  /**
-   * Aprova uma resposta individual
-   * @param answerUuid UUID da resposta a ser aprovada
-   * @returns Confirmação da aprovação
-   */
-  approveAnswer: async (answerUuid: string): Promise<{ message: string }> => {
-    return apiClient.post<{ message: string }>(`/reviews/approve-answer/${answerUuid}`, {});
-  },
 };

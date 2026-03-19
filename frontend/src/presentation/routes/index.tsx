@@ -19,6 +19,8 @@ import { ClassesPage } from '@presentation/pages/classes/ClassesPage';
 import { AnalyticsPage } from '@presentation/pages/analytics/AnalyticsPage';
 import { ClassAnalyticsPage } from '@presentation/pages/analytics/ClassAnalyticsPage';
 import { StudentPerformancePage } from '@presentation/pages/analytics/StudentPerformancePage';
+import { PlagiarismPage } from '@presentation/pages/analytics/PlagiarismPage';
+import { StudentProfilePage } from '@presentation/pages/analytics/StudentProfilePage';
 import { SettingsPage } from '@presentation/pages/settings/SettingsPage';
 import { NotFoundPage } from '@presentation/pages/error/NotFoundPage';
 import { PrivateRoute } from '@presentation/components/auth/PrivateRoute';
@@ -51,6 +53,8 @@ export const AppRoutes: React.FC = () => {
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/analytics/classes/:classUuid" element={<ClassAnalyticsPage />} />
           <Route path="/analytics/classes/:classUuid/students/:studentUuid" element={<StudentPerformancePage />} />
+          <Route path="/analytics/plagiarism" element={<PlagiarismPage />} />
+          <Route path="/analytics/students/:studentUuid/profile" element={<StudentProfilePage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
         

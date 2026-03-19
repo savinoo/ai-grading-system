@@ -131,8 +131,8 @@ def verify_email(
                 key="refresh_token",
                 value=refresh_token,
                 httponly=True,
-                secure=True,
-                samesite="none",
+                secure=False,
+                samesite="lax",
                 path="/auth",
                 max_age=604800
             )

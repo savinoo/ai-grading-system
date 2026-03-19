@@ -42,8 +42,8 @@ export const CreateClassModal: React.FC<CreateClassModalProps> = ({ isOpen, onCl
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Nova Turma</h2>
+      <div className="bg-white dark:bg-slate-900 border border-transparent dark:border-slate-700 rounded-lg shadow-xl p-6 w-full max-w-md">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Nova Turma</h2>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input

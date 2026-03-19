@@ -8,6 +8,7 @@ from typing import Optional
 from langchain_core.language_models import BaseChatModel
 from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from src.core.settings import settings
 
 logger = logging.getLogger(__name__)
@@ -61,27 +62,51 @@ def get_chat_model(
     if provider == "openai":
         if not settings.OPENAI_API_KEY:
             raise ValueError("OPENAI_API_KEY não configurada")
-        
+
         return ChatOpenAI(
             model=model,
             temperature=temp,
             api_key=settings.OPENAI_API_KEY,
             max_retries=retries
         )
-    
+
     elif provider == "gemini":
         if not settings.GOOGLE_API_KEY:
             raise ValueError("GOOGLE_API_KEY não configurada")
-        
+
         return ChatGoogleGenerativeAI(
             model=model,
             temperature=temp,
             google_api_key=settings.GOOGLE_API_KEY,
             max_retries=retries
         )
-    
+
+    elif provider == "groq":
+        if not settings.GROQ_API_KEY:
+            raise ValueError("GROQ_API_KEY não configurada")
+
+        # max_retries=0: deixa o tenacity (examiner_agent.py) controlar retries.
+        # O SDK Groq retentando tool-calls com 429 corrompe o estado → 400.
+        return ChatGroq(
+            model=model,
+            temperature=temp,
+            api_key=settings.GROQ_API_KEY,
+            max_retries=0
+        )
+
+    elif provider == "ollama":
+        # Usa endpoint OpenAI-compatível do Ollama (sem rate limit)
+        base_url = getattr(settings, "LLM_BASE_URL", None) or "http://localhost:11434/v1"
+        return ChatOpenAI(
+            model=model,
+            temperature=temp,
+            api_key="ollama",
+            base_url=base_url,
+            max_retries=retries
+        )
+
     else:
         raise ValueError(
             f"Provider '{provider}' não suportado. "
-            f"Use 'openai' ou 'gemini'."
+            f"Use 'openai', 'gemini' ou 'ollama'."
         )

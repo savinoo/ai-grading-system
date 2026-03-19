@@ -118,7 +118,8 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             "divergence_value": None,
             "all_corrections": [],
             "final_score": None,
-            "error": None
+            "error": None,
+            "processing_metadata": None
         }
         
         # === Executar grafo ===
@@ -148,7 +149,8 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             return {
                 "final_score": final_state['final_score'],
                 "all_corrections": final_state['all_corrections'],
-                "divergence_detected": final_state['divergence_detected']
+                "divergence_detected": final_state['divergence_detected'],
+                "processing_metadata": final_state.get('processing_metadata') or {}
             }
             
         except Exception as e:
@@ -228,12 +230,10 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                     weight_map[rubric_criterion.name] = rubric_criterion.weight
                 except Exception as e:
                     self.__logger.warning(
-                        "Critério '%s' não encontrado no banco: %s",
+                        "Critério '%s' não encontrado no banco: %s — será ignorado",
                         rubric_criterion.name, e
                     )
-                    # Se não encontrar, criar UUID temporário e usar peso da rubrica
-                    criteria_map[rubric_criterion.name] = uuid4()
-                    weight_map[rubric_criterion.name] = rubric_criterion.weight
+                    # Não adicionar ao mapa; linha 271 fará skip via 'if not criteria_uuid'
 
             # === 4. Calcular weighted_score por critério e acumular nota final normalizada ===
             #
