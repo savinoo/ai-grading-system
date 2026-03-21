@@ -8,7 +8,7 @@ class HashPasswordHandler:
     
     """
     Gerencia hashing e verificação de senhas usando bcrypt.
-    Bycrypt é um algoritmo de hashing adaptativo projetado para armazenar senhas de forma segura.
+    Bcrypt é um algoritmo de hashing adaptativo projetado para armazenar senhas de forma segura.
     Ele incorpora um sal (salt) para proteger contra ataques de rainbow table e é configurável em termos de custo computacional, o que permite aumentar a dificuldade de hashing conforme o poder computacional evolui.
     
     Attributes:
