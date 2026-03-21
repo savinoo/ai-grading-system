@@ -1,0 +1,1 @@
+"""Utilidades gerais do sistema."""

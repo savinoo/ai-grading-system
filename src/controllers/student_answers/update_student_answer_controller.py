@@ -1,0 +1,108 @@
+from __future__ import annotations
+
+from uuid import UUID
+from fastapi import HTTPException
+
+from src.domain.http.http_request import HttpRequest
+from src.domain.http.http_response import HttpResponse
+
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
+
+from src.services.student_answers.update_student_answer_service import UpdateStudentAnswerService
+
+from src.errors.domain.sql_error import SqlError
+from src.errors.domain.validate_error import ValidateError
+
+from src.core.logging_config import get_logger
+
+class UpdateStudentAnswerController(AsyncControllerInterface):
+    """  
+    Controller que delega ao UpdateStudentAnswerService a atualização de resposta de aluno.
+    """
+
+    def __init__(self, service: UpdateStudentAnswerService) -> None:
+        self.__service = service
+        self.__logger = get_logger("controllers")
+
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
+        """
+        Processa a requisição de atualização de resposta de aluno.
+        
+        Args:
+            http_request: Requisição HTTP contendo os dados da resposta
+            
+        Returns:
+            HttpResponse: Resposta HTTP com os dados da resposta atualizada
+            
+        Raises:
+            HTTPException: Em caso de erro
+        """
+
+        db = http_request.db
+        caller = http_request.caller
+        
+        # Extrai answer_uuid do body (mesclado pela rota)
+        body_dict = http_request.body
+        answer_uuid = UUID(body_dict.get("answer_uuid"))
+        
+        # Remove answer_uuid do dict para não passar para o service
+        body_dict_clean = {k: v for k, v in body_dict.items() if k != "answer_uuid"}
+
+        self.__logger.debug(
+            "Handling update student answer request from caller: %s - %s - %s", 
+            caller.caller_app if caller else "unknown",
+            caller.caller_user if caller else "unknown",
+            caller.ip if caller else "unknown"
+        )
+
+        try:
+            # Reconstrói o request a partir do dict limpo
+            from src.domain.requests.student_answers.student_answer_update_request import StudentAnswerUpdateRequest
+            request = StudentAnswerUpdateRequest(**body_dict_clean)
+
+            result = await self.__service.update_student_answer(db, answer_uuid, request)
+
+            self.__logger.info("Resposta de aluno atualizada com sucesso: %s", result.uuid)
+
+            return HttpResponse(
+                status_code=200,
+                body=result
+            )
+
+        except (TypeError, ValueError) as parse_err:
+            self.__logger.warning("Erro ao parsear UUID da resposta: %s", parse_err)
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "error": "UUID da resposta inválido ou ausente",
+                    "code": "INVALID_UUID"
+                }
+            ) from parse_err
+
+        except ValidateError as val_err:
+            self.__logger.warning("Erro de validação ao atualizar resposta: %s", val_err)
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "error": val_err.message,
+                    "code": val_err.code,
+                    "context": val_err.context
+                }
+            ) from val_err
+
+        except SqlError as sql_err:
+            self.__logger.error("Erro de banco de dados ao atualizar resposta: %s", sql_err, exc_info=True)
+            raise HTTPException(
+                status_code=500,
+                detail={
+                    "error": "Erro de banco de dados ao atualizar resposta de aluno",
+                    "code": sql_err.code
+                }
+            ) from sql_err
+
+        except Exception as e:
+            self.__logger.exception("Erro inesperado ao atualizar resposta")
+            raise HTTPException(
+                status_code=500,
+                detail="Erro interno do servidor"
+            ) from e

@@ -1,360 +1,303 @@
 # 🎓 AI Grading System (Multi-Agent)
 
 ![Status](https://img.shields.io/badge/Status-Active_Development-brightgreen)
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Python](https://img.shields.io/badge/Python-3.12%2B-blue)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED)
 ![Stack](https://img.shields.io/badge/Tech-LangGraph%20%7C%20DSPy%20%7C%20Gemini-orange)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-An autonomous, multi-agent system designed to automate the grading of complex academic essay questions with human-level reasoning and pedagogical feedback. Developed as a Capstone Project (TCC) in Computer Engineering.
+An intelligent, multi-agent system that automates grading of complex academic essay questions with human-level reasoning and detailed pedagogical feedback. Built as a Capstone Project in Computer Science Engineering.
 
-**✨ NEW: Professor Assistant Module with Analytics Dashboard!**
+**Key Capabilities:**
+
+- 🤖 **Multi-Agent Architecture** with consensus-based grading
+- 📊 **Batch Processing** optimized for high throughput
+- 🎯 **Pedagogical Feedback** explaining grading decisions
+- 🔐 **Enterprise-Ready** with error handling and resilience
 
 ## 📊 Results & Impact
-
-**Currently in pilot deployment at Instituto Federal Fluminense (IFF)** with real coursework and students.
 
 - **5x throughput improvement** — Grading 30 submissions reduced from 10+ minutes to ~2 minutes
 - **90% reduction in vector DB queries** via intelligent RAG caching
 - **Dual-examiner consensus** — 2 independent Examiner agents + 1 Arbiter reduces bias
 - **Full explainability** — Every grade includes written justification traceable to rubric criteria
-- **10+ analytics visualizations** — Student evolution tracking, plagiarism detection, learning gap identification
 
 ---
 
-## 🚀 Quick Deploy
+## 🧠 System Architecture
 
-### Option 1: Streamlit Cloud (Recommended - 2 minutes)
+The grading system employs a **distributed, consensus-based architecture** orchestrated through **LangGraph** and optimized using **DSPy** for intelligent prompt engineering.
 
-[![Deploy to Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy)
+### Agent Components
 
-1. Click the badge above (or go to https://share.streamlit.io/)
-2. Login with GitHub
-3. Select:
-   - **Repository:** `savinoo/ai-grading-system`
-   - **Branch:** `main`
-   - **Main file:** `app/main.py`
-4. Click "Deploy"
-5. Add Secrets (Settings > Secrets):
-   ```toml
-   GOOGLE_API_KEY = "your-gemini-api-key"
-   MODEL_NAME = "gemini-2.0-flash"
-   TEMPERATURE = "0"
-   ```
-6. Get Gemini API key (free): https://aistudio.google.com/app/apikey
+| Agent                      | Role                | Description                                                       |
+| -------------------------- | ------------------- | ----------------------------------------------------------------- |
+| **Examiner C1**            | Primary Evaluator   | Grades submissions independently against rubric using RAG         |
+| **Examiner C2**            | Secondary Evaluator | Independent evaluation for consensus validation                   |
+| **Arbiter**                | Dispute Resolution  | Activated when divergence exceeds threshold; mediates final grade |
+| **Analytics Engine**       | Quality Assurance   | Detects plagiarism, tracks student progress, provides insights    |
 
-**Done! Your app will be live at:** `https://[your-app-name].streamlit.app`
+### Processing Workflow
 
-### Option 2: Local Development
-
-```bash
-git clone https://github.com/savinoo/ai-grading-system.git
-cd ai-grading-system
-pip install -r requirements.txt
-
-# Create .streamlit/secrets.toml with your API key
-streamlit run app/main.py
-```
-
----
-
-## ⚡ Performance & Recent Improvements
-
-**Latest Update (2026-02-10):**
-
-### 🚀 Speed: 5x Faster Grading
-- **Before:** 10 students × 3 questions = ~10 minutes
-- **After:** 10 students × 3 questions = ~2-3 minutes
-- **How:** Increased parallelism (API_CONCURRENCY 2 → 10)
-
-### 🎯 Quality: Production-Grade Reliability
-- ✅ **Grade normalization:** Auto-detects and fixes 0-1 vs 0-10 scale issues
-- ✅ **Robust error handling:** Graceful fallbacks when LLM returns invalid JSON
-- ✅ **Performance logging:** Detailed timing for debugging bottlenecks
-- ✅ **RAG caching:** 90% reduction in vector DB queries
-
-### 📚 Documentation
-- [`PERFORMANCE.md`](PERFORMANCE.md) - Benchmarks, configuration, troubleshooting
-- [`CHANGELOG.md`](CHANGELOG.md) - Detailed changelog with migration guide
-
-### Configuration
-For Gemini free-tier (recommended to avoid rate limits):
-```bash
-export API_CONCURRENCY=5
-export API_THROTTLE_SLEEP=0.5
-```
-
-For OpenAI (paid tier):
-```bash
-export API_CONCURRENCY=10  # or higher for more speed
-```
-
-See [PERFORMANCE.md](PERFORMANCE.md) for full configuration guide.
-
----
-
-## 🧠 Core Architecture
-
-This system leverages a **Multi-Agent Workflow** orchestrated by **LangGraph** and optimized with **DSPy** for robust prompt engineering.
-
-### The Agents
-1.  **🔍 Examiner Agent (C1 & C2):** Two independent instances that grade student submissions against a detailed rubric using RAG (Retrieval-Augmented Generation) for context.
-2.  **⚖️ Arbiter Agent:** Activated only when C1 and C2 diverge significantly (e.g., score difference > 1.5). It reviews arguments from both and decides the final grade.
-3.  **🧬 Analytics Engine:** Runs in parallel to detect semantic plagiarism and analyze student evolution trends across submissions.
-
-> **Note:** DSPy agents (`DSPyExaminerAgent`, `DSPyArbiterAgent`) are the active implementation. LangChain agents exist as legacy fallback in `src/agents/legacy/`.
-
-### Workflow Diagram
 ```mermaid
 graph TD
-    A[Start] --> B(RAG Context Retrieval)
+    A[Student Submission] --> B(RAG Context Retrieval)
     B --> C1[Examiner 1]
     B --> C2[Examiner 2]
     C1 --> D{Divergence Check}
     C2 --> D
-    D -- "Diff > Threshold" --> E[Arbiter Agent]
-    D -- "Consensus" --> F[Final Grade Calculation]
+    D -->|Difference > 1.5 points| E[Arbiter Resolution]
+    D -->|Within Threshold| F[Consensus Reached]
     E --> F
-    F --> G[Feedback Generation]
-    G --> H[Analytics & Insights]
-    H --> I[End]
+    F --> G[Generate Feedback]
+    G --> H[Store Results]
+    H --> I[Analytics Pipeline]
+    I --> J[Complete]
 ```
 
----
+## ✨ Key Features
 
-## 🆕 Professor Assistant Module
+- **🚀 Parallel Batch Processing** – Handles high-volume submissions without hitting LLM rate limits (async workers + chunking strategy)
+- **🧩 Stateful LangGraph Workflow** – Uses `StateGraph` nodes/edges to orchestrate retrieval, dual evaluation, arbitration, and final decision routing
+- **📚 Production RAG Pipeline** – Indexes exam attachments via PDF chunking + embeddings + ChromaDB retrieval
+- **💾 Persistent Vector Store** – Stores vectors on disk for reuse across runs, avoiding unnecessary re-indexing
+- **🔄 Flexible Embedding Providers** – Supports Google, OpenAI, and local Ollama embeddings via environment configuration
+- **💡 Intelligent Cost Optimization** – Tiered model strategy (Gemini 2.0 Flash for routine grading, Pro for complex arbitration)
+- **🛡️ Production-Grade Resilience** – Self-healing logic with retry mechanisms, graceful API error handling, and JSON validation
+- **📝 Context-Aware Feedback** – Pedagogical explanations that help students understand grading rationale
+- **🔍 Academic Integrity Checks** – Semantic similarity detection across submissions
+- **📈 Student Progress Analytics** – Tracks performance trends and learning patterns
+- **🗄️ Postgres + Alembic** – Versioned database migrations for reproducible deployments
 
-**NEW in v2.0!** Advanced analytics and student tracking system.
+## 🛠️ Technology Stack
 
-### Features
-
-#### 👤 Student Profile
-- Grade evolution tracking with trend detection
-- Learning gap identification (<60% criterion avg)
-- Strength recognition (>80% criterion avg)
-- Heatmap visualization of criterion performance
-- Confidence-scored predictions (R² regression)
-
-#### 🏫 Class Analytics
-- Statistical distribution (mean, median, std dev, Q1, Q3, IQR)
-- Grade distribution (A/B/C/D/F buckets)
-- Outlier detection (struggling students & top performers)
-- Common learning gaps across class (>30% affected)
-- Question difficulty ranking
-- Top 5 student comparison (radar chart)
-
-#### 📊 Visualizations
-- 10+ interactive Plotly charts
-- Dual-axis comparisons
-- Heatmaps with colorscales
-- Box plots, violin plots, radar charts
-- Responsive design with gradient headers
-
-#### 💾 Persistent Memory
-- SQLite-based student profile storage (WAL mode, foreign keys)
-- GDPR-compliant data deletion (export, anonymize, delete)
-- Automatic 365-day retention policy
-- Export functionality for reports
-
-**Access:** Sidebar > "📊 Analytics Dashboard"
-
----
-
-## 🚀 Key Features
-
-*   **Massive Parallel Processing:** Optimized to handle batch corrections without hitting LLM Rate Limits (using Tenacity + Chunking).
-*   **Cost-Efficient Intelligence:** Uses a tiered model strategy (Gemini 2.0 Flash for volume, Pro for complex arbitration).
-*   **Resilience:** Self-healing logic for API errors and JSON formatting hallucinations.
-*   **Pedagogical Feedback:** Generates constructive comments explaining *why* a grade was given.
-*   **Student Tracking:** Longitudinal performance analysis with trend detection.
-*   **Auto-Tracking:** Analytics automatically capture data during batch corrections.
-
----
-
-## 🛠️ Tech Stack
-
-*   **Orchestration:** LangGraph
-*   **Prompt Optimization:** DSPy (Stanford)
-*   **LLM:** Local (Ollama) or Google Gemini 2.0 Flash (configurable)
-*   **Interface:** Streamlit
-*   **Vector DB:** ChromaDB (for RAG)
-*   **Analytics:** Plotly, NumPy, SciPy
-*   **Testing:** Pytest (90%+ coverage on analytics)
-
----
+| Layer                  | Technology                  | Purpose                        |
+| ---------------------- | --------------------------- | ------------------------------ |
+| **Orchestration**      | LangGraph                   | Multi-agent workflow engine    |
+| **Prompt Engineering** | DSPy (Stanford)             | Structured prompt optimization |
+| **LLM Provider**       | Google Gemini 2.0 Flash/Pro | Core AI reasoning              |
+| **LLM Interface**      | LiteLLM                     | Unified LLM abstraction        |
+| **Embeddings**         | Google / OpenAI / Ollama    | Configurable vector generation |
+| **Backend API**        | FastAPI                     | REST endpoints                 |
+| **Database**           | PostgreSQL 16               | Persistent data storage        |
+| **Migrations**         | Alembic                     | Schema versioning              |
+| **Vector Search**      | ChromaDB                    | RAG context retrieval          |
+| **Containerization**   | Docker & Docker Compose     | Local & cloud deployment       |
 
 ## 📦 Installation & Setup
 
 ### Prerequisites
-- Python 3.10+
-- Google Gemini API key (free tier available)
 
-### Steps
+Ensure you have the following installed:
 
-1.  **Clone the repo:**
-    ```bash
-    git clone https://github.com/savinoo/ai-grading-system.git
-    cd ai-grading-system
-    ```
+- **Docker** (v20.0+) and **Docker Compose** (v2.0+)
+- **Git** (for version control)
+- **Python** (v3.12+) – *only if running locally without Docker*
 
-2.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+### Clone the Repository
 
-3.  **Configure Environment:**
-    Create `.streamlit/secrets.toml`:
-    ```toml
-    GOOGLE_API_KEY = "your-api-key-here"
-    MODEL_NAME = "gemini-2.0-flash"
-    TEMPERATURE = "0"
-    ```
-    
-    Get API key: https://aistudio.google.com/app/apikey
-
-4.  **Run the App:**
-    ```bash
-    streamlit run app/main.py
-    ```
-
-5.  **Open Browser:**
-    ```
-    http://localhost:8501
-    ```
-
----
-
-## 📖 Usage
-
-### Single Student Debug Mode
-1. Select "Single Student (Debug)" in sidebar
-2. Configure question and rubric
-3. Provide student answer
-4. Execute and review detailed results
-
-### Batch Processing (Class)
-1. Select "Batch Processing (Turma)"
-2. Choose "Simulação Completa (IA)"
-3. Configure: 5 questions, 5-10 students
-4. Generate questions → Simulate answers → Execute corrections
-5. View results dashboard with class metrics
-
-### Analytics Dashboard
-1. After running batch corrections, select "📊 Analytics Dashboard"
-2. Navigate tabs:
-   - **Overview:** Total students, submissions, global metrics
-   - **Student Profile:** Individual student analysis with visualizations
-   - **Class Analysis:** Aggregate statistics and insights
-
-**Note:** Analytics automatically track data during batch corrections. No manual setup needed!
-
----
-
-## 🧪 Testing
-
-Run tests:
 ```bash
-pytest tests/ -v
+git clone https://github.com/savinoo/ai-grading-system.git
+cd ai-grading-system
 ```
 
-Test coverage (analytics modules):
+### Environment Variables
+
+Environment templates are available at the project root. Follow these steps:
+
+#### 1. **Root Directory**
+
 ```bash
-pytest tests/test_analytics.py --cov=src/analytics
+cp database.env.example database.env
+# Windows (PowerShell): Copy-Item database.env.example database.env
 ```
+
+The root `database.env` contains shared Docker Compose settings (PostgreSQL credentials).
+
+#### 2. **Backend**
+
+```bash
+cp .env.example .env
+# Windows (PowerShell): Copy-Item .env.example .env
+```
+
+Then edit `.env` and set:
+
+- `DATABASE_URL` – PostgreSQL connection string (must match values from `database.env`)
+- `GOOGLE_API_KEY` – Your Google Gemini API key (get from [Google AI Studio](https://aistudio.google.com/apikey))
+- `SECRET_KEY` – Random string for JWT signing (generate via `python -c "import secrets; print(secrets.token_urlsafe(32))"`)
+- `BREVO_API_KEY` – Email service key (optional, for notifications)
+- `EMBEDDING_PROVIDER` – `google`, `openai`, or `local` (Ollama)
+- `EMBEDDING_MODEL` – Optional override for embedding model
+- Other settings as needed (see detailed comments in `.env.example`)
+
+### Setup with Docker (Recommended)
+
+This is the **fastest and most reliable** approach.
+
+#### 1. Start All Services
+
+```bash
+cd ai-grading-system
+docker compose up -d
+```
+
+This will spin up:
+
+- **Backend** (FastAPI on `http://localhost:8000`)
+- **PostgreSQL** (on `localhost:5432`)
+- **Ollama** (on `http://localhost:11434`)
+
+#### 2. Run Database Migrations
+
+```bash
+docker compose exec backend alembic upgrade head
+```
+
+This applies all migrations in sequence:
+
+1. Database infrastructure (extensions, functions)
+2. Core schema (tables for users, exams, grading criteria, etc.)
+3. Triggers (auto-update timestamps)
+4. Seed data (default grading criteria)
+
+#### 3. Verify the Setup
+
+- **Backend API Docs:** Open [http://localhost:8000/docs](http://localhost:8000/docs) (Swagger UI)
+- **Health Check:**
+  ```bash
+  curl http://localhost:8000/health
+  ```
+
+### Local Development (Without Docker)
+
+If you prefer running locally:
+
+#### 1. Backend Setup
+
+```bash
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows (PowerShell): .venv\Scripts\Activate.ps1
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run migrations
+alembic upgrade head
+
+# Start server
+uvicorn src.main.server.server:app --reload --port 8000
+```
+
+### Troubleshooting
+
+| Issue                        | Solution                                                                                   |
+| --------------------------- | ------------------------------------------------------------------------------------------ |
+| **Docker build fails**      | Run `docker compose down -v` to remove volumes, then retry                                |
+| **Port 5432 already in use**| Check `docker ps` for conflicting containers or change port in `docker-compose.yml`      |
+| **Alembic migration fails** | Verify `DATABASE_URL` in `.env`, ensure PostgreSQL is running                              |
+| **LLM API errors**          | Verify `GOOGLE_API_KEY` is valid and has quota available                                   |
 
 ---
 
-## 📂 Project Structure
+## 🗄️ Database Migrations Guide
 
-```
-ai-grading-system/
-├── app/
-│   ├── main.py              # Streamlit entry point
-│   ├── analytics_ui.py      # Analytics visualizations
-│   ├── persistence.py       # Streamlit state persistence
-│   └── ui_components.py     # UI helpers
-├── src/
-│   ├── agents/              # Examiner, Arbiter agents
-│   ├── analytics/           # Student tracker, class analyzer (NEW)
-│   ├── domain/              # Pydantic schemas
-│   ├── memory/              # Persistent storage (NEW)
-│   ├── workflow/            # LangGraph workflow
-│   ├── rag/                 # Vector DB, retrieval
-│   └── config/              # Settings, prompts
-├── tests/                   # Unit tests
-├── examples/                # Integration examples
-├── DEPLOY.md                # Deployment guide
-└── requirements.txt         # Dependencies
+### Creating a New Migration
+
+```bash
+# Generate a new migration file
+docker compose exec backend alembic revision --autogenerate -m "description of changes"
+
+# Review the generated migration file in alembic/versions/
+
+# Apply the migration
+docker compose exec backend alembic upgrade head
 ```
 
----
+### Important Migration Rules
 
-## 🎨 Screenshots
+⚠️ **Do NOT manually modify:**
 
-### Analytics Dashboard
-*(Add screenshots after deployment)*
+- `revision` IDs
+- `down_revision` references
+- Migration order
 
-**Student Profile:**
-- Gradient header with performance cards
-- Dual chart (line + bar) with trend line
-- Heatmap of criterion evolution
-- Severity-coded learning gaps
+✅ **Safe to modify:**
 
-**Class Analytics:**
-- Statistical distribution (3-tab view)
-- Ranking with medals and trend indicators
-- Radar chart comparison (Top 5)
-- Question difficulty ranking
+- Migration file names
+- SQL logic and table definitions
+
+### Rollback a Migration
+
+```bash
+# Revert to previous migration
+docker compose exec backend alembic downgrade -1
+
+# Revert to specific revision
+docker compose exec backend alembic downgrade <revision_id>
+```
+
+## 📊 Available Scripts
+
+### Backend
+
+```bash
+# Format code
+docker compose exec backend black src/
+
+# Run linting
+docker compose exec backend pylint src/
+
+# Run tests
+docker compose exec backend pytest
+
+# Shell access
+docker compose exec backend bash
+```
+
+## 🚀 Deployment
+
+### Production Checklist
+
+- [ ] Set `ENVIRONMENT=production` in backend `.env`
+- [ ] Set `DEBUG=false`
+- [ ] Use production LLM keys
+- [ ] Configure proper `CORS_ORIGINS`
+- [ ] Set up database backups
+- [ ] Enable HTTPS/SSL
+- [ ] Review and test all migrations
+- [ ] Set resource limits in Docker Compose
 
 ---
 
 ## 🤝 Contributing
 
 Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes with tests
-4. Submit a pull request
 
----
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-MIT License - See LICENSE file for details
-
----
+This project is licensed under the **MIT License** – see [LICENSE](LICENSE) for details.
 
 ## 👥 Authors
 
-**Lucas Lorenzo Savino** & **Maycon Mendes**  
-Computer Engineering - Instituto Federal Fluminense (IFF)
-
-**Capstone Project (TCC)** - 2024/2025
+- [**Lucas Lorenzo Savino**](https://github.com/savinoo)
+- [**Maycon Mendes**](https://github.com/Maycon-M)
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **LangGraph** - Agent orchestration framework
-- **DSPy** - Prompt optimization (Stanford)
-- **Google Gemini** - LLM API
-- **Streamlit** - Interactive web framework
-- **Claude Code** - Development automation
+- Built with [LangGraph](https://github.com/langchain-ai/langgraph) by LangChain AI
+- Prompt optimization powered by [DSPy](https://github.com/stanfordnlp/dspy) from Stanford NLP
+- LLM inference via [Google Gemini](https://ai.google.dev/) and [LiteLLM](https://github.com/BerriAI/litellm)
 
 ---
 
-## 📞 Support
-
-Issues? Questions?
-- Open a GitHub issue
-- Contact: github.com/savinoo
-
----
-
-## 🔗 Links
-
-- **Live Demo:** [Coming soon - Deploy on Streamlit Cloud]
-- **Documentation:** See `DEPLOY.md`, `AUDITORIA-COERENCIA.md`, `IMPLEMENTATION_SUMMARY.md`
-- **GitHub:** https://github.com/savinoo/ai-grading-system
-
----
-
-**⭐ Star this repo if you find it useful!**
+**Last Updated:** March 2026 | **Status:** Active Development
