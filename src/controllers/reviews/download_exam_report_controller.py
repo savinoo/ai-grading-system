@@ -25,23 +25,23 @@ class DownloadExamReportController:
             HTTPException: Se arquivo não for encontrado
         """
         
-        logger.info("📥 Download de relatório solicitado para prova %s", exam_uuid)
+        logger.info("Download de relatório solicitado para prova %s", exam_uuid)
         
         # Diretório de relatórios
         reports_dir = Path("data/reports")
         
-        logger.info("📁 Verificando diretório: %s (absolute: %s)", reports_dir, reports_dir.absolute())
-        logger.info("📂 Diretório existe? %s", reports_dir.exists())
+        logger.info("Verificando diretório: %s (absolute: %s)", reports_dir, reports_dir.absolute())
+        logger.info("Diretório existe? %s", reports_dir.exists())
         
         if not reports_dir.exists():
-            logger.error("❌ Diretório de relatórios não existe")
+            logger.error("Diretório de relatórios não existe")
             raise HTTPException(status_code=404, detail="Nenhum relatório encontrado")
         
         # Buscar todos os arquivos da prova (pattern: notas_{exam_uuid}_*.xlsx)
         pattern = f"notas_{exam_uuid}_*.xlsx"
-        logger.info("🔍 Buscando arquivos com padrão: %s", pattern)
+        logger.info("Buscando arquivos com padrão: %s", pattern)
         matching_files = list(reports_dir.glob(pattern))
-        logger.info("📊 Arquivos encontrados: %d", len(matching_files))
+        logger.info("Arquivos encontrados: %d", len(matching_files))
         
         if not matching_files:
             logger.warning("Nenhum relatório encontrado para prova %s", exam_uuid)
