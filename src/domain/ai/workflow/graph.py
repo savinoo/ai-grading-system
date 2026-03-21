@@ -14,7 +14,7 @@ from src.domain.ai.workflow.nodes import (
 
 from src.core.logging_config import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger("domain")
 
 
 def should_call_arbiter(state: GradingState) -> str:

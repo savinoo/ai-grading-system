@@ -16,7 +16,7 @@ from src.core.logging_config import get_logger
 
 _jwt = JWTHandler()
 _refresh_token_repo = AuthRefreshTokenRepository()
-_logger = get_logger(__name__)
+_logger = get_logger("main.dependencies")
 
 def _now () -> int:
     """Retorna o timestamp atual (segundos desde epoch)."""

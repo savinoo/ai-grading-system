@@ -18,7 +18,7 @@ class ConsensusBuilder:
     
     def __init__(self) -> None:
         """Inicializa o builder de consenso."""
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("domain")
     
     def calculate_final_score(self, corrections: List[AgentCorrection]) -> float:
         """

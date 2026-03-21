@@ -24,7 +24,7 @@ class DivergenceChecker:
             threshold: Limiar de divergência. Se None, usa settings.DIVERGENCE_THRESHOLD
         """
         self.__threshold = threshold or settings.DIVERGENCE_THRESHOLD
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("domain")
     
     def check_divergence(self, corrections: List[AgentCorrection]) -> dict:
         """

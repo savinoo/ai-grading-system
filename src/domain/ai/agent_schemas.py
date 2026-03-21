@@ -8,7 +8,7 @@ from typing import List, Optional
 from pydantic import BaseModel, Field, field_validator, model_validator
 from src.core.logging_config import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger("domain")
 
 
 class AgentID(str, Enum):

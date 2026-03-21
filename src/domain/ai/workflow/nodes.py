@@ -11,7 +11,7 @@ from src.utils.concurrency import get_api_semaphore
 
 from src.core.logging_config import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger("domain")
 
 
 # =============================================================================
