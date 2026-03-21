@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS public.classes (
 
     CONSTRAINT uq_classes_uuid UNIQUE (uuid),
 
-    constraint fk_classes_teacher_uuid foreign key (teacher_uuid) REFERENCES public.users(uuid) ON UPDATE cascade ON DELETE SET NULL
+    constraint fk_classes_teacher_uuid foreign key (teacher_uuid) REFERENCES public.users(uuid) ON UPDATE cascade ON DELETE SET NULL,
     
     CONSTRAINT fk_classes_created_by
       FOREIGN KEY (created_by) REFERENCES public.users(uuid)
