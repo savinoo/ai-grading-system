@@ -1,7 +1,7 @@
 from typing import Optional
 from uuid import UUID
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 
 class ExamUpdateRequest(BaseModel):
     """
@@ -28,14 +28,6 @@ class ExamUpdateRequest(BaseModel):
         description="UUID da turma",
         examples=["123e4567-e89b-12d3-a456-426614174000"]
     )
-
-    @field_validator("title", "description", "class_uuid", mode="before")
-    @classmethod
-    def validate_fields(cls, v):
-        """
-        Valida os campos da requisição.
-        """
-        return v
 
     def has_any_field(self) -> bool:
         """
