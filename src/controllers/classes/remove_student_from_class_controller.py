@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 from src.interfaces.services.classes.remove_student_from_class_service_interface import RemoveStudentFromClassServiceInterface
 
 from src.errors.domain.sql_error import SqlError
@@ -15,7 +14,7 @@ from src.errors.domain.not_found import NotFoundError
 
 from src.core.logging_config import get_logger
 
-class RemoveStudentFromClassController(ControllerInterface):
+class RemoveStudentFromClassController(AsyncControllerInterface):
     """  
     Controller que delega ao RemoveStudentFromClassService a remoção de um aluno de uma turma.
     """
@@ -24,7 +23,7 @@ class RemoveStudentFromClassController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
         
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de remoção de aluno de uma turma.
         
@@ -73,9 +72,7 @@ class RemoveStudentFromClassController(ControllerInterface):
         )
         
         try:
-            result = asyncio.run(
-                self.__service.remove_student_from_class(db, class_uuid, student_uuid)
-            )
+            result = await self.__service.remove_student_from_class(db, class_uuid, student_uuid)
             
             self.__logger.info(
                 "Aluno %s removido da turma %s",

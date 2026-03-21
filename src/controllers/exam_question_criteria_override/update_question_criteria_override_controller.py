@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exam_question_criteria_override.update_question_criteria_override_service import (
     UpdateQuestionCriteriaOverrideService,
@@ -18,7 +17,7 @@ from src.errors.domain.validate_error import ValidateError
 
 from src.core.logging_config import get_logger
 
-class UpdateQuestionCriteriaOverrideController(ControllerInterface):
+class UpdateQuestionCriteriaOverrideController(AsyncControllerInterface):
     """  
     Controller que delega ao UpdateQuestionCriteriaOverrideService a atualização de sobrescrita.
     """
@@ -27,7 +26,7 @@ class UpdateQuestionCriteriaOverrideController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de atualização de sobrescrita.
         """
@@ -46,9 +45,7 @@ class UpdateQuestionCriteriaOverrideController(ControllerInterface):
         try:
             request = http_request.body
 
-            result = asyncio.run(
-                self.__service.update_question_criteria_override(db, override_uuid, request)
-            )
+            result = await self.__service.update_question_criteria_override(db, override_uuid, request)
 
             self.__logger.info("Sobrescrita atualizada com sucesso: %s", result.uuid)
 

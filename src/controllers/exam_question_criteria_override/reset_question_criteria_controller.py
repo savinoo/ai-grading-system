@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exam_question_criteria_override.reset_question_criteria_service import ResetQuestionCriteriaService
 
@@ -16,7 +15,7 @@ from src.errors.domain.validate_error import ValidateError
 
 from src.core.logging_config import get_logger
 
-class ResetQuestionCriteriaController(ControllerInterface):
+class ResetQuestionCriteriaController(AsyncControllerInterface):
     """  
     Controller que delega ao ResetQuestionCriteriaService o reset de critérios de uma questão.
     """
@@ -25,7 +24,7 @@ class ResetQuestionCriteriaController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de reset de critérios de uma questão.
         
@@ -51,7 +50,7 @@ class ResetQuestionCriteriaController(ControllerInterface):
         )
 
         try:
-            deleted_count = asyncio.run(self.__service.reset_question_criteria(db, question_uuid))
+            deleted_count = await self.__service.reset_question_criteria(db, question_uuid)
 
             self.__logger.info(
                 "Critérios da questão resetados com sucesso: %s (%d sobrescritas removidas)",

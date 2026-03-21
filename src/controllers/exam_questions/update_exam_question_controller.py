@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exam_questions.update_exam_question_service import UpdateExamQuestionService
 
@@ -16,7 +15,7 @@ from src.errors.domain.validate_error import ValidateError
 
 from src.core.logging_config import get_logger
 
-class UpdateExamQuestionController(ControllerInterface):
+class UpdateExamQuestionController(AsyncControllerInterface):
     """  
     Controller que delega ao UpdateExamQuestionService a atualização de questões.
     """
@@ -25,7 +24,7 @@ class UpdateExamQuestionController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de atualização de questão.
         
@@ -75,13 +74,11 @@ class UpdateExamQuestionController(ControllerInterface):
             ) from ve
 
         try:
-            result = asyncio.run(
-                self.__service.update_exam_question(
-                    db,
-                    question_uuid,
-                    teacher_uuid,
-                    body
-                )
+            result = await self.__service.update_exam_question(
+                db,
+                question_uuid,
+                teacher_uuid,
+                body
             )
 
             self.__logger.info("Questão atualizada com sucesso: %s", question_uuid)

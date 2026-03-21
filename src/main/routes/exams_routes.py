@@ -105,7 +105,7 @@ async def create_exam(
     summary="Listar provas de um professor",
     description="Endpoint para listar todas as provas de um professor. Requer autenticação."
 )
-def get_exams_by_teacher(
+async def get_exams_by_teacher(
     request: Request,
     teacher_uuid: str,
     active_only: bool = Query(True, description="Retornar apenas provas ativas"),
@@ -153,7 +153,7 @@ def get_exams_by_teacher(
     controller = make_get_exams_by_teacher_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -173,7 +173,7 @@ def get_exams_by_teacher(
     summary="Buscar prova por UUID",
     description="Endpoint para buscar os dados de uma prova específica. Requer autenticação."
 )
-def get_exam_by_uuid(
+async def get_exam_by_uuid(
     request: Request,
     exam_uuid: str,
     caller: CallerMeta = Depends(get_caller_meta),
@@ -215,7 +215,7 @@ def get_exam_by_uuid(
     controller = make_get_exam_by_uuid_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -235,7 +235,7 @@ def get_exam_by_uuid(
     summary="Atualizar uma prova",
     description="Endpoint para atualizar os dados de uma prova (apenas em status DRAFT). Requer autenticação."
 )
-def update_exam(
+async def update_exam(
     request: Request,
     exam_uuid: str,
     body: ExamUpdateRequest = Body(...),
@@ -280,7 +280,7 @@ def update_exam(
     controller = make_update_exam_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -299,7 +299,7 @@ def update_exam(
     summary="Deletar uma prova",
     description="Endpoint para professores deletarem uma prova. Requer autenticação e permissão."
 )
-def delete_exam(
+async def delete_exam(
     request: Request,
     exam_uuid: str,
     caller: CallerMeta = Depends(get_caller_meta),
@@ -341,7 +341,7 @@ def delete_exam(
     controller = make_delete_exam_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         # Retorna Response vazia para status 204 (No Content)
         return Response(status_code=http_response.status_code)
     except HTTPException as e:

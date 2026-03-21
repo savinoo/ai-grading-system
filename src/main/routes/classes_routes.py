@@ -43,7 +43,7 @@ router = APIRouter(
     summary="Criar uma nova turma",
     description="Endpoint para professores criarem novas turmas. Requer autenticação."
 )
-def create_class(
+async def create_class(
     request: Request,
     body: ClassCreateRequest = Body(...),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -85,7 +85,7 @@ def create_class(
     controller = make_create_class_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -104,7 +104,7 @@ def create_class(
     summary="Adicionar alunos a uma turma",
     description="Endpoint para adicionar alunos a uma turma existente. Cria novos alunos se não existirem (validando por email)."
 )
-def add_students_to_class(
+async def add_students_to_class(
     request: Request,
     class_uuid: str,
     body: AddStudentsToClassRequest = Body(...),
@@ -149,7 +149,7 @@ def add_students_to_class(
     controller = make_add_students_to_class_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -169,7 +169,7 @@ def add_students_to_class(
     summary="Buscar turma com alunos",
     description="Endpoint para buscar uma turma e listar todos os seus alunos matriculados."
 )
-def get_class_with_students(
+async def get_class_with_students(
     request: Request,
     class_uuid: str,
     skip: int = Query(0, ge=0, description="Número de alunos a pular na paginação"),
@@ -218,7 +218,7 @@ def get_class_with_students(
     controller = make_get_class_with_students_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -238,7 +238,7 @@ def get_class_with_students(
     summary="Buscar turmas",
     description="Endpoint para buscar turmas com filtros opcionais."
 )
-def get_classes(
+async def get_classes(
     request: Request,
     teacher_uuid: str,
     skip: int = Query(0, ge=0, description="Número de alunos a pular na paginação"),
@@ -280,7 +280,7 @@ def get_classes(
     controller = make_get_classes_service_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -299,7 +299,7 @@ def get_classes(
     summary="Remover aluno de uma turma",
     description="Endpoint para remover um aluno de uma turma específica."
 )
-def remove_student_from_class(
+async def remove_student_from_class(
     request: Request,
     class_uuid: str,
     student_uuid: str,
@@ -344,7 +344,7 @@ def remove_student_from_class(
     controller = make_remove_student_from_class_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -364,7 +364,7 @@ def remove_student_from_class(
     summary="Desativar uma turma",
     description="Endpoint para desativar uma turma. A turma não será deletada, apenas marcada como inativa."
 )
-def deactivate_class(
+async def deactivate_class(
     request: Request,
     class_uuid: str,
     caller: CallerMeta = Depends(get_caller_meta),
@@ -407,7 +407,7 @@ def deactivate_class(
     controller = make_deactivate_class_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,

@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.student_answers.delete_student_answer_service import DeleteStudentAnswerService
 
@@ -16,7 +15,7 @@ from src.errors.domain.validate_error import ValidateError
 
 from src.core.logging_config import get_logger
 
-class DeleteStudentAnswerController(ControllerInterface):
+class DeleteStudentAnswerController(AsyncControllerInterface):
     """  
     Controller que delega ao DeleteStudentAnswerService a remoção de resposta de aluno.
     """
@@ -25,7 +24,7 @@ class DeleteStudentAnswerController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de remoção de resposta de aluno.
         
@@ -59,7 +58,7 @@ class DeleteStudentAnswerController(ControllerInterface):
         try:
             answer_uuid = UUID(str(answer_uuid_raw))
 
-            asyncio.run(self.__service.delete_student_answer(db, answer_uuid))
+            await self.__service.delete_student_answer(db, answer_uuid)
 
             self.__logger.info("Resposta de aluno removida com sucesso: %s", answer_uuid)
 

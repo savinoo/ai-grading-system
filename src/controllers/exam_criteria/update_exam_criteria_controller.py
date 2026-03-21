@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exam_criteria.update_exam_criteria_service import UpdateExamCriteriaService
 
@@ -16,7 +15,7 @@ from src.errors.domain.validate_error import ValidateError
 
 from src.core.logging_config import get_logger
 
-class UpdateExamCriteriaController(ControllerInterface):
+class UpdateExamCriteriaController(AsyncControllerInterface):
     """  
     Controller que delega ao UpdateExamCriteriaService a atualização de critério de prova.
     """
@@ -25,7 +24,7 @@ class UpdateExamCriteriaController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de atualização de critério de prova.
         
@@ -54,9 +53,7 @@ class UpdateExamCriteriaController(ControllerInterface):
             exam_criteria_uuid = UUID(params.get("exam_criteria_uuid"))
             request = http_request.body
 
-            result = asyncio.run(
-                self.__service.update_exam_criteria(db, exam_criteria_uuid, request)
-            )
+            result = await self.__service.update_exam_criteria(db, exam_criteria_uuid, request)
 
             self.__logger.info("Critério de prova atualizado com sucesso: %s", exam_criteria_uuid)
 

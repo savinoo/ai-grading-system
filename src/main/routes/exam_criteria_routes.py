@@ -40,7 +40,7 @@ router = APIRouter(
     summary="Adicionar critério a uma prova",
     description="Endpoint para adicionar um critério de avaliação a uma prova em status DRAFT. Requer autenticação."
 )
-def create_exam_criteria(
+async def create_exam_criteria(
     request: Request,
     body: ExamCriteriaCreateRequest = Body(...),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -82,7 +82,7 @@ def create_exam_criteria(
     controller = make_create_exam_criteria_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -102,7 +102,7 @@ def create_exam_criteria(
     summary="Listar critérios de uma prova",
     description="Endpoint para listar todos os critérios de uma prova específica. Requer autenticação."
 )
-def list_exam_criteria(
+async def list_exam_criteria(
     request: Request,
     exam_uuid: str = Path(..., description="UUID da prova"),
     active_only: bool = Query(True, description="Retornar apenas critérios ativos"),
@@ -150,7 +150,7 @@ def list_exam_criteria(
     controller = make_list_exam_criteria_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body
         
         # Extrai apenas a lista de critérios do body
@@ -182,7 +182,7 @@ def list_exam_criteria(
     summary="Atualizar critério de prova",
     description="Endpoint para atualizar peso e/ou pontos máximos de um critério. Apenas para provas em DRAFT. Requer autenticação."
 )
-def update_exam_criteria(
+async def update_exam_criteria(
     request: Request,
     exam_criteria_uuid: str = Path(..., description="UUID do critério de prova"),
     body: ExamCriteriaUpdateRequest = Body(...),
@@ -227,7 +227,7 @@ def update_exam_criteria(
     controller = make_update_exam_criteria_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -246,7 +246,7 @@ def update_exam_criteria(
     summary="Remover critério de prova",
     description="Endpoint para remover um critério de uma prova. Apenas para provas em DRAFT. Requer autenticação."
 )
-def delete_exam_criteria(
+async def delete_exam_criteria(
     request: Request,
     exam_criteria_uuid: str = Path(..., description="UUID do critério de prova"),
     caller: CallerMeta = Depends(get_caller_meta),

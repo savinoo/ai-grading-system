@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import asyncio
-
 from fastapi import HTTPException
 
 from src.core.logging_config import get_logger
@@ -9,7 +7,7 @@ from src.core.logging_config import get_logger
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 from src.interfaces.services.users.resend_verification_email_service_interface import (
     ResendVerificationEmailServiceInterface
 )
@@ -18,7 +16,7 @@ from src.errors.domain.not_found import NotFoundError
 from src.errors.domain.sql_error import SqlError
 
 
-class ResendVerificationEmailController(ControllerInterface):
+class ResendVerificationEmailController(AsyncControllerInterface):
     """
     Controller responsável por reenviar email de verificação.
     """
@@ -27,7 +25,7 @@ class ResendVerificationEmailController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
     
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de reenvio de email de verificação.
         
@@ -53,8 +51,7 @@ class ResendVerificationEmailController(ControllerInterface):
             )
         
         try:
-            # Serviço é async, então usamos asyncio.run
-            result = asyncio.run(self.__service.resend_verification_email(db, email))
+            result = await self.__service.resend_verification_email(db, email)
             
             self.__logger.info(
                 "Email de verificação processado para: %s (já verificado: %s)",

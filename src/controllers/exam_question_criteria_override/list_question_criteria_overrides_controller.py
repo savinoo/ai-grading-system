@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import asyncio
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exam_question_criteria_override.list_question_criteria_overrides_service import ListQuestionCriteriaOverridesService
 
@@ -16,7 +15,7 @@ from src.errors.domain.validate_error import ValidateError
 from src.core.logging_config import get_logger
 
 
-class ListQuestionCriteriaOverridesController(ControllerInterface):
+class ListQuestionCriteriaOverridesController(AsyncControllerInterface):
     """
     Controller que delega ao ListQuestionCriteriaOverridesService a listagem de critérios customizados.
     """
@@ -25,7 +24,7 @@ class ListQuestionCriteriaOverridesController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de listagem de critérios customizados.
         
@@ -66,12 +65,10 @@ class ListQuestionCriteriaOverridesController(ControllerInterface):
                 )
 
             # Executar serviço
-            criteria_overrides = asyncio.run(
-                self.__service.list_question_criteria_overrides(
-                    db=db,
-                    question_uuid=question_uuid,
-                    teacher_uuid=teacher_uuid
-                )
+            criteria_overrides = await self.__service.list_question_criteria_overrides(
+                db=db,
+                question_uuid=question_uuid,
+                teacher_uuid=teacher_uuid
             )
 
             self.__logger.info("Listados %d critérios customizados da questão %s", len(criteria_overrides), question_uuid)

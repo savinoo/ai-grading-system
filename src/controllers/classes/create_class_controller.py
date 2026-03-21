@@ -1,19 +1,18 @@
 from __future__ import annotations
 
-import asyncio
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 from src.interfaces.services.classes.create_class_service_interface import CreateClassServiceInterface
 
 from src.errors.domain.sql_error import SqlError
 
 from src.core.logging_config import get_logger
 
-class CreateClassController(ControllerInterface):
+class CreateClassController(AsyncControllerInterface):
     """  
     Controller que delega ao CreateClassService a criação de uma nova turma.
     """
@@ -22,7 +21,7 @@ class CreateClassController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
         
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de criação de turma.
         
@@ -58,7 +57,7 @@ class CreateClassController(ControllerInterface):
             
             teacher_uuid = token_infos.get("sub")
             
-            result = asyncio.run(self.__service.create_class(db, request, teacher_uuid))
+            result = await self.__service.create_class(db, request, teacher_uuid)
             
             self.__logger.info("Turma criada com sucesso: %s", result.uuid)
             

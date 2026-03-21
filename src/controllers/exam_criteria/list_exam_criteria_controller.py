@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exam_criteria.list_exam_criteria_service import ListExamCriteriaService
 
@@ -15,7 +14,7 @@ from src.errors.domain.sql_error import SqlError
 
 from src.core.logging_config import get_logger
 
-class ListExamCriteriaController(ControllerInterface):
+class ListExamCriteriaController(AsyncControllerInterface):
     """  
     Controller que delega ao ListExamCriteriaService a listagem de critérios de uma prova.
     """
@@ -24,7 +23,7 @@ class ListExamCriteriaController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de listagem de critérios de prova.
         
@@ -55,14 +54,12 @@ class ListExamCriteriaController(ControllerInterface):
             limit = params.get("limit", 100)
             active_only = params.get("active_only", True)
 
-            result = asyncio.run(
-                self.__service.list_exam_criteria(
-                    db,
-                    exam_uuid,
-                    skip=skip,
-                    limit=limit,
-                    active_only=active_only
-                )
+            result = await self.__service.list_exam_criteria(
+                db,
+                exam_uuid,
+                skip=skip,
+                limit=limit,
+                active_only=active_only
             )
 
             self.__logger.info("Listados %d critérios da prova %s", len(result), exam_uuid)

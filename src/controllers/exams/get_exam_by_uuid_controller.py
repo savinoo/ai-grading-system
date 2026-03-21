@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exams.get_exam_by_uuid_service import GetExamByUuidService
 
@@ -16,7 +15,7 @@ from src.errors.domain.not_found import NotFoundError
 
 from src.core.logging_config import get_logger
 
-class GetExamByUuidController(ControllerInterface):
+class GetExamByUuidController(AsyncControllerInterface):
     """  
     Controller que delega ao GetExamByUuidService a busca de prova por UUID.
     """
@@ -25,7 +24,7 @@ class GetExamByUuidController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de busca de prova por UUID.
         
@@ -65,7 +64,7 @@ class GetExamByUuidController(ControllerInterface):
             ) from ve
 
         try:
-            result = asyncio.run(self.__service.get_exam_by_uuid(db, exam_uuid))
+            result = await self.__service.get_exam_by_uuid(db, exam_uuid)
 
             self.__logger.info("Prova recuperada com sucesso: %s", exam_uuid)
 

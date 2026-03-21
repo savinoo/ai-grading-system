@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import asyncio
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exam_criteria.create_exam_criteria_service import CreateExamCriteriaService
 
@@ -15,7 +14,7 @@ from src.errors.domain.validate_error import ValidateError
 
 from src.core.logging_config import get_logger
 
-class CreateExamCriteriaController(ControllerInterface):
+class CreateExamCriteriaController(AsyncControllerInterface):
     """  
     Controller que delega ao CreateExamCriteriaService a criação de critério de prova.
     """
@@ -24,7 +23,7 @@ class CreateExamCriteriaController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de criação de critério de prova.
         
@@ -51,7 +50,7 @@ class CreateExamCriteriaController(ControllerInterface):
         try:
             request = http_request.body
 
-            result = asyncio.run(self.__service.create_exam_criteria(db, request))
+            result = await self.__service.create_exam_criteria(db, request)
 
             self.__logger.info("Critério de prova criado com sucesso: %s", result.uuid)
 

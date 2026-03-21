@@ -39,7 +39,7 @@ router = APIRouter(
     summary="Listar respostas de uma questão",
     description="Endpoint para listar todas as respostas de alunos de uma questão específica. Requer autenticação de professor."
 )
-def list_student_answers(
+async def list_student_answers(
     request: Request,
     question_uuid: str = Path(..., description="UUID da questão"),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -82,7 +82,7 @@ def list_student_answers(
     controller = make_list_student_answers_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         # Serializa a lista de responses Pydantic para JSON
         response_body = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in http_response.body]
         return JSONResponse(
@@ -103,7 +103,7 @@ def list_student_answers(
     summary="Criar resposta de aluno",
     description="Endpoint para criar uma resposta de aluno para uma questão de prova. A prova deve estar em status DRAFT. Requer autenticação de professor."
 )
-def create_student_answer(
+async def create_student_answer(
     request: Request,
     body: StudentAnswerCreateRequest = Body(...),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -145,7 +145,7 @@ def create_student_answer(
     controller = make_create_student_answer_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -165,7 +165,7 @@ def create_student_answer(
     summary="Atualizar resposta de aluno",
     description="Endpoint para atualizar uma resposta de aluno. A prova deve estar em status DRAFT e a resposta não pode estar avaliada. Requer autenticação de professor."
 )
-def update_student_answer(
+async def update_student_answer(
     request: Request,
     answer_uuid: str = Path(..., description="UUID da resposta a ser atualizada"),
     body: StudentAnswerUpdateRequest = Body(...),
@@ -213,7 +213,7 @@ def update_student_answer(
     controller = make_update_student_answer_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -232,7 +232,7 @@ def update_student_answer(
     summary="Remover resposta de aluno",
     description="Endpoint para remover uma resposta de aluno. A prova deve estar em status DRAFT e a resposta não pode estar avaliada. Requer autenticação de professor."
 )
-def delete_student_answer(
+async def delete_student_answer(
     request: Request,
     answer_uuid: str = Path(..., description="UUID da resposta a ser removida"),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -274,7 +274,7 @@ def delete_student_answer(
     controller = make_delete_student_answer_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=None

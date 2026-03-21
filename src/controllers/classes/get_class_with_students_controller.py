@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 from src.interfaces.services.classes.get_class_with_students_service_interface import GetClassWithStudentsServiceInterface
 
 from src.errors.domain.sql_error import SqlError
@@ -15,7 +14,7 @@ from src.errors.domain.not_found import NotFoundError
 
 from src.core.logging_config import get_logger
 
-class GetClassWithStudentsController(ControllerInterface):
+class GetClassWithStudentsController(AsyncControllerInterface):
     """  
     Controller que delega ao GetClassWithStudentsService a busca de uma turma com seus alunos.
     """
@@ -24,7 +23,7 @@ class GetClassWithStudentsController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
         
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de busca de turma com alunos.
         
@@ -74,14 +73,12 @@ class GetClassWithStudentsController(ControllerInterface):
         )
         
         try:
-            result = asyncio.run(
-                self.__service.get_class_with_students(
-                    db,
-                    class_uuid,
-                    active_only=active_only,
-                    skip=skip,
-                    limit=limit
-                )
+            result = await self.__service.get_class_with_students(
+                db,
+                class_uuid,
+                active_only=active_only,
+                skip=skip,
+                limit=limit
             )
             
             self.__logger.info(

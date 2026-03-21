@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import asyncio
-
 from fastapi import HTTPException
 
 from src.core.logging_config import get_logger
@@ -9,7 +7,7 @@ from src.core.logging_config import get_logger
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 from src.interfaces.services.users.generate_recovery_code_service_interface import (
     GenerateRecoveryCodeServiceInterface
 )
@@ -18,7 +16,7 @@ from src.errors.domain.not_found import NotFoundError
 from src.errors.domain.sql_error import SqlError
 
 
-class GenerateRecoveryCodeController(ControllerInterface):
+class GenerateRecoveryCodeController(AsyncControllerInterface):
     """
     Controller responsável por gerar código de recuperação.
     """
@@ -27,7 +25,7 @@ class GenerateRecoveryCodeController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
     
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de geração de código de recuperação.
         
@@ -53,8 +51,7 @@ class GenerateRecoveryCodeController(ControllerInterface):
             )
         
         try:
-            # Serviço é async, então usamos asyncio.run
-            result = asyncio.run(self.__service.generate_recovery_code(db, email))
+            result = await self.__service.generate_recovery_code(db, email)
             
             self.__logger.info(
                 "Código de recuperação gerado para: %s",

@@ -40,7 +40,7 @@ router = APIRouter(
     summary="Adicionar questão a uma prova",
     description="Endpoint para adicionar uma questão a uma prova em status DRAFT. Requer autenticação de professor."
 )
-def create_exam_question(
+async def create_exam_question(
     request: Request,
     body: ExamQuestionCreateRequest = Body(...),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -82,7 +82,7 @@ def create_exam_question(
     controller = make_create_exam_question_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -101,7 +101,7 @@ def create_exam_question(
     summary="Remover questão de uma prova",
     description="Endpoint para remover uma questão de uma prova em status DRAFT. A questão não pode estar avaliada. Requer autenticação de professor."
 )
-def delete_exam_question(
+async def delete_exam_question(
     request: Request,
     question_uuid: str = Path(..., description="UUID da questão a ser removida"),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -143,7 +143,7 @@ def delete_exam_question(
     controller = make_delete_exam_question_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=None
@@ -161,7 +161,7 @@ def delete_exam_question(
     summary="Remover todas as respostas de uma questão",
     description="Endpoint para remover todas as respostas de alunos de uma questão específica. A prova deve estar em status DRAFT. Requer autenticação de professor."
 )
-def delete_all_question_answers(
+async def delete_all_question_answers(
     request: Request,
     question_uuid: str = Path(..., description="UUID da questão cujas respostas serão removidas"),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -203,7 +203,7 @@ def delete_all_question_answers(
     controller = make_delete_all_question_answers_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=None
@@ -222,7 +222,7 @@ def delete_all_question_answers(
     summary="Listar questões de uma prova",
     description="Endpoint para listar todas as questões de uma prova específica. Requer autenticação de professor."
 )
-def list_exam_questions(
+async def list_exam_questions(
     request: Request,
     exam_uuid: str = Path(..., description="UUID da prova"),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -264,7 +264,7 @@ def list_exam_questions(
     controller = make_list_exam_questions_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         questions_list = http_response.body if isinstance(http_response.body, list) else [http_response.body]
         response_data = [
             q.model_dump(mode='json') if hasattr(q, 'model_dump') else q
@@ -288,7 +288,7 @@ def list_exam_questions(
     summary="Atualizar uma questão",
     description="Endpoint para atualizar os dados de uma questão. Requer autenticação de professor."
 )
-def update_exam_question(
+async def update_exam_question(
     request: Request,
     question_uuid: str = Path(..., description="UUID da questão a ser atualizada"),
     body: ExamQuestionUpdateRequest = Body(...),
@@ -333,7 +333,7 @@ def update_exam_question(
     controller = make_update_exam_question_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,

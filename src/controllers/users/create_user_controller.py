@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import asyncio
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 from src.interfaces.services.users.create_user_service_interface import CreateUserServiceInterface
 
 from src.errors.domain.already_existing import AlreadyExistingError
@@ -15,7 +14,7 @@ from src.errors.domain.sql_error import SqlError
 from src.core.logging_config import get_logger
 
 
-class CreateUserController(ControllerInterface):
+class CreateUserController(AsyncControllerInterface):
     """
     Controller que delega ao CreateUserService a criação de um novo usuário.
     """
@@ -24,7 +23,7 @@ class CreateUserController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
     
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de criação de usuário.
         
@@ -53,7 +52,7 @@ class CreateUserController(ControllerInterface):
             request = http_request.body
             
             # Delega ao serviço (agora async)
-            result = asyncio.run(self.__service.create_user(db, request))
+            result = await self.__service.create_user(db, request)
             
             self.__logger.info("Usuário criado com sucesso: %s", result.email)
             

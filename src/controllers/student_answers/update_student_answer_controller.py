@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.student_answers.update_student_answer_service import UpdateStudentAnswerService
 
@@ -16,7 +15,7 @@ from src.errors.domain.validate_error import ValidateError
 
 from src.core.logging_config import get_logger
 
-class UpdateStudentAnswerController(ControllerInterface):
+class UpdateStudentAnswerController(AsyncControllerInterface):
     """  
     Controller que delega ao UpdateStudentAnswerService a atualização de resposta de aluno.
     """
@@ -25,7 +24,7 @@ class UpdateStudentAnswerController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de atualização de resposta de aluno.
         
@@ -61,7 +60,7 @@ class UpdateStudentAnswerController(ControllerInterface):
             from src.domain.requests.student_answers.student_answer_update_request import StudentAnswerUpdateRequest
             request = StudentAnswerUpdateRequest(**body_dict_clean)
 
-            result = asyncio.run(self.__service.update_student_answer(db, answer_uuid, request))
+            result = await self.__service.update_student_answer(db, answer_uuid, request)
 
             self.__logger.info("Resposta de aluno atualizada com sucesso: %s", result.uuid)
 

@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exams.update_exam_service import UpdateExamService
 
@@ -17,7 +16,7 @@ from src.errors.domain.validate_error import ValidateError
 
 from src.core.logging_config import get_logger
 
-class UpdateExamController(ControllerInterface):
+class UpdateExamController(AsyncControllerInterface):
     """  
     Controller que delega ao UpdateExamService a atualização de uma prova.
     """
@@ -26,7 +25,7 @@ class UpdateExamController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de atualização de prova.
         
@@ -68,7 +67,7 @@ class UpdateExamController(ControllerInterface):
         request = http_request.body
 
         try:
-            result = asyncio.run(self.__service.update_exam(db, exam_uuid, request))
+            result = await self.__service.update_exam(db, exam_uuid, request)
 
             self.__logger.info("Prova atualizada com sucesso: %s", exam_uuid)
 

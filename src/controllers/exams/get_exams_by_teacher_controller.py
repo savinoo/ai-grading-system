@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exams.get_exams_by_teacher_service import GetExamsByTeacherService
 
@@ -15,7 +14,7 @@ from src.errors.domain.sql_error import SqlError
 
 from src.core.logging_config import get_logger
 
-class GetExamsByTeacherController(ControllerInterface):
+class GetExamsByTeacherController(AsyncControllerInterface):
     """  
     Controller que delega ao GetExamsByTeacherService a busca de provas por professor.
     """
@@ -24,7 +23,7 @@ class GetExamsByTeacherController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de busca de provas por professor.
         
@@ -74,14 +73,12 @@ class GetExamsByTeacherController(ControllerInterface):
             active_only = str(active_only_raw).lower() == "true"
 
         try:
-            result = asyncio.run(
-                self.__service.get_exams_by_teacher(
-                    db,
-                    teacher_uuid,
-                    active_only=active_only,
-                    skip=skip,
-                    limit=limit
-                )
+            result = await self.__service.get_exams_by_teacher(
+                db,
+                teacher_uuid,
+                active_only=active_only,
+                skip=skip,
+                limit=limit
             )
 
             self.__logger.info("Provas recuperadas com sucesso para professor: %s", teacher_uuid)

@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exam_questions.delete_exam_question_service import DeleteExamQuestionService
 
@@ -16,7 +15,7 @@ from src.errors.domain.validate_error import ValidateError
 
 from src.core.logging_config import get_logger
 
-class DeleteExamQuestionController(ControllerInterface):
+class DeleteExamQuestionController(AsyncControllerInterface):
     """  
     Controller que delega ao DeleteExamQuestionService a remoção de questão de prova.
     """
@@ -25,7 +24,7 @@ class DeleteExamQuestionController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de remoção de questão de prova.
         
@@ -51,7 +50,7 @@ class DeleteExamQuestionController(ControllerInterface):
         )
 
         try:
-            asyncio.run(self.__service.delete_exam_question(db, question_uuid))
+            await self.__service.delete_exam_question(db, question_uuid)
 
             self.__logger.info("Questão de prova removida com sucesso: %s", question_uuid)
 

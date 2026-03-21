@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exam_question_criteria_override.delete_question_criteria_override_service import (
     DeleteQuestionCriteriaOverrideService,
@@ -18,7 +17,7 @@ from src.errors.domain.validate_error import ValidateError
 
 from src.core.logging_config import get_logger
 
-class DeleteQuestionCriteriaOverrideController(ControllerInterface):
+class DeleteQuestionCriteriaOverrideController(AsyncControllerInterface):
     """  
     Controller que delega ao DeleteQuestionCriteriaOverrideService a remoção de sobrescrita.
     """
@@ -27,7 +26,7 @@ class DeleteQuestionCriteriaOverrideController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de remoção de sobrescrita.
         """
@@ -44,7 +43,7 @@ class DeleteQuestionCriteriaOverrideController(ControllerInterface):
         )
 
         try:
-            asyncio.run(self.__service.delete_question_criteria_override(db, override_uuid))
+            await self.__service.delete_question_criteria_override(db, override_uuid)
 
             self.__logger.info("Sobrescrita removida com sucesso: %s", override_uuid)
 

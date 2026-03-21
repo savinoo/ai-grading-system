@@ -33,7 +33,7 @@ router = APIRouter(
     summary="Listar critérios de avaliação disponíveis",
     description="Endpoint para listar todos os critérios de avaliação disponíveis no sistema. Requer autenticação."
 )
-def list_grading_criteria(
+async def list_grading_criteria(
     request: Request,
     active_only: bool = Query(True, description="Retornar apenas critérios ativos"),
     skip: int = Query(0, ge=0, description="Número de registros a pular"),
@@ -79,7 +79,7 @@ def list_grading_criteria(
     controller = make_list_grading_criteria_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body
         
         # Extrai apenas a lista de critérios do body

@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exam_criteria.delete_exam_criteria_service import DeleteExamCriteriaService
 
@@ -16,7 +15,7 @@ from src.errors.domain.validate_error import ValidateError
 
 from src.core.logging_config import get_logger
 
-class DeleteExamCriteriaController(ControllerInterface):
+class DeleteExamCriteriaController(AsyncControllerInterface):
     """  
     Controller que delega ao DeleteExamCriteriaService a remoção de critério de prova.
     """
@@ -25,7 +24,7 @@ class DeleteExamCriteriaController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de remoção de critério de prova.
         
@@ -53,9 +52,7 @@ class DeleteExamCriteriaController(ControllerInterface):
         try:
             exam_criteria_uuid = UUID(params.get("exam_criteria_uuid"))
 
-            asyncio.run(
-                self.__service.delete_exam_criteria(db, exam_criteria_uuid)
-            )
+            await self.__service.delete_exam_criteria(db, exam_criteria_uuid)
 
             self.__logger.info("Critério de prova removido com sucesso: %s", exam_criteria_uuid)
 

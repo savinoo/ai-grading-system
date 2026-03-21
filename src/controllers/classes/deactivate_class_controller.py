@@ -1,13 +1,12 @@
 from __future__ import annotations
 
-import asyncio
 from uuid import UUID
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 from src.interfaces.services.classes.deactivate_class_service_interface import DeactivateClassServiceInterface
 
 from src.errors.domain.sql_error import SqlError
@@ -15,7 +14,7 @@ from src.errors.domain.not_found import NotFoundError
 
 from src.core.logging_config import get_logger
 
-class DeactivateClassController(ControllerInterface):
+class DeactivateClassController(AsyncControllerInterface):
     """  
     Controller que delega ao DeactivateClassService a desativação de uma turma.
     """
@@ -24,7 +23,7 @@ class DeactivateClassController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
         
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de desativação de turma.
         
@@ -64,7 +63,7 @@ class DeactivateClassController(ControllerInterface):
         )
         
         try:
-            result = asyncio.run(self.__service.deactivate_class(db, class_uuid))
+            result = await self.__service.deactivate_class(db, class_uuid)
             
             self.__logger.info("Turma desativada com sucesso: %s", class_uuid)
             

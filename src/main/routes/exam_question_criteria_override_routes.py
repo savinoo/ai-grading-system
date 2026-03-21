@@ -40,7 +40,7 @@ router = APIRouter(
     summary="Listar critérios customizados de uma questão",
     description="Endpoint para listar todos os critérios customizados de uma questão específica. Requer autenticação de professor."
 )
-def list_question_criteria_overrides(
+async def list_question_criteria_overrides(
     request: Request,
     question_uuid: str = Path(..., description="UUID da questão"),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -83,7 +83,7 @@ def list_question_criteria_overrides(
     controller = make_list_question_criteria_overrides_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         # Serializa a lista de responses Pydantic para JSON
         response_body = [item.model_dump(mode='json') if hasattr(item, 'model_dump') else item for item in http_response.body]
         return JSONResponse(
@@ -104,7 +104,7 @@ def list_question_criteria_overrides(
     summary="Criar critério customizado para questão",
     description="Endpoint para criar ou atualizar um critério de avaliação customizado para uma questão específica. A prova deve estar em status DRAFT. Requer autenticação de professor."
 )
-def create_question_criteria_override(
+async def create_question_criteria_override(
     request: Request,
     body: ExamQuestionCriteriaOverrideCreateRequest = Body(...),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -146,7 +146,7 @@ def create_question_criteria_override(
     controller = make_create_question_criteria_override_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -166,7 +166,7 @@ def create_question_criteria_override(
     summary="Atualizar sobrescrita de critério",
     description="Endpoint para atualizar uma sobrescrita específica (peso, pontos ou status). A prova deve estar em status DRAFT. Requer autenticação de professor."
 )
-def update_question_criteria_override(
+async def update_question_criteria_override(
     request: Request,
     override_uuid: str = Path(..., description="UUID da sobrescrita a ser atualizada"),
     body: ExamQuestionCriteriaOverrideUpdateRequest = Body(...),
@@ -201,7 +201,7 @@ def update_question_criteria_override(
     controller = make_update_question_criteria_override_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,
@@ -220,7 +220,7 @@ def update_question_criteria_override(
     summary="Remover sobrescrita de critério",
     description="Endpoint para remover uma sobrescrita específica. A prova deve estar em status DRAFT. Requer autenticação de professor."
 )
-def delete_question_criteria_override(
+async def delete_question_criteria_override(
     request: Request,
     override_uuid: str = Path(..., description="UUID da sobrescrita a ser removida"),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -254,7 +254,7 @@ def delete_question_criteria_override(
     controller = make_delete_question_criteria_override_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=None
@@ -272,7 +272,7 @@ def delete_question_criteria_override(
     summary="Resetar critérios de uma questão",
     description="Endpoint para remover todas as customizações de critérios de uma questão, voltando aos critérios originais da prova. A prova deve estar em status DRAFT. Requer autenticação de professor."
 )
-def reset_question_criteria(
+async def reset_question_criteria(
     request: Request,
     question_uuid: str = Path(..., description="UUID da questão cujos critérios serão resetados"),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -314,7 +314,7 @@ def reset_question_criteria(
     controller = make_reset_question_criteria_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=None

@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import asyncio
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exam_questions.list_exam_questions_service import ListExamQuestionsService
 
@@ -16,7 +15,7 @@ from src.errors.domain.validate_error import ValidateError
 from src.core.logging_config import get_logger
 
 
-class ListExamQuestionsController(ControllerInterface):
+class ListExamQuestionsController(AsyncControllerInterface):
     """
     Controller que delega ao ListExamQuestionsService a listagem de questões.
     """
@@ -25,7 +24,7 @@ class ListExamQuestionsController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de listagem de questões.
         
@@ -66,12 +65,10 @@ class ListExamQuestionsController(ControllerInterface):
                 )
 
             # Executar serviço
-            questions = asyncio.run(
-                self.__service.list_exam_questions(
-                    db=db,
-                    exam_uuid=exam_uuid,
-                    teacher_uuid=teacher_uuid
-                )
+            questions = await self.__service.list_exam_questions(
+                db=db,
+                exam_uuid=exam_uuid,
+                teacher_uuid=teacher_uuid
             )
 
             self.__logger.info("Listadas %d questões da prova %s", len(questions), exam_uuid)

@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import asyncio
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.grading_criteria.list_grading_criteria_service import ListGradingCriteriaService
 
@@ -14,7 +13,7 @@ from src.errors.domain.sql_error import SqlError
 
 from src.core.logging_config import get_logger
 
-class ListGradingCriteriaController(ControllerInterface):
+class ListGradingCriteriaController(AsyncControllerInterface):
     """  
     Controller que delega ao ListGradingCriteriaService a listagem de critérios de avaliação.
     """
@@ -23,7 +22,7 @@ class ListGradingCriteriaController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger("controllers")
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de listagem de critérios de avaliação.
         
@@ -53,13 +52,11 @@ class ListGradingCriteriaController(ControllerInterface):
             limit = params.get("limit", 100)
             active_only = params.get("active_only", True)
 
-            result = asyncio.run(
-                self.__service.list_grading_criteria(
-                    db,
-                    skip=skip,
-                    limit=limit,
-                    active_only=active_only
-                )
+            result = await self.__service.list_grading_criteria(
+                db,
+                skip=skip,
+                limit=limit,
+                active_only=active_only
             )
 
             self.__logger.info("Listados %d critérios de avaliação", len(result))
