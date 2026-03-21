@@ -9,7 +9,8 @@
 An intelligent, multi-agent system that automates grading of complex academic essay questions with human-level reasoning and detailed pedagogical feedback. Built as a Capstone Project in Computer Science Engineering.
 
 **Key Capabilities:**
-- 🤖 **Multi-Agent Architecture** with consensus-based grading  
+
+- 🤖 **Multi-Agent Architecture** with consensus-based grading
 - 📊 **Batch Processing** optimized for high throughput
 - 🎯 **Pedagogical Feedback** explaining grading decisions
 - 🔐 **Enterprise-Ready** with error handling and resilience
@@ -22,12 +23,12 @@ The grading system employs a **distributed, consensus-based architecture** orche
 
 ### Agent Components
 
-| Agent | Role | Description |
-|-------|------|-------------|
-| **Examiner C1** | Primary Evaluator | Grades submissions independently against rubric using RAG |
-| **Examiner C2** | Secondary Evaluator | Independent evaluation for consensus validation |
-| **Arbiter** | Dispute Resolution | Activated when divergence exceeds threshold; mediates final grade |
-| **Analytics Engine** | Quality Assurance | Detects plagiarism, tracks student progress, provides insights |
+| Agent                      | Role                | Description                                                       |
+| -------------------------- | ------------------- | ----------------------------------------------------------------- |
+| **Examiner C1**      | Primary Evaluator   | Grades submissions independently against rubric using RAG         |
+| **Examiner C2**      | Secondary Evaluator | Independent evaluation for consensus validation                   |
+| **Arbiter**          | Dispute Resolution  | Activated when divergence exceeds threshold; mediates final grade |
+| **Analytics Engine** | Quality Assurance   | Detects plagiarism, tracks student progress, provides insights    |
 
 ### Processing Workflow
 
@@ -38,7 +39,7 @@ graph TD
     B --> C2[Examiner 2]
     C1 --> D{Divergence Check}
     C2 --> D
-    D -->|Difference &gt; 1.5 points| E[Arbiter Resolution]
+    D -->|Difference > 1.5 points| E[Arbiter Resolution]
     D -->|Within Threshold| F[Consensus Reached]
     E --> F
     F --> G[Generate Feedback]
@@ -50,6 +51,10 @@ graph TD
 ## ✨ Key Features
 
 - **🚀 Parallel Batch Processing** – Handles high-volume submissions without hitting LLM rate limits (async workers + chunking strategy)
+- **🧩 Stateful LangGraph Workflow** – Uses `StateGraph` nodes/edges to orchestrate retrieval, dual evaluation, arbitration, and final decision routing
+- **📚 Production RAG Pipeline** – Indexes exam attachments via PDF chunking + embeddings + ChromaDB retrieval
+- **💾 Persistent Vector Store** – Stores vectors on disk for reuse across runs, avoiding unnecessary re-indexing
+- **🔄 Flexible Embedding Providers** – Supports Google, OpenAI, and local Ollama embeddings via environment configuration
 - **💡 Intelligent Cost Optimization** – Tiered model strategy (Gemini 2.0 Flash for routine grading, Pro for complex arbitration)
 - **🛡️ Production-Grade Resilience** – Self-healing logic with retry mechanisms, graceful API error handling, and JSON validation
 - **📝 Context-Aware Feedback** – Pedagogical explanations that help students understand grading rationale
@@ -59,20 +64,21 @@ graph TD
 
 ## 🛠️ Technology Stack
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **Orchestration** | LangGraph | Multi-agent workflow engine |
-| **Prompt Engineering** | DSPy (Stanford) | Structured prompt optimization |
-| **LLM Provider** | Google Gemini 2.0 Flash/Pro | Core AI reasoning |
-| **LLM Interface** | LiteLLM | Unified LLM abstraction |
-| **Backend API** | FastAPI | REST endpoints |
-| **Database** | PostgreSQL 16 | Persistent data storage |
-| **Migrations** | Alembic | Schema versioning |
-| **Vector Search** | ChromaDB | RAG context retrieval |
-| **Frontend** | React + TypeScript + Tailwind | User interface |
-| **Containerization** | Docker & Docker Compose | Local & cloud deployment |
+| Layer                        | Technology                  | Purpose                        |
+| ---------------------------- | --------------------------- | ------------------------------ |
+| **Orchestration**      | LangGraph                   | Multi-agent workflow engine    |
+| **Prompt Engineering** | DSPy (Stanford)             | Structured prompt optimization |
+| **LLM Provider**       | Google Gemini 2.0 Flash/Pro | Core AI reasoning              |
+| **LLM Interface**      | LiteLLM                     | Unified LLM abstraction        |
+| **Embeddings**         | Google / OpenAI / Ollama    | Configurable vector generation |
+| **Backend API**        | FastAPI                     | REST endpoints                 |
+| **Database**           | PostgreSQL 16               | Persistent data storage        |
+| **Migrations**         | Alembic                     | Schema versioning              |
+| **Vector Search**      | ChromaDB                    | RAG context retrieval          |
+| **Containerization**   | Docker & Docker Compose     | Local & cloud deployment       |
 
 ## 📦 Installation & Setup
+
 
 ### Prerequisites
 
@@ -91,33 +97,33 @@ cd ai-grading-system
 
 ### Environment Variables
 
-Environment configuration templates are provided as `.env.example` files in each directory. Follow these steps:
+Environment templates are available at the project root. Follow these steps:
 
 #### 1. **Root Directory**
+
 ```bash
-cp .env.example .env
+cp database.env.example database.env
+# Windows (PowerShell): Copy-Item database.env.example database.env
 ```
-The root `.env` contains shared Docker Compose settings (PostgreSQL credentials).
+
+The root  `database.env` contains shared Docker Compose settings (PostgreSQL credentials).
 
 #### 2. **Backend**
+
 ```bash
-cp backend/.env.example backend/.env
+cp .env.example .env
+# Windows (PowerShell): Copy-Item .env.example .env
 ```
-Then edit `backend/.env` and set:
-- `DATABASE_URL` – PostgreSQL connection string (matches root `.env`)
+
+Then edit `.env` and set:
+
+- `DATABASE_URL` – PostgreSQL connection string (must match values from `database.env`)
 - `GOOGLE_API_KEY` – Your Google Gemini API key (get from [Google AI Studio](https://aistudio.google.com/apikey))
 - `SECRET_KEY` – Random string for JWT signing (generate via `python -c "import secrets; print(secrets.token_urlsafe(32))"`)
 - `BREVO_API_KEY` – Email service key (optional, for notifications)
+- `EMBEDDING_PROVIDER` – `google`, `openai`, or `local` (Ollama)
+- `EMBEDDING_MODEL` – Optional override for embedding model
 - Other settings as needed (see detailed comments in `.env.example`)
-
-#### 3. **Frontend**
-```bash
-cp frontend/.env.example frontend/.env
-```
-Then edit `frontend/.env` and set:
-- `VITE_API_BASE_URL` – Should match your backend URL (default: `http://localhost:8000`)
-
-**For reference:** Each directory's `.env.example` file contains all available configuration options with explanatory comments.
 
 ### Setup with Docker (Recommended)
 
@@ -131,9 +137,10 @@ docker compose up -d
 ```
 
 This will spin up:
+
 - **Backend** (FastAPI on `http://localhost:8000`)
-- **Frontend** (React on `http://localhost:5173`)
 - **PostgreSQL** (on `localhost:5432`)
+- **Ollama** (on `http://localhost:11434`)
 
 #### 2. Run Database Migrations
 
@@ -142,6 +149,7 @@ docker compose exec backend alembic upgrade head
 ```
 
 This applies all migrations in sequence:
+
 1. Database infrastructure (extensions, functions)
 2. Core schema (tables for users, exams, grading criteria, etc.)
 3. Triggers (auto-update timestamps)
@@ -149,7 +157,6 @@ This applies all migrations in sequence:
 
 #### 3. Verify the Setup
 
-- **Frontend:** Open [http://localhost:5173](http://localhost:5173)
 - **Backend API Docs:** Open [http://localhost:8000/docs](http://localhost:8000/docs) (Swagger UI)
 - **Health Check:**
   ```bash
@@ -163,11 +170,9 @@ If you prefer running locally:
 #### 1. Backend Setup
 
 ```bash
-cd backend
-
 # Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python -m venv .venv
+source .venv/bin/activate  # On Windows (PowerShell): .venv\Scripts\Activate.ps1
 
 # Install dependencies
 pip install -r requirements.txt
@@ -176,30 +181,17 @@ pip install -r requirements.txt
 alembic upgrade head
 
 # Start server
-uvicorn src.main.server:app --reload --port 8000
-```
-
-#### 2. Frontend Setup
-
-```bash
-cd frontend
-
-# Install dependencies
-npm ci
-
-# Start development server
-npm run dev
+uvicorn src.main.server.server:app --reload --port 8000
 ```
 
 ### Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| **Docker build fails** | Run `docker compose down -v` to remove volumes, then retry |
+| Issue                              | Solution                                                                                |
+| ---------------------------------- | --------------------------------------------------------------------------------------- |
+| **Docker build fails**       | Run `docker compose down -v` to remove volumes, then retry                            |
 | **Port 5432 already in use** | Check `docker ps` for conflicting containers or change port in `docker-compose.yml` |
-| **Alembic migration fails** | Verify `DATABASE_URL` in `.env`, ensure PostgreSQL is running |
-| **Frontend can't reach backend** | Check `VITE_API_URL` in `frontend/.env` matches backend URL |
-| **LLM API errors** | Verify `GOOGLE_API_KEY` is valid and has quota available |
+| **Alembic migration fails**  | Verify `DATABASE_URL` in `.env`, ensure PostgreSQL is running                       |
+| **LLM API errors**           | Verify `GOOGLE_API_KEY` is valid and has quota available                              |
 
 ---
 
@@ -211,7 +203,7 @@ npm run dev
 # Generate a new migration file
 docker compose exec backend alembic revision --autogenerate -m "description of changes"
 
-# Review the generated migration file in backend/alembic/versions/
+# Review the generated migration file in alembic/versions/
 
 # Apply the migration
 docker compose exec backend alembic upgrade head
@@ -220,11 +212,13 @@ docker compose exec backend alembic upgrade head
 ### Important Migration Rules
 
 ⚠️ **Do NOT manually modify:**
+
 - `revision` IDs
 - `down_revision` references
 - Migration order
 
 ✅ **Safe to modify:**
+
 - Migration file names
 - SQL logic and table definitions
 
@@ -250,23 +244,10 @@ docker compose exec backend black src/
 docker compose exec backend pylint src/
 
 # Run tests
-docker compose exec backend pytest tests/
+docker compose exec backend pytest
 
 # Shell access
 docker compose exec backend bash
-```
-
-### Frontend
-
-```bash
-# Format & lint
-npm run lint
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
 ```
 
 ## 🚀 Deployment
@@ -274,7 +255,7 @@ npm run preview
 ### Production Checklist
 
 - [ ] Set `ENVIRONMENT=production` in backend `.env`
-- [ ] Disable `DEBUG=false`
+- [ ] Set `DEBUG=false`
 - [ ] Use production LLM keys
 - [ ] Configure proper `CORS_ORIGINS`
 - [ ] Set up database backups
@@ -283,6 +264,7 @@ npm run preview
 - [ ] Set resource limits in Docker Compose
 
 ---
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please:
@@ -292,7 +274,6 @@ Contributions are welcome! Please:
 3. Commit changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
 
 ## 📄 License
 
