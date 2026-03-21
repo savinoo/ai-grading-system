@@ -69,6 +69,16 @@ class UpdateStudentAnswerController(AsyncControllerInterface):
                 body=result
             )
 
+        except (TypeError, ValueError) as parse_err:
+            self.__logger.warning("Erro ao parsear UUID da resposta: %s", parse_err)
+            raise HTTPException(
+                status_code=400,
+                detail={
+                    "error": "UUID da resposta inválido ou ausente",
+                    "code": "INVALID_UUID"
+                }
+            ) from parse_err
+
         except ValidateError as val_err:
             self.__logger.warning("Erro de validação ao atualizar resposta: %s", val_err)
             raise HTTPException(
