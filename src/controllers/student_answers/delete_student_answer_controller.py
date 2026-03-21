@@ -41,7 +41,7 @@ class DeleteStudentAnswerController(ControllerInterface):
 
         db = http_request.db
         caller = http_request.caller
-        answer_uuid: UUID = http_request.param.get("answer_uuid")
+        answer_uuid_raw = http_request.param.get("answer_uuid")
 
         self.__logger.debug(
             "Handling delete student answer request from caller: %s - %s - %s", 
@@ -51,6 +51,14 @@ class DeleteStudentAnswerController(ControllerInterface):
         )
 
         try:
+            if not answer_uuid_raw:
+                raise HTTPException(
+                    status_code=400,
+                    detail={"error": "answer_uuid é obrigatório"}
+                )
+
+            answer_uuid = UUID(str(answer_uuid_raw))
+
             asyncio.run(self.__service.delete_student_answer(db, answer_uuid))
 
             self.__logger.info("Resposta de aluno removida com sucesso: %s", answer_uuid)
@@ -69,6 +77,13 @@ class DeleteStudentAnswerController(ControllerInterface):
                     "code": val_err.code,
                     "context": val_err.context
                 }
+            ) from val_err
+
+        except ValueError as val_err:
+            self.__logger.warning("UUID inválido para remoção de resposta: %s", val_err)
+            raise HTTPException(
+                status_code=400,
+                detail={"error": "answer_uuid inválido"}
             ) from val_err
 
         except SqlError as sql_err:
