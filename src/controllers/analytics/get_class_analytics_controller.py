@@ -13,7 +13,7 @@ from src.domain.http.http_response import HttpResponse
 from src.errors.domain.not_found import NotFoundError
 from src.core.logging_config import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger("controllers")
 
 
 class GetClassAnalyticsController(ControllerInterface):

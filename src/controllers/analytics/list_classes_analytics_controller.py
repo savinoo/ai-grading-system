@@ -2,6 +2,7 @@
 Controller para listar análises pedagógicas de todas as turmas do professor.
 """
 
+from uuid import UUID
 from fastapi import HTTPException
 
 from src.interfaces.controllers.controllers_interface import ControllerInterface
@@ -10,7 +11,7 @@ from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 from src.core.logging_config import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger("controllers")
 
 
 class ListClassesAnalyticsController(ControllerInterface):
@@ -30,7 +31,6 @@ class ListClassesAnalyticsController(ControllerInterface):
             if not teacher_uuid:
                 raise ValueError("UUID do professor não encontrado no token")
 
-            from uuid import UUID
             summaries = self.__service.list_classes_analytics(
                 db=http_request.db,
                 teacher_uuid=UUID(teacher_uuid),

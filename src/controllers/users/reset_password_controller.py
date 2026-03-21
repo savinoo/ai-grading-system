@@ -16,7 +16,7 @@ class ResetPasswordController(ControllerInterface):
     
     def __init__(self, reset_password_service: ResetPasswordServiceInterface):
         self.__reset_password_service = reset_password_service
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("controllers")
     
     def handle(self, http_request: HttpRequest) -> HttpResponse:
         """

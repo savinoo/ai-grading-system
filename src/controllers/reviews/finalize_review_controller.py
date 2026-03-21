@@ -8,14 +8,12 @@ from src.core.logging_config import get_logger
 from src.domain.http.caller_domains import CallerMeta
 
 
-logger = get_logger(__name__)
-
-
 class FinalizeReviewController:
     """Controller para POST /reviews/finalize"""
     
     def __init__(self, finalization_service: ReviewFinalizationServiceInterface):
         self.__finalization_service = finalization_service
+        self.__logger = get_logger("controllers")
     
     def handle(
         self,
@@ -39,10 +37,10 @@ class FinalizeReviewController:
         
         user_uuid = token_infos.get("sub")
         if not user_uuid:
-            logger.error("Token inválido: UUID do usuário não encontrado")
+            self.__logger.error("Token inválido: UUID do usuário não encontrado")
             raise ValueError("Token inválido")
         
-        logger.info(
+        self.__logger.info(
             "Finalizando revisão da prova %s - Usuário: %s - IP: %s - PDF: %s - Notificações: %s",
             request.exam_uuid,
             user_uuid,
@@ -57,6 +55,6 @@ class FinalizeReviewController:
             user_uuid=UUID(user_uuid)
         )
         
-        logger.info("Revisão finalizada com sucesso")
+        self.__logger.info("Revisão finalizada com sucesso")
         
         return response

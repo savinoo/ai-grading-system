@@ -19,7 +19,7 @@ class ValidateRecoveryCodeController(ControllerInterface):
     
     def __init__(self, validate_recovery_code_service: ValidateRecoveryCodeServiceInterface):
         self.__validate_recovery_code_service = validate_recovery_code_service
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("controllers")
     
     def handle(self, http_request: HttpRequest) -> HttpResponse:
         """

@@ -8,7 +8,7 @@ from src.core.logging_config import get_logger
 from src.domain.http.caller_domains import CallerMeta
 
 
-logger = get_logger(__name__)
+
 
 
 class AdjustGradeController:
@@ -16,6 +16,7 @@ class AdjustGradeController:
     
     def __init__(self, adjustment_service: GradeAdjustmentServiceInterface):
         self.__adjustment_service = adjustment_service
+        self.__logger = get_logger("controllers")
     
     def handle(
         self,
@@ -39,10 +40,10 @@ class AdjustGradeController:
         
         user_uuid = token_infos.get("sub")
         if not user_uuid:
-            logger.error("Token inválido: UUID do usuário não encontrado")
+            self.__logger.error("Token inválido: UUID do usuário não encontrado")
             raise ValueError("Token inválido")
         
-        logger.info(
+        self.__logger.info(
             "Ajustando nota da resposta %s para %.2f - Usuário: %s - IP: %s",
             request.answer_uuid,
             request.new_score,
@@ -56,6 +57,6 @@ class AdjustGradeController:
             user_uuid=UUID(user_uuid)
         )
         
-        logger.info("Nota ajustada com sucesso")
+        self.__logger.info("Nota ajustada com sucesso")
         
         return response

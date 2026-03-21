@@ -6,15 +6,12 @@ from src.interfaces.services.reviews.answer_approval_service_interface import An
 from src.core.logging_config import get_logger
 from src.domain.http.caller_domains import CallerMeta
 
-
-logger = get_logger(__name__)
-
-
 class ApproveAnswerController:
     """Controller para POST /reviews/approve-answer/{answer_uuid}"""
     
     def __init__(self, approval_service: AnswerApprovalServiceInterface):
         self.__approval_service = approval_service
+        self.__logger = get_logger("controllers")
     
     def handle(
         self,
@@ -38,10 +35,10 @@ class ApproveAnswerController:
         
         user_uuid = token_infos.get("sub")
         if not user_uuid:
-            logger.error("Token inválido: UUID do usuário não encontrado")
+            self.__logger.error("Token inválido: UUID do usuário não encontrado")
             raise ValueError("Token inválido")
         
-        logger.info(
+        self.__logger.info(
             "Aprovando resposta %s - Usuário: %s - IP: %s",
             answer_uuid,
             user_uuid,
@@ -54,6 +51,6 @@ class ApproveAnswerController:
             user_uuid=UUID(user_uuid)
         )
         
-        logger.info("Resposta aprovada com sucesso")
+        self.__logger.info("Resposta aprovada com sucesso")
         
         return response

@@ -20,7 +20,7 @@ class CreateClassController(ControllerInterface):
     
     def __init__(self, service: CreateClassServiceInterface) -> None:
         self.__service = service
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("controllers")
         
     def handle(self, http_request: HttpRequest) -> HttpResponse:
         """

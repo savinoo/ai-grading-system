@@ -23,7 +23,7 @@ class UploadAttachmentController(AsyncControllerInterface):
 
     def __init__(self, service: UploadAttachmentServiceInterface) -> None:
         self.__service = service
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("controllers")
 
     async def handle(self, http_request: HttpRequest) -> HttpResponse:  # type: ignore[override]
         """

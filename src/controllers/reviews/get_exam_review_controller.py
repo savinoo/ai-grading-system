@@ -8,14 +8,12 @@ from src.core.logging_config import get_logger
 from src.domain.http.caller_domains import CallerMeta
 
 
-logger = get_logger(__name__)
-
-
 class GetExamReviewController:
     """Controller para GET /exams/{exam_uuid}/review"""
     
     def __init__(self, query_service: ExamReviewQueryServiceInterface):
         self.__query_service = query_service
+        self.__logger = get_logger("controllers")
     
     def handle(
         self,
@@ -39,10 +37,10 @@ class GetExamReviewController:
         
         user_uuid = token_infos.get("sub")
         if not user_uuid:
-            logger.error("Token inválido: UUID do usuário não encontrado")
+            self.__logger.error("Token inválido: UUID do usuário não encontrado")
             raise ValueError("Token inválido")
         
-        logger.info(
+        self.__logger.info(
             "Buscando dados de revisão da prova %s para usuário %s - IP: %s",
             exam_uuid,
             user_uuid,
@@ -55,7 +53,7 @@ class GetExamReviewController:
             user_uuid=UUID(user_uuid)
         )
         
-        logger.info(
+        self.__logger.info(
             "Dados de revisão retornados com sucesso: %d questões, %d alunos",
             response.total_questions,
             response.total_students
