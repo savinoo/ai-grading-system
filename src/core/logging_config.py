@@ -55,7 +55,7 @@ def _build_handler(stream: Any, level: int, json_mode: bool) -> logging.Handler:
     if json_mode:
         handler.setFormatter(JsonFormatter())
     else:
-        fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        fmt = "[%(levelname)s] %(asctime)s - %(name)s - %(pathname)s (%(lineno)s) - %(message)s"
         handler.setFormatter(logging.Formatter(fmt))
     return handler
 
