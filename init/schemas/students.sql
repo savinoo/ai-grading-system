@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS public.students (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
-    CONSTRAINT uq_students_uuid UNIQUE (uuid),
+    CONSTRAINT uq_students_uuid UNIQUE (uuid)
 );
 
 CREATE INDEX IF NOT EXISTS idx_students_active ON public.students(active);
