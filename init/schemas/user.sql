@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS public.users (
 
     deleted_at TIMESTAMPTZ null,
     
-    CONSTRAINT chk_users_recovery_code_attempts CHECK (recovery_code_attempts >= 0),
+    CONSTRAINT chk_users_recovery_code_attempts CHECK (recovery_code_attempts >= 0)
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS idx_users_uuid ON public.users (uuid);
