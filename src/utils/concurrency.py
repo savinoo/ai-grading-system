@@ -10,7 +10,7 @@ from typing import Any, Coroutine, Dict
 from src.core.logging_config import get_logger
 from src.core.settings import settings
 
-logger = get_logger(__name__)
+logger = get_logger("utils")
 
 # Mapeamento loop-id → semáforo para evitar conflitos entre event-loops
 _api_semaphores: Dict[int, asyncio.Semaphore] = {}

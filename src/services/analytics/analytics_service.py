@@ -39,7 +39,7 @@ from src.models.entities.student_answers import StudentAnswer
 
 from src.core.logging_config import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger("services")
 
 
 # ---------------------------------------------------------------------------

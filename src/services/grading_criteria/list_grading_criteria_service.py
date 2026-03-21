@@ -22,7 +22,7 @@ class ListGradingCriteriaService(ListGradingCriteriaServiceInterface):
 
     def __init__(self, repository: GradingCriteriaRepositoryInterface) -> None:
         self.__repository = repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def list_grading_criteria(
         self,

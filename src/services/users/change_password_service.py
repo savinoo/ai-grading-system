@@ -23,7 +23,7 @@ class ChangePasswordService(ChangePasswordServiceInterface):
     def __init__(self, user_repository: UserRepositoryInterface) -> None:
         self.__user_repository = user_repository
         self.__hash_handler = HashPasswordHandler()
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     def change_password(
         self,

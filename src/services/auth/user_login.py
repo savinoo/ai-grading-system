@@ -37,7 +37,7 @@ class UserLoginService(UserLoginServiceInterface):
     ):
         self.__user_repository = user_repository
         self.__refresh_token_repository = refresh_token_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
         self.__hash_password_handler = HashPasswordHandler()
         self.__jwt_handler = JWTHandler()
 

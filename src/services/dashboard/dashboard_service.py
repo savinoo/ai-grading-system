@@ -22,7 +22,7 @@ from src.interfaces.repositories.class_student_repository_interface import Class
 
 from src.core.logging_config import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger("services")
 
 
 class DashboardService(DashboardServiceInterface):

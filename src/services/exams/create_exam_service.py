@@ -23,7 +23,7 @@ class CreateExamService(CreateExamServiceInterface):
 
     def __init__(self, repository: ExamsRepositoryInterface) -> None:
         self.__repository = repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def create_exam(
         self,

@@ -29,7 +29,7 @@ class ChunkingService(ChunkingServiceInterface):
             chunk_size: Tamanho máximo do chunk em caracteres (padrão: 4000)
             chunk_overlap: Overlap entre chunks para manter contexto (padrão: 200)
         """
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
         
         self.__text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,

@@ -24,7 +24,7 @@ class ResetPasswordService(ResetPasswordServiceInterface):
         self.__user_repository = user_repository
         self.__hash_handler = HashPasswordHandler()
         self.__brevo_handler = BrevoHandler()
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
     
     def reset_password(self, db: Session, email: str, code: str, new_password: str) -> Dict[str, Any]:
         """

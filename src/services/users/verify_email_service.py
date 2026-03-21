@@ -34,7 +34,7 @@ class VerifyEmailService(VerifyEmailServiceInterface):
     ) -> None:
         self.__repository = repository
         self.__refresh_token_repository = refresh_token_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
         self.__jwt_handler = JWTHandler()
     
     def verify_email(self, db: Session, user_uuid: UUID, caller_meta: CallerMeta) -> dict:

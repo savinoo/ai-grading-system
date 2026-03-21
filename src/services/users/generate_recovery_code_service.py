@@ -27,7 +27,7 @@ class GenerateRecoveryCodeService(GenerateRecoveryCodeServiceInterface):
     
     def __init__(self, repository: UserRepositoryInterface) -> None:
         self.__repository = repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
         self.__brevo_handler = BrevoHandler()
         self.__hash_handler = HashPasswordHandler()
     

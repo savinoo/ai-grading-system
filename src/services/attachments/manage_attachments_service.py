@@ -31,7 +31,7 @@ class ManageAttachmentsService(ManageAttachmentsServiceInterface):
     def __init__(self, repository: AttachmentsRepositoryInterface) -> None:
         self.__repository = repository
         self.__file_system_handler = FileSystemHandler()
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def get_by_uuid(self, db: Session, uuid: UUID) -> AttachmentResponse:
         """

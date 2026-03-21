@@ -31,7 +31,7 @@ class UpdateExamCriteriaService(UpdateExamCriteriaServiceInterface):
     ) -> None:
         self.__exam_criteria_repository = exam_criteria_repository
         self.__exams_repository = exams_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def update_exam_criteria(
         self,

@@ -26,7 +26,7 @@ class DeleteExamService(DeleteExamServiceInterface):
     ) -> None:
         self.__repository = repository
         self.__attachments_service = attachments_service
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def delete_exam(
         self,

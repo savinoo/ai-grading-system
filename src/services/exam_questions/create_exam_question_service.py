@@ -31,7 +31,7 @@ class CreateExamQuestionService(CreateExamQuestionServiceInterface):
     ) -> None:
         self.__exam_question_repository = exam_question_repository
         self.__exams_repository = exams_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def create_exam_question(
         self,

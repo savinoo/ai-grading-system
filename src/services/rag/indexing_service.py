@@ -31,7 +31,7 @@ class IndexingService(IndexingServiceInterface):
         """
         self.__attachment_repository = attachment_repository
         self.__vector_store = get_vector_store()
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
     
     async def index_exam_material(
         self,

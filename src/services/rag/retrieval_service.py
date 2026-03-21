@@ -49,7 +49,7 @@ class RetrievalService(RetrievalServiceInterface):
     def __init__(self) -> None:
         """Inicializa o serviço de retrieval."""
         self.__vector_store = get_vector_store()
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
     
     async def search_context(
         self,

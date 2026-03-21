@@ -44,7 +44,7 @@ class ExamReviewQueryService(ExamReviewQueryServiceInterface):
         self.__grading_criteria_repository = grading_criteria_repository
         self.__exam_criteria_repository = exam_criteria_repository
         self.__class_repository = class_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
     
     def get_exam_review(self, db: Session, exam_uuid: UUID, user_uuid: UUID) -> ExamReviewResponse:
         """Retorna dados completos para revisão de uma prova."""

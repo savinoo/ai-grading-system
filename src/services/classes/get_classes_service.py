@@ -22,7 +22,7 @@ class GetClassesService():
         class_repository: ClassesRepositoryInterface
     ) -> None:
         self.__class_repository = class_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
         
     async def get_classes(
         self,

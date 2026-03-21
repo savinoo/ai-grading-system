@@ -33,7 +33,7 @@ class DeleteQuestionCriteriaOverrideService(DeleteQuestionCriteriaOverrideServic
         self.__override_repository = override_repository
         self.__question_repository = question_repository
         self.__exams_repository = exams_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def delete_question_criteria_override(
         self,

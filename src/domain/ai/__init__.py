@@ -6,6 +6,7 @@ Centraliza DTOs, lógica de negócio e orquestração de avaliação automática
 from .schemas import *  # noqa: F403
 from .agent_schemas import *  # noqa: F403
 from .rag_schemas import *  # noqa: F403
+from . import prompts
 
 # Workflows e utilitários de domínio
 from .utils.divergence_checker import DivergenceChecker
@@ -21,4 +22,5 @@ __all__ = [
     "get_grading_graph",
     "DivergenceChecker",
     "ConsensusBuilder",
+    "prompts",
 ]

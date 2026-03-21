@@ -13,7 +13,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from src.core.settings import settings
 from src.core.logging_config import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger("services")
 
 
 class PlagiarismService:

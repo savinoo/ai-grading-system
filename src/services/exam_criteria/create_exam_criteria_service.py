@@ -34,7 +34,7 @@ class CreateExamCriteriaService(CreateExamCriteriaServiceInterface):
         self.__exam_criteria_repository = exam_criteria_repository
         self.__exams_repository = exams_repository
         self.__grading_criteria_repository = grading_criteria_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def create_exam_criteria(
         self,

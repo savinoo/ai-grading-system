@@ -39,7 +39,7 @@ class UploadAttachmentService(UploadAttachmentServiceInterface):
         self.__repository = repository
         self.__file_system_handler = FileSystemHandler()
         self.__file_hash_handler = FileHashHandler()
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def upload(
         self,

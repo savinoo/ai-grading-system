@@ -37,7 +37,7 @@ class ExaminerAgent(ExaminerAgentInterface):
             ("human", CORRECTOR_SYSTEM_PROMPT)
         ])
         self.__chain = self.__prompt | self.__llm
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     @traceable(run_type="chain", name="Examiner Agent Evaluation")
     @retry(

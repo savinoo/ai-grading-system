@@ -37,7 +37,7 @@ class CreateStudentAnswerService(CreateStudentAnswerServiceInterface):
         self.__question_repository = question_repository
         self.__exams_repository = exams_repository
         self.__student_repository = student_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def create_student_answer(
         self,

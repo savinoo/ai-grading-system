@@ -15,7 +15,7 @@ from src.models.entities.student import Student
 
 from src.core.logging_config import get_logger
 
-logger = get_logger(__name__)
+logger = get_logger("utils")
 
 
 def generate_grades_report(

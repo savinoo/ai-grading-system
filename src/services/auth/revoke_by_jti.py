@@ -23,7 +23,7 @@ class RevokeByJtiService(RevokeByJtiServiceInterface):
     """
     
     def __init__(self, repo: AuthRefreshTokenRepositoryInterface):
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
         self.__repo = repo
         
     def revoke(self, db: Session, body: RevokeByJti) -> None:

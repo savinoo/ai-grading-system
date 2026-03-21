@@ -35,7 +35,7 @@ class ListQuestionCriteriaOverridesService(ListQuestionCriteriaOverridesServiceI
         self.__criteria_override_repository = criteria_override_repository
         self.__exam_question_repository = exam_question_repository
         self.__exams_repository = exams_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def list_question_criteria_overrides(
         self,

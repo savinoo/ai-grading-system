@@ -22,7 +22,7 @@ class GetMeService(GetMeServiceInterface):
     
     def __init__(self, repo: UserRepositoryInterface) -> None:
         self.__repo = repo
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
     
     def execute(self, db: Session, user_uuid: str) -> dict:
         """

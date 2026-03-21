@@ -26,7 +26,7 @@ class ReviewFinalizationService(ReviewFinalizationServiceInterface):
     ):
         self.__exam_repository = exam_repository
         self.__student_answer_repository = student_answer_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
     
     def finalize_review(
         self,

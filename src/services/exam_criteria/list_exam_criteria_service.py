@@ -23,7 +23,7 @@ class ListExamCriteriaService(ListExamCriteriaServiceInterface):
 
     def __init__(self, repository: ExamCriteriaRepositoryInterface) -> None:
         self.__repository = repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def list_exam_criteria(
         self,

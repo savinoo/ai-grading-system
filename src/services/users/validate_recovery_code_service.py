@@ -22,7 +22,7 @@ class ValidateRecoveryCodeService(ValidateRecoveryCodeServiceInterface):
     def __init__(self, user_repository: UserRepositoryInterface):
         self.__user_repository = user_repository
         self.__hash_handler = HashPasswordHandler()
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
     
     def validate(self, db:Session,  email: str, code: str) -> Dict[str, Any]:
         """

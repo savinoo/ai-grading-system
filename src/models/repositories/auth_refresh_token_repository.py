@@ -23,7 +23,7 @@ class AuthRefreshTokenRepository(AuthRefreshTokenRepositoryInterface):
     """
 
     def __init__(self) -> None:
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("repositories")
 
     # ==================== READ OPERATIONS ====================
 

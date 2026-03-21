@@ -25,7 +25,7 @@ class RefreshTokenService(RefreshTokenServiceInterface):
         self, 
         refresh_token_repo: AuthRefreshTokenRepositoryInterface
     ):
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
         self.__refresh_token_repo = refresh_token_repo
         self.__jwt_handler = JWTHandler()
     

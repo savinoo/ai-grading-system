@@ -22,7 +22,7 @@ class GetExamByUuidService(GetExamByUuidServiceInterface):
 
     def __init__(self, repository: ExamsRepositoryInterface) -> None:
         self.__repository = repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def get_exam_by_uuid(
         self,

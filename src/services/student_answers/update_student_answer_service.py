@@ -34,7 +34,7 @@ class UpdateStudentAnswerService(UpdateStudentAnswerServiceInterface):
         self.__student_answer_repository = student_answer_repository
         self.__question_repository = question_repository
         self.__exams_repository = exams_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def update_student_answer(
         self,

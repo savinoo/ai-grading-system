@@ -37,7 +37,7 @@ class CreateQuestionCriteriaOverrideService(CreateQuestionCriteriaOverrideServic
         self.__question_repository = question_repository
         self.__exams_repository = exams_repository
         self.__grading_criteria_repository = grading_criteria_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     async def create_question_criteria_override(
         self,

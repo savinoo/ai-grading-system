@@ -71,7 +71,7 @@ class PublishExamService(PublishExamServiceInterface):
         self.__indexing_service = indexing_service
         self.__grading_service = grading_service
         
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
     
     async def publish_exam(
         self,

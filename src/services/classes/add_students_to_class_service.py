@@ -33,7 +33,7 @@ class AddStudentsToClassService(AddStudentsToClassServiceInterface):
         self.__student_repository = student_repository
         self.__class_student_repository = class_student_repository
         self.__class_repository = class_repository
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
         
     async def add_students_to_class(
         self,

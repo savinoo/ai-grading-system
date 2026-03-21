@@ -31,7 +31,7 @@ class ArbiterAgent(ArbiterAgentInterface):
             ("human", ARBITER_SYSTEM_PROMPT)
         ])
         self.__chain = self.__prompt | self.__llm
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("services")
 
     @traceable(run_type="chain", name="Arbiter Agent Decision")
     @retry(

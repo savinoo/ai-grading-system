@@ -6,7 +6,6 @@ Aplica técnicas de Engenharia de Prompt:
 2. Chain-of-Thought (Raciocínio passo-a-passo)
 3. Groundedness (Fidelidade ao Contexto RAG)
 """
-<<<<<<< HEAD:src/domain/ai/prompts.py
 
 from __future__ import annotations
 
@@ -14,14 +13,6 @@ from typing import List
 
 from src.domain.ai.schemas import EvaluationCriterion
 from src.domain.ai.rag_schemas import RetrievedContext
-=======
-Centralização dos Prompts do Sistema.
-Aqui aplicamos as técnicas de Engenharia de Prompt definidas na metodologia:
-1. Role Prompting (Atuar como especialista)
-2. Chain-of-Thought (Raciocínio passo-a-passo)
-3. Groundedness (Fidelidade ao Contexto RAG) [cite: 63, 102]
-"""
->>>>>>> eeb9ccdeddb9dc198387a00bd1a147308f313900:src/config/prompts.py
 
 # -----------------------------------------------------------------------------
 # PROMPT PARA CORRETORES INDEPENDENTES (C1 e C2)
