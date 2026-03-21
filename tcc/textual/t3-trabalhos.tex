@@ -1,0 +1,256 @@
+\chapter{Trabalhos Relacionados}
+\label{cap:trabalhos}
+
+Este capítulo apresenta uma revisão da literatura existente relacionada ao uso de Inteligência Artificial, especialmente LLMs e RAG, para a correção automática de provas discursivas. O objetivo é identificar padrões, métodos, desafios e lacunas em pesquisas que envolvem a aplicação dessas técnicas avançadas de IA na avaliação educacional automatizada, com foco na análise e feedback de respostas discursivas. Além disso, busca-se compreender como esses modelos estão sendo desenvolvidos e aplicados em diversos contextos educacionais para aprimorar a eficiência e a qualidade do processo avaliativo.
+
+\section{Protocolo de Pesquisa}
+
+\subsection{Objetivo e questões de pesquisa}
+\label{subsec: questoes_pesquisa}
+    
+O objetivo deste mapeamento sistemático da literatura é revisar os estudos existentes que utilizam IA, especialmente Modelos de LLMs e RAG, para a correção automática de provas discursivas. Pretende-se identificar as abordagens metodológicas empregadas, os tipos de dados e modelos de linguagem utilizados, as técnicas de IA (incluindo LLMs, RAG e agentes de IA) aplicadas e os resultados obtidos na avaliação automatizada de respostas discursivas. Além disso, busca-se entender os desafios enfrentados na implementação prática desses sistemas de correção automática e como eles podem ser adaptados a diferentes contextos educacionais e tipos de avaliação.
+
+As seguintes questões de pesquisa foram formuladas para orientar o mapeamento sistemático da literatura:
+
+\begin{enumerate}
+    \item \textbf{QP1:} Quais são as abordagens e técnicas de Inteligência Artificial (especialmente LLMs e PLN) mais utilizadas para a correção automática de provas discursivas no contexto educacional?
+
+    \item \textbf{QP1.1} - Quais são os principais desafios, limitações e vantagens da utilização de sistemas de correção automática de provas discursivas em comparação com a correção manual, especialmente em relação à consistência, subjetividade e feedback ao aluno?
+
+    \item \textbf{QP1.2} - Como a integração de mecanismos como RAG e bancos de dados vetoriais tem sido explorada para melhorar a precisão e a contextualização na correção automática de provas?
+
+    \item \textbf{QP1.3} - Quais são as arquiteturas de sistemas (incluindo sistemas multiagentes) propostas para a correção automática de provas e como elas lidam com a configuração de critérios de avaliação e a intervenção do professor?
+
+    \item \textbf{QP1.4} - Quais são os resultados (\textit{outcomes}) reportados na literatura sobre a eficácia, eficiência e aceitação de ferramentas de correção automática de provas por educadores e alunos?
+\end{enumerate}
+
+\subsection{Estratégia de pesquisa e instrumentos}
+
+A principal fonte de dados definida para a busca foi a base Scopus, reconhecida por sua ampla cobertura de literatura científica revisada por pares.
+
+O \textit{framework} PICOC é uma metodologia amplamente utilizada em revisões sistemáticas para estruturar e guiar a formulação da questão de pesquisa. O acrônimo representa cinco componentes essenciais: População/Problema, Intervenção, Comparação, \textit{Outcome} (resultado) e Contexto, garantindo que a busca por literatura seja ao mesmo tempo abrangente e focada nos aspectos mais relevantes do estudo.
+
+A string de busca foi construída utilizando o \textit{framework} PICOC (População/Problema, Intervenção, Comparação, \textit{Outcome}, Contexto) para garantir a abrangência e especificidade na recuperação dos artigos. As palavras-chave em inglês foram priorizadas para maximizar o alcance em bases de dados internacionais, apesar de manter as palavras em português. 
+
+\noindent
+A \autoref{qua:picoc} abaixo mostra as principais palavras-chave selecionadas para cada um dos elementos do modelo PICOC adotado neste trabalho.
+
+\begin{quadro}[H]
+\caption{Elementos PICOC e suas palavras-chave}
+\label{qua:picoc}
+\centering
+\begin{tabular}{p{0.18\linewidth}p{0.78\linewidth}}
+\hline
+\multicolumn{1}{|p{0.18\linewidth}|}{\Centering\textbf{Elemento}} &
+\multicolumn{1}{|p{0.78\linewidth}|}{\Centering\textbf{Palavras-chave}} \\
+\hline
+\multicolumn{1}{|p{0.18\linewidth}|}{P} &
+\multicolumn{1}{|p{0.78\linewidth}|}{%
+  "correção de provas discursivas", "automated essay scoring", 
+  "automatic essay grading", "avaliação educacional automatizada", 
+  "automated educational assessment", "feedback automatizado", 
+  "automated feedback", "correção de testes discursivos", 
+  "discursive tests correction", "avaliação de questões abertas", 
+  "open-ended question assessment"
+} \\
+\hline
+\multicolumn{1}{|p{0.18\linewidth}|}{I} &
+\multicolumn{1}{|p{0.78\linewidth}|}{%
+  "Inteligência Artificial", "Artificial Intelligence", 
+  "Modelos de Linguagem de Grande Escala", "Large Language Models", 
+  "LLMs", "Processamento de Linguagem Natural", "PLN", "NLP", 
+  "Recuperação Aumentada por Geração", "Retrieval-Augmented Generation", 
+  "RAG", "bancos de dados vetoriais", "vector databases", 
+  "agentes de IA", "AI agents", "sistemas multiagentes", 
+  "multi-agent systems"
+} \\
+\hline
+\multicolumn{1}{|p{0.18\linewidth}|}{C (\emph{comparação})} &
+\multicolumn{1}{|p{0.78\linewidth}|}{%
+  
+} \\
+\hline
+\multicolumn{1}{|p{0.18\linewidth}|}{O} &
+\multicolumn{1}{|p{0.78\linewidth}|}{%
+ "precisão da correção", "grading accuracy", 
+  "acurácia da avaliação", "assessment accuracy", 
+  "eficiência", "efficiency", "consistência da avaliação", 
+  "assessment consistency", "qualidade do feedback", 
+  "feedback quality", "métricas de avaliação", "evaluation metrics", 
+  "aceitação por usuários", "user acceptance", 
+  "desempenho do sistema", "system performance"
+} \\
+\hline
+\multicolumn{1}{|p{0.18\linewidth}|}{C (\emph{contexto})} &
+\multicolumn{1}{|p{0.78\linewidth}|}{%
+  % preencha se desejar
+} \\
+\hline
+\end{tabular}
+\end{quadro}
+
+Os artigos retornados pelas máquinas de busca foram filtrados e analisados considerando os seguintes critérios de inclusão (CI) e exclusão (CE).
+
+\begin{itemize}
+    \item \textbf{CI1 - Relevância Temática}: Estudos que abordem diretamente a aplicação de IA, Modelos de LLMs, PLN, RAG, bancos de dados vetoriais, agentes de IA ou sistemas multiagentes para a correção automática, avaliação ou feedback de provas discursivas, questões abertas ou textos dissertativos em contextos educacionais.
+
+    \item \textbf{CI2 - Tipo de Publicação}: Artigos científicos publicados em periódicos revisados por pares, anais de conferências de relevância (com revisão por pares), dissertações e teses.
+
+    \item \textbf{CI3 - Idioma}: Trabalhos publicados em inglês ou português.
+
+    \item \textbf{CI4 - Período de Publicação}: Trabalhos publicados a partir de 2020, inclusive. Este marco temporal foi escolhido devido ao crescimento exponencial e aos avanços significativos na capacidade e disponibilidade de Modelos de LLMs a partir deste período, o que impactou diretamente as pesquisas na área de correção automática.
+
+    \item \textbf{CI5 - Acesso ao Texto Completo}: Estudos cujo texto completo esteja diretamente acessível para análise.
+
+    \item \textbf{CE1 - Irrelevância Temática}: Estudos que não se concentrem primariamente na correção/avaliação automática de textos discursivos utilizando as tecnologias de IA especificadas (por exemplo, estudos focados apenas em questões de múltipla escolha, avaliação de código de programação sem foco discursivo, ou uso de IA em educação para outros fins que não a avaliação de textos).
+
+    \item \textbf{CE2 - Tipo de Publicação}: Resumos, editoriais, cartas ao editor, livros (como um todo, embora capítulos específicos possam ser considerados se atenderem aos outros critérios como estudos originais), patentes, relatórios técnicos não revisados por pares, artigos de opinião, ou publicações em blogs e websites não acadêmicos.
+
+    \item \textbf{CE3 - Idioma}: Trabalhos publicados em idiomas diferentes de inglês ou português.
+
+    \item \textbf{CE4 - Período de Publicação}: Trabalhos publicados antes de 2020.
+
+    \item \textbf{CE5 - Acesso ao Texto Completo}: Estudos cujo texto completo não pôde ser obtido por acesso direto.
+
+    \item \textbf{CE6 - Duplicatas}: Estudos que sejam publicações duplicadas do mesmo trabalho (será mantida a versão mais completa ou a publicada na fonte de maior impacto/relevância).
+\end{itemize}
+
+\subsection{Procedimentos da Revisão Sistemática da Literatura}
+
+O processo de revisão sistemática da literatura adotado neste trabalho seguiu as etapas metodológicas descritas abaixo, visando assegurar um levantamento abrangente, transparente e replicável dos trabalhos relevantes para responder às questões de pesquisa formuladas.
+
+\begin{enumerate}
+    \item \textbf{Definição das Questões de Pesquisa}: Conforme detalhado na \autoref{subsec: questoes_pesquisa}, foram estabelecidas questões de pesquisa claras e específicas. Estas questões nortearam toda a estratégia de busca e seleção de estudos, focando em identificar as abordagens de IA, especialmente Modelos de LLMs e RAG, aplicadas à correção automática de provas discursivas, bem como os desafios, métricas e oportunidades na área.
+
+    \item \textbf{Elaboração da Estratégia de Busca}: Utilizando o framework PICOC (População/Problema, Intervenção, Comparação, Resultados e Contexto) como guia, foi desenvolvida uma estratégia de busca detalhada. Foram selecionadas palavras-chave e termos de busca em inglês e português, cobrindo os principais conceitos relacionados à correção automática de provas, IA, LLMs, RAG, avaliação educacional e contextos de aplicação. A string de busca foi refinada iterativamente para otimizar a sensibilidade e especificidade dos resultados.
+
+    \item \textbf{Seleção das Bases de Dados e Execução da Busca}: Busca nas bases de dados selecionadas, aplicando os filtros de idioma e período de publicação.
+
+    \item \textbf{Seleção Inicial dos Estudos}: Os resultados das buscas foram avaliados inicialmente pelos títulos e resumos para excluir estudos claramente irrelevantes ou que não atendessem aos critérios básicos de inclusão (tipo de publicação, idioma).
+
+    \item \textbf{Análise dos Textos Completos e Extração de Dados}: Os estudos pré-selecionados tiveram seus textos completos lidos para confirmar sua elegibilidade, aplicando-se rigorosamente todos os critérios de inclusão e exclusão. Dos estudos elegíveis, foram extraídas informações sistematicamente utilizando uma planilha eletrônica, contemplando dados bibliográficos, objetivos, metodologia, contexto da aplicação, tecnologias de IA (LLMs, RAG, agentes), tipos de avaliação, métricas de desempenho, principais resultados, desafios, contribuições e sugestões para pesquisas futuras.
+
+    \item \textbf{Síntese e Análise Qualitativa dos Resultados}: Os dados extraídos foram compilados e organizados para identificar padrões e tendências. Realizou-se uma análise qualitativa, agrupando estudos por temas emergentes e sintetizando narrativamente os achados para responder a cada questão de pesquisa, destacando contribuições, lacunas e limitações, com uso de tabelas/figuras quando apropriado.
+\end{enumerate}
+
+\section{Caracterização da Pesquisa}
+Realizou-se uma busca por trabalhos publicados a partir de 2020, em inglês ou português, relacionados ao uso de IA para correção ou avaliação de textos discursivos em contextos educacionais. Foram considerados estudos revisados por pares (artigos de periódicos, anais de conferências) e literatura acadêmica (dissertações e teses). Aplicando os critérios de inclusão e exclusão, identificaram-se 12 publicações iniciais. Após seleção por título e resumo, 7 estudos foram mantidos para análise completa.
+
+A \autoref{tab:estudos} apresenta os 7 estudos analisados, com objetivos, metodologia, tecnologias de IA, tipo de avaliação, principais resultados e desafios.
+\begin{adjustwidth*}{-2.5cm}{-2.5cm}
+\hspace*{\fill}
+\captionsetup[table]{hypcap=false}
+\keepXColumns
+\small
+\setlength\LTcapwidth{\textwidth}
+
+\begin{tabularx}{\dimexpr\textwidth+1.25cm\relax}{
+    >{\RaggedRight\arraybackslash}p{0.8cm}
+    >{\RaggedRight\arraybackslash}p{2.5cm}
+    *{5}{>{\RaggedRight\arraybackslash}X}
+}
+\caption{Características dos estudos incluídos}
+\label{tab:estudos} \\
+      \toprule
+      \textbf{E} &\textbf{Autores} &\textbf{Objetivos e Contexto} & \textbf{Metodologia}
+        & \textbf{Tecnologias de IA}
+        & \textbf{Tipo de Avaliação e Métricas}
+        & \textbf{Principais Resultados e Desafios} \\
+      \midrule
+      \endhead
+
+      % agora seu conteúdo:
+      E1 & \cite{janumpally_role_2025} & Mapear aplicações de PLN/LLM na formação médica de residentes & Revisão de escopo (PRISMA); 20 estudos (2018–2024) & Técnicas de PLN e LLMs diversas & Avaliação de desempenho; análise de sentimento; métricas de acurácia & Redução de carga, melhora de consistência; riscos de viés e privacidade \\
+      \midrule
+      E2 & \cite{li_applying_2024} & Avaliar LLMs em correção de redações de japonês L2 & Experimento comparativo com 1 400 textos; 5 abordagens & GPT-4, BERT, ferramentas tradicionais & Notas e proficiência; acurácia de anotação & GPT-4 superior; dependência de engenharia de prompt \\
+      \midrule
+      E3 & \cite{xiao_human-ai_2025} & Sistema colaborativo Humano-IA para pontuação de ensaios em inglês L2 & Experimentos com GPT-4/GPT-3.5 afinado; co-avaliação com professores & GPT-4, GPT-3.5 \textit{fine-tuned} & Notas e \textit{feedback}; consistência e interpretabilidade & Melhora de avaliadores; necessidade de ampliar amostra \\
+    \midrule
+    E4  & \cite{hutt_feedback_2024} & IA para avaliar qualidade de \textit{feedback} entre pares & Comparativo: modelo clássico versus LLM generativo & Modelo ML clássico; LLM generativo & Classificação da qualidade do \textit{feedback}; acurácia & ML tradicional um pouco melhor; LLM gera explicações ricas \\
+    \midrule
+    E5 & \cite{avcu_employing_2025} & Revisão de modelos hierárquicos de avaliadores (HRMs) em  \textit{Automated Essay Scoring} (AES) & Revisão de escopo sobre HRMs e PLN & HRMs integrados com PLN/IA & Consistência interavaliador; viés de correção & Mitigação de vieses; alta complexidade computacional \\
+    \midrule
+    E6 & \cite{fiki_setiawan_exploring_2025} & Ferramentas de IA no \textit{feedback} de escrita em inglês EFL & Estudo descritivo: Grammarly, QuillBot, Ginger & Ferramentas de PLN (Grammarly, QuillBot, Ginger) & Detecção de erros; qualidade das sugestões & Eficácia e dependência; uso como complemento \\
+    \midrule
+    E7 & \cite{kitzie_ai-empowered_2024} & Painel sobre IA para apoiar doutorandos & Relato de painel com experientes e novatos & ChatGPT, Otter.ai, tradutores, etc. & Assistência em pesquisa e redação; produtividade & Maior eficiência; desafios de integridade acadêmica \\
+    \bottomrule
+\end{tabularx}
+\hspace*{\fill}
+\end{adjustwidth*}
+
+\section{Resultados e Discussões}
+A análise dos estudos selecionados revela tendências convergentes, que agrupamos em três eixos principais:
+
+\begin{enumerate}
+    \item Aplicação de LLMs e outras IA para avaliação automatizada de textos discursivos (especialmente redações);
+    \item Uso de IA para geração e avaliação de feedback em contexto educacional;
+    \item Principais desafios e considerações na implementação dessas tecnologias em ambientes de aprendizagem.
+\end{enumerate}
+
+As seções \autoref{subsec:llm-avalicao}, \autoref{subsec:ia-avaliacao} e \autoref{subsec:desafios-etica} a seguir, sintetizam os achados de acordo com esses temas.
+
+\subsection{LLMs e Avaliação Automatizada de Redações}
+\label{subsec:llm-avalicao}
+Vários trabalhos exploram como modelos de LLMs e outras abordagens de IA estão sendo empregados para atribuir notas automáticas a textos escritos por alunos. No estudo experimental de \citeonline{li_applying_2024} (E2), por exemplo, a aplicação de LLMs no AES mostrou-se promissora: o GPT-4 ultrapassou métodos tradicionais na correção de redações em japonês como L2. Esse LLM obteve maior exatidão na anotação das redações e melhor capacidade de estimar o nível de proficiência do aluno, evidenciando o potencial dos modelos generativos de última geração em avaliações escritas. Por outro lado, os autores ressaltam que a eficácia dos LLMs depende fortemente de \textit{prompts} bem elaborados, visto que estratégias de \textit{prompting} diferentes resultaram em qualidade variável da avaliação automática. Assim, otimizar as instruções dadas ao modelo (\textit{prompt engineering}) desponta como fator crítico para obter avaliações confiáveis, alinhado à recomendação dos autores de explorar técnicas de \textit{prompt} mais avançadas e testar LLMs em outras modalidades de linguagem (como avaliação de fala).
+
+No trabalho de \citeonline{xiao_human-ai_2025} (E3), que foca em redações de inglês L2, os LLMs (GPT-4 e GPT-3.5) foram incorporados em um sistema colaborativo de correção. Embora versões anteriores do estudo tenham indicado que LLMs puros não superavam todos os modelos tradicionais em métricas de desempenho, na versão final percebeu-se que um GPT-3.5 ajustado conseguiu igualar ou exceder a acurácia de modelos clássicos especializados. Mais notável, porém, foi o ganho em consistência e capacidade de explicação: as notas atribuídas pelos LLMs apresentaram menor variabilidade indesejada e vieram acompanhadas de feedback textual interpretável, algo que métodos tradicionais geralmente não fornecem. Além disso, os experimentos do autor demonstraram que LLMs podem aumentar a eficiência de avaliadores humanos, servindo como apoio (\textit{augmented grading}), os professores menos experientes conseguiram avaliar textos com qualidade próxima à de especialistas ao utilizar sugestões e justificativas geradas pela IA. Esses achados reforçam a ideia de que, para avaliação de redações, a sinergia entre IA e humanos pode produzir melhores resultados do que cada um isoladamente: a IA confere rapidez, padronização e abrangência, enquanto o humano aporta julgamento pedagógico e senso crítico.
+
+Um aspecto transversal aos estudos de AES é a preocupação com equidade e robustez das notas automatizadas. A revisão de \citeonline{avcu_employing_2025} (E5) contribui aqui ao discutir HRMs integrados à IA. Esses modelos matemáticos visam replicar o processo de um avaliador humano, capturando vieses e variâncias, e incorporá-los no sistema automático para minimizar injustiças. A revisão aponta que combinar técnicas de PLN com HRMs mitiga vieses de correção e melhora a confiabilidade das pontuações. Em outras palavras, algoritmos de correção de redações podem se tornar mais justos ao ajustar automaticamente as notas considerando, por exemplo, a tendência de um professor ser “mão dura” ou “leniente” demais, equilibrando assim a avaliação. Este enfoque complementa o uso de LLMs: enquanto estes trazem poder de compreensão semântica em larga escala, HRMs trazem o arcabouço estatístico para tratar consistência e fairness. A revisão de \citeonline{janumpally_role_2025} (E1), embora focada em educação médica, também identificou sistemas automatizados de avaliação de desempenho como uma das principais aplicações do PLN/IA na educação, ressaltando ganhos de acurácia e redução de carga dos instrutores. Em suma, o conjunto dos estudos sugere que modelos de IA podem corrigir redações com qualidade próxima ou equivalente à humana, desde que bem configurados, e inclusive oferecem oportunidades de melhorar aspectos antes problemáticos (viés, inconsistência) através de abordagens híbridas (IA + modelos estatísticos + supervisão humana).
+
+\subsection{IA na Geração e Avaliação de Feedback Educacional}
+\label{subsec:ia-avaliacao}
+Outro tema recorrente é o emprego da IA para fornecer feedback automatizado aos alunos, bem como para avaliar a qualidade do feedback que alunos produzem. Essa linha aparece tanto em estudos experimentais quanto em contextos de uso real de ferramentas. 
+
+No feedback ao estudante sobre sua escrita, o estudo de \citeonline{fiki_setiawan_exploring_2025} (E6) avaliou três ferramentas amplamente disponíveis. Os resultados mostram que essas IA conseguem identificar e sugerir correções para uma variedade de problemas em textos estudantis, de erros gramaticais a construções confusas. O Grammarly, em particular, destacou-se por sua precisão gramatical, cobrindo grande parte dos erros de forma confiável. Já o QuillBot demonstrou uma função valiosa de reformulações (paráfrases), ajudando os alunos a melhorarem a clareza e variedade de vocabulário. A ferramenta Ginger, por outro lado, ficou aquém das demais, oferecendo feedback mais superficial. Um achado importante foi que os alunos aprimoraram aspectos de sua escrita (especialmente gramática) e se sentiram mais motivados ao utilizar essas ferramentas, mas simultaneamente desenvolveram certa dependência, confiando nas sugestões a ponto de não as revisar criticamente ou não se arriscarem em construções próprias. Os autores propõem, então, uma integração equilibrada: utilizar o feedback automatizado como complemento ao feedback humano. Por exemplo, o aluno pode primeiro passar o texto no Grammarly para corrigir erros básicos e, em seguida, submeter a versão revisada ao professor ou colegas para comentários mais aprofundados. Essa abordagem combinada tira proveito do feedback imediato e personalizado que a IA oferece, sem abrir mão da orientação pedagógica humana e do estímulo ao pensamento crítico do aluno. 
+
+Quanto ao feedback que o próprio aluno fornece em atividades de \textit{peer review} (avaliação por pares), o estudo de \citeonline{hutt_feedback_2024} (E4) introduz a IA como “avaliadora de avaliadores”. A ideia é usar modelos para examinar se um comentário de aluno para seu colega é útil, específico, construtivo, etc.. Nesse cenário, comparou-se um algoritmo tradicional de classificação de texto com um LLM. Os resultados indicaram que o método tradicional foi ligeiramente mais preciso em julgar a qualidade do feedback, possivelmente por ter sido treinado diretamente nos critérios de qualidade desejados. Entretanto, o LLM pôde produzir análises mais detalhadas em linguagem natural, por exemplo explicando quais aspectos do feedback do aluno estão bons ou precisam melhorar. Essa capacidade de gerar explicações sugere um valor pedagógico: a ferramenta de IA não apenas atribuiria uma nota ou categoria ao feedback do aluno, mas também daria um retorno a ele sobre seu comentário, fechando um ciclo de meta-feedback (“feedback sobre o feedback”). Na prática, isso poderia ajudar estudantes a se tornarem revisores melhores ao longo do tempo. A ressalva observada foi que os LLMs, se não devidamente alinhados, podem às vezes se desviar das diretrizes (instruções) ao produzir essas avaliações textuais, por exemplo, podendo elogiar excessivamente ou criticar de forma não estruturada, fugindo dos critérios específicos da tarefa. Apesar disso, o estudo sinaliza que unir a acurácia das técnicas tradicionais com a riqueza das explicações geradas por IA tende a ser uma solução muito eficaz. Uma possibilidade mencionada seria usar o modelo clássico para decidir a classificação do feedback (p.ex. “ótimo, bom, razoável, fraco”) e o LLM para gerar uma justificativa comentada para o aluno. 
+
+De forma geral, os estudos concordam que a IA expandiu as possibilidades de feedback educacional em termos de escala e imediaticidade. Ferramentas como chatbots ou LLMs podem dar retorno instantâneo a um grande número de alunos, algo difícil apenas com pessoal humano. Além disso, conseguem adaptar o feedback ao conteúdo específico de cada texto (diferente de correções fixas), atuando quase como “tutores virtuais” disponíveis 24 horas. Entretanto, a qualidade pedagógica desse feedback automatizado ainda exige validação e acompanhamento. A orientação comum é: IA no feedback deve ser usada de forma assistiva, e não substitutiva, ou seja, para potencializar o aprendizado fornecendo insumos rápidos e detalhados, enquanto o professor reorienta e valida esse processo.
+
+\subsection{Desafios e Considerações Éticas}
+\label{subsec:desafios-etica}
+Apesar dos avanços demonstrados, os estudos levantam diversos desafios na implementação de IA para avaliação educacional. Um tema recorrente é o risco de viés e injustiça. \citeonline{janumpally_role_2025} (E1) e \citeonline{avcu_employing_2025} (E5) enfatizam preocupação com viés algorítmico: modelos podem perpetuar preconceitos presentes nos dados (por exemplo, avaliar sistematicamente pior redações de certos grupos). Assim, há um apelo forte por \textit{frameworks} éticos e de auditoria das IAs educacionais, garantindo que sejam transparentes, responsáveis e não discriminatórias. Ainda sobre justiça, \citeonline{avcu_employing_2025} discute que as notas automatizadas precisam ganhar confiança dos educadores e alunos, o que requer tanto rigor técnico (p.ex. uso de HRMs para equilíbrio de notas) quanto clareza nas justificativas. Fornecer explicações compreensíveis junto com a nota (como LLMs fazem) ajuda nesse sentido, tornando o processo menos “caixa-preta”.
+
+Outro desafio destacado é a dependência excessiva de alunos e professores nas ferramentas de IA. \citeonline{fiki_setiawan_exploring_2025} (E6) observaram que alguns estudantes passaram a aceitar todas as sugestões do Grammarly cegamente, sem reflexão. De modo similar, \citeonline{kitzie_ai-empowered_2024} (E7) alertam que doutorandos podem confiar demais em traduções automáticas ou na geração de conteúdo via IA, em detrimento de desenvolver suas próprias habilidades de escrita e análise. Essa comodidade traz o perigo de uma diminuição do pensamento crítico. Como resposta, os autores sugerem intervenções educacionais: é crucial treinar os usuários (sejam alunos de graduação, sejam doutorandos) para utilizar as ferramentas de forma estratégica e consciente. Isso inclui discutir casos de erro da IA, incentivar revisão humana do \textit{output} da máquina e enfatizar que a IA é uma assistente, útil para tarefas mecânicas ou como consulta,  mas não substitui o aprendizado fundamental nem o julgamento humano.
+
+Questões de integridade acadêmica e plágio também emergem. No contexto de doutorado (E7), mencionou-se preocupação de que o uso de IA para escrever partes de textos ou resumir artigos pode diluir a originalidade e até configurar má conduta se não houver transparência \cite{kitzie_ai-empowered_2024}. Instituições educacionais começam a elaborar políticas sobre o uso aceitável de IA pelos alunos. Uma abordagem sugerida é tratar a IA como mais uma fonte de auxílio, similar a um livro ou ferramenta, devendo ser citada ou declarada quando utilizada para produzir conteúdo avaliado. Em avaliações escritas, isso implica que professores talvez precisem repensar formatos de tarefa e critérios, valorizando processos (esboços, rascunhos manuais, discussões em classe) para garantir que a aprendizagem genuína ocorra mesmo com a IA disponível.
+
+No aspecto técnico, a calibragem e manutenção desses sistemas é um ponto complexo. Modelos de IA, especialmente LLMs de ponta, demandam recursos computacionais elevados e atualizações constantes. A robustez fora do ambiente de laboratório é incerta – por exemplo, um GPT-4 pode se comportar de forma inesperada com entradas muito diferentes das do treino. Os estudos que implementaram sistemas (E2, E3, E4, E6) frequentemente limitam seu escopo a conjuntos de dados específicos; quando expandidos para outros domínios ou faixas etárias, o desempenho pode variar. Logo, há a recomendação de testes piloto e refinamento contínuo antes de adoção ampla. \citeonline{hutt_feedback_2024} (E4) mencionaram a necessidade de alinhar melhor o LLM às instruções específicas da tarefa de \textit{feedback}, possivelmente através de \textit{fine-tuning} ou \textit{prompting} mais detalhado, o que ilustra a importância de customizar a IA ao contexto educacional alvo, em vez de usar “modelo pronto” genericamente.
+
+Por fim, todos os autores convergem na visão de que a IA não vem para substituir o professor, mas para empoderá-lo (assim como aos estudantes). A integração bem-sucedida demanda um delineamento claro de papéis: deixar para as máquinas o que elas fazem de melhor (processar rapidamente grande volume de textos, garantir padronização inicial, sugerir melhorias triviais) e deixar para os humanos o que eles fazem de melhor (analisar nuances subjetivas, entender o aluno como indivíduo, inspirar e motivar, ajustar intervenções pedagógicas). Com base nos achados, pode-se dizer que a IA, usada com critério, tem potencial de tornar a avaliação mais ágil, frequente e formativa, desde que os desafios de viés, dependência e integridade sejam continuamente monitorados e mitigados.
+
+\section{Respostas às Questões de Pesquisa}
+
+\textbf{QP1}
+As abordagens de IA mais empregadas para correção automática de respostas discursivas evoluíram de técnicas clássicas de PLN para modelos de linguagem de última geração. Sistemas de AES tradicionais baseavam-se em \textit{features} linguísticas pré-definidas e algoritmos de aprendizado de máquina supervisionados. Exemplos incluem motores como o \textit{Intelligent Essay Assessor}, \textit{e-rater} e similares. Essas abordagens utilizam métricas como riqueza lexical, complexidade sintática, coerência textual e outros indicadores manuais para emular a avaliação humana. Sua principal contribuição é viabilizar \textit{feedback} rápido e consistente, reduzindo a carga de trabalho dos docentes, embora com flexibilidade limitada. Nos últimos anos, o foco migrou para modelos de \textit{Deep Learning}, especialmente os LLMs, como o BERT, GPT-3.5 e GPT-4. Estudos comparativos indicam que métodos baseados em LLMs superam abordagens convencionais em termos de acurácia e capacidade preditiva. Modelos como o GPT-4 demonstraram maior correspondência com as notas de referência do que os próprios avaliadores humanos entre si. Além disso, LLMs oferecem a possibilidade de gerar \textit{feedback} textual detalhado ao estudante, como demonstrado por \citeonline{xiao_human-ai_2025}, que propuseram um sistema inspirado na teoria de processamento dual. \citeonline{hutt_feedback_2024} também constataram que LLMs podem avaliar a qualidade de \textit{feedback} entre pares com desempenho próximo ao de classificadores tradicionais.
+
+\textbf{QP1.1}
+No contraste entre correção automática e manual, destacam-se vantagens como consistência, eficiência e \textit{feedback} personalizado. A IA aplica os mesmos critérios de forma uniforme, eliminando variabilidades e subjetividades comuns entre corretores humanos. Estudos apontam que a concordância entre modelos como o GPT-4 e as notas humanas é superior à concordância entre os próprios humanos \cite{li_applying_2024}. A correção automática oferece retorno rápido e escalável, viabilizando \textit{feedback} formativo em larga escala. Porém, há limitações. A subjetividade de respostas criativas nem sempre é capturada adequadamente. LLMs podem apresentar \textit{alucinações}, ou inferências indevidas, além de reproduzir vieses presentes nos dados de treinamento \cite{xiao_human-ai_2025}. Estudos alertam para a necessidade de \textit{frameworks} éticos e mecanismos de monitoramento. Outro desafio é a dependência excessiva de estudantes em ferramentas de correção, prejudicando o pensamento crítico \cite{fiki_setiawan_exploring_2025}. Portanto, é essencial equilibrar os benefícios da automação com orientações pedagógicas claras.
+
+\textbf{QP1.2}
+A integração de mecanismos de RAG e bancos de dados vetoriais visa melhorar a precisão e contextualização na avaliação de respostas discursivas. Esses mecanismos permitem que modelos de linguagem acessem informações relevantes durante a avaliação, alinhando suas respostas aos critérios e conteúdos esperados da tarefa. Um exemplo notável dessa abordagem é o sistema \textit{SteLLA}, desenvolvido por \citeonline{qiu_stella_2025}, que utiliza RAG para recuperar rubricas e respostas modelos e, em seguida, emprega o GPT-4 para gerar perguntas de avaliação e analisar a resposta do aluno item a item. Os resultados preliminares reportam alta concordância com avaliadores humanos e detalhamento do \textit{feedback} por subcritérios. Contudo, trata-se de um estudo em formato de \textit{preprint}, não submetido a revisão por pares, e por isso foi excluído da amostra principal desta revisão. Ainda assim, ele ilustra o potencial das arquiteturas baseadas em RAG para ancorar a correção automatizada em critérios pedagógicos explícitos. Além disso, outros estudos reforçam que a engenharia de \textit{prompts}, quando inclui instruções claras e rubricas na entrada do modelo, também contribui para aumentar a acurácia e contextualização das respostas geradas pelos LLMs, funcionando como uma forma simplificada de simular o fornecimento de contexto vetorial \cite{hutt_feedback_2024}. 
+
+\textbf{QP1.3}
+As arquiteturas propostas para correção automática de provas discursivas variam entre \textit{pipelines} modulares e sistemas colaborativos humano-IA. \citeonline{xiao_human-ai_2025} apresentam um modelo em que o LLM realiza uma primeira rodada de avaliação, atribuindo nota e gerando \textit{feedback}, enquanto o professor atua como agente supervisor nos casos em que o sistema identifica baixa confiança na própria resposta, garantindo assim maior confiabilidade. Já os HRMs, discutidos por \citeonline{avcu_employing_2025}, oferecem uma abordagem estatística hierárquica que considera múltiplas camadas, como comportamento dos avaliadores, dificuldade das tarefas e interações entre esses fatores. Esse tipo de modelagem permite calibrar pontuações, mitigar vieses e promover maior consistência entre avaliações. Em comum, essas arquiteturas buscam integrar a atuação do docente ao processo automatizado, permitindo configuração de critérios, personalização pedagógica e intervenção humana quando necessário.
+
+\textbf{QP1.4}
+A literatura revisada aponta alta eficácia e eficiência de ferramentas automáticas, com qualidade de avaliação comparável à humana. Modelos como o GPT-3.5 e GPT-4 demonstraram desempenho equivalente ou superior a métodos tradicionais . A correção automatizada reduz tempo e carga de trabalho dos professores, sendo viável para aplicação em larga escala \cite{xiao_human-ai_2025}. Quanto à aceitação, estudantes relataram melhorias na escrita e motivação com o uso de ferramentas como Grammarly e QuillBot, desde que orientados a revisar criticamente as sugestões \cite{fiki_setiawan_exploring_2025}. Educadores demonstraram aprovação quando a IA é usada como apoio, permitindo foco em tarefas pedagógicas mais estratégicas. A confiança na ferramenta cresce com a transparência dos algoritmos e a possibilidade de intervenção docente, tornando a IA uma aliada potencial na avaliação educacional.
+
+\section{Considerações}
+
+A presente revisão sistemática da literatura permitiu identificar e analisar, de forma abrangente, os avanços, desafios e tendências no uso de técnicas de IA, com destaque para os Modelos de LLMs e mecanismos de RAG, aplicados à correção automática de respostas discursivas no contexto educacional.
+
+Os estudos revisados demonstram que os LLMs representam uma evolução expressiva em relação às abordagens tradicionais de correção automática baseadas em features linguísticas e algoritmos clássicos de aprendizado de máquina. Modelos como o GPT-4 e o GPT-3.5 \textit{fine-tuned} apresentaram desempenho superior em termos de acurácia e consistência, além de oferecerem a capacidade de gerar \textit{feedback} textual interpretável e detalhado. Esse tipo de retorno, aliado à velocidade e escalabilidade da correção automatizada, revela um potencial significativo para o uso pedagógico desses modelos em avaliações formativas e somativas.
+
+O uso de mecanismos como RAG e engenharia de \textit{prompts} avançada tem se mostrado promissor para fornecer contexto pedagógico aos modelos, alinhando suas respostas aos critérios avaliativos previamente estabelecidos. Embora ainda escassos, os estudos que integram bases vetoriais, rubricas e exemplos modelo apontam para uma melhoria na precisão e na transparência do processo de avaliação automatizada. Mesmo trabalhos que não atenderam aos critérios formais de inclusão, como preprints, oferecem sinais claros de um movimento em direção a sistemas de avaliação mais contextualizados e explicáveis.
+
+Paralelamente, o uso de IA na geração e avaliação de \textit{feedback} ao estudante, tanto individual quanto em atividades de avaliação por pares, amplia o escopo de aplicação dessas tecnologias, especialmente ao fomentar a autonomia do aprendiz e a personalização do processo de escrita. Contudo, a literatura adverte sobre os riscos da dependência excessiva dos usuários nas ferramentas automatizadas, o que pode comprometer o desenvolvimento de habilidades críticas e criativas.
+
+Em termos de arquitetura, os estudos destacam soluções que variam desde sistemas colaborativos humano-IA, em que o professor supervisiona e ajusta a atuação do modelo, até modelos estatísticos hierárquicos, como os HRMs, que buscam corrigir vieses e inconsistências históricas da avaliação humana. Essa diversidade de propostas revela um consenso: a IA deve atuar como ferramenta complementar e assistiva, e não substitutiva, do julgamento pedagógico humano.
+
+Apesar dos benefícios, persistem desafios técnicos, éticos e pedagógicos. A possibilidade de viés algorítmico, as dificuldades de adaptação dos modelos a diferentes contextos culturais e linguísticos, e as exigências de infraestrutura computacional são obstáculos que requerem atenção. Além disso, a aceitação plena dessas tecnologias por educadores e instituições depende de fatores como transparência, auditabilidade, capacidade de personalização e possibilidade de intervenção docente.
+
+Conclui-se, portanto, que a integração de IA na correção automatizada de respostas discursivas possui alto potencial transformador para a avaliação educacional — desde que conduzida com responsabilidade ética, supervisão qualificada e foco na aprendizagem. Futuras pesquisas devem investir em abordagens híbridas, que combinem IA, modelagem estatística e participação docente, e expandir a análise para outros contextos, níveis educacionais e áreas do conhecimento. O uso crítico e pedagógico da IA, aliado a políticas institucionais claras, será determinante para garantir que essa tecnologia se torne uma aliada efetiva na promoção de avaliações mais justas, ágeis e formativas.
+
+
+ 

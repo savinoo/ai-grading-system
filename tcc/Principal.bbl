@@ -1,0 +1,432 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\setlength{\labelsep}{0pt}\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{v-1.9.7 }
+
+\bibitem[Avcu 2025]{avcu_employing_2025}
+\abntrefinfo{Avcu}{AVCU}{2025}
+{AVCU, A. Employing a {Hierarchical} {Rater} {Models} for {Automated}
+  {Scoring}: {Scope} {Review} on the {Application} in {Educational}
+  {Assessment}.
+\emph{Malaysian Online Journal of Educational Technology}, v.~13, n.~2, p.
+  37--47, abr. 2025.
+ISSN 2289-2990.
+Dispon{\'\i}vel em: \url{https://mojet.net/index.php/mojet/article/view/569}.}
+
+\bibitem[Barbosa et al. 2021]{barbosa_tempo_2021}
+\abntrefinfo{Barbosa et al.}{BARBOSA et al.}{2021}
+{BARBOSA, A. et al. Tempo de trabalho e de ensino: composição da jornada de
+  trabalho dos professores paulistas.
+\emph{Educação e Pesquisa}, v.~47, p. e235807, 2021.
+ISSN 1678-4634, 1517-9702.
+Dispon{\'\i}vel em:
+  \url{http://www.scielo.br/scielo.php?script=sci\_arttext&pid=S1517-97022021000100770&tlng=pt}.}
+
+\bibitem[Barroso, Reis e Amorim 2021]{barroso_subjetividade_2021}
+\abntrefinfo{Barroso, Reis e Amorim}{BARROSO; REIS; AMORIM}{2021}
+{BARROSO, I. d.~N.; REIS, J. F.~d.; AMORIM, V. P.~R. Subjetividade na
+  avaliação da aprendizagem.
+\emph{Research, Society and Development}, v.~10, n.~3, p.
+  e18410313234--e18410313234, mar. 2021.
+ISSN 2525-3409.
+Dispon{\'\i}vel em:
+  \url{https://rsdjournal.org/index.php/rsd/article/view/13234}.}
+
+\bibitem[Bastos 1997]{bastos_instrucao_1997}
+\abntrefinfo{Bastos}{BASTOS}{1997}
+{BASTOS, M. H.~C. A instrução pública e o ensino mútuo no {Brasil}: uma
+  história pouco conhecida (1808-1827).
+\emph{Revista História da Educação}, v.~1, n.~1, p. 115--133, 1997.
+ISSN 2236-3459.
+Dispon{\'\i}vel em:
+  \url{https://seer.ufrgs.br/index.php/asphe/article/view/30631}.}
+
+\bibitem[Beckford 2024]{beckford_revisit_2024}
+\abntrefinfo{Beckford}{BECKFORD}{2024}
+{BECKFORD, W. \emph{Revisit from 2024: {The} current {Status} and {Future} of
+  {Pretrained} {Large} {Language} {Models} ({LLMs}) for {Education}
+  {Revolution}}. 2024.
+Dispon{\'\i}vel em: \url{https://osf.io/7ds4a}.}
+
+\bibitem[Besta et al. 2024]{besta_graph_2024}
+\abntrefinfo{Besta et al.}{BESTA et al.}{2024}
+{BESTA, M. et al. \emph{Graph of {Thoughts}: {Solving} {Elaborate} {Problems}
+  with {Large} {Language} {Models}}. arXiv, 2024.
+ArXiv:2308.09687.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2308.09687}.}
+
+\bibitem[Borges e Silva 2017]{borges_avaliacao_2017}
+\abntrefinfo{Borges e Silva}{BORGES; SILVA}{2017}
+{BORGES, B.~G.; SILVA, S. P.~D. Avaliação, exames e poderes: a
+  “docimologia” a partir de algumas contribuições de {Foucault} e
+  {Nietzsche}.
+\emph{EDUCAÇÃO E FILOSOFIA}, v.~31, n.~62, p. 669--694, ago. 2017.
+ISSN 01026801, 1982596X.
+Dispon{\'\i}vel em:
+  \url{http://www.seer.ufu.br/index.php/EducacaoFilosofia/article/view/31385}.}
+
+\bibitem[Carnaval 2021]{carnaval_desigualdade_2021}
+\abntrefinfo{Carnaval}{CARNAVAL}{2021}
+{CARNAVAL, M.~M. A desigualdade da infraestrutura escolar das escolas estaduais
+  no município de {São} {Paulo}.
+\emph{Jornal de Políticas Educacionais}, v.~15, maio 2021.
+ISSN 1981-1969, 1981-1969.
+Dispon{\'\i}vel em: \url{https://revistas.ufpr.br/jpe/article/view/79216}.}
+
+\bibitem[Carregari e Romão 2024]{carregari_luckesi_2024}
+\abntrefinfo{Carregari e Romão}{CARREGARI; ROMãO}{2024}
+{CARREGARI, F. A. D.~S.; ROMãO, J.~E. {LUCKESI}, {Cipriano} {Carlos}.
+  {Avaliação} em educação: questões epistemológicas e práticas. {São}
+  {Paulo}: {Cortez}, 2018.
+\emph{Dialogia}, n.~48, p. e25572, abr. 2024.
+ISSN 1983-9294, 1677-1303.
+Dispon{\'\i}vel em:
+  \url{https://periodicos.uninove.br/dialogia/article/view/25572}.}
+
+\bibitem[Chen et al. 2021]{chen_evaluating_2021}
+\abntrefinfo{Chen et al.}{CHEN et al.}{2021}
+{CHEN, M. et al. \emph{Evaluating {Large} {Language} {Models} {Trained} on
+  {Code}}. arXiv, 2021.
+ArXiv:2107.03374.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2107.03374}.}
+
+\bibitem[Chen et al. 2025]{chen_survey_2025}
+\abntrefinfo{Chen et al.}{CHEN et al.}{2025}
+{CHEN, S. et al. \emph{A {Survey} on {LLM}-based {Multi}-{Agent} {System}:
+  {Recent} {Advances} and {New} {Frontiers} in {Application}}. arXiv, 2025.
+ArXiv:2412.17481.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2412.17481}.}
+
+\bibitem[{Fiki Setiawan} e {Annas Alkhowarizmi}
+  2025]{fiki_setiawan_exploring_2025}
+\abntrefinfo{{Fiki Setiawan} e {Annas Alkhowarizmi}}{{Fiki Setiawan}; {Annas
+  Alkhowarizmi}}{2025}
+{{Fiki Setiawan}; {Annas Alkhowarizmi}. Exploring an {Artificial}
+  {Intelligence} as {Automated} {Feedback} {Program} in {EFL} {Writing}.
+\emph{ETERNAL (English Teaching Journal)}, v.~16, n.~1, p. 202--224, fev. 2025.
+ISSN 2614-1639, 2086-5473.
+Dispon{\'\i}vel em:
+  \url{https://journal2.upgris.ac.id/index.php/eternal/article/view/1206}.}
+
+\bibitem[Gao et al. 2022]{gao_precise_2022}
+\abntrefinfo{Gao et al.}{GAO et al.}{2022}
+{GAO, L. et al. \emph{Precise {Zero}-{Shot} {Dense} {Retrieval} without
+  {Relevance} {Labels}}. arXiv, 2022.
+ArXiv:2212.10496.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2212.10496}.}
+
+\bibitem[Gao et al. 2024]{gao_retrieval-augmented_2024}
+\abntrefinfo{Gao et al.}{GAO et al.}{2024}
+{GAO, Y. et al. \emph{Retrieval-{Augmented} {Generation} for {Large} {Language}
+  {Models}: {A} {Survey}}. arXiv, 2024.
+ArXiv:2312.10997.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2312.10997}.}
+
+\bibitem[Gatti 2017]{gatti_formacao_2017}
+\abntrefinfo{Gatti}{GATTI}{2017}
+{GATTI, B.~A. {FORMAÇÃO} {DE} {PROFESSORES}, {COMPLEXIDADE} {E} {TRABALHO}
+  {DOCENTE}.
+\emph{Revista Diálogo Educacional}, v.~17, n.~53, p. 721--737, ago. 2017.
+ISSN 1981-416X.
+Dispon{\'\i}vel em:
+  \url{https://periodicos.pucpr.br/dialogoeducacional/article/view/8429}.}
+
+\bibitem[Heggler, Szmoski e Miquelin 2025]{heggler_as_2025}
+\abntrefinfo{Heggler, Szmoski e Miquelin}{HEGGLER; SZMOSKI; MIQUELIN}{2025}
+{HEGGLER, J.~M.; SZMOSKI, R.~M.; MIQUELIN, A.~F. {AS} {DUALIDADES} {ENTRE} {O}
+  {USO} {DA} {INTELIGÊNCIA} {ARTIFICIAL} {NA} {EDUCAÇÃO} {E} {OS} {RISCOS}
+  {DE} {VIESES} {ALGORÍTMICOS}.
+\emph{Educação \& Sociedade}, v.~46, jan. 2025.
+ISSN 1678-4626.
+Dispon{\'\i}vel em:
+  \url{https://www.scielo.br/j/es/a/qrTryFvZR9Y9WsRpG5fWGHB/}.}
+
+\bibitem[Hutt et al. 2024]{hutt_feedback_2024}
+\abntrefinfo{Hutt et al.}{HUTT et al.}{2024}
+{HUTT, S. et al. Feedback on {Feedback}: {Comparing} {Classic} {Natural}
+  {Language} {Processing} and {Generative} {AI} to {Evaluate} {Peer}
+  {Feedback}. In:  \emph{Proceedings of the 14th {Learning} {Analytics} and
+  {Knowledge} {Conference}}. Kyoto Japan: ACM, 2024. p. 55--65.
+ISBN 9798400716188. Dispon{\'\i}vel em:
+  \url{https://dl.acm.org/doi/10.1145/3636555.3636850}.}
+
+\bibitem[Janumpally 2025]{janumpally_role_2025}
+\abntrefinfo{Janumpally}{JANUMPALLY}{2025}
+{JANUMPALLY, R.~K. The {Role} of {Natural} {Language} {Processing} in
+  {Graduate} {Medical} {Education}: {A} {Scoping} {Review}.
+\emph{Cureus}, mar. 2025.
+ISSN 2168-8184.
+Dispon{\'\i}vel em:
+  \url{https://www.cureus.com/articles/334867-the-role-of-natural-language-processing-in-graduate-medical-education-a-scoping-review}.}
+
+\bibitem[Junior et al. 2024]{bottentuit_junior_inteligencia_2024}
+\abntrefinfo{Junior et al.}{JUNIOR et al.}{2024}
+{JUNIOR, J.~B. B. et al. Inteligência artificial no ensino superior: uma
+  revisão de literatura sobre desafios e possibilidades no contexto
+  acadêmico.
+\emph{PoliÉtica. Revista de Ética e Filosofia Política}, v.~12, n.~3, p.
+  145--171, nov. 2024.
+ISSN 2318-3160.
+Dispon{\'\i}vel em:
+  \url{https://revistas.pucsp.br/index.php/PoliEtica/article/view/68116}.}
+
+\bibitem[Khattab e Zaharia 2020]{khattab_colbert_2020}
+\abntrefinfo{Khattab e Zaharia}{KHATTAB; ZAHARIA}{2020}
+{KHATTAB, O.; ZAHARIA, M. \emph{{ColBERT}: {Efficient} and {Effective}
+  {Passage} {Search} via {Contextualized} {Late} {Interaction} over {BERT}}.
+  arXiv, 2020.
+ArXiv:2004.12832.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2004.12832}.}
+
+\bibitem[Kitzie et al. 2024]{kitzie_ai-empowered_2024}
+\abntrefinfo{Kitzie et al.}{KITZIE et al.}{2024}
+{KITZIE, V. et al. The {AI}-empowered {Researcher}: {Using} {AI}-based {Tools}
+  for {Success} in {Ph}.{D}. {Programs}.
+\emph{Proceedings of the ALISE Annual Conference}, out. 2024.
+ISSN 2573-2269.
+Dispon{\'\i}vel em:
+  \url{https://iopn.library.illinois.edu/journals/aliseacp/article/view/1710}.}
+
+\bibitem[Lai et al. 2024]{lai_large_2024}
+\abntrefinfo{Lai et al.}{LAI et al.}{2024}
+{LAI, J. et al. Large language models in law: {A} survey.
+\emph{AI Open}, v.~5, p. 181--196, jan. 2024.
+ISSN 2666-6510.
+Dispon{\'\i}vel em:
+  \url{https://www.sciencedirect.com/science/article/pii/S2666651024000172}.}
+
+\bibitem[Lewis et al. 2021]{lewis_retrieval-augmented_2021}
+\abntrefinfo{Lewis et al.}{LEWIS et al.}{2021}
+{LEWIS, P. et al. \emph{Retrieval-{Augmented} {Generation} for
+  {Knowledge}-{Intensive} {NLP} {Tasks}}. arXiv, 2021.
+ArXiv:2005.11401.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2005.11401}.}
+
+\bibitem[Li e Liu 2024]{li_applying_2024}
+\abntrefinfo{Li e Liu}{LI; LIU}{2024}
+{LI, W.; LIU, H. Applying large language models for automated essay scoring for
+  non-native {Japanese}.
+\emph{Humanities and Social Sciences Communications}, v.~11, n.~1, p.~723, jun.
+  2024.
+ISSN 2662-9992.
+Dispon{\'\i}vel em: \url{https://www.nature.com/articles/s41599-024-03209-9}.}
+
+\bibitem[Lima et al. 2023]{lima_avaliacao_2023}
+\abntrefinfo{Lima et al.}{LIMA et al.}{2023}
+{LIMA, T. B.~d. et al. Avaliação {Automática} de {Redação}: {Uma} revisão
+  sistemática.
+\emph{Revista Brasileira de Informática na Educação}, v.~31, p. 205--221,
+  maio 2023.
+ISSN 2317-6121.
+Dispon{\'\i}vel em:
+  \url{https://journals-sol.sbc.org.br/index.php/rbie/article/view/2869}.}
+
+\bibitem[Liu et al. 2023]{liu_prompt_2023}
+\abntrefinfo{Liu et al.}{LIU et al.}{2023}
+{LIU, P. et al. Pre-train, prompt, and predict: A systematic survey of
+  prompting methods in natural language processing.
+\emph{ACM Comput. Surv.}, Association for Computing Machinery, New York, NY,
+  USA, v.~55, n.~9, jan. 2023.
+ISSN 0360-0300.
+Dispon{\'\i}vel em: \url{https://doi.org/10.1145/3560815}.}
+
+\bibitem[Otter, Medina e Kalita 2021]{otter_survey_2021}
+\abntrefinfo{Otter, Medina e Kalita}{OTTER; MEDINA; KALITA}{2021}
+{OTTER, D.~W.; MEDINA, J.~R.; KALITA, J.~K. A {Survey} of the {Usages} of
+  {Deep} {Learning} for {Natural} {Language} {Processing}.
+\emph{IEEE transactions on neural networks and learning systems}, v.~32, n.~2,
+  p. 604--624, fev. 2021.
+ISSN 2162-2388.}
+
+\bibitem[Paixão et al. 2022]{paixao_machine_2022}
+\abntrefinfo{Paixão et al.}{PAIXãO et al.}{2022}
+{PAIXãO, G. M. d.~M. et al. Machine {Learning} na {Medicina}: {Revisão} e
+  {Aplicabilidade}.
+\emph{Arquivos Brasileiros de Cardiologia}, v.~118, n.~1, p. 95--102, jan.
+  2022.
+ISSN 0066-782X.
+Dispon{\'\i}vel em:
+  \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8959062/}.}
+
+\bibitem[Park et al. 2023]{park_generative_2023}
+\abntrefinfo{Park et al.}{PARK et al.}{2023}
+{PARK, J.~S. et al. \emph{Generative {Agents}: {Interactive} {Simulacra} of
+  {Human} {Behavior}}. arXiv, 2023.
+ArXiv:2304.03442.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2304.03442}.}
+
+\bibitem[Pessanha, Vieira e Brandão 2024]{pessanha_large_2024}
+\abntrefinfo{Pessanha, Vieira e Brandão}{PESSANHA; VIEIRA; BRANDãO}{2024}
+{PESSANHA, G. R.~G.; VIEIRA, A.~G.; BRANDãO, W.~C. Large {Language} {Models}
+  ({LLMs}): {A} systematic study in {Administration} and {Business}.
+\emph{RAM. Revista de Administração Mackenzie}, v.~25, p. eRAMD240059, dez.
+  2024.
+ISSN 1678-6971.
+Dispon{\'\i}vel em:
+  \url{https://www.scielo.br/j/ram/a/GCJHtgxWBNVv7kB73pKbm5m/?lang=en}.}
+
+\bibitem[Pinho, Gaspar e Sassi 2024]{pinho_aplicacao_2024}
+\abntrefinfo{Pinho, Gaspar e Sassi}{PINHO; GASPAR; SASSI}{2024}
+{PINHO, C. M. D.~A.; GASPAR, M.~A.; SASSI, R.~J. {APLICAÇÃO} {DE} {TÉCNICAS}
+  {DE} {INTELIGÊNCIA} {ARTIFICIAL} {PARA} {CLASSIFICAÇÃO} {DE} {FUGA} {AO}
+  {TEMA} {EM} {REDAÇÕES}.
+\emph{Educação em Revista}, v.~40, p. e39773, 2024.
+ISSN 1982-6621, 0102-4698.
+Dispon{\'\i}vel em:
+  \url{http://www.scielo.br/scielo.php?script=sci\_arttext&pid=S0102-46982024000100209&tlng=pt}.}
+
+\bibitem[Qian et al. 2024]{qian_chatdev_2024}
+\abntrefinfo{Qian et al.}{QIAN et al.}{2024}
+{QIAN, C. et al. \emph{{ChatDev}: {Communicative} {Agents} for {Software}
+  {Development}}. arXiv, 2024.
+ArXiv:2307.07924.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2307.07924}.}
+
+\bibitem[Qiu et al. 2025]{qiu_stella_2025}
+\abntrefinfo{Qiu et al.}{QIU et al.}{2025}
+{QIU, H. et al. \emph{{SteLLA}: {A} {Structured} {Grading} {System} {Using}
+  {LLMs} with {RAG}}. arXiv, 2025.
+Dispon{\'\i}vel em: \url{https://arxiv.org/abs/2501.09092}.}
+
+\bibitem[Ram et al. 2023]{ram_-context_2023}
+\abntrefinfo{Ram et al.}{RAM et al.}{2023}
+{RAM, O. et al. \emph{In-{Context} {Retrieval}-{Augmented} {Language}
+  {Models}}. arXiv, 2023.
+ArXiv:2302.00083.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2302.00083}.}
+
+\bibitem[Sahoo et al. 2025]{sahoo_systematic_2025}
+\abntrefinfo{Sahoo et al.}{SAHOO et al.}{2025}
+{SAHOO, P. et al. \emph{A {Systematic} {Survey} of {Prompt} {Engineering} in
+  {Large} {Language} {Models}: {Techniques} and {Applications}}. arXiv, 2025.
+ArXiv:2402.07927.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2402.07927}.}
+
+\bibitem[Santos 2016]{santos_articulacao_2016}
+\abntrefinfo{Santos}{SANTOS}{2016}
+{SANTOS, L. A articulação entre a avaliação somativa e a formativa, na
+  prática pedagógica: uma impossibilidade ou um desafio?
+\emph{Ensaio: Avaliação e Políticas Públicas em Educação}, v.~24, n.~92,
+  p. 637--669, set. 2016.
+ISSN 0104-4036.
+Dispon{\'\i}vel em:
+  \url{http://www.scielo.br/scielo.php?script=sci\_arttext&pid=S0104-40362016000300637&lng=pt&tlng=pt}.}
+
+\bibitem[Seo et al. 2025]{seo_large_2025}
+\abntrefinfo{Seo et al.}{SEO et al.}{2025}
+{SEO, H. et al. Large {Language} {Models} as {Evaluators} in {Education}:
+  {Verification} of {Feedback} {Consistency} and {Accuracy}.
+\emph{Applied Sciences}, v.~15, n.~2, p.~671, jan. 2025.
+ISSN 2076-3417.
+Dispon{\'\i}vel em: \url{https://www.mdpi.com/2076-3417/15/2/671}.}
+
+\bibitem[Shahzad et al. 2025]{shahzad_comprehensive_2025}
+\abntrefinfo{Shahzad et al.}{SHAHZAD et al.}{2025}
+{SHAHZAD, T. et al. A comprehensive review of large language models: issues and
+  solutions in learning environments.
+\emph{Discover Sustainability}, v.~6, n.~1, p.~27, jan. 2025.
+ISSN 2662-9984.
+Dispon{\'\i}vel em: \url{https://doi.org/10.1007/s43621-025-00815-8}.}
+
+\bibitem[Silva 2020]{silva_politicas_2020}
+\abntrefinfo{Silva}{SILVA}{2020}
+{SILVA, R. R. d. O.~d. \emph{Políticas e gestão da educação brasileira em
+  tempos de retrocessos}. [S.l.]: Anpae, 2020.
+ISBN 9786587561004.}
+
+\bibitem[Tavares, Rodrigues e Dermeval 2024]{tavares_clarice_2024}
+\abntrefinfo{Tavares, Rodrigues e Dermeval}{TAVARES; RODRIGUES; DERMEVAL}{2024}
+{TAVARES, J.; RODRIGUES, L.; DERMEVAL, D. {CLaRiCe}: {Uma} abordagem neural
+  para a correção automática de redações. In:  \emph{Anais do {XXXV}
+  {Simpósio} {Brasileiro} de {Informática} na {Educação} ({SBIE} 2024)}.
+  Brasil: Sociedade Brasileira de Computação - SBC, 2024. p. 1824--1836.
+  Dispon{\'\i}vel em:
+  \url{https://sol.sbc.org.br/index.php/sbie/article/view/31360}.}
+
+\bibitem[Torfi et al. 2021]{torfi_natural_2021}
+\abntrefinfo{Torfi et al.}{TORFI et al.}{2021}
+{TORFI, A. et al. \emph{Natural {Language} {Processing} {Advancements} {By}
+  {Deep} {Learning}: {A} {Survey}}. arXiv, 2021.
+ArXiv:2003.01200.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2003.01200}.}
+
+\bibitem[Vaswani et al. 2023]{vaswani_attention_2023}
+\abntrefinfo{Vaswani et al.}{VASWANI et al.}{2023}
+{VASWANI, A. et al. \emph{Attention {Is} {All} {You} {Need}}. arXiv, 2023.
+ArXiv:1706.03762.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/1706.03762}.}
+
+\bibitem[Wang et al. 2025]{wang_survey_2025}
+\abntrefinfo{Wang et al.}{WANG et al.}{2025}
+{WANG, L. et al. \emph{A {Survey} on {Large} {Language} {Model} based
+  {Autonomous} {Agents}}. arXiv, 2025.
+ArXiv:2308.11432.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2308.11432}.}
+
+\bibitem[Wang et al. 2024]{wang_large_2024}
+\abntrefinfo{Wang et al.}{WANG et al.}{2024}
+{WANG, S. et al. \emph{Large {Language} {Models} for {Education}: {A} {Survey}
+  and {Outlook}}. arXiv, 2024.
+ArXiv:2403.18105.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2403.18105}.}
+
+\bibitem[Wang et al. 2023]{wang_self-consistency_2023}
+\abntrefinfo{Wang et al.}{WANG et al.}{2023}
+{WANG, X. et al. \emph{Self-{Consistency} {Improves} {Chain} of {Thought}
+  {Reasoning} in {Language} {Models}}. arXiv, 2023.
+ArXiv:2203.11171.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2203.11171}.}
+
+\bibitem[Wei et al. 2023]{wei_chain--thought_2023}
+\abntrefinfo{Wei et al.}{WEI et al.}{2023}
+{WEI, J. et al. \emph{Chain-of-{Thought} {Prompting} {Elicits} {Reasoning} in
+  {Large} {Language} {Models}}. arXiv, 2023.
+ArXiv:2201.11903.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2201.11903}.}
+
+\bibitem[Wooldridge 2012]{wooldridge_introduction_2012}
+\abntrefinfo{Wooldridge}{WOOLDRIDGE}{2012}
+{WOOLDRIDGE, M.~J. \emph{An introduction to multiagent systems}. 2. ed., repr.
+  ed. Chichester: Wiley, 2012.
+ISBN 9780470519462.}
+
+\bibitem[Xi et al. 2023]{xi_rise_2023}
+\abntrefinfo{Xi et al.}{XI et al.}{2023}
+{XI, Z. et al. \emph{The {Rise} and {Potential} of {Large} {Language} {Model}
+  {Based} {Agents}: {A} {Survey}}. arXiv, 2023.
+ArXiv:2309.07864.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2309.07864}.}
+
+\bibitem[Xiao et al. 2025]{xiao_human-ai_2025}
+\abntrefinfo{Xiao et al.}{XIAO et al.}{2025}
+{XIAO, C. et al. Human-{AI} {Collaborative} {Essay} {Scoring}: {A}
+  {Dual}-{Process} {Framework} with {LLMs}. In:  \emph{Proceedings of the 15th
+  {International} {Learning} {Analytics} and {Knowledge} {Conference}}. Dublin
+  Ireland: ACM, 2025. p. 293--305.
+ISBN 9798400707018. Dispon{\'\i}vel em:
+  \url{https://dl.acm.org/doi/10.1145/3706468.3706507}.}
+
+\bibitem[Yan et al. 2025]{yan_beyond_2025}
+\abntrefinfo{Yan et al.}{YAN et al.}{2025}
+{YAN, B. et al. \emph{Beyond {Self}-{Talk}: {A} {Communication}-{Centric}
+  {Survey} of {LLM}-{Based} {Multi}-{Agent} {Systems}}. arXiv, 2025.
+ArXiv:2502.14321.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2502.14321}.}
+
+\bibitem[Yao et al. 2023]{yao_tree_2023}
+\abntrefinfo{Yao et al.}{YAO et al.}{2023}
+{YAO, S. et al. \emph{Tree of {Thoughts}: {Deliberate} {Problem} {Solving} with
+  {Large} {Language} {Models}}. arXiv, 2023.
+ArXiv:2305.10601.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2305.10601}.}
+
+\bibitem[Young et al. 2018]{young_recent_2018}
+\abntrefinfo{Young et al.}{YOUNG et al.}{2018}
+{YOUNG, T. et al. \emph{Recent {Trends} in {Deep} {Learning} {Based} {Natural}
+  {Language} {Processing}}. arXiv, 2018.
+ArXiv:1708.02709.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/1708.02709}.}
+
+\end{thebibliography}

@@ -1,0 +1,377 @@
+% Desenvolvido por: Prof. Dr. David Buzatto
+% Adaptado por: Prof. Dr. Fernando Carvalho
+%
+% Baseado na documentação do abntex2 e nos modelos em
+% Microsoft Word propostos pela Profa. Dra. Rosana F. L. Rodrigues
+% e pela bibliotecária M.Sc. Maria Carolina Gonçalves do câmpus
+% São João da Boa Vista do IFSP.
+%
+% Versão 1.5
+% Data: 03/09/2018
+
+
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	openany,			% capítulos começam em pág ímpar openright (insere página vazia caso preciso)
+	oneside,			% para impressão em verso e anverso (twoside). Oposto a oneside 
+	a4paper,			% tamanho do papel. 
+	normalfigtabnum,
+	pnumromarab,
+	% -- opções da classe abntex2 --
+	chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	french,				% idioma adicional para hifenização
+	spanish,			% idioma adicional para hifenização
+	brazil,				% o último idioma é o principal do documento
+]{abntex2}
+
+% \usepackage{blindtext, showframe}
+
+% \usepackage[a4paper,showframe,
+% top    = 2.75cm,
+% bottom = 2.50cm,
+% left   = 3.00cm,
+% right  = 2.50cm]{geometry}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newenvironment{conditions}[1][onde:]
+  {\noindent
+	#1
+	
+	\indent
+	\begin{tabular}[t]{>{$}l<{$} @{${} \> \> {}$} l}}
+	{\end{tabular}\\[\belowdisplayskip]}
+
+
+% --- Controla a geração de listas de siglas, símbolos e glossário
+% \RequirePackage[style=long]{glossaries}
+% ,long,numberlist
+
+
+\usepackage[acronyms,symbols]{glossaries}
+\setacronymstyle{long-short}
+
+\makenoidxglossaries
+
+
+%Definição das listas de glossários e parâmertos para compilação.
+%-------------------------------------------------------
+\newglossary{verbetes}{verbetes}{vrl}{verbetes}
+\newglossary{siglas}{siglas}{sgl}{siglas}
+\newglossary{simbolos}{simbolos}{sbl}{simbolos}
+
+
+%Definição dos comandos para exibição das listas individuais.
+%-----------------------------------------------------------
+\newcommand{\listarsiglas}{\printglossary[type=siglas, title=\listadesiglasname, nonumberlist=true]}
+\newcommand{\listarsimbolos}{\printglossary[type=simbolos, title=\listadesimbolosname, nonumberlist=true]}
+\newcommand{\listarverbetes}{\printglossary[type=verbetes]}
+
+%Definição dos Comandos para inclusão no texto das siglas.
+
+\newcommand{\verbete}[3]{
+	\newglossaryentry{glossary}{name=#1, description={#2}, plural={#3}, type=verbetes}
+	\gls{#1}
+}
+
+\newcommand{\sigla}[2]{
+	\newacronym[type=siglas]{#1}{#1}{#2}
+	\gls{#1}
+}
+
+\newcommand{\simbolo}[3]{
+	\newglossaryentry{#1}{type=simbolos, name=#3, text=#3, description=#2,symbol=#3, sort=def}
+	\gls{#1}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{bookmark}   			
+
+
+
+% ---------------------------------------------------------------------------------
+%                                   PACOTES
+% ---------------------------------------------------------------------------------
+
+
+% ---
+% Pacotes básicos 
+% ---
+\input{pendencias}
+
+\usepackage{lmodern}			% Usa a fonte Latin Modern			
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{lastpage}			% Usado pela Ficha catalográfica
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{xcolor,colortbl}	% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{hyperref}
+\usepackage{subfig}
+\usepackage{epigraph}
+\usepackage{url}
+\usepackage{placeins}
+\usepackage{multirow}
+\usepackage[figuresright]{rotating}
+\usepackage{chemfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{bigints}
+\usepackage{listings}
+\usepackage{etoolbox}
+\usepackage[final]{pdfpages}
+\usepackage{bigstrut}
+\usepackage{makeidx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{ltablex}       % tabularx + longtable
+\usepackage{ragged2e}      % \RaggedRight
+\usepackage{pdflscape}     % landscape, se quiser girar a página
+\usepackage{changepage}
+\usepackage{tabu}
+\keepXColumns
+% ---
+
+
+
+
+
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+% \usepackage[alf,abnt-emphasize=bf]{abntex2cite}  % Citações padrão ABNT
+\usepackage[alf]{abntex2cite}  % Citações padrão ABNT
+
+
+% ---------------------------------------------------------------------------------
+%                          CONFIGURAÇÕES DOS PACOTES
+% ---------------------------------------------------------------------------------
+
+% ---
+% Configurações do pacote backref
+%
+% Para desativar, tire o comentário de \begin{comment} e \end{comment} 
+% das próximas linhas e comente a linha \usepackage[brazilian,hyperpageref]{backref}
+% acima.
+% ---
+
+% \newcommand{\imprimirdata}{\data}
+
+
+%\begin{comment}
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+	Nenhuma citação no texto.%
+	\or
+	Citado na página #2.%
+	\else
+	Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
+%\end{comment}
+
+
+% listagens
+\definecolor{corComentario}{RGB}{150,150,150}
+\definecolor{corString}{RGB}{206,123,0}
+\definecolor{corPalavraChave}{RGB}{0,0,230}
+
+\lstset{
+	numbers=left,
+	stepnumber=1,
+	firstnumber=1,
+	numberstyle=\footnotesize,
+	extendedchars=true,
+	breaklines=true,
+	lineskip=0pt,
+	frame=tb,
+	basicstyle=\ttfamily\footnotesize,
+	showstringspaces=false,
+	stringstyle=\color{corString},
+	commentstyle=\color{corComentario},
+	keywordstyle=\color{corPalavraChave}
+}
+
+\newcommand{\graficoname}{Gráfico}
+\newcommand{\graficorefname}{Gráfico}
+\newcommand{\listofgraficosname}{Lista de gráficos}
+
+
+
+
+
+% \newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\newcommand{\ano}[1]{\def \oano {#1}}
+\newcommand{\imprimirano}{\oano}
+
+\newcommand{\mes}[1]{\def \omes {#1}}
+\newcommand{\imprimirmes}{\omes}
+
+\newcommand{\dia}[1]{\def \odia {#1}}
+\newcommand{\imprimirdia}{\odia}
+
+% \newcommand{\subtitulo}[1]{\def \osubtitulo {#1}}
+% \newcommand{\imprimirsubtitulo}{\osubtitulo}
+
+\newcommand{\area}[1]{\def \aarea {#1}}
+\newcommand{\imprimirarea}{\aarea}
+
+\newcommand{\disciplina}[1]{\def \adisciplina {#1}}
+\newcommand{\imprimirdisciplina}{\adisciplina}
+
+% \renewcommand{\coorientador}[1]{\def \ocoorientador {#1}}
+% \renewcommand{\imprimircoorientador}{\ocoorientador}
+
+\newcommand{\grau}[1]{\def \ograu {#1}}
+\newcommand{\imprimirgrau}{\ograu}
+
+\newcommand{\curso}[1]{\def \ocurso {#1}}
+\newcommand{\imprimircurso}{\ocurso}
+
+\newcommand{\campus}[1]{\def \ocampus {#1}}
+\newcommand{\imprimircampus}{\ocampus}
+
+\newcommand{\instituicaoOrientador}[1]{\def \aInstituicaoOrientador {#1}}
+\newcommand{\imprimirInstituicaoOrientador}{\aInstituicaoOrientador}
+
+\newcommand{\instituicaoCoorientador}[1]{\def \aInstituicaoCoorientador {#1}}
+\newcommand{\imprimirInstituicaoCoorientador}{\aInstituicaoCoorientador}
+
+\newcommand{\instituicaoProfBancaA}[1]{\def \aInstituicaoProfBancaA {#1}}
+\newcommand{\imprimirInstituicaoProfBancaA}{\aInstituicaoProfBancaA}
+
+\newcommand{\instituicaoProfBancaB}[1]{\def \aInstituicaoProfBancaB {#1}}
+\newcommand{\imprimirInstituicaoProfBancaB}{\aInstituicaoProfBancaB}
+
+\providecommand{\imprimirProfBancaARotulo}{}
+\providecommand{\imprimirProfBancaAnome}{}
+\newcommand{\ProfBancaA}[2][\ProfBancaAname]%
+  {\renewcommand{\imprimirProfBancaARotulo}{#1}%
+   \renewcommand{\imprimirProfBancaAnome}{#2}}
+
+
+\providecommand{\imprimirProfBancaBRotulo}{}
+\providecommand{\imprimirProfBancaBnome}{}
+\newcommand{\ProfBancaB}[2][\ProfBancaBname]%
+  {\renewcommand{\imprimirProfBancaBRotulo}{#1}%
+   \renewcommand{\imprimirProfBancaBnome}{#2}}
+
+
+
+% Área de Concentração: \imprimirarea}
+% ---
+
+
+% ---
+% Configurações de aparência do PDF final
+% ---
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+	%pagebackref=true,
+	pdftitle={\@title}, 
+	pdfauthor={\@author},
+	pdfsubject={\imprimirpreambulo},
+	pdfcreator={\@author},
+	pdfkeywords={Palavra chave 1}{Palavra chave 2}{Palavra chave 3}{Palavra chave n}, 
+	colorlinks=true,       		% false: boxed links; true: colored links
+	linkcolor=blue,          	% color of internal links
+	citecolor=blue,       		% color of links to bibliography
+	filecolor=black,      		% color of file links
+	urlcolor=blue,
+	bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+
+% ---
+% Comandos do autor
+% ---
+
+% comando para inserir autor e ano
+\newcommand{\citeauthorandyear}[1]{\citeauthoronline{#1} (\citeyear{#1})}
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+\glsaddall
+
+% ---
+% compila os glossários e listas
+%\makeglossaries
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+%---
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% para o pacote "Lst Listing"
+
+\newcommand{\source}[1]{\caption*{Fonte: {#1}}}
+
+% Altera o nome padrão do rótulo usado no comando \autoref{}
+\renewcommand{\lstlistingname}{Código}
+
+% Altera o rótulo a ser usando no elemento pré-textual "Lista de código"
+\renewcommand{\lstlistlistingname}{Lista de códigos}
+
+%% Configuração para o ambiente de código (algorítmos)
+\lstset{
+%   numbers=left,
+%   inputencoding=latin1,
+%   basicstyle=\footnotesize\ttfamily,
+%   keywordstyle=\color{blue},         
+%   breaklines=true, 
+%   showtabs=false,
+%   showstringspaces=false,
+%   numberstyle=\tiny\color{mygray}
+   basicstyle=\fontsize{9}{11}\selectfont\ttfamily
+}
+%% 
+%% exemplo da página https://latex.org/forum/viewtopic.php?t=24038
+%%

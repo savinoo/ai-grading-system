@@ -1,0 +1,30 @@
+
+\chapter{RESULTADOS E DISCUSSÕES}
+%%%%%%%%%%%%%%%%%ALTERADO%%% %%%%%%%%%%%%%%%%%%%%
+\label{cap:resultados}
+ Neste capítulo são apresentados os resultados obtidos após o desenvolvimento do protótipo e a análise dessas informações. O desenvolvimento deste projeto cumpriu as etapas planejadas e teve como resultado um protótipo com dois perfis: O perfil catador, o qual é responsável pelo recolhimento do material e o perfil separador, que solicita o serviço da coleta de resíduos sólidos.
+
+No final do testes foi coletado o questionário de avaliação dos participantes com os itens avaliados, sendo estas informações representadas na \autoref{fig:resultados}.
+
+\begin{figure}[H]
+\caption{Gráfico dos resultados obtidos do questionário}
+	\begin{Center}
+		\includegraphics[width=15.0cm]{./media/resultados.png}
+	\end{Center}
+\label{fig:resultados}
+\end{figure}
+
+Na \autoref{fig:resultados} citada acima foi possível observar que foram criados quatro perfis de usuário: dois perfis separadores e dois perfis catadores. A média dos resultados das perguntas foi satisfatória.
+
+O \autoref{cod:cadbanc0} é responsável por salvar o usuário catador no \textit{firebase realtime database}. A linha 3 do \autoref{cod:cadbanc0}, consiste na criação do nó (\textit{child}) denominado “Catadores”, onde cada catador possui um identificador (\textit{id}), onde seus dados são salvos (\textit{setValue}).
+
+\begin{codigo}[H]
+\begin{lstlisting}[language=Java]
+public void salvar(){
+    DatabaseReference databaseReference = ConfiguracaoFirebase.getFirebase();
+    databaseReference.child("Catadores").child(getId()).setValue(this);
+}
+\end{lstlisting}
+\caption{Salvar usuário catador no banco de dados}
+\label{cod:cadbanc0}
+\end{codigo}

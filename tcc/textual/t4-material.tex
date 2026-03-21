@@ -1,0 +1,157 @@
+\chapter{Metodologia}
+\label{cap:metodologia}
+
+O presente trabalho desenvolverá um sistema para a correção automatizada de provas discursivas. Esse sistema utilizará técnicas avançadas de inteligência artificial, como \textit{Large Language Models} (LLM) e \textit{Retrieval-Augmented Generation} (RAG), permitindo que as avaliações sejam corrigidas de forma rápida, precisa e objetiva. Assim, o processo de avaliação se tornará mais eficiente, beneficiando tanto professores quanto alunos.
+
+Este capítulo apresentará o detalhamento do desenvolvimento do sistema proposto, que será dividido em três subprocessos principais: a configuração da prova, a correção geral da prova e a correção específica das respostas que exigirão intervenção adicional. Cada subprocesso será explicado detalhadamente, utilizando fluxogramas para ilustrar os passos que serão realizados. A seguir, serão apresentados os fluxogramas que ilustrarão cada um dos subprocessos mencionados (Figuras
+\autoref{fig:fluxo-configuracao},
+\autoref{fig:fluxo-correcao-prova} e
+\autoref{fig:fluxo-correcao-pergunta}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{media/fluxo-configuracao.jpg}
+    \caption{Fluxograma do subprocesso de configuração da prova}
+    \label{fig:fluxo-configuracao}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{media/fluxo-correcao-prova.jpg}
+    \caption{Fluxograma do subprocesso de correção da prova}
+    \label{fig:fluxo-correcao-prova}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{media/fluxo-correcao-pergunta.jpg}
+    \caption{Fluxograma do subprocesso de correção da resposta}
+    \label{fig:fluxo-correcao-pergunta}
+\end{figure}
+
+\section{Tipo de Pesquisa}
+
+Este trabalho caracterizar-se-á como uma pesquisa aplicada, pois buscará desenvolver um sistema para correção automatizada de provas, visando solucionar um problema prático no contexto educacional. Quanto aos objetivos, classificará como uma pesquisa exploratória, já que pretende analisar a viabilidade de implementação de técnicas de inteligência artificial, como LLM e RAG, no processo de correção de avaliações.
+
+\section{Processo de Correção de Prova}
+
+\subsection{Subprocesso de Configuração}
+
+\subsubsection{Imputação dos Dados da Matéria}
+Nesta etapa, o professor realizará a inserção dos materiais didáticos pertinentes ao conteúdo que será avaliado, como apostilas, livros e outros recursos complementares. Cada professor poderá inserir conteúdos específicos relacionados à sua disciplina, que serão digitalizados e organizados em formato digital para utilização pelo sistema.
+
+\subsubsection{Geração do Banco de Dados Vetorizado}
+Os materiais didáticos inseridos serão convertidos em representações vetoriais por meio de técnicas avançadas de \textit{embedding}. O resultado desse processo será um banco de dados vetorizado que permitirá análises semânticas eficazes, possibilitando ao sistema compreender o conteúdo para uso posterior pela inteligência artificial.
+
+\subsubsection{Sugestão Inicial da Configuração pela LLM}
+Uma LLM, utilizando o conteúdo previamente vetorizado, gerará automaticamente sugestões iniciais dos critérios de avaliação para as provas, propondo temas relevantes, critérios gerais e níveis preliminares de complexidade. Essas sugestões serão embasadas em análises semânticas dos materiais fornecidos pelo professor.
+
+\subsubsection{Análise e Configuração Final pelo Professor}
+O professor revisará detalhadamente as sugestões fornecidas pela LLM. Nesse momento, ele poderá aprovar integralmente ou realizar ajustes nos temas propostos, critérios de avaliação específicos e níveis de dificuldade, garantindo assim a adequação dos critérios à realidade pedagógica e aos objetivos da disciplina.
+
+\subsubsection{Configuração Interna da LLM}
+Uma vez estabelecida e aprovada a configuração final pelo professor, a LLM será configurada internamente seguindo os critérios validados. Essa etapa consiste em aplicar diretamente estratégias específicas de prompts, parâmetros otimizados e práticas recomendadas que são ajustadas continuamente durante a fase de testes. A metodologia adotada prevê ajustes iterativos e automáticos, permitindo que a inteligência artificial opere com maior eficácia e precisão ao longo das etapas de geração e correção das questões, garantindo aderência total aos critérios pedagógicos definidos pelo professor.
+
+\subsubsection{Imputação das Perguntas da Prova}
+Nesta etapa, as perguntas validadas pelo professor serão inseridas no sistema. Cada questão será associada diretamente aos temas e critérios previamente configurados, garantindo coerência entre o conteúdo da prova e os parâmetros avaliativos estabelecidos.
+
+\subsubsection{Imputação Estruturada das Respostas dos Alunos}
+Após a aplicação da prova aos alunos, as respostas serão coletadas e estruturadas em formato JSON. Cada resposta será associada ao identificador específico da questão, à resposta fornecida e ao identificador individual do aluno, possibilitando a organização necessária para a correção automatizada.
+
+\subsubsection{Correção Automatizada da Prova}
+Utilizando os parâmetros configurados nas etapas anteriores, o sistema procederá com a correção automatizada das respostas dos alunos. Essa correção levará em conta a precisão, completude e relevância das respostas, resultando em uma avaliação objetiva, ágil e consistente, conforme os critérios pedagógicos estabelecidos pelo professor.
+
+\subsection{Subprocesso de Correção da Prova}
+
+\subsubsection{Verificação Inicial das Questões}
+O sistema iniciará com uma verificação sequencial para confirmar se todas as questões da prova terão sido devidamente corrigidas. Se existirem questões pendentes, estas serão identificadas e encaminhadas para a correção específica.
+
+\subsubsection{Geração de Contexto via RAG}
+Para cada questão identificada como pendente, o sistema gerará \textit{embeddings} das perguntas e recorrerá ao método RAG para recuperar contextos adicionais relevantes do banco de dados vetorizado. Esses contextos auxiliarão diretamente na análise e correção detalhada das respostas dos alunos.
+
+\subsubsection{Processo de Correção Específica das Respostas}
+Cada resposta pendente passará por um subprocesso dedicado de correção com auxílio do contexto obtido via RAG. A correção ocorrerá com base em critérios de avaliação já estabelecidos, incluindo precisão, relevância e completude das respostas.
+
+\subsubsection{Loop de Correção das Respostas}
+Após a correção de cada resposta, o sistema verificará novamente se todas as respostas relacionadas a uma determinada questão terão sido corrigidas. Caso ainda restem respostas pendentes, o subprocesso continuará sendo executado até que todas sejam corrigidas.
+
+\subsubsection{Geração de Documentos com Notas Preliminares}
+Quando todas as questões e respostas tiverem sido corrigidas, o sistema gerará automaticamente documentos contendo as notas preliminares dos alunos. Esses documentos serão estruturados de maneira clara e organizada, facilitando a revisão posterior.
+
+\subsubsection{Avaliação e Modificação Final pelo Professor}
+Os documentos contendo as notas preliminares serão então revisados pelo professor responsável. O professor poderá confirmar as notas preliminares ou realizar ajustes, assegurando que as avaliações estarão alinhadas aos objetivos acadêmicos e critérios pedagógicos pré-estabelecidos.
+
+\subsubsection{Geração das Notas Finais dos Alunos}
+Após a aprovação final das notas pelo professor, o sistema gerará as notas definitivas. Essas notas finais serão oficializadas e disponibilizadas aos alunos, encerrando efetivamente o subprocesso de correção da prova.
+
+\subsection{Subprocesso de Correção da Resposta}
+
+\subsubsection{Envio da Resposta aos Agentes Corretores}
+Inicialmente, a resposta do aluno será enviada a dois agentes de correção independentes, denominados Corretor 1 e Corretor 2. Esses agentes terão como função principal realizar a correção das respostas dos alunos com base nos critérios de avaliação previamente definidos na configuração da prova e utilizando o contexto adicional específico fornecido pelo método RAG.
+
+\subsubsection{Avaliação Independente pelos Corretores 1 e 2}
+Os corretores realizarão a análise detalhada da resposta recebida individualmente. Eles atribuirão notas com base em critérios claros e contextuais, previamente definidos pelo professor, garantindo assim uma avaliação objetiva e consistente. Cada corretor gerará uma nota independente, sem comunicação entre si durante o processo.
+
+\subsubsection{Comparação das Notas Obtidas}
+Após a atribuição das notas, o sistema realizará automaticamente a comparação entre as notas obtidas pelos dois primeiros corretores. Essa comparação buscará identificar o grau de divergência entre as avaliações realizadas.
+
+\subsubsection{Verificação do Limiar de Divergência}
+Caso a diferença entre as notas atribuídas pelos Corretores 1 e 2 esteja dentro de um limite aceitável pré-estabelecido (limiar), o sistema calculará automaticamente a média dessas duas avaliações e finalizará a correção dessa resposta específica.
+
+\subsubsection{Acionamento do Corretor 3 em Caso de Divergência}
+Se a divergência entre as notas atribuídas ultrapassar o limiar definido, o sistema acionará automaticamente um terceiro corretor (Corretor 3). Esse corretor realizará uma nova avaliação independente, seguindo os mesmos critérios e contextos utilizados pelos corretores anteriores, garantindo imparcialidade e coerência na análise adicional.
+
+\subsubsection{Definição da Nota Final em Caso de Três Avaliações}
+Com a terceira avaliação concluída, o sistema selecionará automaticamente as duas notas mais próximas entre as três avaliações realizadas (Corretores 1, 2 e 3). A média dessas duas notas mais próximas será calculada automaticamente, definindo assim a nota final para a resposta avaliada.
+
+\subsubsection{Encerramento da Correção e Retorno da Nota}
+Após determinar a média final, seja por meio de duas ou três avaliações, o subprocesso será concluído, registrando e devolvendo a nota definitiva para o sistema principal. Essa etapa assegurará a precisão e a confiabilidade do processo de correção, garantindo avaliações consistentes e fundamentadas conforme os critérios pedagógicos definidos na configuração inicial da prova.
+
+\section{Ferramentas e Tecnologias Utilizadas}
+
+Para o desenvolvimento e implementação do sistema proposto, serão utilizadas ferramentas e tecnologias cuidadosamente selecionadas, cada uma contribuindo de maneira estratégica para a eficácia, precisão e eficiência do sistema. A seguir, são apresentadas as principais tecnologias e os motivos para sua escolha:
+
+\subsection{Python}
+A linguagem Python será escolhida devido à sua versatilidade e robustez em projetos que envolvem inteligência artificial e aprendizado de máquina. Além disso, sua vasta comunidade e a disponibilidade de bibliotecas especializadas facilitarão o processamento de dados e a geração de modelos inteligentes, contribuindo para um desenvolvimento mais ágil e confiável do sistema.
+
+\subsection{\textit{Large Language Model} (LLM)}
+Modelos avançados de inteligência artificial, como os LLMs (por exemplo, GPT), serão utilizados para automatizar a geração de sugestões de temas e critérios de avaliação. Esses modelos permitirão uma análise semântica sofisticada dos conteúdos, garantindo que as avaliações sejam baseadas em critérios objetivos e contextuais, e possibilitando uma correção automatizada mais precisa e eficiente.
+
+\subsection{\textit{Retrieval-Augmented Generation} (RAG)}
+A metodologia RAG será empregada para recuperar contextos adicionais relevantes a partir do banco de dados vetorizado. Essa técnica potencializará a assertividade do sistema, permitindo que as respostas dos alunos sejam avaliadas com maior precisão e coerência, ao integrar informações adicionais que enriquecem o processo de correção.
+
+\subsection{\textit{Vector Database} (Banco de Dados Vetorial)}
+Um banco de dados vetorial será utilizado para armazenar e gerenciar os \textit{embeddings} dos materiais didáticos. Essa tecnologia possibilitará consultas rápidas e análises semânticas eficazes, fundamentais para a implementação da técnica RAG e para garantir que o sistema opere de forma integrada e com alto desempenho.
+
+\subsection{JSON (\textit{JavaScript Object Notation})}
+O formato JSON será adotado para a padronização, armazenamento e transmissão das informações relacionadas às provas, como perguntas, respostas dos alunos e identificadores únicos. A escolha pelo JSON deve-se à sua leveza e facilidade de manipulação, garantindo uma interoperabilidade eficiente entre os diferentes componentes do sistema.
+
+\section{Métodos de Avaliação}
+
+A avaliação do sistema de correção automática de provas discursivas proposto neste trabalho será conduzida por meio de um estudo experimental controlado, desenhado para aferir a precisão, a consistência e a eficácia do sistema em comparação com gabaritos pré-definidos. A metodologia de avaliação envolverá a utilização de questões discursivas extraídas de livros-texto consagrados na área de computação, em nível de graduação, cujas respostas fornecidas pelos autores servirão como padrão-ouro (gabarito) para a análise.
+
+O processo avaliativo será estruturado nas seguintes:
+
+\begin{enumerate}
+    \item \textbf{Seleção do Corpus de Questões e Gabaritos:} Serão selecionados, no mínimo, três livros de diferentes subáreas da computação (por exemplo, Algoritmos e Estruturas de Dados, Engenharia de Software, Redes de Computadores, Inteligência Artificial, Sistemas Operacionais, Teoria da Computação), comumente utilizados em cursos de graduação. De cada livro, serão extraídas cinco questões discursivas que possuam respostas detalhadas fornecidas pelos próprios autores. A escolha recairá sobre questões que exijam compreensão conceitual, aplicação de conhecimento e argumentação, em detrimento de questões puramente factuais ou de múltipla escolha. A seleção final dos livros e das questões buscará garantir uma diversidade de tópicos e estilos de formulação, compondo um conjunto de, no mínimo, 15 pares de pergunta-resposta (gabarito do autor).
+
+    \item \textbf{Coleta de Respostas de LLMs:} Cada uma das questões discursivas selecionadas será submetida, de forma independente, a um conjunto de Modelos de LLMs para a geração de respostas. Os LLMs a serem avaliados incluem: GPT-4o, DeepSeek v2, Manus AI, LLama 4 (ou a versão mais recente disponível), Claude (última versão disponível), Qwen (última versão disponível), Perplexity AI, Grok (última versão disponível) e Gemini (última versão disponível, como Gemini 2.0 Flash). As perguntas serão apresentadas aos LLMs sem qualquer contexto adicional além do próprio enunciado da questão, simulando um cenário de prova onde o aluno responde com base em seu conhecimento.
+
+    \item \textbf{Processo de Correção Automatizada e Avaliação de Desempenho:} As respostas geradas por cada LLM para cada questão serão então processadas pelo sistema de correção automática que será desenvolvido neste TCC. O sistema utilizará o conteudo do livro como referência para avaliar a qualidade da resposta do LLM. A avaliação considerará múltiplos aspectos, incluindo, mas não se limitando a:
+
+    \begin{itemize}
+        \item \textbf{Precisão Conceitual:} Verificação da correção dos conceitos apresentados na resposta do LLM em relação ao gabarito.
+
+        \item  \textbf{Completude da Resposta:} Análise se todos os pontos relevantes abordados no gabarito foram contemplados pelo LLM.
+
+        \item \textbf{Coerência e Clareza:} Avaliação da organização lógica, fluidez textual e inteligibilidade da resposta gerada.
+
+        \item \textbf{Similaridade Semântica:} Utilização de métricas de similaridade de texto (como cosseno de embeddings ou outras métricas específicas para avaliação de texto gerado por IA) para quantificar o quão próxima a resposta do LLM está do gabarito em termos de significado.
+    \end{itemize}
+
+    O sistema de correção automática, conforme descrito nas seções anteriores deste capítulo , atribuirá uma nota ou um conjunto de pontuações para cada resposta de cada LLM. 
+
+    \item \textbf{Análise dos Resultados e Comparação:} Os resultados da correção automática serão compilados e analisados estatisticamente. Serão calculadas métricas de desempenho para cada LLM, como a média das notas obtidas, a variabilidade das notas, e a correlação com a avaliação humana (caso uma amostra seja também avaliada por especialistas humanos para calibrar ou validar o processo automático). Será realizada uma análise comparativa do desempenho dos diferentes LLMs nas diversas questões e áreas do conhecimento abordadas.
+
+    Esta metodologia permitirá uma avaliação quantitativa e qualitativa da capacidade do sistema de correção proposto em lidar com respostas complexas geradas por diferentes LLMs, utilizando como base de comparação gabaritos de alta qualidade provenientes de literatura técnica reconhecida. Os resultados obtidos fornecerão insights sobre a eficácia do sistema e sobre as capacidades e limitações dos LLMs atuais em tarefas de resposta a questões discursivas no domínio da computação em nível de graduação.
+\end{enumerate}

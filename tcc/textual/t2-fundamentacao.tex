@@ -1,0 +1,376 @@
+\chapter{FUNDAMENTAÇÃO TEÓRICA}
+\label{cap:fundamentacao}
+
+Este capítulo apresenta as bases teóricas que sustentam o desenvolvimento de um sistema de correção automática de provas por meio de agentes de IA. Inicialmente, revisaremos os fundamentos de avaliação educacional, seus desafios e a subjetividade inerente à correção de questões dissertativas \autoref{sec:avaliacao-educacional}. Em seguida, examinaremos o processo tradicional de correção manual, suas limitações e a necessidade de automação \autoref{sec:correcao-manual}. Na \autoref{sec:ia-pln}, abordaremos os princípios de Inteligência Artificial e Processamento de Linguagem Natural (PLN), incluindo técnicas de deep learning e modelos transformer aplicáveis à compreensão de respostas escritas. Finalmente, na \autoref{sec:agentes-rag}, discutiremos arquiteturas de agentes de IA, sistemas multi‑agentes e estratégias avançadas como engenharia de prompt e Recuperação Aumentada por Geração (RAG), que permitirão orquestrar componentes especializados para análise, pontuação e feedback automático.  
+
+\section{Avaliação Educacional}
+\label{sec:avaliacao-educacional}
+\subsection{Conceitos e Importância da Avaliação no Processo Educacional}
+
+A avaliação educacional constitui um elemento fundamental no processo de ensino-aprendizagem, representando não apenas um dispositivo de verificação do conhecimento adquirido, mas também um mecanismo essencial para o direcionamento das práticas pedagógicas. Segundo \citeonline{carregari_luckesi_2024}, a avaliação transcende a mera atribuição de notas, configurando-se como um processo contínuo que permite diagnosticar dificuldades, reorientar o ensino e promover a evolução da aprendizagem.
+
+Embora os princípios gerais de avaliação enfatizem seu caráter formativo e diagnóstico em qualquer sistema de ensino, no Brasil esses usos ganham contornos particulares devido ao nosso histórico de desigualdades educacionais. É nesse cenário que a avaliação não só verifica aprendizados, mas também sinaliza onde as políticas públicas e as práticas escolares precisam intervir.
+
+No contexto educacional brasileiro, marcado por desafios estruturais e pedagógicos, conforme apontado por \citeonline{bastos_instrucao_1997}, a avaliação assume papel ainda mais relevante como ferramenta para identificação de lacunas e potencialidades do sistema. O processo avaliativo, quando bem conduzido, possibilita a coleta de informações valiosas sobre o desempenho dos estudantes, permitindo intervenções pedagógicas mais precisas e eficazes.
+
+A importância da avaliação educacional manifesta-se em múltiplas dimensões. No âmbito individual, proporciona ao estudante feedback sobre seu progresso, estimulando a metacognição e a autorregulação da aprendizagem. Para o professor, constitui instrumento diagnóstico que orienta o planejamento e a execução de estratégias didáticas. Na perspectiva institucional, fornece indicadores para políticas educacionais e reformulações curriculares.
+
+\subsection{Tipos de Avaliação Educacional}
+
+A literatura pedagógica contemporânea reconhece diferentes modalidades de avaliação, cada qual com propósitos e metodologias específicas. Tradicionalmente, distinguem-se três tipos fundamentais: diagnóstica, formativa e somativa.
+
+A avaliação diagnóstica, realizada geralmente no início de um processo educativo, visa identificar conhecimentos prévios, habilidades e eventuais dificuldades dos estudantes. Conforme destacado por \citeonline{gatti_formacao_2017}, esta modalidade permite ao educador adequar seu planejamento às necessidades reais da turma, estabelecendo pontos de partida apropriados para o desenvolvimento do trabalho pedagógico.
+
+A avaliação formativa, por sua vez, ocorre durante todo o processo de ensino-aprendizagem, com caráter processual e contínuo. Seu objetivo principal não é classificar, mas fornecer informações que permitam ajustes nas estratégias de ensino e aprendizagem. Esta modalidade valoriza o erro como oportunidade de aprendizagem e enfatiza o feedback qualitativo \cite{santos_articulacao_2016}.
+
+Já a avaliação somativa, realizada ao final de um período ou unidade de ensino, visa verificar o alcance de objetivos predeterminados, geralmente resultando em classificações ou certificações. Segundo \citeonline{santos_articulacao_2016}, embora necessária em determinados contextos institucionais, esta modalidade, quando utilizada isoladamente, pode limitar a compreensão do processo de aprendizagem em sua complexidade.
+
+No cenário educacional contemporâneo, observa-se uma tendência à integração dessas diferentes modalidades avaliativas, buscando-se uma abordagem mais holística e menos fragmentada do processo de avaliação.
+
+\subsection{Desafios da Avaliação Discursiva}
+
+A avaliação discursiva, caracterizada pela proposição de questões abertas que demandam respostas elaboradas pelos estudantes, apresenta particularidades e desafios significativos. Diferentemente das avaliações objetivas, as questões dissertativas permitem avaliar habilidades cognitivas complexas, como capacidade de análise, síntese, argumentação e pensamento crítico.
+
+Conforme apontado por \citeonline{lima_avaliacao_2023}, a correção de questões dissertativas constitui tarefa não trivial, exigindo do avaliador competências específicas e tempo considerável para a análise das respostas. O processo envolve a interpretação do conteúdo produzido pelo estudante, a identificação de elementos conceituais relevantes e o julgamento sobre a qualidade da argumentação desenvolvida.
+
+Entre os principais desafios da avaliação discursiva, destacam-se:
+
+\begin{enumerate}
+    \item \textbf{Tempo demandado para correção:} A disponibilidade de tempo da maioria dos educadores é limitada, o que dificulta o processo de ensino-aprendizagem dos estudantes. O tempo gasto para corrigir uma avaliação é extenso, e frequentemente o educador não consegue manter o mesmo nível de correção para todos os eventos \cite{barbosa_tempo_2021}.
+
+    \item \textbf{Estabelecimento de critérios claros:} A definição de parâmetros objetivos para avaliação de respostas abertas representa desafio considerável, especialmente em áreas que envolvem interpretação e argumentação.
+
+    \item \textbf{Variabilidade entre avaliadores:} Diferentes corretores podem atribuir valores distintos à mesma resposta, dependendo de sua formação, experiência e concepções pedagógicas.
+
+    \item \textbf{Escala de aplicação:} Para instituições como escolas de ensino básico e fundamental, universidades e o Exame Nacional do Ensino Médio (Enem), a atividade de correção demanda tempo e custo significativos para a avaliação dos textos produzidos \cite{pinho_aplicacao_2024}.
+
+    \item \textbf{Feedback adequado:} A elaboração de devolutivas qualitativas que orientem o processo de aprendizagem representa outro desafio importante, especialmente em contextos com grande número de estudantes.
+
+\end{enumerate}
+
+Estes desafios tornam-se ainda mais evidentes em avaliações de larga escala, como vestibulares e exames nacionais, onde a padronização dos critérios e a equidade no processo avaliativo são requisitos fundamentais.
+
+\subsection{Subjetividade na Avaliação de Questões Dissertativas}
+
+A subjetividade constitui elemento inerente ao processo de avaliação de questões dissertativas, representando simultaneamente riqueza e desafio. Conforme apontado por \citeonline{barroso_subjetividade_2021}, a subjetividade está presente não apenas no processo de avaliação da aprendizagem, mas em todo o ambiente educacional, por ser parte intrínseca dos indivíduos que o compõem.
+
+O estudo conduzido por \citeonline{barroso_subjetividade_2021} verificou que a subjetividade pode influenciar a avaliação da aprendizagem, inclusive interferindo na progressão do estudante para séries posteriores. Os autores observaram que, com o professor, não seria diferente, sendo necessária a consciência sobre a subjetividade durante as correções das atividades desenvolvidas pelos alunos, a fim de tentar minimizá-la para não prejudicar os estudantes.
+
+\citeonline{borges_avaliacao_2017}, em seu trabalho sobre avaliação da aprendizagem, subjetividade e docimologia, aprofundam a discussão sobre os fatores que influenciam o julgamento avaliativo. A docimologia, ciência que estuda os exames e suas implicações, revela que diversos elementos subjetivos podem afetar a atribuição de notas, entre eles:
+
+\begin{enumerate}
+    \item \textbf{Efeito de halo:} Tendência a generalizar uma característica positiva ou negativa do estudante para toda sua produção.
+
+    \item \textbf{Efeito de contraste:} Influência da qualidade das respostas anteriormente corrigidas sobre a avaliação da resposta atual.
+
+    \item \textbf{Efeito de estereotipia:} Influência de preconceitos ou expectativas prévias sobre determinados grupos de estudantes.
+
+    \item \textbf{Efeito de ordem:} Variação na avaliação conforme a posição da resposta no conjunto de provas.
+
+    \item \textbf{Fadiga do avaliador:} Alteração nos critérios de correção em função do cansaço acumulado durante o processo.
+\end{enumerate}
+
+A consciência sobre estes fatores torna-se fundamental para o desenvolvimento de estratégias que minimizem seus impactos. Conforme destacado por \citeonline{barroso_subjetividade_2021}, é necessário que o avaliador esteja ciente da subjetividade durante as correções, buscando estratégias para minimizar seus efeitos potencialmente prejudiciais.
+
+Neste contexto, o desenvolvimento de sistemas automatizados de correção, baseados em critérios objetivos e consistentes, apresenta-se como alternativa promissora para mitigar os efeitos da subjetividade, especialmente em avaliações de larga escala. Contudo, como será discutido em seções posteriores, tais sistemas também enfrentam desafios significativos na captura da complexidade e riqueza do pensamento humano expressos em respostas dissertativas.
+
+\section{Correção Manual de Provas Discursivas}
+\label{sec:correcao-manual}
+\subsection{Processo Tradicional de Correção}
+
+O processo tradicional de correção de provas discursivas caracteriza-se por uma abordagem essencialmente manual, na qual o avaliador analisa individualmente cada resposta, comparando-a com parâmetros predefinidos ou gabaritos de referência. Este método, amplamente utilizado em instituições educacionais de diversos níveis, envolve uma série de etapas que demandam tempo e atenção consideráveis do professor ou avaliador.
+
+Conforme observado por \cite{lima_avaliacao_2023}, o processo de correção manual de questões dissertativas constitui tarefa não trivial, exigindo do avaliador competências específicas e disponibilidade de tempo. Tipicamente, o avaliador precisa ler atentamente cada resposta, identificar os elementos conceituais presentes, verificar a coerência argumentativa, analisar a adequação da linguagem e, finalmente, atribuir uma pontuação que reflita a qualidade da resposta em relação aos objetivos de aprendizagem estabelecidos.
+
+O processo tradicional de correção geralmente segue um fluxo que inclui:
+\begin{enumerate}
+    \item \textbf{Elaboração de critérios de avaliação:} Definição prévia dos elementos que serão considerados na análise das respostas, incluindo conteúdo conceitual, estrutura argumentativa, uso da linguagem, entre outros.
+
+    \item \textbf{Leitura e análise individual:} Exame detalhado de cada resposta, identificando pontos fortes e fracos em relação aos critérios estabelecidos.
+
+    \item \textbf{Atribuição de pontuação:} Conversão do julgamento qualitativo em valor quantitativo, geralmente seguindo escalas predefinidas.
+
+    \item \textbf{Registro e feedback:} Documentação das avaliações e, idealmente, elaboração de comentários que orientem o processo de aprendizagem do estudante.
+
+\end{enumerate}
+
+Este modelo, embora permita análise aprofundada e contextualizada das respostas, apresenta limitações significativas, especialmente em contextos de avaliação em larga escala ou com grande número de estudantes.
+
+\subsection{Limitações e Desafios da Correção Manual}
+
+A correção manual de provas discursivas, apesar de sua tradição e potencial para análise qualitativa aprofundada, enfrenta desafios consideráveis que impactam sua eficácia e viabilidade em diversos contextos educacionais. \citeonline{lima_avaliacao_2023} destacam que o Brasil experimentou, na última década, grande aumento na demanda por Educação a Distância, tendência acentuada com o advento da pandemia, o que intensificou a necessidade de ferramentas tecnológicas que possam auxiliar nas atividades pedagógicas e de avaliação.
+
+Entre as principais limitações e desafios da correção manual, destacam-se:
+\begin{enumerate}
+    \item \textbf{Tempo demandado:} Conforme apontado por \citeonline{barbosa_tempo_2021}, o tempo gasto para corrigir uma avaliação é extenso, representando parcela significativa da carga de trabalho docente. Em contextos com grande número de estudantes, este fator pode comprometer a qualidade e a tempestividade do feedback fornecido.
+    
+    \item \textbf{Consistência avaliativa:} Manter o mesmo padrão de rigor e critérios ao longo de todo o processo de correção constitui desafio considerável. \citeonline{barbosa_tempo_2021} observam que frequentemente o educador não consegue manter o mesmo nível de correção para todos os eventos, o que pode comprometer a equidade do processo avaliativo.
+
+    \item \textbf{Fadiga do avaliador:} O cansaço acumulado durante longas sessões de correção pode afetar o julgamento e a precisão da avaliação, introduzindo variabilidade indesejada nos resultados.
+
+    \item \textbf{Custo operacional:} Para instituições educacionais, especialmente em avaliações de larga escala, o processo de correção manual implica custos significativos com recursos humanos e logística. \citeonline{pinho_aplicacao_2024} destacam que, para instituições como escolas de ensino básico e fundamental, universidades e o Exame Nacional do Ensino Médio (Enem), tal atividade demanda tempo e custo para a avaliação dos textos produzidos.
+
+    \item \textbf{Demora no feedback:} O tempo necessário para a correção manual frequentemente resulta em atraso no retorno aos estudantes, o que pode comprometer o valor pedagógico da avaliação como instrumento de aprendizagem.
+
+    \item \textbf{Limitações em análises comparativas:} A natureza individualizada da correção manual dificulta análises comparativas amplas e identificação de padrões coletivos de desempenho, elementos valiosos para o planejamento pedagógico.
+\end{enumerate}
+
+Estes desafios tornam-se particularmente evidentes em contextos educacionais contemporâneos, caracterizados por turmas numerosas, diversidade de perfis de estudantes e crescente demanda por feedback imediato e personalizado. Conforme observado por \citeonline{lima_avaliacao_2023}, a adaptação forçada pela realidade pandêmica aos professores, embora difícil inicialmente, contribuiu para uma visão clara de como ferramentas tecnológicas podem fornecer maior assistência na prática de suas atividades pedagógicas e de ensino aos alunos.
+
+\subsection{Impacto da Subjetividade na Avaliação}
+
+A subjetividade inerente ao processo de avaliação manual de provas discursivas constitui elemento de particular relevância, com impactos significativos sobre a validade e a confiabilidade dos resultados obtidos. \citeonline{barroso_subjetividade_2021} investigaram especificamente se a subjetividade pode influenciar a avaliação da aprendizagem, inclusive interferindo na progressão do estudante para séries posteriores, confirmando esta hipótese através de estudos bibliográficos.
+
+Para \citeonline{barroso_subjetividade_2021}, o impacto da subjetividade manifesta-se em múltiplas dimensões do processo avaliativo:
+
+\begin{enumerate}
+    \item  \textbf{Variabilidade entre avaliadores:} Diferentes corretores podem atribuir valores distintos à mesma resposta, fenômeno conhecido como "efeito avaliador". \citeonline{barroso_subjetividade_2021} destacam que esta variabilidade pode ser significativa, especialmente em áreas que envolvem a interpretação e o julgamento de argumentos.
+    
+    \item  \textbf{Inconsistência intra-avaliador:} Um mesmo avaliador pode aplicar critérios diferentes em momentos distintos do processo de correção, influenciado por fatores como fadiga, ordem das provas ou comparação entre respostas.
+    
+    \item  \textbf{Vieses inconscientes:} Expectativas prévias, estereótipos ou conhecimento anterior sobre o estudante podem influenciar o julgamento do avaliador, comprometendo a objetividade da avaliação.
+    
+    \item  \textbf{Interpretação de critérios:} Mesmo quando existem rubricas ou critérios formalizados, sua interpretação pode variar entre avaliadores, resultando em diferenças significativas na atribuição de notas.
+    
+    \item  \textbf{Efeitos contextuais:} Fatores como ambiente de correção, pressão de tempo e estado emocional do avaliador podem afetar o processo de julgamento, introduzindo variabilidade adicional nos resultados.
+\end{enumerate}
+
+Um estudo recente conduzido por \citeonline{heggler_as_2025} sobre as dualidades entre o uso da inteligência artificial na educação e os riscos de vieses algorítmicos destaca que, embora a subjetividade humana seja um desafio reconhecido, é importante considerar que sistemas automatizados também podem incorporar vieses, ainda que de natureza distinta. O autor argumenta que a consciência sobre esses fatores é fundamental para o desenvolvimento de abordagens avaliativas mais equitativas, sejam elas humanas ou assistidas por tecnologia.
+
+\subsection{Necessidade de Automação no Processo de Correção}
+
+Diante dos desafios e limitações da correção manual de provas discursivas, a automação deste processo emerge como alternativa promissora, especialmente em contextos educacionais contemporâneos. A crescente disponibilidade de tecnologias avançadas de processamento de linguagem natural e inteligência artificial tem viabilizado o desenvolvimento de sistemas capazes de analisar respostas dissertativas com níveis cada vez mais sofisticados de compreensão semântica.
+
+Diversos fatores convergem para justificar a necessidade de automação no processo de correção:
+
+\begin{enumerate}
+    \item  \textbf{Escala e eficiência:} Em contextos de avaliação em larga escala, como exames nacionais, vestibulares ou cursos com grande número de estudantes, a automação pode proporcionar ganhos significativos de eficiência, reduzindo o tempo necessário para o processamento das respostas e a disponibilização dos resultados.
+    
+    \item  \textbf{Padronização de critérios:} Sistemas automatizados aplicam consistentemente os mesmos critérios a todas as respostas, eliminando variações decorrentes de fadiga, ordem de correção ou outros fatores subjetivos que afetam avaliadores humanos.
+    
+    \item  \textbf{Feedback imediato:} A automação possibilita a geração de feedback instantâneo aos estudantes, potencializando o valor formativo da avaliação e permitindo intervenções pedagógicas mais tempestivas.
+    
+    \item  \textbf{Análise de dados educacionais:} Sistemas automatizados podem gerar dados estruturados sobre o desempenho dos estudantes, facilitando análises comparativas, identificação de padrões e diagnóstico de dificuldades recorrentes, informações valiosas para o planejamento pedagógico.
+    
+    \item  \textbf{Complementaridade ao trabalho docente:} A automação não visa substituir o papel do professor, mas oferecer suporte que permita ao educador concentrar-se em aspectos mais qualitativos e personalizados do processo avaliativo.
+\end{enumerate}
+
+Conforme destacado por \citeonline{lima_avaliacao_2023}, o aumento na demanda por Educação a Distância e as transformações aceleradas pela pandemia intensificaram a necessidade de ferramentas tecnológicas que possam auxiliar nas atividades pedagógicas e de avaliação. Neste contexto, sistemas automatizados de correção representam não apenas uma resposta a desafios operacionais, mas também uma oportunidade de repensar e aprimorar os processos avaliativos.
+
+Contudo, é importante ressaltar que a automação da correção de provas discursivas apresenta seus próprios desafios e limitações, relacionados principalmente à capacidade dos sistemas em capturar nuances semânticas, contextualizar adequadamente as respostas e avaliar aspectos qualitativos da argumentação. Estas questões serão abordadas em seções subsequentes, dedicadas às tecnologias de inteligência artificial e processamento de linguagem natural aplicadas à correção automática.
+
+\section{Inteligência Artificial e Processamento de Liguagem Natural}
+\label{sec:ia-pln}
+
+\subsection{Fundamentos de Inteligência Artificial}
+
+A Inteligência Artificial (IA) representa um campo multidisciplinar da ciência da computação dedicado ao desenvolvimento de sistemas capazes de realizar tarefas que, tradicionalmente, demandariam inteligência humana. Estas tarefas incluem reconhecimento de padrões, aprendizado, raciocínio, resolução de problemas, compreensão de linguagem natural e percepção visual, entre outras.
+
+Historicamente, o campo da IA evoluiu através de diferentes paradigmas e abordagens. Desde os primeiros sistemas baseados em regras e lógica simbólica, desenvolvidos nas décadas de 1950 e 1960, até os atuais modelos de aprendizado profundo (deep learning), observa-se uma trajetória marcada por avanços significativos, intercalados por períodos de expectativas moderadas, conhecidos como "invernos da IA" \cite{torfi_natural_2021}.
+
+Os fundamentos conceituais da IA abrangem diversas áreas do conhecimento, incluindo:
+
+\begin{enumerate}
+  \item \textbf{Representação do conhecimento:} Métodos para codificar informações de forma que possam ser processadas por sistemas computacionais.
+  \item \textbf{Algoritmos de busca e otimização:} Técnicas para encontrar soluções eficientes em espaços de possibilidades complexos.
+  \item \textbf{Aprendizado de máquina:} Abordagens que permitem aos sistemas melhorar seu desempenho com base em experiência, sem programação explícita para cada situação.
+  \item \textbf{Raciocínio probabilístico:} Métodos para lidar com incerteza e informações incompletas.
+  \item \textbf{Processamento de linguagem natural:} Técnicas para compreensão, interpretação e geração de linguagem humana.
+\end{enumerate}
+
+Nas últimas décadas, o campo da IA experimentou avanços expressivos, impulsionados principalmente pelo aprendizado profundo e técnicas baseadas em redes neurais artificiais (RNA). Conforme destacado por \citeonline{young_recent_2018, otter_survey_2021}, esses métodos têm superado abordagens tradicionais em diversas aplicações, especialmente em tarefas complexas relacionadas à decisão, classificação e extração de informações.
+
+No contexto educacional, a IA tem encontrado aplicações diversas, desde sistemas tutoriais inteligentes até ferramentas de avaliação automatizada. \citeonline{wang_large_2024} destacam que a IA educacional pode ser categorizada com base em seu papel no processo educativo, abrangendo assistência a estudantes e professores, aprendizagem adaptativa e ferramentas comerciais específicas para o ambiente educacional.
+
+\subsection{Processamento de Linguagem Natural (PLN)}
+
+O Processamento de Linguagem Natural (PLN) constitui um subcampo da Inteligência Artificial dedicado ao desenvolvimento de métodos e sistemas capazes de compreender, interpretar e gerar linguagem humana em suas diversas formas. Esta área interdisciplinar combina conhecimentos de linguística, ciência da computação, estatística e aprendizado de máquina para abordar a complexidade inerente à comunicação humana.
+
+Conforme observado por \citeonline{torfi_natural_2021}, os avanços em PLN transformaram profundamente o cenário tecnológico nas últimas décadas. Tarefas que anteriormente representavam desafios significativos para sistemas computacionais, como tradução automática, análise de sentimentos, reconhecimento de entidades nomeadas e resposta a perguntas, hoje são realizadas com níveis crescentes de precisão e sofisticação.
+
+O PLN enfrenta diversos desafios fundamentais, decorrentes da natureza complexa e ambígua da linguagem humana:
+
+\begin{enumerate}
+  \item \textbf{Ambiguidade lexical e sintática:} Palavras e estruturas frasais podem ter múltiplos significados, dependendo do contexto.
+  \item \textbf{Variações linguísticas:} Diferenças dialetais, gírias, expressões idiomáticas e evolução constante da linguagem.
+  \item \textbf{Inferência pragmática:} Compreensão de significados implícitos, ironia, sarcasmo e outras nuances comunicativas.
+  \item \textbf{Conhecimento de mundo:} Necessidade de informações contextuais e conhecimento geral para interpretação adequada de textos.
+  \item \textbf{Multimodalidade:} Integração entre linguagem e outros modos de comunicação, como gestos, expressões faciais e elementos visuais.
+\end{enumerate}
+
+Para abordar estes desafios, o PLN desenvolveu diversas técnicas e abordagens, que evoluíram significativamente ao longo do tempo. Inicialmente baseadas em regras linguísticas explícitas e análise estatística simples, as abordagens contemporâneas de PLN fundamentam-se predominantemente em métodos de aprendizado de máquina, especialmente aprendizado profundo.
+
+No contexto educacional, e particularmente na avaliação de respostas discursivas, o PLN oferece ferramentas valiosas para análise semântica, identificação de conceitos-chave, verificação de coerência argumentativa e avaliação da qualidade textual. Conforme destacado por \citeonline{lima_avaliacao_2023} em sua revisão sistemática sobre avaliação automática de redação, técnicas avançadas de PLN têm viabilizado sistemas cada vez mais sofisticados de correção automática, capazes de analisar aspectos tanto formais quanto substantivos das produções textuais dos estudantes.
+
+\subsection{Técnicas de Deep Learning para PLN}
+
+O deep learning revolucionou o campo do PLN, introduzindo arquiteturas e técnicas capazes de capturar padrões complexos e nuances semânticas em dados textuais. Estas abordagens, baseadas em RNA com múltiplas camadas, superaram significativamente os métodos tradicionais em diversas tarefas de PLN.
+
+Entre as principais técnicas de deep learning aplicadas ao PLN, destacam-se:
+
+\begin{enumerate}
+  \item \textbf{Redes Neurais Recorrentes (RNNs):} Arquiteturas especialmente adequadas para processamento de sequências, como textos, por manterem uma “memória” de elementos anteriores. Variantes como LSTM (Long Short-Term Memory) e GRU (Gated Recurrent Unit) foram desenvolvidas para lidar com o problema do desvanecimento do gradiente, permitindo a captura de dependências de longo prazo em textos \cite{young_recent_2018}.
+  
+  \item \textbf{Word Embeddings::} Representações vetoriais densas de palavras em espaços multidimensionais, que capturam relações semânticas e sintáticas. Técnicas como Word2Vec, GloVe e FastText revolucionaram a forma como as palavras são representadas em sistemas de PLN, permitindo operações algébricas sobre significados \cite{otter_survey_2021}.
+  
+  \item \textbf{Redes Neurais Convolucionais (CNNs):} Originalmente desenvolvidas para processamento de imagens, foram adaptadas para PLN, mostrando-se eficazes na extração de características locais em textos, como n-gramas e padrões sintáticos.
+  
+  \item \textbf{Mecanismos de Atenção:} Permitem que modelos foquem em partes específicas do texto de entrada ao gerar cada elemento da saída, melhorando significativamente o desempenho em tarefas como tradução e sumarização.
+  
+  \item \textbf{Transfer Learning:} Abordagem que utiliza modelos pré-treinados em grandes corpora textuais e os ajusta para tarefas específicas, reduzindo a necessidade de dados rotulados e tempo de treinamento.
+\end{enumerate}
+
+Estas técnicas têm sido aplicadas com sucesso em diversos domínios do PLN, incluindo análise de sentimentos, classificação de textos, extração de informações, tradução automática e geração de linguagem natural. No contexto educacional, e especificamente na correção automática de respostas discursivas, o deep learning oferece ferramentas poderosas para análise semântica, avaliação de coerência argumentativa e identificação de conceitos-chave.
+
+Conforme destacado por \citeonline{tavares_clarice_2024} em seu trabalho sobre uma abordagem neural para correção automática de redações, as técnicas de deep learning permitem superar limitações de abordagens anteriores baseadas em regras ou estatísticas simples, possibilitando análises mais sofisticadas e contextualizadas das produções textuais dos estudantes.
+
+\subsection{Modelos de Linguagem e Transformers}
+
+Um marco decisivo na evolução do PLN foi a introdução da arquitetura Transformer, proposta por \citeonline{vaswani_attention_2023}. Esta arquitetura revolucionária eliminou a necessidade de recorrência ao utilizar exclusivamente mecanismos de autoatenção, permitindo processamento paralelo e captura eficiente de dependências de longo alcance em textos.
+
+Os Transformers apresentam várias vantagens em relação às arquiteturas anteriores:
+
+\begin{enumerate}
+  \item \textbf{Paralelização:} Ao contrário das RNNs, que processam sequências elemento por elemento, os Transformers podem processar todos os elementos simultaneamente, resultando em treinamento mais rápido.
+  
+  \item \textbf{Atenção multi-cabeça:} Permite ao modelo focar em diferentes aspectos do texto simultaneamente, capturando relações complexas entre palavras e frases.
+  
+  \item \textbf{Modelagem bidirecional:} Capacidade de considerar tanto o contexto anterior quanto o posterior de cada palavra, resultando em representações mais ricas e contextualizadas.
+  
+  \item \textbf{Escalabilidade:} A arquitetura pode ser expandida para modelos com bilhões de parâmetros, aproveitando o poder computacional disponível para melhorar o desempenho.
+\end{enumerate}
+
+A partir da arquitetura Transformer, surgiram diversos modelos de linguagem que transformaram o estado da arte em PLN, como BERT (Bidirectional Encoder Representations from Transformers), GPT (Generative Pre-trained Transformer), T5 (Text-to-Text Transfer Transformer), entre outros. Estes modelos são pré-treinados em vastos conjuntos textuais usando objetivos como modelagem de linguagem mascarada ou predição do próximo token, e posteriormente ajustados para tarefas específicas.
+
+\citeonline{chen_evaluating_2021} destacam que estes modelos demonstram capacidades impressionantes em diversas tarefas linguísticas, incluindo compreensão de leitura, inferência textual, resposta a perguntas e geração de texto. No contexto educacional, os Transformers têm sido aplicados com sucesso em sistemas de tutoria inteligente, avaliação automatizada e geração de feedback personalizado.
+
+\citeonline{wang_large_2024}, em sua revisão abrangente sobre modelos de linguagem para educação, observam que os Transformers proporcionaram avanços significativos na capacidade dos sistemas em compreender respostas discursivas dos estudantes, avaliar sua qualidade e fornecer feedback contextualizado. Os autores destacam que estas arquiteturas permitem análises mais nuançadas e sensíveis ao contexto, superando limitações de abordagens anteriores baseadas em correspondência de palavras-chave ou estatísticas superficiais.
+
+\subsection{LLMs e suas Aplicações}
+
+Os Large Language Models (LLMs) representam a culminação dos avanços em arquiteturas Transformer, caracterizando-se por sua escala sem precedentes em termos de parâmetros e dados de treinamento. Modelos como GPT-4o, Claude, Llama 2 e DeepSeek contêm dezenas ou centenas de bilhões de parâmetros e são treinados em vastos conjuntos textuais, abrangendo livros, artigos, websites e outras fontes de conhecimento humano.
+
+Esta escala confere aos LLMs capacidades emergentes notáveis:
+
+\begin{enumerate}
+  \item \textbf{Compreensão contextual sofisticada:} Capacidade de interpretar nuances, ambiguidades e referências implícitas em textos complexos.
+  
+  \item \textbf{Versatilidade em múltiplas tarefas:} Habilidade para realizar diversas tarefas linguísticas sem treinamento específico, apenas com instruções em linguagem natural (prompting).
+  
+  \item \textbf{Geração de texto coerente e contextualizado:} Produção de conteúdo textual que mantém consistência temática, estilística e factual ao longo de extensões consideráveis.
+  
+  \item \textbf{Raciocínio em múltiplos passos:} Capacidade de decompor problemas complexos, seguir cadeias de raciocínio e explicar conclusões.
+  
+  \item \textbf{Adaptabilidade a domínios específicos:} Facilidade de ajuste para áreas especializadas do conhecimento através de fine-tuning ou técnicas de prompt engineering.
+\end{enumerate}
+
+No contexto educacional, os LLMs têm encontrado aplicações diversas e promissoras. \citeonline{wang_large_2024} categorizam estas aplicações em três áreas principais: assistência a estudantes, assistência a professores e ferramentas comerciais específicas para a educação.
+
+Na assistência a estudantes, os LLMs podem atuar como tutores personalizados, respondendo a dúvidas, explicando conceitos complexos, fornecendo exemplos ilustrativos e adaptando-se ao nível de conhecimento do aprendiz. Conforme destacado por \citeonline{seo_large_2025}, em seu estudo sobre LLMs como avaliadores na educação, estes modelos podem fornecer feedback detalhado e construtivo sobre produções textuais dos estudantes, identificando pontos fortes e áreas para melhoria.
+
+Na assistência a professores, os LLMs podem auxiliar na preparação de materiais didáticos, geração de questões para avaliação, correção automatizada de atividades e análise de padrões de desempenho dos estudantes. \citeonline{beckford_revisit_2024} destaca o potencial destes modelos para reduzir a carga administrativa dos educadores, permitindo que dediquem mais tempo a interações pedagógicas significativas.
+
+Especificamente na correção automática de provas discursivas, os LLMs oferecem vantagens significativas em relação a abordagens anteriores:
+
+\begin{enumerate}
+  \item \textbf{Compreensão semântica profunda:} Capacidade de entender o significado das respostas além de correspondências lexicais superficiais.
+  
+  \item \textbf{Avaliação holística:} Habilidade para considerar simultaneamente múltiplos aspectos da resposta, como precisão factual, coerência argumentativa, estrutura textual e adequação linguística.
+  
+  \item \textbf{Feedback contextualizado:} Possibilidade de gerar comentários específicos e construtivos, identificando pontos fortes e sugerindo melhorias.
+  
+  \item \textbf{Adaptabilidade a diferentes disciplinas:} Versatilidade para avaliar respostas em diversos domínios do conhecimento, desde ciências exatas até humanidades.
+\end{enumerate}
+
+Contudo, como observado por \citeonline{heggler_as_2025} os LLMs também apresentam desafios e limitações importantes, incluindo potenciais vieses incorporados durante o treinamento, tendência a "alucinações" (geração de informações incorretas com aparência de confiabilidade) e questões de privacidade e segurança. Estas considerações serão abordadas em seções subsequentes, dedicadas aos desafios e limitações dos sistemas atuais.
+
+\section{Arquiteturas de Agentes de IA e Estratégias de Otimização}
+\label{sec:agentes-rag}
+\subsection{Agentes de IA}
+
+A concepção tradicional de agentes inteligentes, caracterizados por autonomia, reatividade, pró-atividade e sociabilidade em um ambiente \cite{wooldridge_introduction_2012}, ganhou uma nova dimensão com a implantação de LLMs. Os LLMs, como o GPT-4o, DeepSeek e outros, com suas vastas capacidades de compreensão e geração de linguagem natural, raciocínio e até mesmo planejamento rudimentar, tornaram-se a espinha dorsal de uma nova geração de agentes autônomos \cite{wang_survey_2025, xi_rise_2023}.
+
+Agentes baseados em LLMs (\textit{LLM-based agents}) são sistemas que utilizam um LLM como seu componente central de processamento ou "cérebro" para realizar tarefas complexas que exigem planejamento, tomada de decisão e interação com o ambiente, que pode incluir software, ferramentas digitais ou até o mundo físico \cite{wang_survey_2025}. Diferentemente de agentes simbólicos clássicos, cujo comportamento é explicitamente programado, os agentes baseados em LLMs aproveitam o conhecimento implícito e as capacidades de raciocínio do modelo pré-treinado, guiados por prompts cuidadosamente elaborados (engenharia de prompt) para definir seus objetivos, capacidades e restrições.
+
+\citeonline{wang_survey_2025} propõem um \textit{framework} conceitual para a construção desses agentes, destacando quatro componentes principais:
+
+\begin{enumerate}
+    \item \textbf{Perfil (\textit{Profile}):} Define o papel e as características essenciais do agente (ex: "Você é um assistente de correção de provas..."). Isso molda a identidade e o comportamento esperado do agente.
+
+    \item \textbf{Memória (\textit{Memory}):} Armazena informações passadas (interações, observações, resultados de ações) para permitir aprendizado contextual e consistência ao longo do tempo. A memória pode ser de curto prazo (contexto da janela do prompt) ou de longo prazo (armazenada e recuperada de bancos de dados externos).
+
+    \item \textbf{Planejamento (\textit{Planning}):} Envolve a decomposição de tarefas complexas em subtarefas menores e gerenciáveis. O agente pode refletir sobre suas ações passadas e planejar os próximos passos para atingir seu objetivo final.
+
+    \item  \textbf{Ação (\textit{Action}):} Executa as subtarefas planejadas, interagindo com o ambiente. Isso pode envolver o uso de ferramentas externas (APIs, motores de busca, calculadoras), a geração de código ou a produção de texto.
+\end{enumerate}
+
+A interação entre esses componentes permite que o agente perceba seu ambiente (através de prompts ou ferramentas), raciocine sobre o estado atual e seus objetivos (usando o LLM), planeje uma sequência de ações e execute essas ações, aprendendo e adaptando-se com base nos resultados. No contexto da correção automática de provas discursivas, um agente baseado em LLM poderia receber a resposta do aluno, acessar critérios de avaliação (memória/ferramenta), planejar os passos da correção (verificar conceitos, avaliar argumentação, etc.), executar a avaliação (ação, usando o LLM para análise e geração de feedback) e registrar o resultado (memória).
+
+\subsection{Sistema de Multi Agentes}
+
+A colaboração entre múltiplos agentes para resolver problemas complexos é o foco dos Sistemas Multiagentes (SMA). Tradicionalmente, a coordenação em SMAs dependia de protocolos de comunicação e mecanismos de negociação predefinidos. No entanto, a integração de LLMs como componentes centrais dos agentes abriu novas possibilidades e desafios para a construção e operação de SMAs \cite{chen_survey_2025, yan_beyond_2025}.
+
+Sistemas Multiagentes baseados em LLMs (\textit{LLM-based MAS}) utilizam LLMs não apenas para as capacidades individuais de cada agente (raciocínio, planejamento, ação), mas também para facilitar a interação e a colaboração entre eles. A capacidade dos LLMs de compreender e gerar linguagem natural permite formas de comunicação mais flexíveis e sofisticadas entre os agentes, potencialmente superando a rigidez dos protocolos de comunicação tradicionais \cite{chen_survey_2025}.
+
+As principais abordagens e características dos SMAs baseados em LLMs incluem:
+
+\begin{enumerate}
+    \item \textbf{Comunicação Aprimorada por LLM:} Os agentes podem usar linguagem natural para se comunicar, negociar tarefas, compartilhar informações e coordenar ações. O LLM pode interpretar mensagens recebidas e gerar respostas apropriadas no contexto da interação \cite{yan_beyond_2025}.
+
+    \item \textbf{Atribuição Dinâmica de Papéis e Tarefas:}  Um LLM central ou os próprios agentes podem analisar um problema complexo e atribuir dinamicamente papéis e subtarefas a diferentes agentes com base em seus perfis e capacidades \cite{wang_survey_2025}.
+
+    \item \textbf{Colaboração em Resolução de Problemas:} Múltiplos agentes podem trabalhar juntos em tarefas como escrita colaborativa, debate, brainstorming ou desenvolvimento de software. Cada agente contribui com sua perspectiva ou habilidade específica, e o LLM pode ajudar a sintetizar as contribuições ou a mediar discussões \cite{qian_chatdev_2024}.
+
+    \item \textbf{Simulação de Interações Sociais:} SMAs baseados em LLMs são usados para simular comportamentos sociais complexos, permitindo estudar a emergência de normas, a formação de opiniões ou a dinâmica de grupos em ambientes virtuais \cite{park_generative_2023}.
+\end{enumerate}
+
+A arquitetura desses sistemas pode variar. Alguns utilizam um LLM centralizado que orquestra a comunicação e a colaboração, enquanto outros adotam abordagens mais descentralizadas, onde cada agente possui seu próprio LLM ou acessa um modelo compartilhado \cite{chen_survey_2025}. A engenharia de prompt desempenha um papel crucial na definição dos papéis dos agentes, das regras de interação e dos objetivos coletivos.
+
+No contexto da correção automática de provas, um SMA baseado em LLMs poderia envolver múltiplos agentes especializados (ex: agente de análise de conteúdo, agente de verificação gramatical, agente de avaliação de argumentação) que se comunicam (possivelmente via linguagem natural interpretada por LLMs) para chegar a uma avaliação consensual e gerar um feedback abrangente, simulando um processo de revisão por pares ou uma banca avaliadora.
+
+\subsection{Engenharia de Prompt}
+
+A Engenharia de Prompt emergiu como uma disciplina fundamental para interagir eficazmente com LLMs. Em vez de re-treinar ou ajustar finamente os modelos para cada tarefa específica, a engenharia de prompt foca na formulação cuidadosa das instruções (prompts) fornecidas ao LLM para elicitar o comportamento desejado \cite{sahoo_systematic_2025}.
+
+Um prompt, no contexto de LLMs, é mais do que uma simples pergunta; é uma instrução que pode incluir contexto, exemplos (few-shot learning), e especificações sobre o formato ou estilo da saída desejada. A qualidade do prompt influencia diretamente a qualidade da resposta gerada pelo LLM (\citeauthor{liu_prompt_2023}, \citeyear{liu_prompt_2023} apud \citeauthor{sahoo_systematic_2025}, \citeyear{sahoo_systematic_2025}).
+
+\citeonline{sahoo_systematic_2025} categorizam diversas técnicas de engenharia de prompt, muitas das quais são cruciais para otimizar o desempenho de agentes baseados em LLMs:
+
+\begin{enumerate}
+    \item \textbf{\textit{Prompting Zero-Shot} e \textit{Few-Shot}:} A forma mais básica, onde o prompt contém apenas a instrução (\textit{zero-shot}) ou a instrução com alguns exemplos ilustrativos (\textit{few-shot}) para guiar o modelo.
+
+    \item \textbf{\textit{Prompting Chain-of-Thought} (CoT):} articularmente eficaz para tarefas que exigem raciocínio complexo, o CoT instrui o LLM a detalhar seu processo de pensamento passo a passo antes de chegar à resposta final. Isso melhora a capacidade de resolução de problemas do modelo \cite{wei_chain--thought_2023}.
+
+    \item \textbf{\textit{Self-Consistency}:} Uma extensão do CoT, onde múltiplas cadeias de pensamento são geradas para o mesmo problema, e a resposta final mais frequente entre elas é selecionada, aumentando a robustez \cite{wang_self-consistency_2023}.
+
+    \item \textbf{\textit{Prompting} Baseado em Papéis (\textit{Role Prompting}):} Atribuir um papel específico ao LLM no prompt (ex: "Aja como um especialista em avaliação educacional...") pode focar o modelo e melhorar a relevância e o tom da resposta.
+
+    \item \textbf{Técnicas Estruturadas (ex: \textit{Tree-of-Thoughts}, \textit{Graph-of-Thoughts}):}  Abordagens mais avançadas que guiam o LLM a explorar múltiplas linhas de raciocínio ou estruturas de pensamento mais complexas, úteis para problemas que exigem exploração ou planejamento estratégico \cite{yao_tree_2023, besta_graph_2024}.
+
+\end{enumerate}
+
+A engenharia de prompt é um processo iterativo. Desenvolvedores frequentemente refinam os prompts com base nas saídas do modelo para melhorar o desempenho. No contexto da correção automática de provas discursivas, a engenharia de prompt é essencial para instruir o agente LLM sobre os critérios de avaliação, a estrutura esperada do feedback, como ponderar diferentes aspectos da resposta do aluno e como alinhar a avaliação com os objetivos pedagógicos específicos, garantindo que o agente atue como uma ferramenta eficaz e confiável para o educador.
+
+\subsection{Recuperação Aumentada por Geração (RAG)}
+
+Os LLMs, apesar de suas notáveis capacidades generativas, enfrentam desafios intrínsecos, como a propensão a gerar informações factualmente incorretas ("alucinações") e a limitação de seu conhecimento ao corpus de treinamento, que rapidamente se torna desatualizado \cite{gao_retrieval-augmented_2024}. A Recuperação Aumentada por Geração (RAG) surge como uma arquitetura robusta para mitigar essas limitações, integrando dinamicamente conhecimento de fontes externas e atualizadas ao processo de geração do LLM \cite{lewis_retrieval-augmented_2021, gao_retrieval-augmented_2024}.
+
+A RAG aprimora os LLMs ao fundamentar suas respostas em informações relevantes recuperadas de uma base de conhecimento externa (documentos, artigos, bases de dados). O processo central da RAG, conforme descrito por \citeonline{gao_retrieval-augmented_2024}, pode ser dividido em etapas fundamentais, com a fase de recuperação sendo crucial e dependente de representações semânticas conhecidas como \textit{embeddings}.
+
+\begin{enumerate}
+    \item \textbf{Indexação (\textit{Indexing}):} A base de conhecimento externa (ex: material didático, artigos científicos, gabaritos) é primeiramente processada. Os documentos são segmentados em trechos menores (\textit{chunks}). Em seguida, um modelo de \textit{embedding} (como Sentence-BERT, SimCSE, ou modelos via APIs como os da OpenAI) é utilizado para converter cada trecho de texto em um vetor numérico de alta dimensionalidade (\textit{embedding}). Esses \textit{embeddings} capturam a essência semântica do texto, de modo que trechos com significados similares possuam vetores próximos no espaço vetorial. Esses vetores, juntamente com os textos originais, são armazenados e indexados em um banco de dados vetorial (ex: FAISS, Milvus, Pinecone), otimizado para buscas rápidas de similaridade \cite{gao_retrieval-augmented_2024, khattab_colbert_2020}.
+
+    \item \textbf{Recuperação (\textit{Retrieval}):} Quando o usuário envia uma consulta (prompt), ela também é convertida em um \textit{embedding} vetorial usando o mesmo modelo de \textit{embedding}. Este vetor da consulta é então usado para pesquisar no banco de dados vetorial os \textit{embeddings} dos trechos de texto que são semanticamente mais similares à consulta. A similaridade de cosseno é uma métrica comum para medir a proximidade entre os vetores. Os `k` trechos mais relevantes (\textit{top-k retrieval}) são selecionados \cite{gao_retrieval-augmented_2024, gao_precise_2022}.
+
+    \item \textbf{Geração (\textit{Generation}):}  Os trechos de texto recuperados, que contêm informações relevantes e potencialmente atualizadas, são então combinados com o prompt original do usuário. Este prompt aumentado é fornecido ao LLM. O LLM utiliza tanto sua conhecimento interno quanto o contexto adicional fornecido pelos trechos recuperados para gerar uma resposta final mais precisa, factual, detalhada e rastreável, pois pode (e idealmente deve) citar as fontes recuperadas \cite{gao_retrieval-augmented_2024, ram_-context_2023}.
+\end{enumerate}
+
+A eficácia da RAG depende significativamente da qualidade dos \textit{embeddings} e da relevância dos documentos recuperados. Técnicas avançadas de RAG (\textit{Advanced RAG, Modular RAG}) buscam otimizar cada etapa, incluindo pré-processamento dos dados, estratégias de chunking, otimização dos modelos de embedding, técnicas de re-ranking dos documentos recuperados e métodos para refinar o prompt ou a resposta final \cite{gao_retrieval-augmented_2024}.
+
+No contexto da correção automática de provas discursivas, a RAG permite que o agente de IA "consulte" materiais específicos do curso, critérios de avaliação detalhados ou exemplos de respostas modelo (previamente indexados como \textit{embeddings}) antes de avaliar a resposta do aluno. Isso garante que a correção seja fundamentada no contexto específico da disciplina e nos critérios do professor, aumentando a precisão, a consistência e a explicabilidade da avaliação gerada pelo LLM.
+
+%\section{APLICAÇÕES DE IA NA CORREÇÃO DE PROVAS DISCURSIVAS}
+%\subsection{Sistemas Existentes de Correção Automática}
+%\subsection{Uso de LLMs na Avaliação de Respostas Abertas}
+%\subsection{Desafios e Limitações dos Sistemas Atuais}
+%\subsection{Perspectivas Futuras para Correção Automática}

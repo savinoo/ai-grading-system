@@ -1,0 +1,31 @@
+
+Lista de gráficos
+
+Lista de tabelas (somente uma?)
+
+capítulo 1, capítulo 2, ...
+usar:
+ \autoref{cap:introducao}
+ \autoref{cap:referencial}
+ \autoref{cap:material_metodos}
+
+e embaixo dos comandos \chapter{Introdução}
+escrever na linha exatamente embaixo:
+\label{cap:introducao} % sem acentos
+\label{cap:referencial}
+\label{cap:material_metodos}
+...
+
+fontes nas Figura 8,9 (os autores) 
+
+Fonte nos Quadros (os autores)
+
+O anexo 1 é na verdade um apêndice, trocar.
+
+Adicionar os códigos como apêndice B também.
+    colocar uma legenda abaixo dizendo sobre o que é o código.
+    se puder recuperem os parágrafos de comentário já feitos 
+    para acompanhar o código.
+
+Fazer a legenda utilizando \label{cod:xxx}
+

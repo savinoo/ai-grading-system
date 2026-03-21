@@ -1,0 +1,47 @@
+\chapter{Introdução}
+
+A Inteligência Artificial (IA) alcançou avanços expressivos nos últimos anos, impulsionada principalmente pelo aprendizado profundo (\textit{deep learning}) e técnicas baseadas em redes neurais artificiais \cite{young2017recent, otter2018survey}. Esses métodos têm superado abordagens tradicionais em diversas aplicações, especialmente em tarefas complexas relacionadas à decisão, classificação e extração de informações.
+
+Particularmente no Processamento de Linguagem Natural (PLN), esses avanços transformaram profundamente o cenário tecnológico \cite{torfi2020nlp}. Modelos neurais profundos, como as redes neurais recorrentes (RNNs), redes LSTM (\textit{Long Short-Term Memory}) e mecanismos de atenção, mostraram-se altamente eficazes em tarefas como tradução automática, análise de sentimentos e reconhecimento de entidades \cite{young2017recent, otter2018survey}.
+
+Um marco decisivo nessa evolução foi a introdução da arquitetura \textit{Transformer}, proposta por \citeonline{vaswani2017attention}, que eliminou a necessidade de recorrências ao utilizar mecanismos de autoatenção. Com isso, foi possível o treinamento de modelos maiores e mais eficientes, conhecidos como \textit{Large Language Models} (LLMs). Esses modelos são capazes de gerar textos coerentes e contextualizados, demonstrando versatilidade inédita em múltiplas tarefas linguísticas \cite{chen2021decision}.
+
+Os avanços proporcionados por LLMs e PLN vêm sendo amplamente aplicados para melhorar processos em diversas áreas. Na saúde, essas tecnologias têm auxiliado diagnósticos e agilizado a análise de dados clínicos \cite{tang2024clinical}. No setor jurídico, LLMs ajudam na pesquisa legal e previsão de resultados judiciais, tornando o trabalho mais eficiente \cite{lai2023gptlaw}. Atendimento ao cliente, administração pública e setor empresarial também têm integrado esses modelos para automatizar tarefas e aprimorar tomadas de decisão \cite{larsen2025customer, mazur2024ai, sciforce2025impact}. Esse cenário abre possibilidades promissoras também para o campo educacional.
+
+O sistema educacional brasileiro enfrenta desafios multidimensionais, abrangendo questões estruturais, pedagógicas, avaliativas e administrativas. Estruturalmente, persistem deficiências em infraestrutura e recursos limitados, especialmente na rede pública, problemas agravados por desigualdades socioeconômicas e regionais \cite{bastos2019educacao, tpe2016anuario}. Pedagogicamente, destaca-se a formação insuficiente de professores e práticas de ensino ultrapassadas, que afetam diretamente a qualidade do ensino \cite{gatti2019formacao}. No contexto administrativo, políticas públicas descontínuas, baixa valorização docente e deficiências no planejamento institucional impedem avanços consistentes \cite{bastos2019educacao, castro2008ensinomedio}.
+
+Em relação às avaliações, prevalecem exames tradicionais centrados na memorização, negligenciando abordagens formativas e críticas. Essa realidade, aliada à gestão escolar deficiente, compromete a equidade e qualidade das avaliações \cite{nasser2019avaliacao}.
+
+Um desafio central nesse cenário educacional refere-se especificamente à correção de provas discursivas. Essa atividade exige alto empenho docente, análise minuciosa e critérios definidos para justiça na atribuição das notas. Estudos apontam que correções discursivas sofrem frequentemente de subjetividade e variação significativa entre avaliadores, impactando negativamente a equidade e a confiabilidade da avaliação educacional \cite{nasser2019avaliacao}.
+
+
+\section{Objetivos}
+
+\subsection{Objetivo Geral} 
+Implementar um modelo de correção automatizada de provas discursivas utilizando LLMs com apoio da técnica de recuperação de contexto, integrando informações adicionais relevantes às respostas dos alunos. 
+
+\subsection{Objetivos Específicos}
+\begin{enumerate}
+    \item Implementar um módulo de configuração flexível que permita aos professores definirem e validarem critérios específicos para as avaliações, auxiliados por sugestões automatizadas baseadas em modelos de linguagem avançados (LLMs).
+
+    \item Criar um mecanismo de correção baseado em múltiplos agentes de IA que realizem avaliações independentes das respostas, incluindo o tratamento automático de divergências entre as correções.
+
+    \item Disponibilizar uma interface integrada para que o professor possa revisar e validar as notas atribuídas pelo sistema, assegurando coerência com os objetivos acadêmicos definidos previamente.
+
+
+\end{enumerate}
+
+\section{Justificativa}
+
+A modernização dos processos avaliativos é essencial para atender às demandas atuais no cenário educacional, que exigem avaliações mais ágeis e coerentes com critérios pedagógicos bem definidos. Os métodos tradicionais de correção manual, especialmente em provas discursivas, costumam demandar um tempo significativo dos docentes, além de exigirem constante atenção aos critérios estabelecidos, o que pode levar a variações nas avaliações realizadas por diferentes avaliadores.
+
+Nesse contexto, técnicas avançadas de inteligência artificial, como os modelos de linguagem avançados (LLMs) associados à recuperação de contexto, apresentam-se como alternativas promissoras para auxiliar na padronização e consistência da correção das respostas discursivas. Esses métodos possibilitam uma análise semântica detalhada e consistente das respostas dos alunos, contribuindo para uma maior uniformidade e clareza na aplicação dos critérios de avaliação.
+
+Ao oferecer suporte automatizado às correções, o sistema proposto poderá facilitar a identificação objetiva das principais dificuldades e pontos fortes no aprendizado dos alunos, permitindo que os professores direcionem melhor suas intervenções pedagógicas. Além disso, ao reduzir atividades repetitivas associadas à correção manual extensiva, o sistema auxiliará os docentes na otimização de sua rotina, ampliando a oportunidade de dedicar maior atenção ao planejamento de estratégias didáticas e acompanhamento individualizado dos estudantes.
+
+Finalmente, acredita-se que o desenvolvimento desse sistema possa contribuir positivamente para melhorar os processos avaliativos e reforçar o compromisso das instituições com práticas educacionais mais modernas e eficientes.
+
+ 
+
+
+\section{Estrutura do Trabalho}

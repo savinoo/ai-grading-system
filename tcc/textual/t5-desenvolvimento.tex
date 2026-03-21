@@ -1,0 +1,179 @@
+\chapter{DESENVOLVIMENTO}
+\label{cap:desenvolvimento}
+Vestibulum ac arcu suscipit, consequat orci sit amet, maximus dolor. Vestibulum condimentum nulla vitae fermentum venenatis. In sit amet tincidunt ex, quis molestie turpis. Proin eleifend fringilla tincidunt. Curabitur pellentesque nisi in risus iaculis, in tristique odio maximus. Donec condimentum massa a erat malesuada, ut lacinia elit maximus. Integer feugiat volutpat luctus. Vestibulum commodo varius venenatis. Ut diam ante, feugiat non consectetur id, suscipit at dolor. Duis tempor quam ligula, id volutpat ligula dapibus id. Phasellus at fermentum nibh.
+
+\section{Levantamento das Estórias}
+
+As estórias foram identificadas, analisadas e descritas abaixo:
+
+\begin{itemize}
+	\item \textbf{Estória 01: Cadastrar Catador}\par
+Descrição: Permite a criação do usuário responsável pelo recolhimento do material descartado.
+
+	\item \textbf{Estória 02: Cadastrar Separador}\par
+Descrição: Permite a criação do usuário responsável pelo descarte do material.
+
+	\item \textbf{Estória 03: Efetuar login}\par
+Descrição: Autoriza o acesso às funcionalidades do sistema. 
+
+	\item \textbf{Estória 04: Recuperar senha }\par
+Descrição: Possibilita que o usuário redefina a senha.
+
+	\item \textbf{Estória 05: Tirar dúvidas }\par
+Descrição: Esclarece sobre a definição dos perfis. 
+
+	\item \textbf{Estória 06: Solicitar recolhimento}\par
+Descrição: Requisita a coleta do material descartado.
+
+	\item \textbf{Estória 07: Realizar logoff}\par
+Descrição: Permite que o usuário saia do sistema.
+
+\end{itemize}
+
+
+\section{Diagramas do Modelo Proposto}
+
+\subsection{Diagrama de Classes}
+
+Na construção do diagrama de classes foi analisada as principais classes do sistema, suas características, seus relacionamentos e suas funcionalidades. É possível observar através da \autoref{fig:classe}, a estrutura do desenvolvimento do sistema.
+
+%%%%%%%%%%%%%%%%%%%% Figure/Image No: 8 starts here %%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+	\caption{Diagrama de Classes}
+	\begin{Center}
+		\includegraphics[width=6.4in,height=2.77in]{./media/image35.png}
+	\end{Center}
+	\label{fig:classe}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%% Figure/Image No: 8 Ends here %%%%%%%%%%%%%%%%%%%%
+
+Na \autoref{fig:classe} citada acima podemos observar o Diagrama de Classes utilizado para a construção do aplicativo.
+
+As classes Catador e Separador são extensões da classe Pessoa, que tem como objetivo informar seus dados, tirar dúvidas sobre a definição dos perfis, criar uma conta perfil, redefinir a senha esquecida, efetuar \textit{login}, salvar os dados do \textit{login} e realizar \textit{logoff}.
+
+A classe Catador que faz parte de uma das contas perfil, é responsável pelo cadastro do usuário catador. Este usuário é encarregado por traçar a rota da coleta e recolher o material descartado.
+
+A classe Separador que faz parte de uma das contas perfil, é responsável pelo cadastro do usuário separador. Ao informar sua localização e o tipo de material, o usuário poderá solicitar o recolhimento do material descartado.
+
+\subsection{Diagrama de Casos de Uso}
+
+Esse parágrafo descreve as funcionalidades do sistema e as interações entre os atores, através da \autoref{fig:casos}. 
+
+%%%%%%%%%%%%%%%%%%%% Figure/Image No: 9 starts here %%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+\caption{Diagrama de Casos de Uso}
+	\begin{Center}
+		\includegraphics[width=5.12in,height=3.02in]{./media/image32.png}
+	\end{Center}
+	\label{fig:casos}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%% Figure/Image No: 9 Ends here %%%%%%%%%%%%%%%%%%%%
+
+Na \autoref{fig:casos} citada acima, podemos ver o Diagrama de Casos de Uso. Na tela inicial do aplicativo, o usuário poderá realizar as seguintes funções: logar no APP, cadastrar usuário, tirar dúvidas, efetuar \textit{logoff} e recuperar a senha. Se o usuário ainda não estiver cadastrado, irá se cadastrar no perfil desejado: Catador ou Separador. Caso já tenha cadastro, basta efetuar o \textit{login}, o qual pode ser salvo pelo sistema. Em caso de senha esquecida, o sistema permite a recuperação através do \textit{e-mail}.
+
+A partir da inserção da localização e do tipo de material, o Separador poderá solicitar o recolhimento do rejeito. O Catador recebendo a solicitação do Separador, irá traçar a rota para a coleta do material. 
+
+\paragraph*{5.2.2.1 Especificação dos Casos de Uso}
+
+Esse capítulo é responsável pelo detalhamento das funcionalidades do sistema. O (\autoref{quad:catador}), descreve o passo a passo para o cadastro do usuário Catador.
+
+%%%%%%%%%%%%%%%%%%%% Table No: 4 starts here %%%%%%%%%%%%%%%%%%%%
+
+\begin{quadro}[H]
+\caption{Cadastrar Catador}
+\label{quad:catador}
+\centering
+\begin{tabular}{p{1.25in}p{4.50in}}
+\hline
+%row no:1
+\multicolumn{1}{|p{1.25in}}{\textbf{Caso de Uso}} & 
+\multicolumn{1}{|p{4.50in}|}{Cadastrar Catador} \\
+\hhline{--}
+%row no:2
+\multicolumn{1}{|p{1.25in}}{\textbf{Descrição}} & 
+\multicolumn{1}{|p{4.50in}|}{Permite a criação de perfil usuário denominado catador.} \\
+\hhline{--}
+%row no:3
+\multicolumn{1}{|p{1.25in}}{\textbf{Ator}} & 
+\multicolumn{1}{|p{4.50in}|}{Catador} \\
+\hhline{--}
+%row no:4
+\multicolumn{1}{|p{1.25in}}{\textbf{Pré-condições}} & 
+\multicolumn{1}{|p{4.50in}|}{Preencher todos os dados solicitados} \\
+\hhline{--}
+%row no:5
+\multicolumn{1}{|p{1.25in}}{\textbf{Pós-condições}} & 
+\multicolumn{1}{|p{4.50in}|}{Cadastro do perfil catador no sistema} \\
+\hhline{--}
+%row no:6
+\multicolumn{1}{|p{1.25in}}{\textbf{Fluxo Principal}} & 
+\multicolumn{1}{|p{4.50in}|}{\begin{enumerate}[label*={\fontsize{12pt}{12pt}\selectfont \arabic*.}]
+	\item Na tela inicial, o usuário solicita o cadastro; \par 	\item Em seguida preenche todos os dados; \par 	\item O sistema valida os dados preenchidos; \par 	\item O cadastro é realizado.
+\end{enumerate}} \\
+\hhline{--}
+%row no:7
+\multicolumn{1}{|p{1.25in}}{\textbf{Fluxo de Exceção}} & 
+\multicolumn{1}{|p{4.50in}|}{\textbf{Dados incorretos} \par \begin{enumerate}[label*={\fontsize{12pt}{12pt}\selectfont \arabic*.}]
+	\item No passo 3 do Fluxo Principal, o usuário não preencheu os dados corretamente, o sistema sinaliza qual campo não foi preenchido.
+\end{enumerate} \par \textbf{Dados não cadastrados} \par \begin{enumerate}[label*={\fontsize{12pt}{12pt}\selectfont \arabic*.}]
+	\item No passo 3 do Fluxo Principal, o usuário preenche algum campo já cadastrado, o sistema exibe qual campo já foi cadastrado.
+\end{enumerate}} \\
+\hhline{--}
+
+\end{tabular}
+\end{quadro}
+
+
+%%%%%%%%%%%%%%%%%%%% Table No: 4 ends here %%%%%%%%%%%%%%%%%%%%
+
+O caso de uso Cadastrar Catador (\autoref{quad:catador}), citado acima é responsável por avaliar as ações necessárias para realizar o cadastro do perfil catador. 
+
+O \autoref{qua:separador} descreve o passo a passo para o cadastro do usuário Separador.
+
+%%%%%%%%%%%%%%%%%%%% Table No: 5 starts here %%%%%%%%%%%%%%%%%%%%
+
+
+\begin{quadro}[H]
+\caption{Cadastro Separador}
+ \label{qua:separador}			\begin{tabular}{p{1.33in}p{3.96in}}
+\hline
+%row no:1
+\multicolumn{1}{|p{1.33in}}{\textbf{Caso de Uso}} & 
+\multicolumn{1}{|p{3.96in}|}{Cadastrar Separador} \\
+\hhline{--}
+%row no:2
+\multicolumn{1}{|p{1.33in}}{\textbf{Descrição}} & 
+\multicolumn{1}{|p{3.96in}|}{Permite a criação de perfil usuário denominado separador.} \\
+\hhline{--}
+%row no:3
+\multicolumn{1}{|p{1.33in}}{\textbf{Ator}} & 
+\multicolumn{1}{|p{3.96in}|}{Separador} \\
+\hhline{--}
+%row no:4
+\multicolumn{1}{|p{1.33in}}{\textbf{Pré-condições}} & 
+\multicolumn{1}{|p{3.96in}|}{Preencher todos os dados solicitados } \\
+\hhline{--}
+%row no:5
+\multicolumn{1}{|p{1.33in}}{\textbf{Pós-condições}} & 
+\multicolumn{1}{|p{3.96in}|}{Cadastro do perfil separador no sistema} \\
+\hhline{--}
+%row no:6
+\multicolumn{1}{|p{1.33in}}{\textbf{Fluxo Principal}} & 
+\multicolumn{1}{|p{3.96in}|}{\begin{enumerate}[label*={\fontsize{12pt}{12pt}\selectfont \arabic*.}]
+	\item Na tela inicial, o usuário solicita o cadastro; \par 	\item Em seguida, preenche todos os dados; \par 	\item O sistema verifica os dados; \par 	\item O cadastro é realizado.
+\end{enumerate}} \\
+\hhline{--}
+
+\end{tabular}
+ \end{quadro}
+
+%%%%%%%%%%%%%%%%%%%% Table No: 5 ends here %%%%%%%%%%%%%%%%%%%%
+
+O caso de uso Cadastrar Separador (\autoref{qua:separador}), citado acima é responsável por avaliar as ações necessárias para realizar o cadastro do perfil separador.
+
+
+

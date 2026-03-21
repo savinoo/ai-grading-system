@@ -1,0 +1,93 @@
+
+\chapter{Questionário de Avaliação do Protótipo}
+
+\begin{figure}[H]
+	\begin{Center}
+		\includegraphics[width=6.00in]{media/questionariopaint.png}
+		\label{fig:questionario}
+	\end{Center}
+\end{figure}
+
+\chapter{Códigos fonte comentados}
+
+\section{Salvar usuário catador no banco de dados}
+
+O \autoref{cod:cadbanc} é responsável por salvar o usuário catador no \textit{firebase realtime database}. A linha 3 do \autoref{cod:cadbanc}, consiste na criação do nó (\textit{child}) denominado “Catadores”, onde cada catador possui um identificador (\textit{id}), onde seus dados são salvos (\textit{setValue}).
+
+\begin{codigo}[H]
+\begin{lstlisting}[language=Java]
+public void salvar(){
+    DatabaseReference databaseReference = ConfiguracaoFirebase.getFirebase();
+    databaseReference.child("Catadores").child(getId()).setValue(this);
+}
+\end{lstlisting}
+\caption{Salvar usuário catador no banco de dados}
+\label{cod:cadbanc}
+\end{codigo}
+
+
+\section{Salvar usuário separador no banco de dados}
+
+\begin{codigo}[H]
+	\begin{lstlisting}[language=Java]
+public void salvar(){
+    DatabaseReference databaseReference = ConfiguracaoFirebase.getFirebase();
+    databaseReference.child("Separadores").child(getId()).setValue(this);
+}
+   	\end{lstlisting}
+   	\caption{Salvar usuário separador no banco de dados}
+   	\label{cod:cadsep}
+\end{codigo}
+
+O \autoref{cod:cadsep} é responsável por salvar o usuário separador no \textit{firebase realtime database}. A linha 3 do \autoref{cod:cadbanc}, consiste na criação do nó (\textit{child}) denominado “Separadores”, onde cada separador possui um identificador (\textit{id}), onde seus dados são salvos (\textit{setValue}).
+
+
+\section{Cadastrar usuário catador}
+
+\begin{codigo}[H]
+	\begin{lstlisting}[language=Java]
+private void cadastrarCatador(){
+    firebaseAuth = ConfiguracaoFirebase.getFirebaseAuth();
+    firebaseAuth.createUserWithEmailAndPassword(
+            catador.getEmail(),
+            catador.getSenha()
+    ).addOnCompleteListener(CadastroCatador.this, new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+            if(task.isSuccessful()){
+                Toast.makeText(CadastroCatador.this,"Sucesso ao cadastrar catador",Toast.LENGTH_LONG).show();
+                FirebaseUser firebaseUser = task.getResult().getUser();
+                catador.setId(firebaseUser.getUid());
+                catador.salvar();
+                startActivity(new Intent(CadastroCatador.this, Login.class));
+       	\end{lstlisting}
+       	\caption{Cadastrar usuário catador na aplicação}
+       	\label{cod:cat}
+\end{codigo}
+
+O \autoref{cod:cat} consiste no cadastro do usuário catador. A função \textit{createUserWithEmailAndPassword}, que se encontra na linha 3, é responsável pela criação da autenticação dos usuário através do \textit{e-mail} e a senha. Em caso de sucesso, o sistema irá exibir a seguinte mensagem “Sucesso ao cadastrar catador” e o usuário será redirecionado para a tela de \textit{login}.
+
+\section{Cadastrar usuário separador}
+
+\begin{codigo}[H]
+	\begin{lstlisting}[language=Java]
+private void cadastrarSeparador(){
+    firebaseAuth = ConfiguracaoFirebase.getFirebaseAuth();
+    firebaseAuth.createUserWithEmailAndPassword(
+            separador.getEmail(),
+            separador.getSenha()
+    ).addOnCompleteListener(CadastroSeparador.this, new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+            if(task.isSuccessful()){
+                Toast.makeText(CadastroSeparador.this,"Sucesso ao cadastrar separador",Toast.LENGTH_LONG).show();
+                FirebaseUser firebaseUser = task.getResult().getUser();
+                separador.setId(firebaseUser.getUid());
+                separador.salvar();
+                startActivity(new Intent(CadastroSeparador.this, Login.class));
+       	\end{lstlisting}
+       	\caption{Cadastrar usuário separador}
+       	\label{cod:sep}
+\end{codigo}
+
+O \autoref{cod:sep} consiste no cadastro do usuário separador. A função \textit{createUserWithEmailAndPassword}, que se encontra na linha 3, é responsável pela criação da autenticação do usuário através do \textit{e-mail} e a senha.
