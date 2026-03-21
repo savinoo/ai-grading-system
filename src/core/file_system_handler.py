@@ -14,7 +14,7 @@ class FileSystemHandler:
     """
 
     def __init__(self) -> None:
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("core")
         self.__upload_dir = Path(settings.UPLOAD_DIR)
         self.__ensure_upload_directory()
 

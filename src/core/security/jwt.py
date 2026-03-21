@@ -12,7 +12,7 @@ class JWTHandler:
     """Cria e valida JWTs (tanto API Key quanto Access Token)."""
     
     def __init__(self) -> None:
-        self.__log = get_logger(__name__)
+        self.__log = get_logger("core")
     
 
     def encode_jwt_token(self, payload: Dict) -> str:

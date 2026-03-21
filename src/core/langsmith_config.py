@@ -11,7 +11,7 @@ from typing import Optional
 from src.core.logging_config import get_logger
 from src.core.settings import settings
 
-logger = get_logger(__name__)
+logger = get_logger("drivers")
 
 
 def initialize_langsmith() -> bool:

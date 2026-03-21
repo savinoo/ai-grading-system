@@ -19,7 +19,7 @@ class BrevoHandler:
     """
     
     def __init__(self):
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("drivers")
         self.__api_key = settings.BREVO_API_KEY
         self.__base_url = "https://api.brevo.com/v3"
         self.__headers = {

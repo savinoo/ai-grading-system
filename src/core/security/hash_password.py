@@ -15,7 +15,7 @@ class HashPasswordHandler:
         __logger: Instância de logger para registrar eventos relacionados ao hashing de senhas.
     """
     def __init__(self):
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("core")
     
     def generate_password_hash(self, password: str) -> str:
         """

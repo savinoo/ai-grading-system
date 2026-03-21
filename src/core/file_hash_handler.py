@@ -11,7 +11,7 @@ class FileHashHandler:
     """
 
     def __init__(self) -> None:
-        self.__logger = get_logger(__name__)
+        self.__logger = get_logger("core")
 
     def calculate_sha256(self, file: BinaryIO, chunk_size: int = 8192) -> str:
         """
