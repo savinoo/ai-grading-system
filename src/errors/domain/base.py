@@ -28,10 +28,10 @@ class DomainError(Exception):
     def to_problem_details(self, status: int, type_: str = "about:blank") -> dict[str, Any]:
         return {
             "type": type_,
-            "title": self.code.replace("_", " ").title(),
+            "title": self.code.value.replace("_", " ").title(),
             "status": status,
             "detail": self.message,
-            "code": self.code,
+            "code": self.code.value,
             "retryable": self.retryable,
             **({"context": self.context} if self.context else {}),
         }
