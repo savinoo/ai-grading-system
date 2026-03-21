@@ -9,4 +9,4 @@ class ErrorCode(StrEnum):
     EXTERNAL = "external_service_error"
     CONFLICT = "conflict"
     UNEXPECTED = "unexpected_error"
-    DATA_BASE = "data_base_error"
+    DATABASE = "database_error"
