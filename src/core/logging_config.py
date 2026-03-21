@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import logging
+from datetime import datetime, timezone
 from typing import Any, Optional
 from contextvars import ContextVar, Token
 
@@ -17,6 +18,12 @@ class JsonFormatter(logging.Formatter):
     """
     Classe que formata logs em JSON.
     """
+
+    def formatTime(self, record: logging.LogRecord, datefmt: Optional[str] = None) -> str:
+        dt = datetime.fromtimestamp(record.created, tz=timezone.utc).astimezone()
+        if datefmt:
+            return dt.strftime(datefmt)
+        return dt.isoformat(timespec="milliseconds")
     
     def format(self, record: logging.LogRecord) -> str:
         payload: dict[str, Any] = {
@@ -56,7 +63,7 @@ def setup_logging() -> None:
     log_level = os.getenv("LOG_LEVEL", "INFO").upper()
     json_mode = os.getenv("LOG_JSON", "false").lower() in ("1", "true", "yes")
 
-    root = logging.getLogger()
+    root = logging.getLogger("corretumai")
     root.setLevel(log_level)
 
     for h in list(root.handlers):
@@ -78,4 +85,4 @@ def setup_logging() -> None:
     logging.getLogger("gunicorn.error").setLevel(logging.ERROR)
 
 def get_logger(name: str) -> logging.Logger:
-    return logging.getLogger(name)
+    return logging.getLogger(f"corretumai.{name}")
