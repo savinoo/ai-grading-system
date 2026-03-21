@@ -27,7 +27,7 @@ from src.main.dependencies.request_meta import get_caller_meta
 from src.main.dependencies.auth_jwt import auth_jwt_verify
 
 
-logger = get_logger(__name__)
+logger = get_logger("main.routes")
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 

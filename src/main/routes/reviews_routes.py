@@ -1,6 +1,5 @@
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Request
-from sqlalchemy.orm import Session
 
 from src.domain.http.caller_domains import CallerMeta
 from src.core.logging_config import get_logger
@@ -27,7 +26,7 @@ from src.main.dependencies.get_db_session import get_db
 from src.main.dependencies.auth_jwt import auth_jwt_verify
 
 
-logger = get_logger(__name__)
+logger = get_logger("main.routes")
 
 router = APIRouter(
     prefix="/reviews",

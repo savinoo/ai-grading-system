@@ -14,7 +14,7 @@ from src.main.dependencies.get_db_session import get_db
 from src.main.dependencies.auth_jwt import auth_jwt_verify
 
 
-logger = get_logger(__name__)
+logger = get_logger("main.routes")
 
 router = APIRouter(
     prefix="/dashboard",

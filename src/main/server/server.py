@@ -34,7 +34,7 @@ from src.main.routes.dashboard_routes import router as dashboard_router
 
 # Configura o logging conforme as configurações
 setup_logging()
-logger = get_logger(__name__)
+logger = get_logger("main.routes")
 
 
 @asynccontextmanager

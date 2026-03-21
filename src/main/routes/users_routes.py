@@ -27,7 +27,7 @@ from src.main.dependencies.auth_jwt import auth_jwt_verify
 from src.main.dependencies.request_meta import get_caller_meta
 from src.main.dependencies.get_db_session import get_db
 
-logger = get_logger(__name__)
+logger = get_logger("main.routes")
 
 router = APIRouter(
     prefix="/users",
