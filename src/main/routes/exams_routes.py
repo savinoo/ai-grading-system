@@ -43,7 +43,7 @@ router = APIRouter(
     summary="Criar uma nova prova",
     description="Endpoint para professores criarem novas provas. Requer autenticação."
 )
-def create_exam(
+async def create_exam(
     request: Request,
     body: ExamCreateRequest = Body(...),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -85,7 +85,7 @@ def create_exam(
     controller = make_create_exam_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         response_body = http_response.body.model_dump(mode='json') if hasattr(http_response.body, 'model_dump') else http_response.body
         return JSONResponse(
             status_code=http_response.status_code,

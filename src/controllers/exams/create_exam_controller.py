@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-import asyncio
 from fastapi import HTTPException
 
 from src.domain.http.http_request import HttpRequest
 from src.domain.http.http_response import HttpResponse
 
-from src.interfaces.controllers.controllers_interface import ControllerInterface
+from src.interfaces.controllers.async_controllers_interface import AsyncControllerInterface
 
 from src.services.exams.create_exam_service import CreateExamService
 
@@ -14,7 +13,7 @@ from src.errors.domain.sql_error import SqlError
 
 from src.core.logging_config import get_logger
 
-class CreateExamController(ControllerInterface):
+class CreateExamController(AsyncControllerInterface):
     """  
     Controller que delega ao CreateExamService a criação de uma nova prova.
     """
@@ -23,7 +22,7 @@ class CreateExamController(ControllerInterface):
         self.__service = service
         self.__logger = get_logger(__name__)
 
-    def handle(self, http_request: HttpRequest) -> HttpResponse:
+    async def handle(self, http_request: HttpRequest) -> HttpResponse:
         """
         Processa a requisição de criação de prova.
         
@@ -59,7 +58,7 @@ class CreateExamController(ControllerInterface):
 
             teacher_uuid = token_infos.get("sub")
 
-            result = asyncio.run(self.__service.create_exam(db, request, teacher_uuid))
+            result = await self.__service.create_exam(db, request, teacher_uuid)
 
             self.__logger.info("Prova criada com sucesso: %s", result.uuid)
 
