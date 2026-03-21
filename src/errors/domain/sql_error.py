@@ -4,7 +4,7 @@ from src.errors.domain.base import DomainError
 from src.errors.domain.codes import ErrorCode
 
 class SqlError(DomainError):
-    """Erro de no SLQ."""
+    """Erro no SQL."""
     
     def __init__(self, message: str, *, context: dict | None = None, cause: Exception | None = None):
         super().__init__(
