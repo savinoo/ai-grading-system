@@ -50,13 +50,13 @@ class DeleteStudentAnswerController(ControllerInterface):
             caller.ip if caller else "unknown"
         )
 
-        try:
-            if not answer_uuid_raw:
-                raise HTTPException(
-                    status_code=400,
-                    detail={"error": "answer_uuid é obrigatório"}
-                )
+        if not answer_uuid_raw:
+            raise HTTPException(
+                status_code=400,
+                detail={"error": "answer_uuid é obrigatório"}
+            )
 
+        try:
             answer_uuid = UUID(str(answer_uuid_raw))
 
             asyncio.run(self.__service.delete_student_answer(db, answer_uuid))
@@ -79,12 +79,15 @@ class DeleteStudentAnswerController(ControllerInterface):
                 }
             ) from val_err
 
-        except ValueError as val_err:
+        except (ValueError, TypeError) as val_err:
             self.__logger.warning("UUID inválido para remoção de resposta: %s", val_err)
             raise HTTPException(
                 status_code=400,
                 detail={"error": "answer_uuid inválido"}
             ) from val_err
+
+        except HTTPException:
+            raise
 
         except SqlError as sql_err:
             self.__logger.error("Erro de banco de dados ao remover resposta: %s", sql_err, exc_info=True)

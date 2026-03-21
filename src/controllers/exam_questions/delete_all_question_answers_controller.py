@@ -41,7 +41,7 @@ class DeleteAllQuestionAnswersController(ControllerInterface):
 
         db = http_request.db
         caller = http_request.caller
-        question_uuid: UUID = http_request.param.get("question_uuid")
+        question_uuid_raw = http_request.param.get("question_uuid")
 
         self.__logger.debug(
             "Handling delete all question answers request from caller: %s - %s - %s", 
@@ -51,6 +51,14 @@ class DeleteAllQuestionAnswersController(ControllerInterface):
         )
 
         try:
+            if not question_uuid_raw:
+                raise HTTPException(
+                    status_code=400,
+                    detail={"error": "question_uuid é obrigatório"}
+                )
+
+            question_uuid = UUID(str(question_uuid_raw))
+
             deleted_count = asyncio.run(self.__service.delete_all_question_answers(db, question_uuid))
 
             self.__logger.info(
@@ -73,6 +81,13 @@ class DeleteAllQuestionAnswersController(ControllerInterface):
                     "code": val_err.code,
                     "context": val_err.context
                 }
+            ) from val_err
+
+        except ValueError as val_err:
+            self.__logger.warning("UUID inválido para remoção de respostas da questão: %s", val_err)
+            raise HTTPException(
+                status_code=400,
+                detail={"error": "question_uuid inválido"}
             ) from val_err
 
         except SqlError as sql_err:
