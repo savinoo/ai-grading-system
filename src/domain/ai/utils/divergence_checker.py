@@ -41,9 +41,10 @@ class DivergenceChecker:
             }
         
         Raises:
-            AssertionError: Se não receber exatamente 2 correções
+            ValueError: Se não receber exatamente 2 correções
         """
-        assert len(corrections) == 2, "Deve receber exatamente 2 correções"
+        if len(corrections) != 2:
+            raise ValueError("Deve receber exatamente 2 correções")
         
         score1 = corrections[0].total_score
         score2 = corrections[1].total_score
