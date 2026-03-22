@@ -55,19 +55,19 @@
 \contentsline {section}{\numberline {4.1}Tipo de Pesquisa}{44}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Processo de Correção de Prova}{44}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Subprocesso de Configuração da Prova}{44}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Subprocesso de Correção da Prova (background e revisão docente)}{45}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.2}Subprocesso de Correção da Prova (background e revisão docente)}{44}{subsection.4.2.2}%
 \contentsline {subsection}{\numberline {4.2.3}Subprocesso de Correção da Resposta (workflow de avaliação)}{45}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Ferramentas e Tecnologias Utilizadas}{46}{section.4.3}%
+\contentsline {section}{\numberline {4.3}Ferramentas e Tecnologias Utilizadas}{45}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Python}{46}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}FastAPI}{46}{subsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.3.3}Orquestração do fluxo com LangGraph}{46}{subsection.4.3.3}%
 \contentsline {subsection}{\numberline {4.3.4}Agentes corretores com DSPy e LiteLLM}{46}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}Integração com LLMs e provedores de \textit {embeddings} (LangChain)}{47}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.5}Integração com LLMs e provedores de \textit {embeddings} (LangChain)}{46}{subsection.4.3.5}%
 \contentsline {subsection}{\numberline {4.3.6}Recuperação de contexto e armazenamento vetorial (ChromaDB)}{47}{subsection.4.3.6}%
 \contentsline {subsection}{\numberline {4.3.7}Persistência relacional e migrações (PostgreSQL, SQLAlchemy e Alembic)}{47}{subsection.4.3.7}%
 \contentsline {subsection}{\numberline {4.3.8}Conteinerização (Docker e Docker Compose)}{47}{subsection.4.3.8}%
 \contentsline {subsection}{\numberline {4.3.9}Ollama e Streamlit (apoio a desenvolvimento e inspeção)}{47}{subsection.4.3.9}%
-\contentsline {subsection}{\numberline {4.3.10}JSON (\textit {JavaScript Object Notation})}{48}{subsection.4.3.10}%
+\contentsline {subsection}{\numberline {4.3.10}JSON (\textit {JavaScript Object Notation})}{47}{subsection.4.3.10}%
 \contentsline {section}{\numberline {4.4}Métodos de Avaliação}{48}{section.4.4}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}

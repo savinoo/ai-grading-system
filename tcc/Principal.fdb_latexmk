@@ -1,20 +1,20 @@
 # Fdb version 4
-["bibtex Principal"] 1774208453.09812 "Principal.aux" "Principal.bbl" "Principal" 1774216706.00355 0
+["bibtex Principal"] 1774218370.29798 "Principal.aux" "Principal.bbl" "Principal" 1774218373.31914 0
   "./Referencias.bib" 1774188122 147942 fc41681115dfa821392f562e6d291d89 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/bibtex/bib/abntex2/abntex2-options.bib" 1543103229 5396 4eb260dac60f150ae608d45252853090 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/bibtex/bst/abntex2/abntex2-alf.bst" 1543103230 60064 0819ac8568f9a482510a46e3a8a6f605 ""
-  "Principal.aux" 1774216705 70691 85809bc04df6afe4e3893b69b2707453 "pdflatex"
+  "Principal.aux" 1774218372 70691 dd3b7df850dd55f7b6a6019b57bfc87e "pdflatex"
   (generated)
   "Principal.bbl"
   "Principal.blg"
   (rewritten before read)
-["makeindex Principal.idx"] 1774131628.95655 "Principal.idx" "Principal.ind" "Principal" 1774216706.00321 0
-  "Principal.idx" 1774216704 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex Principal.idx"] 1774218366.88595 "Principal.idx" "Principal.ind" "Principal" 1774218373.31879 0
+  "Principal.idx" 1774218371 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "Principal.ilg"
   "Principal.ind"
   (rewritten before read)
-["pdflatex"] 1774216703.29662 "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/Principal.tex" "Principal.pdf" "Principal" 1774216706.00395 0
+["pdflatex"] 1774218370.48873 "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/Principal.tex" "Principal.pdf" "Principal" 1774218373.31957 0
   "C:/Users/Maycon Mendes/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1774127426 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/Maycon Mendes/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774127238 13337757 a72a5df451ad51107ceaaa1b28447996 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -348,21 +348,21 @@
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/xfor/xfor.sty" 1233849756 2689 44855b72da58344b1c1d9b3087bce6ca ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
-  "Principal.aux" 1774216705 70691 85809bc04df6afe4e3893b69b2707453 "pdflatex"
-  "Principal.bbl" 1774208453 23314 e58bc428b66d1ef6308a6fca23b7a4b9 "bibtex Principal"
-  "Principal.brf" 1774216705 8998 66c98330c6428cbe53c70878cf4c63be "pdflatex"
-  "Principal.ind" 1774131629 0 d41d8cd98f00b204e9800998ecf8427e "makeindex Principal.idx"
-  "Principal.lof" 1774216705 559 5a4a40501b184a23aaa2274de7ea093a "pdflatex"
-  "Principal.loq" 1774216705 116 13ac1cca9fa4edc3df1171699da87e9c "pdflatex"
-  "Principal.lot" 1774216705 249 57151cccaa33436cfc2af09c32519f67 "pdflatex"
+  "Principal.aux" 1774218372 70691 dd3b7df850dd55f7b6a6019b57bfc87e "pdflatex"
+  "Principal.bbl" 1774218370 23314 e58bc428b66d1ef6308a6fca23b7a4b9 "bibtex Principal"
+  "Principal.brf" 1774218372 8998 88c509eb914c11f90d9a6a53ffbc59e9 "pdflatex"
+  "Principal.ind" 1774218367 0 d41d8cd98f00b204e9800998ecf8427e "makeindex Principal.idx"
+  "Principal.lof" 1774218372 559 5a4a40501b184a23aaa2274de7ea093a "pdflatex"
+  "Principal.loq" 1774218372 116 13ac1cca9fa4edc3df1171699da87e9c "pdflatex"
+  "Principal.lot" 1774218372 249 57151cccaa33436cfc2af09c32519f67 "pdflatex"
   "Principal.siglas" 0 -1 0 ""
   "Principal.tex" 1774131674 2943 73a3a792b3f9bd4dffce79264b24e916 ""
-  "Principal.toc" 1774216705 7197 703df2f713d25e9fa06ea1ac0129ee9f "pdflatex"
+  "Principal.toc" 1774218372 7197 89890543c39f56f63ba378cb20a21b26 "pdflatex"
   "abntex2.cls" 1774112320 37987 566dd65c99748b7ab5b3d7d3986844e7 ""
   "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/Principal.tex" 1774131674 2943 73a3a792b3f9bd4dffce79264b24e916 ""
   "configuracao.tex" 1774203839 10761 0ea0f57e503b8e3e7f0f32bf20ee38d0 ""
   "media/fluxo-configuracao.jpg" 1774208714 101847 49ff3cc89dd6b48455da2bfa08079a74 ""
-  "media/fluxo-correcao-pergunta.jpg" 1774216402 177071 23ef017f06e5dd050b7c81689a86c63d ""
+  "media/fluxo-correcao-pergunta.jpg" 1774218195 76215 d8502f617f23aec7c4cf12240036eb60 ""
   "media/fluxo-correcao-prova.jpg" 1774216699 169044 bd6a720ccb945ab2d41fbacb5ca73180 ""
   "pendencias.tex" 1774112320 799 59c804b12f6ea0f86a663990969ec71b ""
   "pre/07-figuras.tex" 1774112320 72 e2131bfc3056e4ae608dd889e70f3650 ""
@@ -374,7 +374,7 @@
   "textual/t1-introducao-v2.tex" 1774182017 8342 f98156bc5bd9efced7e3a33f947f1ecb ""
   "textual/t2-fundamentacao.tex" 1774182377 50579 3554bbc870bb2daf10fb92a60c814496 ""
   "textual/t3-trabalhos.tex" 1774138792 40624 ee66ac3c3ec620e97113057e363dd201 ""
-  "textual/t4-material.tex" 1774203839 16783 c63b6b009e373edff90ec18f6594a53f ""
+  "textual/t4-material.tex" 1774218369 16822 fef3da39654422618d31f97f8e555571 ""
   (generated)
   "Principal.aux"
   "Principal.brf"

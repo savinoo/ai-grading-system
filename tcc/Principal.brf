@@ -130,7 +130,7 @@
 \backcite {langgraph_docs_2026}{{46}{4.3.3}{subsection.4.3.3}}
 \backcite {dspy_docs_2026,litellm_docs_2026}{{46}{4.3.4}{subsection.4.3.4}}
 \backcite {dspy_docs_2026,litellm_docs_2026}{{46}{4.3.4}{subsection.4.3.4}}
-\backcite {langchain_docs_2026}{{47}{4.3.5}{subsection.4.3.5}}
+\backcite {langchain_docs_2026}{{46}{4.3.5}{subsection.4.3.5}}
 \backcite {chromadb_docs_2026}{{47}{4.3.6}{subsection.4.3.6}}
 \backcite {postgresql_docs_2026,sqlalchemy_docs_2026,alembic_docs_2026}{{47}{4.3.7}{subsection.4.3.7}}
 \backcite {postgresql_docs_2026,sqlalchemy_docs_2026,alembic_docs_2026}{{47}{4.3.7}{subsection.4.3.7}}
@@ -139,4 +139,4 @@
 \backcite {docker_docs_2026,docker_compose_docs_2026}{{47}{4.3.8}{subsection.4.3.8}}
 \backcite {ollama_docs_2026,streamlit_docs_2026}{{47}{4.3.9}{subsection.4.3.9}}
 \backcite {ollama_docs_2026,streamlit_docs_2026}{{47}{4.3.9}{subsection.4.3.9}}
-\backcite {rfc8259_json_2017}{{48}{4.3.10}{subsection.4.3.10}}
+\backcite {rfc8259_json_2017}{{47}{4.3.10}{subsection.4.3.10}}
