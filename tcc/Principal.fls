@@ -698,6 +698,7 @@ INPUT .\textual\t2-fundamentacao.tex
 INPUT textual\t2-fundamentacao.tex
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmbx12.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmbxi10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-mathsy.enc
 INPUT .\textual\t3-trabalhos.tex
 INPUT .\textual\t3-trabalhos.tex
 INPUT .\textual\t3-trabalhos.tex
@@ -785,3 +786,5 @@ INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmssbx10.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsso12.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsso12.pfb
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsy10.pfb
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsy10.pfb

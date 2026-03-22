@@ -32,7 +32,7 @@
 \contentsline {subsection}{\numberline {2.3.3}Técnicas de Deep Learning para PLN}{15}{subsection.2.3.3}%
 \contentsline {subsection}{\numberline {2.3.4}Modelos de Linguagem e Transformers}{16}{subsection.2.3.4}%
 \contentsline {subsection}{\numberline {2.3.5}LLMs e suas Aplicações}{17}{subsection.2.3.5}%
-\contentsline {section}{\numberline {2.4}Arquiteturas de Agentes de IA e Estratégias de Otimização}{19}{section.2.4}%
+\contentsline {section}{\numberline {2.4}Arquiteturas de Agentes de IA e Estratégias de Coordenação}{19}{section.2.4}%
 \contentsline {subsection}{\numberline {2.4.1}Agentes de IA}{19}{subsection.2.4.1}%
 \contentsline {subsection}{\numberline {2.4.2}Sistema de Multi Agentes}{20}{subsection.2.4.2}%
 \contentsline {subsection}{\numberline {2.4.3}Engenharia de Prompt}{21}{subsection.2.4.3}%

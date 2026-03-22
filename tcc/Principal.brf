@@ -72,18 +72,18 @@
 \backcite {park_generative_2023}{{21}{4}{Item.71}}
 \backcite {chen_survey_2025}{{21}{2.4.2}{Item.71}}
 \backcite {sahoo_systematic_2025}{{21}{2.4.3}{subsection.2.4.3}}
-\backcite {liu_prompt_2023}{{21}{2.4.3}{subsection.2.4.3}}
-\backcite {liu_prompt_2023}{{21}{2.4.3}{subsection.2.4.3}}
-\backcite {sahoo_systematic_2025}{{21}{2.4.3}{subsection.2.4.3}}
-\backcite {sahoo_systematic_2025}{{21}{2.4.3}{subsection.2.4.3}}
-\backcite {sahoo_systematic_2025}{{21}{2.4.3}{subsection.2.4.3}}
+\backcite {liu_prompt_2023}{{22}{2.4.3}{subsection.2.4.3}}
+\backcite {liu_prompt_2023}{{22}{2.4.3}{subsection.2.4.3}}
+\backcite {sahoo_systematic_2025}{{22}{2.4.3}{subsection.2.4.3}}
+\backcite {sahoo_systematic_2025}{{22}{2.4.3}{subsection.2.4.3}}
+\backcite {sahoo_systematic_2025}{{22}{2.4.3}{subsection.2.4.3}}
 \backcite {wei_chain--thought_2023}{{22}{2}{Item.73}}
 \backcite {wang_self-consistency_2023}{{22}{3}{Item.74}}
 \backcite {yao_tree_2023, besta_graph_2024}{{22}{5}{Item.76}}
 \backcite {yao_tree_2023, besta_graph_2024}{{22}{5}{Item.76}}
-\backcite {gao_retrieval-augmented_2024}{{22}{2.4.4}{subsection.2.4.4}}
-\backcite {lewis_retrieval-augmented_2021, gao_retrieval-augmented_2024}{{22}{2.4.4}{subsection.2.4.4}}
-\backcite {lewis_retrieval-augmented_2021, gao_retrieval-augmented_2024}{{22}{2.4.4}{subsection.2.4.4}}
+\backcite {gao_retrieval-augmented_2024}{{23}{2.4.4}{subsection.2.4.4}}
+\backcite {lewis_retrieval-augmented_2021, gao_retrieval-augmented_2024}{{23}{2.4.4}{subsection.2.4.4}}
+\backcite {lewis_retrieval-augmented_2021, gao_retrieval-augmented_2024}{{23}{2.4.4}{subsection.2.4.4}}
 \backcite {gao_retrieval-augmented_2024}{{23}{2.4.4}{subsection.2.4.4}}
 \backcite {gao_retrieval-augmented_2024, khattab_colbert_2020}{{23}{1}{Item.77}}
 \backcite {gao_retrieval-augmented_2024, khattab_colbert_2020}{{23}{1}{Item.77}}
@@ -91,7 +91,7 @@
 \backcite {gao_retrieval-augmented_2024, gao_precise_2022}{{23}{2}{Item.78}}
 \backcite {gao_retrieval-augmented_2024, ram_-context_2023}{{23}{3}{Item.79}}
 \backcite {gao_retrieval-augmented_2024, ram_-context_2023}{{23}{3}{Item.79}}
-\backcite {gao_retrieval-augmented_2024}{{23}{2.4.4}{Item.79}}
+\backcite {gao_retrieval-augmented_2024}{{24}{2.4.4}{Item.79}}
 \backcite {janumpally_role_2025}{{30}{1}{table.3.1}}
 \backcite {li_applying_2024}{{30}{1}{table.3.1}}
 \backcite {xiao_human-ai_2025}{{30}{1}{table.3.1}}

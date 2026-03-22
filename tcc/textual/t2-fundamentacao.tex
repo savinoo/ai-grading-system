@@ -284,7 +284,7 @@ Especificamente na correção automática de provas discursivas, os LLMs oferece
 
 Contudo, como observado por \citeonline{heggler_as_2025} os LLMs também apresentam desafios e limitações importantes, incluindo potenciais vieses incorporados durante o treinamento, tendência a "alucinações" (geração de informações incorretas com aparência de confiabilidade) e questões de privacidade e segurança. Estas considerações serão abordadas em seções subsequentes, dedicadas aos desafios e limitações dos sistemas atuais.
 
-\section{Arquiteturas de Agentes de IA e Estratégias de Otimização}
+\section{Arquiteturas de Agentes de IA e Estratégias de Coordenação}
 \label{sec:agentes-rag}
 \subsection{Agentes de IA}
 
@@ -326,7 +326,9 @@ As principais abordagens e características dos SMAs baseados em LLMs incluem:
 
 A arquitetura desses sistemas pode variar. Alguns utilizam um LLM centralizado que orquestra a comunicação e a colaboração, enquanto outros adotam abordagens mais descentralizadas, onde cada agente possui seu próprio LLM ou acessa um modelo compartilhado \cite{chen_survey_2025}. A engenharia de prompt desempenha um papel crucial na definição dos papéis dos agentes, das regras de interação e dos objetivos coletivos.
 
-No contexto da correção automática de provas, um SMA baseado em LLMs poderia envolver múltiplos agentes especializados (ex: agente de análise de conteúdo, agente de verificação gramatical, agente de avaliação de argumentação) que se comunicam (possivelmente via linguagem natural interpretada por LLMs) para chegar a uma avaliação consensual e gerar um feedback abrangente, simulando um processo de revisão por pares ou uma banca avaliadora.
+No contexto da correção automática de provas, um SMA baseado em LLMs pode envolver múltiplos agentes especializados (ex: agente de análise de conteúdo, agente de verificação gramatical, agente de avaliação de argumentação) que se comunicam (possivelmente via linguagem natural interpretada por LLMs) para chegar a uma avaliação consensual e gerar um feedback abrangente, simulando um processo de revisão por pares ou uma banca avaliadora.
+
+No protótipo desenvolvido neste trabalho, essa ideia é aplicada por meio de uma estratégia de consenso 2$\rightarrow$1: dois corretores independentes (C1 e C2) avaliam inicialmente a mesma resposta e, apenas quando há divergência acima de um limiar definido, um terceiro corretor atua como árbitro (C3). Assim, o sistema combina paralelismo na avaliação inicial com arbitragem condicional, reduzindo custo computacional em casos de convergência e aumentando a robustez quando há discordância.
 
 \subsection{Engenharia de Prompt}
 
@@ -334,7 +336,7 @@ A Engenharia de Prompt emergiu como uma disciplina fundamental para interagir ef
 
 Um prompt, no contexto de LLMs, é mais do que uma simples pergunta; é uma instrução que pode incluir contexto, exemplos (few-shot learning), e especificações sobre o formato ou estilo da saída desejada. A qualidade do prompt influencia diretamente a qualidade da resposta gerada pelo LLM (\citeauthor{liu_prompt_2023}, \citeyear{liu_prompt_2023} apud \citeauthor{sahoo_systematic_2025}, \citeyear{sahoo_systematic_2025}).
 
-\citeonline{sahoo_systematic_2025} categorizam diversas técnicas de engenharia de prompt, muitas das quais são cruciais para otimizar o desempenho de agentes baseados em LLMs:
+\citeonline{sahoo_systematic_2025} categorizam diversas técnicas de engenharia de prompt, muitas das quais são relevantes para melhorar o desempenho de agentes baseados em LLMs:
 
 \begin{enumerate}
     \item \textbf{\textit{Prompting Zero-Shot} e \textit{Few-Shot}:} A forma mais básica, onde o prompt contém apenas a instrução (\textit{zero-shot}) ou a instrução com alguns exemplos ilustrativos (\textit{few-shot}) para guiar o modelo.
