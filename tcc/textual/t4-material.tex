@@ -56,7 +56,7 @@ Uma vez estabelecida e aprovada a configuração final pelo professor, a LLM ser
 Nesta etapa, as perguntas validadas pelo professor serão inseridas no sistema. Cada questão será associada diretamente aos temas e critérios previamente configurados, garantindo coerência entre o conteúdo da prova e os parâmetros avaliativos estabelecidos.
 
 \subsubsection{Imputação Estruturada das Respostas dos Alunos}
-Após a aplicação da prova aos alunos, as respostas serão coletadas e estruturadas em formato JSON. Cada resposta será associada ao identificador específico da questão, à resposta fornecida e ao identificador individual do aluno, possibilitando a organização necessária para a correção automatizada.
+Após a aplicação da prova aos alunos, as respostas serão coletadas e estruturadas em formato JSON para envio e integração entre os componentes do sistema. Cada resposta será associada ao identificador específico da questão, à resposta fornecida e ao identificador individual do aluno, possibilitando a organização necessária para a correção automatizada. A persistência principal dessas informações ocorre no banco de dados relacional da aplicação.
 
 \subsubsection{Correção Automatizada da Prova}
 Utilizando os parâmetros configurados nas etapas anteriores, o sistema procederá com a correção automatizada das respostas dos alunos. Essa correção levará em conta a precisão, completude e relevância das respostas, resultando em uma avaliação objetiva, ágil e consistente, conforme os critérios pedagógicos estabelecidos pelo professor.
@@ -124,7 +124,7 @@ A metodologia RAG será empregada para recuperar contextos adicionais relevantes
 Um banco de dados vetorial será utilizado para armazenar e gerenciar os \textit{embeddings} dos materiais didáticos. Essa tecnologia possibilitará consultas rápidas e análises semânticas eficazes, fundamentais para a implementação da técnica RAG e para garantir que o sistema opere de forma integrada e com alto desempenho.
 
 \subsection{JSON (\textit{JavaScript Object Notation})}
-O formato JSON será adotado para a padronização, armazenamento e transmissão das informações relacionadas às provas, como perguntas, respostas dos alunos e identificadores únicos. A escolha pelo JSON deve-se à sua leveza e facilidade de manipulação, garantindo uma interoperabilidade eficiente entre os diferentes componentes do sistema.
+O formato JSON será adotado para a padronização e transmissão das informações relacionadas às provas, como perguntas, respostas dos alunos e identificadores únicos. A escolha pelo JSON deve-se à sua leveza e facilidade de manipulação, garantindo uma interoperabilidade eficiente entre os diferentes componentes do sistema. O armazenamento persistente e principal dos dados acadêmicos e de correção é realizado no banco de dados relacional da aplicação.
 
 \section{Métodos de Avaliação}
 
