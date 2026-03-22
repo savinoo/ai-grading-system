@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Dict, List
+from typing import Dict, List, Optional
 from uuid import UUID, uuid4
 from datetime import datetime
 
@@ -12,8 +12,11 @@ from src.interfaces.services.grading.grading_workflow_service_interface import G
 from src.domain.ai.schemas import ExamQuestion, StudentAnswer
 from src.domain.ai.agent_schemas import AgentCorrection
 from src.domain.ai.schemas import QuestionMetadata, EvaluationCriterion
+from src.domain.ai.rag_schemas import RetrievedContext
 from src.domain.ai.workflow.graph import get_grading_graph
 from src.domain.ai.workflow.state import GradingState
+
+from src.services.rag.retrieval_service import RetrievalService
 
 from src.interfaces.repositories.student_answer_repository_interface import StudentAnswerRepositoryInterface
 from src.interfaces.repositories.exam_question_repository_interface import ExamQuestionRepositoryInterface
@@ -71,7 +74,9 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
         db: Session,
         exam_uuid: UUID,
         question: ExamQuestion,
-        student_answer: StudentAnswer
+        student_answer: StudentAnswer,
+        *,
+        rag_contexts: Optional[List[RetrievedContext]] = None
     ) -> Dict:
         """
         Executa workflow completo de correção usando LangGraph.
@@ -110,7 +115,7 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             "exam_uuid": exam_uuid,
             "question": question,
             "student_answer": student_answer,
-            "rag_contexts": None,
+            "rag_contexts": rag_contexts,
             "correction_1": None,
             "correction_2": None,
             "correction_arbiter": None,
@@ -402,6 +407,9 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             graded_answers = 0
             failed_answers = 0
             scores: List[float] = []
+
+            # Reutilizar um único serviço de RAG durante toda a correção
+            rag_service = RetrievalService()
             
             # === 3. Iterar por questões e respostas ===
             for question_entity in questions:
@@ -421,6 +429,25 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                 question_schema = self.__convert_question_to_schema(db, question_entity)
                 question_graded_successfully = False
 
+                # Pré-buscar contexto RAG uma única vez por questão e reutilizar em todas as respostas
+                # Observação: o node de RAG no grafo irá pular retrieval caso rag_contexts já esteja preenchido.
+                question_rag_contexts: Optional[List[RetrievedContext]] = None
+                try:
+                    question_rag_contexts = await rag_service.search_context(
+                        query=question_schema.statement,
+                        exam_uuid=exam_uuid,
+                        discipline="Geral",
+                        topic=None,
+                    )
+                except Exception as e:
+                    # Falha de RAG não deve interromper toda a correção; o grafo ainda pode rodar
+                    # (e, se necessário, tentará fazer retrieval novamente).
+                    self.__logger.warning(
+                        "Falha ao pré-buscar contexto RAG para questão %s: %s",
+                        question_schema.id,
+                        str(e),
+                    )
+
                 for answer_entity in answers:
                     total_answers += 1
 
@@ -437,7 +464,8 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                             db=db,
                             exam_uuid=exam_uuid,
                             question=question_schema,
-                            student_answer=answer_schema
+                            student_answer=answer_schema,
+                            rag_contexts=question_rag_contexts
                         )
 
                         graded_answers += 1
@@ -571,7 +599,7 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             ]
         
         # === 4. Construir metadata (extrair de campos se existirem) ===
-        # TODO: Se ExamQuestion tiver campos discipline/topic/difficulty, usar aqui
+        # Nota: se ExamQuestion tiver campos discipline/topic/difficulty, usar aqui
         metadata = QuestionMetadata(
             discipline="Geral",
             topic="Geral",
