@@ -45,11 +45,11 @@
 \contentsline {subsection}{\numberline {3.1.3}Procedimentos da Revisão Sistemática da Literatura}{28}{subsection.3.1.3}%
 \contentsline {section}{\numberline {3.2}Caracterização da Pesquisa}{29}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Resultados e Discussões}{31}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}LLMs e Avaliação Automatizada de Redações}{31}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.1}LLMs e Avaliação Automatizada de Redações}{32}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}IA na Geração e Avaliação de Feedback Educacional}{33}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}Desafios e Considerações Éticas}{34}{subsection.3.3.3}%
 \contentsline {section}{\numberline {3.4}Respostas às Questões de Pesquisa}{36}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Considerações}{37}{section.3.5}%
+\contentsline {section}{\numberline {3.5}Considerações}{38}{section.3.5}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase []{Metodologia}}{40}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Tipo de Pesquisa}{44}{section.4.1}%
