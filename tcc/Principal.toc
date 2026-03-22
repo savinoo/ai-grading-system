@@ -81,11 +81,16 @@
 \contentsline {subsubsection}{\numberline {4.2.3.7}Encerramento da Correção e Retorno da Nota}{47}{subsubsection.4.2.3.7}%
 \contentsline {section}{\numberline {4.3}Ferramentas e Tecnologias Utilizadas}{48}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Python}{48}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}\textit {Large Language Model} (LLM)}{48}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}\textit {Retrieval-Augmented Generation} (RAG)}{48}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}\textit {Vector Database} (Banco de Dados Vetorial)}{48}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}JSON (\textit {JavaScript Object Notation})}{49}{subsection.4.3.5}%
-\contentsline {section}{\numberline {4.4}Métodos de Avaliação}{49}{section.4.4}%
+\contentsline {subsection}{\numberline {4.3.2}FastAPI}{48}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Orquestração do fluxo com LangGraph}{48}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Agentes corretores com DSPy e LiteLLM}{48}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Integração com LLMs e provedores de \textit {embeddings} (LangChain)}{49}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Recuperação de contexto e armazenamento vetorial (ChromaDB)}{49}{subsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.3.7}Persistência relacional e migrações (PostgreSQL, SQLAlchemy e Alembic)}{49}{subsection.4.3.7}%
+\contentsline {subsection}{\numberline {4.3.8}Conteinerização (Docker e Docker Compose)}{49}{subsection.4.3.8}%
+\contentsline {subsection}{\numberline {4.3.9}Ollama e Streamlit (apoio a desenvolvimento e inspeção)}{49}{subsection.4.3.9}%
+\contentsline {subsection}{\numberline {4.3.10}JSON (\textit {JavaScript Object Notation})}{50}{subsection.4.3.10}%
+\contentsline {section}{\numberline {4.4}Métodos de Avaliação}{50}{section.4.4}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{51}{section*.16}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{52}{section*.16}%

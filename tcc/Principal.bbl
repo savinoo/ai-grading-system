@@ -50,6 +50,11 @@ Dispon{\'\i}vel em:
   {Revolution}}. 2024.
 Dispon{\'\i}vel em: \url{https://osf.io/7ds4a}.}
 
+\bibitem[{BerriAI} 2026]{litellm_docs_2026}
+\abntrefinfo{{BerriAI}}{{BerriAI}}{2026}
+{{BerriAI}. \emph{LiteLLM Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://docs.litellm.ai/}.}
+
 \bibitem[Besta et al. 2024]{besta_graph_2024}
 \abntrefinfo{Besta et al.}{BESTA et al.}{2024}
 {BESTA, M. et al. \emph{Graph of {Thoughts}: {Solving} {Elaborate} {Problems}
@@ -66,6 +71,13 @@ Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2308.09687}.}
 ISSN 01026801, 1982596X.
 Dispon{\'\i}vel em:
   \url{http://www.seer.ufu.br/index.php/EducacaoFilosofia/article/view/31385}.}
+
+\bibitem[Bray 2017]{rfc8259_json_2017}
+\abntrefinfo{Bray}{BRAY}{2017}
+{BRAY, T. \emph{The {JavaScript} {Object} {Notation} ({JSON}) {Data}
+  {Interchange} {Format}}. 2017.
+{RFC} 8259.
+Dispon{\'\i}vel em: \url{https://www.rfc-editor.org/rfc/rfc8259}.}
 
 \bibitem[Carnaval 2021]{carnaval_desigualdade_2021}
 \abntrefinfo{Carnaval}{CARNAVAL}{2021}
@@ -98,6 +110,31 @@ Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2107.03374}.}
   {Recent} {Advances} and {New} {Frontiers} in {Application}}. arXiv, 2025.
 ArXiv:2412.17481.
 Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2412.17481}.}
+
+\bibitem[{Chroma Contributors} 2026]{chromadb_docs_2026}
+\abntrefinfo{{Chroma Contributors}}{{Chroma Contributors}}{2026}
+{{Chroma Contributors}. \emph{Chroma Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://docs.trychroma.com/}.}
+
+\bibitem[{Docker, Inc.} 2026]{docker_compose_docs_2026}
+\abntrefinfo{{Docker, Inc.}}{{Docker, Inc.}}{2026a}
+{{Docker, Inc.} \emph{Docker Compose Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://docs.docker.com/compose/}.}
+
+\bibitem[{Docker, Inc.} 2026]{docker_docs_2026}
+\abntrefinfo{{Docker, Inc.}}{{Docker, Inc.}}{2026b}
+{{Docker, Inc.} \emph{Docker Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://docs.docker.com/}.}
+
+\bibitem[{DSPy Contributors} 2026]{dspy_docs_2026}
+\abntrefinfo{{DSPy Contributors}}{{DSPy Contributors}}{2026}
+{{DSPy Contributors}. \emph{DSPy Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://dspy.ai/}.}
+
+\bibitem[{FastAPI} 2026]{fastapi_docs_2026}
+\abntrefinfo{{FastAPI}}{{FastAPI}}{2026}
+{{FastAPI}. \emph{FastAPI Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://fastapi.tiangolo.com/}.}
 
 \bibitem[{Fiki Setiawan} e {Annas Alkhowarizmi}
   2025]{fiki_setiawan_exploring_2025}
@@ -132,6 +169,11 @@ Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2312.10997}.}
 ISSN 1981-416X.
 Dispon{\'\i}vel em:
   \url{https://periodicos.pucpr.br/dialogoeducacional/article/view/8429}.}
+
+\bibitem[{Gunicorn Contributors} 2026]{gunicorn_docs_2026}
+\abntrefinfo{{Gunicorn Contributors}}{{Gunicorn Contributors}}{2026}
+{{Gunicorn Contributors}. \emph{Gunicorn Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://docs.gunicorn.org/}.}
 
 \bibitem[Heggler, Szmoski e Miquelin 2025]{heggler_as_2025}
 \abntrefinfo{Heggler, Szmoski e Miquelin}{HEGGLER; SZMOSKI; MIQUELIN}{2025}
@@ -197,6 +239,16 @@ ISSN 2666-6510.
 Dispon{\'\i}vel em:
   \url{https://www.sciencedirect.com/science/article/pii/S2666651024000172}.}
 
+\bibitem[{LangChain, Inc.} 2026]{langchain_docs_2026}
+\abntrefinfo{{LangChain, Inc.}}{{LangChain, Inc.}}{2026a}
+{{LangChain, Inc.} \emph{LangChain Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://python.langchain.com/}.}
+
+\bibitem[{LangChain, Inc.} 2026]{langgraph_docs_2026}
+\abntrefinfo{{LangChain, Inc.}}{{LangChain, Inc.}}{2026b}
+{{LangChain, Inc.} \emph{LangGraph Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://langchain-ai.github.io/langgraph/}.}
+
 \bibitem[Lewis et al. 2021]{lewis_retrieval-augmented_2021}
 \abntrefinfo{Lewis et al.}{LEWIS et al.}{2021}
 {LEWIS, P. et al. \emph{Retrieval-{Augmented} {Generation} for
@@ -231,6 +283,11 @@ Dispon{\'\i}vel em:
   USA, v.~55, n.~9, jan. 2023.
 ISSN 0360-0300.
 Dispon{\'\i}vel em: \url{https://doi.org/10.1145/3560815}.}
+
+\bibitem[{Ollama} 2026]{ollama_docs_2026}
+\abntrefinfo{{Ollama}}{{Ollama}}{2026}
+{{Ollama}. \emph{Ollama Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://ollama.com/}.}
 
 \bibitem[Otter, Medina e Kalita 2021]{otter_survey_2021}
 \abntrefinfo{Otter, Medina e Kalita}{OTTER; MEDINA; KALITA}{2021}
@@ -276,6 +333,17 @@ Dispon{\'\i}vel em:
 ISSN 1982-6621, 0102-4698.
 Dispon{\'\i}vel em:
   \url{http://www.scielo.br/scielo.php?script=sci\_arttext&pid=S0102-46982024000100209&tlng=pt}.}
+
+\bibitem[{PostgreSQL Global Development Group} 2026]{postgresql_docs_2026}
+\abntrefinfo{{PostgreSQL Global Development Group}}{{PostgreSQL Global
+  Development Group}}{2026}
+{{PostgreSQL Global Development Group}. \emph{PostgreSQL Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://www.postgresql.org/docs/}.}
+
+\bibitem[{Python Software Foundation} 2026]{python_docs_2026}
+\abntrefinfo{{Python Software Foundation}}{{Python Software Foundation}}{2026}
+{{Python Software Foundation}. \emph{Python 3 Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://docs.python.org/3/}.}
 
 \bibitem[Qian et al. 2024]{qian_chatdev_2024}
 \abntrefinfo{Qian et al.}{QIAN et al.}{2024}
@@ -336,6 +404,21 @@ Dispon{\'\i}vel em: \url{https://doi.org/10.1007/s43621-025-00815-8}.}
   tempos de retrocessos}. [S.l.]: Anpae, 2020.
 ISBN 9786587561004.}
 
+\bibitem[{SQLAlchemy Authors} 2026]{alembic_docs_2026}
+\abntrefinfo{{SQLAlchemy Authors}}{{SQLAlchemy Authors}}{2026a}
+{{SQLAlchemy Authors}. \emph{Alembic Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://alembic.sqlalchemy.org/}.}
+
+\bibitem[{SQLAlchemy Authors} 2026]{sqlalchemy_docs_2026}
+\abntrefinfo{{SQLAlchemy Authors}}{{SQLAlchemy Authors}}{2026b}
+{{SQLAlchemy Authors}. \emph{SQLAlchemy Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://docs.sqlalchemy.org/}.}
+
+\bibitem[{Streamlit Inc.} 2026]{streamlit_docs_2026}
+\abntrefinfo{{Streamlit Inc.}}{{Streamlit Inc.}}{2026}
+{{Streamlit Inc.} \emph{Streamlit Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://docs.streamlit.io/}.}
+
 \bibitem[Tavares, Rodrigues e Dermeval 2024]{tavares_clarice_2024}
 \abntrefinfo{Tavares, Rodrigues e Dermeval}{TAVARES; RODRIGUES; DERMEVAL}{2024}
 {TAVARES, J.; RODRIGUES, L.; DERMEVAL, D. {CLaRiCe}: {Uma} abordagem neural
@@ -351,6 +434,11 @@ ISBN 9786587561004.}
   {Deep} {Learning}: {A} {Survey}}. arXiv, 2021.
 ArXiv:2003.01200.
 Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2003.01200}.}
+
+\bibitem[{Uvicorn Contributors} 2026]{uvicorn_docs_2026}
+\abntrefinfo{{Uvicorn Contributors}}{{Uvicorn Contributors}}{2026}
+{{Uvicorn Contributors}. \emph{Uvicorn Documentation}. 2026.
+Dispon{\'\i}vel em: \url{https://www.uvicorn.org/}.}
 
 \bibitem[Vaswani et al. 2023]{vaswani_attention_2023}
 \abntrefinfo{Vaswani et al.}{VASWANI et al.}{2023}

@@ -112,22 +112,37 @@ Após determinar a nota final pela regra de consenso (média entre C1 e C2 quand
 
 \section{Ferramentas e Tecnologias Utilizadas}
 
-Para o desenvolvimento e implementação do sistema proposto, foram utilizadas ferramentas e tecnologias cuidadosamente selecionadas, cada uma contribuindo de maneira estratégica para a eficácia, precisão e eficiência do sistema. A seguir, são apresentadas as principais tecnologias e os motivos para sua escolha:
+Para o desenvolvimento e a implementação do sistema proposto, foram empregadas ferramentas e tecnologias que atendem aos requisitos de integração com modelos de linguagem, persistência de dados, recuperação de contexto por similaridade semântica e disponibilização do sistema por meio de uma API. A seguir, apresentam-se as principais tecnologias utilizadas e suas respectivas finalidades no contexto do projeto.
 
 \subsection{Python}
-A linguagem Python foi escolhida devido à sua versatilidade e robustez em projetos que envolvem inteligência artificial e aprendizado de máquina. Além disso, sua vasta comunidade e a disponibilidade de bibliotecas especializadas facilitam o processamento de dados e a geração de modelos inteligentes, contribuindo para um desenvolvimento mais ágil e confiável do sistema.
+O sistema foi implementado em Python, em função da maturidade do ecossistema para desenvolvimento de aplicações web, integração com bibliotecas de inteligência artificial e suporte a ferramentas de persistência e processamento de dados \cite{python_docs_2026}.
 
-\subsection{\textit{Large Language Model} (LLM)}
-Modelos avançados de inteligência artificial, como os LLMs (por exemplo, GPT), foram utilizados para realizar a avaliação automática das respostas dos alunos com base nos critérios de avaliação. Esses modelos permitem uma análise semântica sofisticada dos conteúdos, garantindo que as avaliações sejam baseadas em critérios objetivos e contextuais, e possibilitando uma correção automatizada mais precisa e eficiente.
+\subsection{FastAPI}
+O backend foi desenvolvido com o \textit{framework} FastAPI, utilizado para a implementação de uma API REST, organização de rotas e tratamento de requisições relacionadas às etapas de configuração, correção e revisão docente. Para execução em ambiente de produção, a aplicação é servida com \textit{workers} assíncronos (Gunicorn/Uvicorn), favorecendo concorrência e escalabilidade \cite{fastapi_docs_2026,gunicorn_docs_2026,uvicorn_docs_2026}.
 
-\subsection{\textit{Retrieval-Augmented Generation} (RAG)}
-A metodologia RAG foi empregada para recuperar contextos adicionais relevantes a partir do banco de dados vetorizado. Essa técnica potencializa a assertividade do sistema, permitindo que as respostas dos alunos sejam avaliadas com maior precisão e coerência, ao integrar informações adicionais que enriquecem o processo de correção.
+\subsection{Orquestração do fluxo com LangGraph}
+O fluxo de correção foi estruturado como um grafo de estados, empregando LangGraph para definir nós de execução (recuperação de contexto, correção independente, verificação de divergência, acionamento condicional do terceiro corretor e consolidação do resultado). Essa abordagem permite controlar o encadeamento das etapas e tornar o processo reprodutível e rastreável \cite{langgraph_docs_2026}.
 
-\subsection{\textit{Vector Database} (Banco de Dados Vetorial)}
-Um banco de dados vetorial foi utilizado para armazenar e gerenciar os \textit{embeddings} dos materiais didáticos. Essa tecnologia possibilita consultas rápidas e análises semânticas eficazes, fundamentais para a implementação da técnica RAG e para garantir que o sistema opere de forma integrada e com alto desempenho.
+\subsection{Agentes corretores com DSPy e LiteLLM}
+Os agentes de correção foram implementados com DSPy, adotando chamadas a modelos de linguagem por meio de uma camada de compatibilidade (LiteLLM). Essa combinação possibilita parametrizar modelos e provedores, manter configuração centralizada e aplicar cache quando aplicável, reduzindo variabilidade operacional e custo computacional \cite{dspy_docs_2026,litellm_docs_2026}.
+
+\subsection{Integração com LLMs e provedores de \textit{embeddings} (LangChain)}
+Para padronizar integrações com provedores de modelos e de \textit{embeddings}, foram utilizadas bibliotecas do ecossistema LangChain. No sistema, essa camada é empregada tanto para instanciar modelos de chat (conforme o provedor configurado) quanto para gerar \textit{embeddings} utilizados no processo de recuperação de contexto \cite{langchain_docs_2026}.
+
+\subsection{Recuperação de contexto e armazenamento vetorial (ChromaDB)}
+O armazenamento vetorial e a recuperação por similaridade foram realizados com ChromaDB, utilizado como \textit{vector store} persistente. O banco vetorial armazena representações vetoriais dos materiais didáticos e permite consultas para obtenção de trechos relevantes, compondo o contexto adicional necessário à estratégia de \textit{Retrieval-Augmented Generation} (RAG) \cite{chromadb_docs_2026}.
+
+\subsection{Persistência relacional e migrações (PostgreSQL, SQLAlchemy e Alembic)}
+Os dados estruturados do sistema (usuários, turmas, provas, questões, respostas, critérios e resultados) são persistidos em banco de dados relacional PostgreSQL. Para a camada de acesso a dados, utiliza-se SQLAlchemy, enquanto Alembic é empregado para versionamento e execução de migrações, assegurando reprodutibilidade do esquema entre ambientes \cite{postgresql_docs_2026,sqlalchemy_docs_2026,alembic_docs_2026}.
+
+\subsection{Conteinerização (Docker e Docker Compose)}
+O ambiente de execução foi padronizado por meio de Docker e Docker Compose, viabilizando a composição de serviços (API, banco de dados relacional e serviços auxiliares) e reduzindo diferenças de configuração entre execução local e implantação \cite{docker_docs_2026,docker_compose_docs_2026}.
+
+\subsection{Ollama e Streamlit (apoio a desenvolvimento e inspeção)}
+Quando configurado, o Ollama é utilizado como provedor local para modelos e/ou \textit{embeddings}, favorecendo experimentação sem dependência exclusiva de serviços externos. Além disso, uma aplicação auxiliar em Streamlit é utilizada para fins de observabilidade e inspeção do pipeline de correção durante o desenvolvimento \cite{ollama_docs_2026,streamlit_docs_2026}.
 
 \subsection{JSON (\textit{JavaScript Object Notation})}
-O formato JSON foi adotado para a padronização e transmissão das informações relacionadas às provas, como perguntas, respostas dos alunos e identificadores únicos. A escolha pelo JSON deve-se à sua leveza e facilidade de manipulação, garantindo uma interoperabilidade eficiente entre os diferentes componentes do sistema. O armazenamento persistente e principal dos dados acadêmicos e de correção é realizado no banco de dados relacional da aplicação.
+O formato JSON é empregado na padronização e transmissão de informações entre componentes do sistema, como questões, respostas e identificadores. Essa escolha favorece interoperabilidade e validação de dados, enquanto o armazenamento persistente e principal das informações acadêmicas e de correção permanece sob responsabilidade do banco relacional da aplicação \cite{rfc8259_json_2017}.
 
 \section{Métodos de Avaliação}
 
@@ -136,11 +151,11 @@ A avaliação do sistema de correção automática de provas discursivas propost
 O processo avaliativo é estruturado nas seguintes:
 
 \begin{enumerate}
-    \item \textbf{Seleção do Corpus de Questões e Gabaritos:} Foram selecionados, no mínimo, três livros de diferentes subáreas da computação (por exemplo, Algoritmos e Estruturas de Dados, Engenharia de Software, Redes de Computadores, Inteligência Artificial, Sistemas Operacionais, Teoria da Computação), comumente utilizados em cursos de graduação. De cada livro, foram extraídas cinco questões discursivas que possuem respostas detalhadas fornecidas pelos próprios autores. A escolha recaiu sobre questões que exigem compreensão conceitual, aplicação de conhecimento e argumentação, em detrimento de questões puramente factuais ou de múltipla escolha. A seleção final dos livros e das questões buscou garantir uma diversidade de tópicos e estilos de formulação, compondo um conjunto de, no mínimo, 15 pares de pergunta-resposta (gabarito do autor).
+    \item \textbf{Seleção do Corpus de Questões e Gabaritos:} Foram selecionados, no mínimo, três livros de diferentes subáreas da computação (por exemplo, Algoritmos e Estruturas de Dados, Engenharia de Software, Redes de Computadores, Inteligência Artificial, Sistemas Operacionais, Teoria da Computação), comumente utilizados em cursos de graduação. De cada livro, foram extraídas cinco questões discursivas que possuem respostas detalhadas fornecidas pelos próprios autores. A escolha recaiu sobre questões que exigem compreensão conceitual, aplicação de conhecimento e argumentação, em detrimento de questões puramente factuais ou de múltipla escolha. A seleção final dos livros e das questões buscou garantir uma diversidade de tópicos e estilos de formulação, compondo um conjunto de, no mínimo, 15 pares de questão-resposta (gabarito do autor).
 
-    \item \textbf{Coleta de Respostas de LLMs:} Cada uma das questões discursivas selecionadas foi submetida, de forma independente, a um conjunto de Modelos de LLMs para a geração de respostas. Os LLMs avaliados incluem: GPT-4o, DeepSeek v2, Manus AI, LLama 4 (ou a versão mais recente disponível), Claude (última versão disponível), Qwen (última versão disponível), Perplexity AI, Grok (última versão disponível) e Gemini (última versão disponível, como Gemini 2.0 Flash). As perguntas foram apresentadas aos LLMs sem qualquer contexto adicional além do próprio enunciado da questão, simulando um cenário de prova onde o aluno responde com base em seu conhecimento.
+    \item \textbf{Coleta de Respostas de LLMs:} Cada uma das questões discursivas selecionadas foi submetida, de forma independente, a um conjunto de Modelos de LLMs para a geração de respostas. Os LLMs avaliados incluem: GPT-4o, DeepSeek v2, Manus AI, LLama 4 (ou a versão mais recente disponível), Claude (última versão disponível), Qwen (última versão disponível), Perplexity AI, Grok (última versão disponível) e Gemini (última versão disponível, como Gemini 2.0 Flash). As questões foram apresentadas aos LLMs sem qualquer contexto adicional além do próprio enunciado da questão, simulando um cenário de prova onde o aluno responde com base em seu conhecimento.
 
-    \item \textbf{Processo de Correção Automatizada e Avaliação de Desempenho:} As respostas geradas por cada LLM para cada questão foram então processadas pelo sistema de correção automática desenvolvido neste TCC. O sistema utiliza o conteuúdo do livro como referência para avaliar a qualidade da resposta do LLM. A avaliação considera múltiplos aspectos, incluindo, mas não se limitando a:
+    \item \textbf{Processo de Correção Automatizada e Avaliação de Desempenho:} As respostas geradas por cada LLM para cada questão foram então processadas pelo sistema de correção automática desenvolvido neste TCC. O sistema utiliza o conteúdo do livro como referência para avaliar a qualidade da resposta do LLM. A avaliação considera múltiplos aspectos, incluindo, mas não se limitando a:
 
     \begin{itemize}
         \item \textbf{Precisão Conceitual:} Verificação da correção dos conceitos apresentados na resposta do LLM em relação ao gabarito.
