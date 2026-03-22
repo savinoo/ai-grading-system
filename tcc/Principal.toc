@@ -65,27 +65,27 @@
 \contentsline {subsubsection}{\numberline {4.2.1.8}Correção Automatizada da Prova}{45}{subsubsection.4.2.1.8}%
 \contentsline {subsection}{\numberline {4.2.2}Subprocesso de Correção da Prova}{45}{subsection.4.2.2}%
 \contentsline {subsubsection}{\numberline {4.2.2.1}Verificação Inicial das Questões}{45}{subsubsection.4.2.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.2.2}Geração de Contexto via RAG}{45}{subsubsection.4.2.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.2}Geração de Contexto via RAG}{46}{subsubsection.4.2.2.2}%
 \contentsline {subsubsection}{\numberline {4.2.2.3}Processo de Correção Específica das Respostas}{46}{subsubsection.4.2.2.3}%
 \contentsline {subsubsection}{\numberline {4.2.2.4}Loop de Correção das Respostas}{46}{subsubsection.4.2.2.4}%
 \contentsline {subsubsection}{\numberline {4.2.2.5}Geração de Documentos com Notas Preliminares}{46}{subsubsection.4.2.2.5}%
 \contentsline {subsubsection}{\numberline {4.2.2.6}Avaliação e Modificação Final pelo Professor}{46}{subsubsection.4.2.2.6}%
 \contentsline {subsubsection}{\numberline {4.2.2.7}Geração das Notas Finais dos Alunos}{46}{subsubsection.4.2.2.7}%
-\contentsline {subsection}{\numberline {4.2.3}Subprocesso de Correção da Resposta}{46}{subsection.4.2.3}%
-\contentsline {subsubsection}{\numberline {4.2.3.1}Envio da Resposta aos Agentes Corretores}{46}{subsubsection.4.2.3.1}%
+\contentsline {subsection}{\numberline {4.2.3}Subprocesso de Correção da Resposta}{47}{subsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.3.1}Envio da Resposta aos Agentes Corretores}{47}{subsubsection.4.2.3.1}%
 \contentsline {subsubsection}{\numberline {4.2.3.2}Avaliação Independente pelos Corretores 1 e 2}{47}{subsubsection.4.2.3.2}%
 \contentsline {subsubsection}{\numberline {4.2.3.3}Comparação das Notas Obtidas}{47}{subsubsection.4.2.3.3}%
 \contentsline {subsubsection}{\numberline {4.2.3.4}Verificação do Limiar de Divergência}{47}{subsubsection.4.2.3.4}%
 \contentsline {subsubsection}{\numberline {4.2.3.5}Acionamento do Corretor 3 em Caso de Divergência}{47}{subsubsection.4.2.3.5}%
 \contentsline {subsubsection}{\numberline {4.2.3.6}Definição da Nota Final em Caso de Três Avaliações}{47}{subsubsection.4.2.3.6}%
-\contentsline {subsubsection}{\numberline {4.2.3.7}Encerramento da Correção e Retorno da Nota}{47}{subsubsection.4.2.3.7}%
+\contentsline {subsubsection}{\numberline {4.2.3.7}Encerramento da Correção e Retorno da Nota}{48}{subsubsection.4.2.3.7}%
 \contentsline {section}{\numberline {4.3}Ferramentas e Tecnologias Utilizadas}{48}{section.4.3}%
 \contentsline {subsection}{\numberline {4.3.1}Python}{48}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}\textit {Large Language Model} (LLM)}{48}{subsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.3.3}\textit {Retrieval-Augmented Generation} (RAG)}{48}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}\textit {Vector Database} (Banco de Dados Vetorial)}{48}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}JSON (\textit {JavaScript Object Notation})}{48}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.4}\textit {Vector Database} (Banco de Dados Vetorial)}{49}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}JSON (\textit {JavaScript Object Notation})}{49}{subsection.4.3.5}%
 \contentsline {section}{\numberline {4.4}Métodos de Avaliação}{49}{section.4.4}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{51}{section*.16}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{52}{section*.16}%

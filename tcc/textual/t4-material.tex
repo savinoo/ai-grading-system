@@ -46,10 +46,10 @@ Nesta etapa, o professor realizará a inserção dos materiais didáticos pertin
 Os materiais didáticos inseridos serão convertidos em representações vetoriais por meio de técnicas avançadas de \textit{embedding}. O resultado desse processo será um banco de dados vetorizado que permitirá análises semânticas eficazes, possibilitando ao sistema compreender o conteúdo para uso posterior pela inteligência artificial.
 
 \subsubsection{Sugestão Inicial da Configuração pela LLM}
-Uma LLM, utilizando o conteúdo previamente vetorizado, gerará automaticamente sugestões iniciais dos critérios de avaliação para as provas, propondo temas relevantes, critérios gerais e níveis preliminares de complexidade. Essas sugestões serão embasadas em análises semânticas dos materiais fornecidos pelo professor.
+Os critérios de avaliação disponíveis no sistema encontram-se pré-configurados em um banco de dados. O professor utilizará esses critérios como referência inicial para configurar a prova, podendo selecioná-los conforme a relevância pedagógica e o contexto específico da disciplina.
 
 \subsubsection{Análise e Configuração Final pelo Professor}
-O professor revisará detalhadamente as sugestões fornecidas pela LLM. Nesse momento, ele poderá aprovar integralmente ou realizar ajustes nos temas propostos, critérios de avaliação específicos e níveis de dificuldade, garantindo assim a adequação dos critérios à realidade pedagógica e aos objetivos da disciplina.
+O professor revisará detalhadamente os critérios selecionados e realizará ajustes conforme necessário, considerando a relevância pedagógica, contexto específico da disciplina, temas propostos e níveis de dificuldade. Essa etapa garante a adequação dos critérios à realidade pedagógica e aos objetivos disciplinares.
 
 \subsubsection{Configuração Interna da LLM}
 Uma vez estabelecida e aprovada a configuração final pelo professor, a LLM será configurada internamente seguindo os critérios validados. Essa etapa consiste em definir os prompts de correção e os parâmetros operacionais do modelo (por exemplo, instruções de avaliação, estrutura de saída e limites de pontuação) para garantir aderência aos critérios pedagógicos da disciplina. Quando necessário, os ajustes são realizados de forma controlada durante a evolução do sistema, sem mecanismo de auto-otimização contínua em tempo de execução.
@@ -117,7 +117,7 @@ Para o desenvolvimento e implementação do sistema proposto, serão utilizadas 
 A linguagem Python será escolhida devido à sua versatilidade e robustez em projetos que envolvem inteligência artificial e aprendizado de máquina. Além disso, sua vasta comunidade e a disponibilidade de bibliotecas especializadas facilitarão o processamento de dados e a geração de modelos inteligentes, contribuindo para um desenvolvimento mais ágil e confiável do sistema.
 
 \subsection{\textit{Large Language Model} (LLM)}
-Modelos avançados de inteligência artificial, como os LLMs (por exemplo, GPT), serão utilizados para automatizar a geração de sugestões de temas e critérios de avaliação. Esses modelos permitirão uma análise semântica sofisticada dos conteúdos, garantindo que as avaliações sejam baseadas em critérios objetivos e contextuais, e possibilitando uma correção automatizada mais precisa e eficiente.
+Modelos avançados de inteligência artificial, como os LLMs (por exemplo, GPT), serão utilizados para realizar a avaliação automática das respostas dos alunos com base nos critérios de avaliação. Esses modelos permitirão uma análise semântica sofisticada dos conteúdos, garantindo que as avaliações sejam baseadas em critérios objetivos e contextuais, e possibilitando uma correção automatizada mais precisa e eficiente.
 
 \subsection{\textit{Retrieval-Augmented Generation} (RAG)}
 A metodologia RAG será empregada para recuperar contextos adicionais relevantes a partir do banco de dados vetorizado. Essa técnica potencializará a assertividade do sistema, permitindo que as respostas dos alunos sejam avaliadas com maior precisão e coerência, ao integrar informações adicionais que enriquecem o processo de correção.
