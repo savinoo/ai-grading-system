@@ -18,16 +18,18 @@ Este capítulo apresentará o detalhamento do desenvolvimento do sistema propost
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{media/fluxo-correcao-prova.jpg}
-    \caption{Fluxograma do subprocesso de correção da prova}
+    \caption{Fluxograma do subprocesso de correção da prova, incluindo revisão docente antes da consolidação das notas finais}
     \label{fig:fluxo-correcao-prova}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{media/fluxo-correcao-pergunta.jpg}
-    \caption{Fluxograma do subprocesso de correção da resposta}
+    \caption{Fluxograma do subprocesso de correção da resposta, com acionamento condicional do Corretor 3 por limiar de divergência}
     \label{fig:fluxo-correcao-pergunta}
 \end{figure}
+
+No fluxo da \autoref{fig:fluxo-correcao-prova}, a revisão do professor ocorre após a geração das notas preliminares e antes da definição das notas finais. Já no fluxo da \autoref{fig:fluxo-correcao-pergunta}, o Corretor 3 atua apenas quando a divergência entre C1 e C2 ultrapassa o limiar configurado, mantendo o caminho condicional de arbitragem alinhado à implementação.
 
 \section{Tipo de Pesquisa}
 
