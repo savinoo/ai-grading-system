@@ -96,16 +96,16 @@ Os corretores realizarão a análise detalhada da resposta recebida individualme
 Após a atribuição das notas, o sistema realizará automaticamente a comparação entre as notas obtidas pelos dois primeiros corretores. Essa comparação buscará identificar o grau de divergência entre as avaliações realizadas.
 
 \subsubsection{Verificação do Limiar de Divergência}
-Caso a diferença entre as notas atribuídas pelos Corretores 1 e 2 esteja dentro de um limite aceitável pré-estabelecido (limiar), o sistema calculará automaticamente a média dessas duas avaliações e finalizará a correção dessa resposta específica. No protótipo, o valor padrão desse limiar é de 2,0 pontos. Embora não exista uma rota explícita para esse ajuste na aplicação, o limiar pode ser configurado via variável de ambiente \texttt{DIVERGENCE\_THRESHOLD} no arquivo \texttt{.env}.
+Caso a diferença entre as notas atribuídas pelos Corretores 1 e 2 esteja dentro de um limite aceitável pré-estabelecido (limiar), a nota final da resposta será definida pela média simples entre essas duas avaliações. No protótipo, o valor padrão desse limiar é de 2,0 pontos. Embora não exista uma rota explícita para esse ajuste na aplicação, o limiar pode ser configurado via variável de ambiente \texttt{DIVERGENCE\_THRESHOLD} no arquivo \texttt{.env}.
 
 \subsubsection{Acionamento do Corretor 3 em Caso de Divergência}
-Se a divergência entre as notas atribuídas ultrapassar o limiar definido, o sistema acionará automaticamente um terceiro corretor (Corretor 3). Esse corretor realizará uma nova avaliação independente, seguindo os mesmos critérios e contextos utilizados pelos corretores anteriores, garantindo imparcialidade e coerência na análise adicional.
+Se a divergência entre as notas atribuídas pelos Corretores 1 e 2 ultrapassar o limiar definido, o sistema acionará automaticamente um terceiro corretor (Corretor 3). Esse corretor realizará uma nova avaliação independente, seguindo os mesmos critérios e contextos utilizados pelos corretores anteriores, garantindo imparcialidade e coerência na análise adicional.
 
 \subsubsection{Definição da Nota Final em Caso de Três Avaliações}
-Com a terceira avaliação concluída, o sistema selecionará automaticamente as duas notas mais próximas entre as três avaliações realizadas (Corretores 1, 2 e 3). A média dessas duas notas mais próximas será calculada automaticamente, definindo assim a nota final para a resposta avaliada.
+Com a terceira avaliação concluída, o sistema selecionará automaticamente o par de notas mais próximas entre as três avaliações realizadas (Corretores 1, 2 e 3). A nota final da resposta será definida pela média desse par mais próximo.
 
 \subsubsection{Encerramento da Correção e Retorno da Nota}
-Após determinar a média final, seja por meio de duas ou três avaliações, o subprocesso será concluído, registrando e devolvendo a nota definitiva para o sistema principal. Essa etapa assegurará a precisão e a confiabilidade do processo de correção, garantindo avaliações consistentes e fundamentadas conforme os critérios pedagógicos definidos na configuração inicial da prova.
+Após determinar a nota final pela regra de consenso (média entre C1 e C2 quando não há divergência acima do limiar; média do par mais próximo entre C1, C2 e C3 quando há divergência), o subprocesso será concluído, registrando e devolvendo o resultado para o sistema principal. Essa etapa assegurará a precisão e a confiabilidade do processo de correção, garantindo avaliações consistentes e fundamentadas conforme os critérios pedagógicos definidos na configuração inicial da prova.
 
 \section{Ferramentas e Tecnologias Utilizadas}
 
