@@ -328,7 +328,7 @@ A arquitetura desses sistemas pode variar. Alguns utilizam um LLM centralizado q
 
 No contexto da correção automática de provas, um SMA baseado em LLMs pode envolver múltiplos agentes especializados (ex: agente de análise de conteúdo, agente de verificação gramatical, agente de avaliação de argumentação) que se comunicam (possivelmente via linguagem natural interpretada por LLMs) para chegar a uma avaliação consensual e gerar um feedback abrangente, simulando um processo de revisão por pares ou uma banca avaliadora.
 
-No protótipo desenvolvido neste trabalho, essa ideia é aplicada por meio de uma estratégia de consenso 2$\rightarrow$1: dois corretores independentes (C1 e C2) avaliam inicialmente a mesma resposta e, apenas quando há divergência acima de um limiar definido, um terceiro corretor atua como árbitro (C3). Assim, o sistema combina paralelismo na avaliação inicial com arbitragem condicional, reduzindo custo computacional em casos de convergência e aumentando a robustez quando há discordância.
+No protótipo desenvolvido neste trabalho, essa ideia é aplicada por meio de uma estratégia de consenso 2$\rightarrow$1: dois corretores independentes (C1 e C2) avaliam inicialmente a mesma resposta e, apenas quando há divergência acima de um limiar definido, um terceiro corretor (Corretor 3) atua condicionalmente para resolver a discordância. Assim, o sistema combina paralelismo na avaliação inicial com arbitragem condicional, reduzindo custo computacional em casos de convergência e aumentando a robustez quando há discordância.
 
 \subsection{Engenharia de Prompt}
 

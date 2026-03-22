@@ -54,8 +54,8 @@ O professor revisará detalhadamente os critérios selecionados e realizará aju
 \subsubsection{Configuração Interna da LLM}
 Uma vez estabelecida e aprovada a configuração final pelo professor, a LLM será configurada internamente seguindo os critérios validados. Essa etapa consiste em definir os prompts de correção e os parâmetros operacionais do modelo (por exemplo, instruções de avaliação, estrutura de saída e limites de pontuação) para garantir aderência aos critérios pedagógicos da disciplina. Quando necessário, os ajustes são realizados de forma controlada durante a evolução do sistema, sem mecanismo de auto-otimização contínua em tempo de execução.
 
-\subsubsection{Imputação das Perguntas da Prova}
-Nesta etapa, as perguntas validadas pelo professor serão inseridas no sistema. Cada questão será associada diretamente aos temas e critérios previamente configurados, garantindo coerência entre o conteúdo da prova e os parâmetros avaliativos estabelecidos.
+\subsubsection{Imputação das Questões da Prova}
+Nesta etapa, as questões validadas pelo professor serão inseridas no sistema. Cada questão será associada diretamente aos temas e critérios previamente configurados, garantindo coerência entre o conteúdo da prova e os parâmetros avaliativos estabelecidos.
 
 \subsubsection{Imputação Estruturada das Respostas dos Alunos}
 Após a aplicação da prova aos alunos, as respostas serão coletadas e estruturadas em formato JSON para envio e integração entre os componentes do sistema. Cada resposta será associada ao identificador específico da questão, à resposta fornecida e ao identificador individual do aluno, possibilitando a organização necessária para a correção automatizada. A persistência principal dessas informações ocorre no banco de dados relacional da aplicação.
@@ -69,7 +69,7 @@ Utilizando os parâmetros configurados nas etapas anteriores, o sistema proceder
 O sistema iniciará com uma verificação sequencial para confirmar se todas as questões da prova terão sido devidamente corrigidas. Se existirem questões pendentes, estas serão identificadas e encaminhadas para a correção específica.
 
 \subsubsection{Geração de Contexto via RAG}
-Para cada questão identificada como pendente, o sistema gerará \textit{embeddings} das perguntas e recorrerá ao método RAG para recuperar contextos adicionais relevantes do banco de dados vetorizado. Esses contextos auxiliarão diretamente na análise e correção detalhada das respostas dos alunos.
+Para cada questão identificada como pendente, o sistema gerará \textit{embeddings} da questão e recorrerá ao método RAG para recuperar contextos adicionais relevantes do banco de dados vetorizado. Esses contextos auxiliarão diretamente na análise e correção detalhada das respostas dos alunos.
 
 \subsubsection{Processo de Correção Específica das Respostas}
 Cada resposta pendente passará por um subprocesso dedicado de correção com auxílio do contexto obtido via RAG. A correção ocorrerá com base em critérios de avaliação já estabelecidos, incluindo precisão, relevância e completude das respostas.
