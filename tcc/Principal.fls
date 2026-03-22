@@ -680,7 +680,6 @@ INPUT pre\12-sumario.tex
 INPUT .\Principal.toc
 INPUT .\Principal.toc
 INPUT Principal.toc
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmss10.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmsso12.tfm
 INPUT .\textual\t1-introducao-v2.tex
 INPUT .\textual\t1-introducao-v2.tex
@@ -745,10 +744,6 @@ INPUT .\media\fluxo-correcao-pergunta.jpg
 INPUT .\media\fluxo-correcao-pergunta.jpg
 INPUT .\media\fluxo-correcao-pergunta.jpg
 INPUT .\media\fluxo-correcao-pergunta.jpg
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt12.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmsso12.tfm
 INPUT .\Principal.bbl
 INPUT .\Principal.bbl
@@ -780,8 +775,6 @@ INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmri10.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmri12.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmri12.pfb
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmss10.pfb
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmss10.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmss12.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmss12.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmss17.pfb
@@ -792,5 +785,3 @@ INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsso12.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsy10.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsy10.pfb
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtt12.pfb
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtt12.pfb

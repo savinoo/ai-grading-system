@@ -7,7 +7,7 @@
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \contentsline {chapter}{Sum\'ario}{vii}{chapter*.8}%
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{Contents}{ix}{chapter*.8}%
+\contentsline {chapter}{Contents}{viii}{chapter*.8}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase []{Introdução}}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Objetivos}{2}{section.1.1}%
@@ -54,43 +54,21 @@
 \contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase []{Metodologia}}{40}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Tipo de Pesquisa}{44}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Processo de Correção de Prova}{44}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Subprocesso de Configuração}{44}{subsection.4.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.1.1}Imputação dos Dados da Matéria}{44}{subsubsection.4.2.1.1}%
-\contentsline {subsubsection}{\numberline {4.2.1.2}Geração do Banco de Dados Vetorizado}{44}{subsubsection.4.2.1.2}%
-\contentsline {subsubsection}{\numberline {4.2.1.3}Sugestão Inicial da Configuração pela LLM}{44}{subsubsection.4.2.1.3}%
-\contentsline {subsubsection}{\numberline {4.2.1.4}Análise e Configuração Final pelo Professor}{44}{subsubsection.4.2.1.4}%
-\contentsline {subsubsection}{\numberline {4.2.1.5}Configuração Interna da LLM}{45}{subsubsection.4.2.1.5}%
-\contentsline {subsubsection}{\numberline {4.2.1.6}Imputação das Questões da Prova}{45}{subsubsection.4.2.1.6}%
-\contentsline {subsubsection}{\numberline {4.2.1.7}Imputação Estruturada das Respostas dos Alunos}{45}{subsubsection.4.2.1.7}%
-\contentsline {subsubsection}{\numberline {4.2.1.8}Correção Automatizada da Prova}{45}{subsubsection.4.2.1.8}%
-\contentsline {subsection}{\numberline {4.2.2}Subprocesso de Correção da Prova}{45}{subsection.4.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.2.1}Verificação Inicial das Questões}{45}{subsubsection.4.2.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.2.2}Geração de Contexto via RAG}{46}{subsubsection.4.2.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.2.3}Processo de Correção Específica das Respostas}{46}{subsubsection.4.2.2.3}%
-\contentsline {subsubsection}{\numberline {4.2.2.4}Loop de Correção das Respostas}{46}{subsubsection.4.2.2.4}%
-\contentsline {subsubsection}{\numberline {4.2.2.5}Geração de Documentos com Notas Preliminares}{46}{subsubsection.4.2.2.5}%
-\contentsline {subsubsection}{\numberline {4.2.2.6}Avaliação e Modificação Final pelo Professor}{46}{subsubsection.4.2.2.6}%
-\contentsline {subsubsection}{\numberline {4.2.2.7}Geração das Notas Finais dos Alunos}{46}{subsubsection.4.2.2.7}%
-\contentsline {subsection}{\numberline {4.2.3}Subprocesso de Correção da Resposta}{46}{subsection.4.2.3}%
-\contentsline {subsubsection}{\numberline {4.2.3.1}Envio da Resposta aos Agentes Corretores}{46}{subsubsection.4.2.3.1}%
-\contentsline {subsubsection}{\numberline {4.2.3.2}Avaliação Independente pelos Corretores 1 e 2}{47}{subsubsection.4.2.3.2}%
-\contentsline {subsubsection}{\numberline {4.2.3.3}Comparação das Notas Obtidas}{47}{subsubsection.4.2.3.3}%
-\contentsline {subsubsection}{\numberline {4.2.3.4}Verificação do Limiar de Divergência}{47}{subsubsection.4.2.3.4}%
-\contentsline {subsubsection}{\numberline {4.2.3.5}Acionamento do Corretor 3 em Caso de Divergência}{47}{subsubsection.4.2.3.5}%
-\contentsline {subsubsection}{\numberline {4.2.3.6}Definição da Nota Final em Caso de Três Avaliações}{47}{subsubsection.4.2.3.6}%
-\contentsline {subsubsection}{\numberline {4.2.3.7}Encerramento da Correção e Retorno da Nota}{47}{subsubsection.4.2.3.7}%
-\contentsline {section}{\numberline {4.3}Ferramentas e Tecnologias Utilizadas}{48}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Python}{48}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}FastAPI}{48}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Orquestração do fluxo com LangGraph}{48}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Agentes corretores com DSPy e LiteLLM}{48}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}Integração com LLMs e provedores de \textit {embeddings} (LangChain)}{49}{subsection.4.3.5}%
-\contentsline {subsection}{\numberline {4.3.6}Recuperação de contexto e armazenamento vetorial (ChromaDB)}{49}{subsection.4.3.6}%
-\contentsline {subsection}{\numberline {4.3.7}Persistência relacional e migrações (PostgreSQL, SQLAlchemy e Alembic)}{49}{subsection.4.3.7}%
-\contentsline {subsection}{\numberline {4.3.8}Conteinerização (Docker e Docker Compose)}{49}{subsection.4.3.8}%
-\contentsline {subsection}{\numberline {4.3.9}Ollama e Streamlit (apoio a desenvolvimento e inspeção)}{49}{subsection.4.3.9}%
-\contentsline {subsection}{\numberline {4.3.10}JSON (\textit {JavaScript Object Notation})}{50}{subsection.4.3.10}%
-\contentsline {section}{\numberline {4.4}Métodos de Avaliação}{50}{section.4.4}%
+\contentsline {subsection}{\numberline {4.2.1}Subprocesso de Configuração da Prova}{44}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Subprocesso de Correção da Prova (background e revisão docente)}{45}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Subprocesso de Correção da Resposta (workflow de avaliação)}{45}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Ferramentas e Tecnologias Utilizadas}{46}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Python}{46}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}FastAPI}{46}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Orquestração do fluxo com LangGraph}{46}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Agentes corretores com DSPy e LiteLLM}{46}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Integração com LLMs e provedores de \textit {embeddings} (LangChain)}{47}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Recuperação de contexto e armazenamento vetorial (ChromaDB)}{47}{subsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.3.7}Persistência relacional e migrações (PostgreSQL, SQLAlchemy e Alembic)}{47}{subsection.4.3.7}%
+\contentsline {subsection}{\numberline {4.3.8}Conteinerização (Docker e Docker Compose)}{47}{subsection.4.3.8}%
+\contentsline {subsection}{\numberline {4.3.9}Ollama e Streamlit (apoio a desenvolvimento e inspeção)}{47}{subsection.4.3.9}%
+\contentsline {subsection}{\numberline {4.3.10}JSON (\textit {JavaScript Object Notation})}{48}{subsection.4.3.10}%
+\contentsline {section}{\numberline {4.4}Métodos de Avaliação}{48}{section.4.4}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{52}{section*.16}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{50}{section*.16}%

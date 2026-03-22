@@ -1,20 +1,20 @@
 # Fdb version 4
-["bibtex Principal"] 1774188136.91154 "Principal.aux" "Principal.bbl" "Principal" 1774188139.66745 0
+["bibtex Principal"] 1774202720.24949 "Principal.aux" "Principal.bbl" "Principal" 1774202723.1694 0
   "./Referencias.bib" 1774188122 147942 fc41681115dfa821392f562e6d291d89 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/bibtex/bib/abntex2/abntex2-options.bib" 1543103229 5396 4eb260dac60f150ae608d45252853090 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/bibtex/bst/abntex2/abntex2-alf.bst" 1543103230 60064 0819ac8568f9a482510a46e3a8a6f605 ""
-  "Principal.aux" 1774188138 84886 25fd079dbe4e57dadf025b3e2d385fcd "pdflatex"
+  "Principal.aux" 1774202722 70691 85809bc04df6afe4e3893b69b2707453 "pdflatex"
   (generated)
   "Principal.bbl"
   "Principal.blg"
   (rewritten before read)
-["makeindex Principal.idx"] 1774131628.95655 "Principal.idx" "Principal.ind" "Principal" 1774188139.66702 0
-  "Principal.idx" 1774188138 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex Principal.idx"] 1774131628.95655 "Principal.idx" "Principal.ind" "Principal" 1774202723.16884 0
+  "Principal.idx" 1774202721 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "Principal.ilg"
   "Principal.ind"
   (rewritten before read)
-["pdflatex"] 1774188137.0985 "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/Principal.tex" "Principal.pdf" "Principal" 1774188139.66788 0
+["pdflatex"] 1774202720.46545 "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/Principal.tex" "Principal.pdf" "Principal" 1774202723.17002 0
   "C:/Users/Maycon Mendes/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1774127426 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/Maycon Mendes/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774127238 13337757 a72a5df451ad51107ceaaa1b28447996 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -36,12 +36,10 @@
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmr12.tfm" 1256929440 12092 7b1546e2d096cfd5dcbd4049b0b1ec2e ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmri10.tfm" 1256929440 17148 9556e1b5f936b77a796f68d2d559ba99 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmri12.tfm" 1256929440 17144 271aaf9ebb339934b04110dc5211fba4 ""
-  "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmss10.tfm" 1256929440 11176 53ebf7a171df1f9447b387b178768bb5 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmss12.tfm" 1256929440 11232 955a7245396175d9219648eadc654ac9 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmss17.tfm" 1256929440 11252 57c8b53a3aeebba8c17658d4221d47ec ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmssbx10.tfm" 1256929440 11168 06d87f5698fd1b642d96449b7c8d90b0 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmsso12.tfm" 1256929440 11352 d9e290eeb53800a380f9d1e4c40ad6c8 ""
-  "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmtt12.tfm" 1256929440 1368 6a60e6a5e029141041d64d339b87e533 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmex10.tfm" 1256929440 992 ce925c9346c7613270a79afbee98c070 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmmi10.tfm" 1256929440 1528 6d36b2385e0ca062a654de6ac59cb34f ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmmi12.tfm" 1256929440 1524 753b192b18f2991794f9d41a8228510b ""
@@ -65,13 +63,11 @@
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb" 1256929440 113634 9384aebdf26f9881e046a4b5574566db ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb" 1256929440 112593 fda2373ba4420af33949610de4c28fe8 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb" 1256929440 109265 e6c7d377db6dfccd4a123fb26da8cffb ""
-  "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss10.pfb" 1256929440 97408 f595704ec2a07246c2d6f7b602587452 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb" 1256929440 96107 daf52840b555e3b38f9679b629b5e2df ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss17.pfb" 1256929440 97155 ffb6880a68751002f414154d64548ca3 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb" 1256929440 119663 1a3a2206591ddc98c6d6c6271a282516 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso12.pfb" 1256929440 109054 c1447b33e20f8aea130da0724b569017 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb" 1256929440 27863 09ce3735688ffde955e72da27c95b61a ""
-  "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb" 1256929440 110323 19372944fba298bb4c4758abff959582 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/context/base/mkii/supp-pdf.mkii" 1580390158 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/generic/babel-french/french.ldf" 1756554183 47319 b47cc42e0d211cf69f68d58f695ca90c ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/generic/babel-french/french3.ldf" 1756554182 58536 c1e02f18528a926fdd58d9a375f97888 ""
@@ -286,7 +282,6 @@
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/lm/ot1lmr.fd" 1430474546 1882 28c08db1407ebff35a658fd141753d16 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/lm/t1lmr.fd" 1430474546 1867 996fe743d88a01aca041ed22cc10e1bb ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/lm/t1lmss.fd" 1430474546 1641 f48673bce41ac279099d0c9523459753 ""
-  "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/lm/t1lmtt.fd" 1430474546 2682 555da1faa2e266801e4b221d01a42cb5 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/lm/ts1lmr.fd" 1430474546 1914 884882d7ebb0fd65cea93fca77ff6f5a ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/ltablex/ltablex.sty" 1407946510 6021 43ef4b327cd0a38df15482bafd67d6df ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/makecell/makecell.sty" 1250677107 16155 2dd7dde1ec1c2a3d0c85bc3b273e04d8 ""
@@ -353,16 +348,16 @@
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/xfor/xfor.sty" 1233849756 2689 44855b72da58344b1c1d9b3087bce6ca ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
-  "Principal.aux" 1774188138 84886 25fd079dbe4e57dadf025b3e2d385fcd "pdflatex"
-  "Principal.bbl" 1774188137 23314 e58bc428b66d1ef6308a6fca23b7a4b9 "bibtex Principal"
-  "Principal.brf" 1774188139 8998 406a4cc1ede17728cba353e055bcb9dd "pdflatex"
+  "Principal.aux" 1774202722 70691 85809bc04df6afe4e3893b69b2707453 "pdflatex"
+  "Principal.bbl" 1774202720 23314 e58bc428b66d1ef6308a6fca23b7a4b9 "bibtex Principal"
+  "Principal.brf" 1774202722 8998 66c98330c6428cbe53c70878cf4c63be "pdflatex"
   "Principal.ind" 1774131629 0 d41d8cd98f00b204e9800998ecf8427e "makeindex Principal.idx"
-  "Principal.lof" 1774188139 559 5a4a40501b184a23aaa2274de7ea093a "pdflatex"
-  "Principal.loq" 1774188139 116 13ac1cca9fa4edc3df1171699da87e9c "pdflatex"
-  "Principal.lot" 1774188139 249 57151cccaa33436cfc2af09c32519f67 "pdflatex"
+  "Principal.lof" 1774202722 559 5a4a40501b184a23aaa2274de7ea093a "pdflatex"
+  "Principal.loq" 1774202722 116 13ac1cca9fa4edc3df1171699da87e9c "pdflatex"
+  "Principal.lot" 1774202722 249 57151cccaa33436cfc2af09c32519f67 "pdflatex"
   "Principal.siglas" 0 -1 0 ""
   "Principal.tex" 1774131674 2943 73a3a792b3f9bd4dffce79264b24e916 ""
-  "Principal.toc" 1774188139 9793 485d5fd0aebfad352ec64bc243dd4917 "pdflatex"
+  "Principal.toc" 1774202722 7197 703df2f713d25e9fa06ea1ac0129ee9f "pdflatex"
   "abntex2.cls" 1774112320 37987 566dd65c99748b7ab5b3d7d3986844e7 ""
   "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/Principal.tex" 1774131674 2943 73a3a792b3f9bd4dffce79264b24e916 ""
   "configuracao.tex" 1774127407 10384 0ea0f57e503b8e3e7f0f32bf20ee38d0 ""
@@ -379,7 +374,7 @@
   "textual/t1-introducao-v2.tex" 1774182017 8342 f98156bc5bd9efced7e3a33f947f1ecb ""
   "textual/t2-fundamentacao.tex" 1774182377 50579 3554bbc870bb2daf10fb92a60c814496 ""
   "textual/t3-trabalhos.tex" 1774138792 40624 ee66ac3c3ec620e97113057e363dd201 ""
-  "textual/t4-material.tex" 1774187822 20885 970b30439dc7421d030972918bbfc5d5 ""
+  "textual/t4-material.tex" 1774202713 16650 c63b6b009e373edff90ec18f6594a53f ""
   (generated)
   "Principal.aux"
   "Principal.brf"
