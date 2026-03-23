@@ -146,7 +146,7 @@ Diversos fatores convergem para justificar a necessidade de automação no proce
 \begin{enumerate}
     \item  \textbf{Escala e eficiência:} Em contextos de avaliação em larga escala, como exames nacionais, vestibulares ou cursos com grande número de estudantes, a automação pode proporcionar ganhos significativos de eficiência, reduzindo o tempo necessário para o processamento das respostas e a disponibilização dos resultados.
     
-    \item  \textbf{Padronização de critérios:} Sistemas automatizados aplicam consistentemente os mesmos critérios a todas as respostas, eliminando variações decorrentes de fadiga, ordem de correção ou outros fatores subjetivos que afetam avaliadores humanos.
+  \item  \textbf{Padronização de critérios:} Sistemas automatizados tendem a aplicar os mesmos critérios a todas as respostas, reduzindo variações decorrentes de fadiga, ordem de correção ou outros fatores subjetivos que afetam avaliadores humanos.
     
     \item  \textbf{Feedback imediato:} A automação possibilita a geração de feedback instantâneo aos estudantes, potencializando o valor formativo da avaliação e permitindo intervenções pedagógicas mais tempestivas.
     
@@ -351,7 +351,7 @@ Um prompt, no contexto de LLMs, é mais do que uma simples pergunta; é uma inst
 
 \end{enumerate}
 
-A engenharia de prompt é um processo iterativo. Desenvolvedores frequentemente refinam os prompts com base nas saídas do modelo para melhorar o desempenho. No contexto da correção automática de provas discursivas, a engenharia de prompt é essencial para instruir o agente LLM sobre os critérios de avaliação, a estrutura esperada do feedback, como ponderar diferentes aspectos da resposta do aluno e como alinhar a avaliação com os objetivos pedagógicos específicos, garantindo que o agente atue como uma ferramenta eficaz e confiável para o educador.
+A engenharia de prompt é um processo iterativo. Desenvolvedores frequentemente refinam os prompts com base nas saídas do modelo para melhorar o desempenho. No contexto da correção automática de provas discursivas, a engenharia de prompt é essencial para instruir o agente LLM sobre os critérios de avaliação, a estrutura esperada do feedback, como ponderar diferentes aspectos da resposta do aluno e como alinhar a avaliação com os objetivos pedagógicos específicos, aumentando a probabilidade de que o agente atue como uma ferramenta útil e confiável para o educador.
 
 \subsection{Recuperação Aumentada por Geração (RAG)}
 
@@ -369,7 +369,7 @@ A RAG aprimora os LLMs ao fundamentar suas respostas em informações relevantes
 
 A eficácia da RAG depende significativamente da qualidade dos \textit{embeddings} e da relevância dos documentos recuperados. Técnicas avançadas de RAG (\textit{Advanced RAG, Modular RAG}) buscam otimizar cada etapa, incluindo pré-processamento dos dados, estratégias de chunking, otimização dos modelos de embedding, técnicas de re-ranking dos documentos recuperados e métodos para refinar o prompt ou a resposta final \cite{gao_retrieval-augmented_2024}.
 
-No contexto da correção automática de provas discursivas, a RAG permite que o agente de IA "consulte" materiais específicos do curso, critérios de avaliação detalhados ou exemplos de respostas modelo (previamente indexados como \textit{embeddings}) antes de avaliar a resposta do aluno. Isso garante que a correção seja fundamentada no contexto específico da disciplina e nos critérios do professor, aumentando a precisão, a consistência e a explicabilidade da avaliação gerada pelo LLM.
+No contexto da correção automática de provas discursivas, a RAG permite que o agente de IA "consulte" materiais específicos do curso, critérios de avaliação detalhados ou exemplos de respostas modelo (previamente indexados como \textit{embeddings}) antes de avaliar a resposta do aluno. Essa estratégia pode ajudar a fundamentar a correção no contexto específico da disciplina e nos critérios do professor, tendendo a aumentar a consistência e a explicabilidade da avaliação gerada pelo LLM.
 
 %\section{APLICAÇÕES DE IA NA CORREÇÃO DE PROVAS DISCURSIVAS}
 %\subsection{Sistemas Existentes de Correção Automática}

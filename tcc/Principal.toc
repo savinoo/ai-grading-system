@@ -7,7 +7,7 @@
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \contentsline {chapter}{Sum\'ario}{vii}{chapter*.8}%
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{Contents}{viii}{chapter*.8}%
+\contentsline {chapter}{Contents}{ix}{chapter*.8}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase []{Introdução}}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Objetivos}{2}{section.1.1}%
@@ -69,6 +69,15 @@
 \contentsline {subsection}{\numberline {4.3.9}Ollama e Streamlit (apoio a desenvolvimento e inspeção)}{47}{subsection.4.3.9}%
 \contentsline {subsection}{\numberline {4.3.10}JSON (\textit {JavaScript Object Notation})}{47}{subsection.4.3.10}%
 \contentsline {section}{\numberline {4.4}Métodos de Avaliação}{48}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Objetivo da avaliação}{48}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Questões avaliativas}{48}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Desenho do estudo}{48}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Procedimento experimental}{49}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}Evidências coletadas}{49}{subsection.4.4.5}%
+\contentsline {subsection}{\numberline {4.4.6}Métricas simples}{50}{subsection.4.4.6}%
+\contentsline {subsection}{\numberline {4.4.7}Critérios de sucesso}{50}{subsection.4.4.7}%
+\contentsline {subsection}{\numberline {4.4.8}Ameaças à validade}{50}{subsection.4.4.8}%
+\contentsline {subsection}{\numberline {4.4.9}Reprodutibilidade (checklist)}{51}{subsection.4.4.9}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{50}{section*.16}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{52}{section*.16}%

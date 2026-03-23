@@ -2,7 +2,7 @@
 \label{cap:metodologia}
 
 
-O presente trabalho desenvolveu um sistema para a correção automatizada de provas discursivas. Esse sistema utiliza técnicas avançadas de inteligência artificial, como \textit{Large Language Models} (LLM) e \textit{Retrieval-Augmented Generation} (RAG), permitindo que as avaliações sejam corrigidas de forma rápida, precisa e objetiva. Assim, o processo de avaliação se torna mais eficiente, beneficiando tanto professores quanto alunos.
+O presente trabalho desenvolveu um sistema para a correção automatizada de provas discursivas. Esse sistema utiliza técnicas de inteligência artificial, como \textit{Large Language Models} (LLM) e \textit{Retrieval-Augmented Generation} (RAG), para apoiar uma correção inicial estruturada e rastreável, mantendo a revisão docente como etapa necessária para confirmação e ajustes. Assim, busca-se reduzir esforço operacional na correção e ampliar a consistência dos artefatos produzidos (notas, justificativas e detalhamento por critério), sem substituir a decisão final do professor.
 
 Este capítulo apresenta o detalhamento do desenvolvimento do sistema implementado, que é dividido em três subprocessos principais: a configuração da prova, a correção geral da prova e a correção específica das respostas que exigem intervenção adicional. Cada subprocesso é explicado detalhadamente, utilizando fluxogramas para ilustrar os passos realizados. A seguir, são apresentados os fluxogramas que ilustram cada um dos subprocessos mencionados (Figuras
 \autoref{fig:fluxo-configuracao},
@@ -105,30 +105,85 @@ O formato JSON é empregado na padronização e transmissão de informações en
 
 \section{Métodos de Avaliação}
 
-A avaliação do sistema de correção automática de provas discursivas proposto neste trabalho foi conduzida por meio de um estudo experimental controlado, desenhado para aferir a precisão, a consistência e a eficácia do sistema em comparação com gabaritos pré-definidos. A metodologia de avaliação envolve a utilização de questões discursivas extraídas de livros-texto consagrados na área de computação, em nível de graduação, cujas respostas fornecidas pelos autores servem como padrão-ouro (gabarito) para a análise.
+Esta seção descreve o método adotado para avaliar o sistema desenvolvido, com foco em evidências observáveis do próprio fluxo de correção e revisão docente. Em vez de executar um \textit{benchmark} multi-modelo, a avaliação busca demonstrar a \textbf{viabilidade técnica} e a \textbf{utilidade prática} do sistema end-to-end (configurar \(\rightarrow\) publicar \(\rightarrow\) indexar \(\rightarrow\) corrigir \(\rightarrow\) persistir \(\rightarrow\) revisar \(\rightarrow\) consolidar), bem como observar efeitos do RAG e do mecanismo de arbitragem por divergência.
 
-O processo avaliativo é estruturado nas seguintes:
+\subsection{Objetivo da avaliação}
+O objetivo da avaliação é verificar se o sistema é capaz de executar o fluxo completo de correção automatizada de respostas discursivas, produzindo \textbf{artefatos estruturados e revisáveis} (nota final, notas por critério e justificativas), e mantendo o professor como responsável pela decisão final por meio de uma etapa explícita de revisão.
+
+\subsection{Questões avaliativas}
+A avaliação é organizada nas seguintes questões avaliativas (QAs):
+
+\begin{itemize}
+    \item \textbf{QA1 --- Execução end-to-end:} o sistema completa o fluxo de configuração, publicação, processamento em \textit{background}, correção, persistência e disponibilização para revisão docente?
+    \item \textbf{QA2 --- Utilidade do RAG:} ao ativar o RAG (materiais anexados), as justificativas e pontuações tendem a ficar mais ancoradas ao conteúdo recuperado do que em um cenário sem RAG?
+    \item \textbf{QA3 --- Arbitragem por divergência:} o mecanismo de divergência e acionamento condicional do terceiro corretor (árbitro) é acionado quando esperado e contribui para estabilizar a nota final?
+    \item \textbf{QA4 --- Estabilidade operacional:} com configurações mais determinísticas (por exemplo, temperatura baixa), o sistema produz saídas com baixa variabilidade em execuções repetidas do mesmo caso?
+\end{itemize}
+
+\subsection{Desenho do estudo}
+Adota-se um \textbf{estudo de caso controlado}, com uma prova pequena (de 2 a 4 questões discursivas) e materiais didáticos anexados em PDF. A prova é configurada com rubrica simples e objetiva, contendo de 3 a 5 critérios (por exemplo, correção conceitual, completude, clareza/organização e aderência ao enunciado), com pesos e limites de pontuação.
+
+No contexto deste estudo, o conjunto de respostas pode ser composto por \textbf{respostas sintéticas} elaboradas pelos autores, cobrindo níveis de qualidade (excelente, adequada/média, fraca/incompleta e fora do tema). O objetivo não é representar toda a diversidade de respostas humanas, mas viabilizar a verificação objetiva do funcionamento do sistema em casos típicos e casos-limite.
+
+\subsection{Procedimento experimental}
+O procedimento é dividido em duas condições para observar o efeito do RAG, mantendo as demais variáveis constantes.
 
 \begin{enumerate}
-    \item \textbf{Seleção do Corpus de Questões e Gabaritos:} Foram selecionados, no mínimo, três livros de diferentes subáreas da computação (por exemplo, Algoritmos e Estruturas de Dados, Engenharia de Software, Redes de Computadores, Inteligência Artificial, Sistemas Operacionais, Teoria da Computação), comumente utilizados em cursos de graduação. De cada livro, foram extraídas cinco questões discursivas que possuem respostas detalhadas fornecidas pelos próprios autores. A escolha recaiu sobre questões que exigem compreensão conceitual, aplicação de conhecimento e argumentação, em detrimento de questões puramente factuais ou de múltipla escolha. A seleção final dos livros e das questões buscou garantir uma diversidade de tópicos e estilos de formulação, compondo um conjunto de, no mínimo, 15 pares de questão-resposta (gabarito do autor).
-
-    \item \textbf{Coleta de Respostas de LLMs:} Cada uma das questões discursivas selecionadas foi submetida, de forma independente, a um conjunto de Modelos de LLMs para a geração de respostas. Os LLMs avaliados incluem: GPT-4o, DeepSeek v2, Manus AI, LLama 4 (ou a versão mais recente disponível), Claude (última versão disponível), Qwen (última versão disponível), Perplexity AI, Grok (última versão disponível) e Gemini (última versão disponível, como Gemini 2.0 Flash). As questões foram apresentadas aos LLMs sem qualquer contexto adicional além do próprio enunciado da questão, simulando um cenário de prova onde o aluno responde com base em seu conhecimento.
-
-    \item \textbf{Processo de Correção Automatizada e Avaliação de Desempenho:} As respostas geradas por cada LLM para cada questão foram então processadas pelo sistema de correção automática desenvolvido neste TCC. O sistema utiliza o conteúdo do livro como referência para avaliar a qualidade da resposta do LLM. A avaliação considera múltiplos aspectos, incluindo, mas não se limitando a:
-
-    \begin{itemize}
-        \item \textbf{Precisão Conceitual:} Verificação da correção dos conceitos apresentados na resposta do LLM em relação ao gabarito.
-
-        \item  \textbf{Completude da Resposta:} Análise se todos os pontos relevantes abordados no gabarito foram contemplados pelo LLM.
-
-        \item \textbf{Coerência e Clareza:} Avaliação da organização lógica, fluidez textual e inteligibilidade da resposta gerada.
-
-        \item \textbf{Similaridade Semântica:} Utilização de métricas de similaridade de texto (como cosseno de embeddings ou outras métricas específicas para avaliação de texto gerado por IA) para quantificar o quão próxima a resposta do LLM está do gabarito em termos de significado.
-    \end{itemize}
-
-    O sistema de correção automática, conforme descrito nas seções anteriores deste capítulo, atribui uma nota ou um conjunto de pontuações para cada resposta de cada LLM. 
-
-    \item \textbf{Análise dos Resultados e Comparação:} Os resultados da correção automática foram compilados e analisados estatisticamente. Foram calculadas métricas de desempenho para cada LLM, como a média das notas obtidas, a variabilidade das notas, e a correlação com a avaliação humana (caso uma amostra seja também avaliada por especialistas humanos para calibrar ou validar o processo automático). Foi realizada uma análise comparativa do desempenho dos diferentes LLMs nas diversas questões e áreas do conhecimento abordadas.
-
-    Esta metodologia permite uma avaliação quantitativa e qualitativa da capacidade do sistema de correção proposto em lidar com respostas complexas geradas por diferentes LLMs, utilizando como base de comparação gabaritos de alta qualidade provenientes de literatura técnica reconhecida. Os resultados obtidos fornecem insights sobre a eficácia do sistema e sobre as capacidades e limitações dos LLMs atuais em tarefas de resposta a questões discursivas no domínio da computação em nível de graduação.
+    \item \textbf{Configuração:} cadastrar prova, questões, rubrica e anexar PDFs.
+    \item \textbf{Publicação:} publicar a prova e aguardar o processamento em \textit{background} (indexação do material e início da correção).
+    \item \textbf{Condição A (com RAG):} executar a correção com recuperação de contexto ativada.
+    \item \textbf{Condição B (sem RAG):} executar a correção com recuperação de contexto desativada (ou equivalente, como \textit{top\_k}=0), mantendo rubrica e dados idênticos.
+    \item \textbf{Coleta de evidências:} extrair os artefatos gerados para cada resposta (nota final, notas por critério, justificativas, indicação de divergência e eventual atuação do árbitro), além do status de indexação dos anexos.
 \end{enumerate}
+
+Quando aplicável, repete-se a execução de um subconjunto de casos (por exemplo, 3 repetições) para observar estabilidade.
+
+\subsection{Evidências coletadas}
+As evidências são baseadas em artefatos do próprio sistema:
+
+\begin{itemize}
+    \item nota final por resposta;
+    \item pontuação por critério;
+    \item justificativa textual associada;
+    \item indicação de divergência entre corretores e acionamento do árbitro;
+    \item status de indexação dos anexos (sucesso/falha), quando existir;
+    \item (opcional) relatório exportado (planilha) com consolidação das notas.
+\end{itemize}
+
+\subsection{Métricas simples}
+As métricas são propositalmente simples, visando viabilidade no prazo do trabalho:
+
+\begin{itemize}
+    \item \textbf{Completude estrutural:} porcentagem de respostas com todos os campos esperados (nota total, notas por critério e justificativa).
+    \item \textbf{Aderência à rubrica (checklist):} verificação de que cada critério foi efetivamente pontuado e possui justificativa coerente.
+    \item \textbf{Efeito do RAG (checklist):} comparação das justificativas em A vs. B, registrando se, com RAG, há maior especificidade e ancoragem ao material anexado.
+    \item \textbf{Taxa de arbitragem:} porcentagem de respostas em que o limiar de divergência aciona o árbitro.
+    \item \textbf{Estabilidade:} variação absoluta da nota final entre execuções repetidas do mesmo caso.
+\end{itemize}
+
+\subsection{Critérios de sucesso}
+Considera-se que a avaliação cumpre seu papel quando:
+
+\begin{itemize}
+    \item o sistema executa o fluxo end-to-end e persiste resultados;
+    \item as saídas são estruturadas, revisáveis e coerentes com a rubrica;
+    \item com RAG, as justificativas tendem a ser mais específicas e ancoradas ao material recuperado;
+    \item o árbitro é acionado em casos de divergência e contribui para a consolidação;
+    \item o sistema apresenta estabilidade operacional suficiente para uso com revisão docente.
+\end{itemize}
+
+\subsection{Ameaças à validade}
+\begin{itemize}
+    \item \textbf{Respostas sintéticas:} não representam toda a diversidade de respostas humanas; mitigação: cobrir níveis de qualidade e casos-limite.
+    \item \textbf{Não-determinismo de LLMs:} mitigação por configurações mais determinísticas (temperatura baixa) e repetição de casos.
+    \item \textbf{Dependência do material:} resultados podem variar com PDFs e temas; mitigação: descrever claramente o conjunto utilizado.
+\end{itemize}
+
+\subsection{Reprodutibilidade (checklist)}
+Para permitir repetição do estudo:
+
+\begin{itemize}
+    \item registrar configurações relevantes (provedor/modelo, temperatura, \textit{top\_k}, limiar de divergência);
+    \item manter a mesma prova, rubrica e conjunto de respostas nas duas condições;
+    \item documentar o procedimento de extração dos resultados (relatório/consulta).
+\end{itemize}
