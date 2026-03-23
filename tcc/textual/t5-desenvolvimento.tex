@@ -112,11 +112,29 @@ Para viabilizar RAG, os materiais didáticos anexados são processados em duas f
 
 Um aspecto de projeto relevante é o isolamento por prova: as consultas de recuperação utilizam um filtro obrigatório por \texttt{exam\_uuid}, garantindo que apenas trechos associados à prova em questão sejam retornados. Operacionalmente, o sistema utiliza \textit{top-k} pequeno (por padrão, \texttt{RAG\_TOP\_K=4}), de modo a produzir contexto suficiente sem exceder o orçamento de tokens e sem inundar os corretores com material pouco relevante.
 
+\subsection{Por que o desenho multiagente é superior a uma correção monolítica}
+
+Embora seja possível corrigir uma resposta com uma única chamada a LLM (um \textit{prompt} único e uma nota final), o protótipo adotou um desenho em etapas e com redundância controlada porque esse formato aumenta a robustez e melhora a qualidade operacional do sistema como artefato de apoio à decisão docente.
+
+Em uma correção monolítica, os principais riscos se concentram em um único ponto: uma saída potencialmente instável, pouco diagnosticável e difícil de auditar, na qual erros de entendimento do enunciado, recuperação de contexto inadequada ou interpretações subjetivas do critério se tornam indistinguíveis. Já no \textit{workflow} multiagente, cada etapa produz artefatos verificáveis (contexto recuperado, notas e justificativas por critério, medida de divergência e decisão de arbitragem), permitindo que a revisão docente se apoie em evidências intermediárias e não apenas no resultado final.
+
+De forma mais concreta, os benefícios técnicos desse desenho podem ser sintetizados em:
+
+\begin{itemize}
+    \item \textbf{Robustez por redundância e detecção de inconsistência}: dois corretores independentes reduzem a dependência de uma única amostra de resposta do modelo; a divergência explicita quando há instabilidade entre avaliações, em vez de ocultá-la no resultado final.
+    \item \textbf{Arbitragem condicional como controle de custo e de incerteza}: o terceiro agente não é acionado sempre; ele é reservado para casos em que a divergência supera um limiar (por padrão, \texttt{DIVERGENCE\_THRESHOLD=2.0}), equilibrando consistência e custo computacional.
+    \item \textbf{Separação de responsabilidades e depuração}: a recuperação (RAG), a correção e a consolidação são módulos distintos; assim, falhas de indexação ou de recuperação podem ser tratadas e observadas (por exemplo, via \texttt{vector\_status}) sem confundir o diagnóstico com a etapa de correção.
+    \item \textbf{Auditabilidade e revisabilidade}: saídas estruturadas (nota total, pontuação por critério e justificativas) tornam explícito como a nota foi composta, permitindo ao professor localizar rapidamente o ponto de discordância e ajustar o que for necessário.
+    \item \textbf{Reprodutibilidade operacional}: a execução como \textit{workflow} com estado explícito facilita repetir o processamento sob o mesmo conjunto de parâmetros (por exemplo, \texttt{LLM\_TEMPERATURE}, \texttt{RAG\_TOP\_K} e \texttt{DIVERGENCE\_THRESHOLD}) e comparar resultados entre rodadas de avaliação.
+\end{itemize}
+
 \subsection{Correção por agentes e saídas estruturadas}
 
 Cada resposta discursiva é avaliada por dois corretores independentes. Os agentes produzem uma saída estruturada que inclui: nota total, pontuação por critério e justificativas textuais. Essa estrutura atende ao objetivo de tornar o resultado revisável pelo professor, pois permite inspecionar como cada critério contribuiu para a nota final.
 
 Quando a divergência entre as notas dos corretores ultrapassa um limiar configurável (por padrão, \texttt{DIVERGENCE\_THRESHOLD=2.0} pontos), um terceiro agente (\textit{árbitro}) é acionado para produzir uma avaliação adicional. Na consolidação, o sistema utiliza a avaliação adicional como mecanismo de estabilização da nota final em casos de incerteza ou inconsistência entre corretores.
+
+Esse mecanismo também fortalece a coerência do sistema sob a ótica de governança: em vez de “forçar” uma nota única, o pipeline sinaliza quando a própria IA está em desacordo consigo mesma e, portanto, quando há maior probabilidade de que o professor precise inspecionar a resposta com mais atenção. Em termos de apoio à decisão, esse comportamento é preferível porque direciona esforço humano para os casos mais ambíguos.
 
 Após a execução do \textit{workflow}, o resultado é persistido no banco relacional, marcando a resposta como avaliada (por exemplo, \texttt{is\_graded}) e registrando pontuações por critério em uma estrutura normalizada (uma linha por critério). Dessa forma, a API de revisão pode recuperar tanto a nota final quanto o detalhamento necessário para inspeção e ajuste docente.
 
