@@ -55,16 +55,26 @@ Para tornar essa organização mais concreta, a Tabela~\ref{tab:endpoints-chave}
     \centering
     \caption{Exemplos de endpoints do fluxo principal do sistema}
     \label{tab:endpoints-chave}
-    \begin{tabular}{p{0.24\textwidth} p{0.68\textwidth}}
+    {\small
+    \setlength{\tabcolsep}{0pt}
+    \begin{tabular}{@{}p{0.23\textwidth}@{\hspace{6pt}}p{0.73\textwidth}@{}}
         \hline
         \textbf{Domínio} & \textbf{Exemplos (rota)} \\
         \hline
-        Provas & \texttt{POST /exams}, \texttt{GET \allowbreak /exams\allowbreak /\{exam\_uuid\}}, \texttt{POST \allowbreak /exams\allowbreak /\{exam\_uuid\}\allowbreak /publish} \\
+        Provas & \texttt{POST /exams},\newline
+        \texttt{GET \allowbreak /exams\allowbreak /\{exam\_uuid\}},\newline
+        \texttt{POST \allowbreak /exams\allowbreak /\{exam\_uuid\}\allowbreak /publish} \\
         Anexos (PDF) & \texttt{POST \allowbreak /attachments\allowbreak /upload\allowbreak ?exam\_uuid=...} \\
-        Questões e respostas & \texttt{POST /exam-questions}, \texttt{POST /student-answers}, \texttt{GET \allowbreak /student-answers\allowbreak /question\allowbreak /\{question\_uuid\}} \\
-        Revisão docente & \texttt{GET \allowbreak /reviews\allowbreak /exams\allowbreak /\{\allowbreak exam\_\allowbreak uuid\allowbreak \}}, \texttt{PUT \allowbreak /reviews\allowbreak /grades\allowbreak /adjust}, \texttt{POST \allowbreak /reviews\allowbreak /approve-\allowbreak answer\allowbreak /\{\allowbreak answer\_\allowbreak uuid\allowbreak \}}, \texttt{POST \allowbreak /reviews\allowbreak /finalize} \\
+        Questões e respostas & \texttt{POST /exam-questions},\newline
+        \texttt{POST /student-answers},\newline
+        \texttt{GET \allowbreak /student-answers\allowbreak /question\allowbreak /\{question\_uuid\}} \\
+        Revisão docente & \texttt{GET \allowbreak /reviews\allowbreak /exams\allowbreak /\{\allowbreak exam\_\allowbreak uuid\allowbreak \}},\newline
+        \texttt{PUT \allowbreak /reviews\allowbreak /grades\allowbreak /adjust},\newline
+        \texttt{POST \allowbreak /reviews\allowbreak /approve-\allowbreak answer\allowbreak /\{\allowbreak answer\_\allowbreak uuid\allowbreak \}},\newline
+        \texttt{POST \allowbreak /reviews\allowbreak /finalize} \\
         \hline
     \end{tabular}
+    }
 \end{table}
 
 A \autoref{fig:fluxo-requisicao} representa esse encadeamento de camadas, evidenciando o caminho de ida (requisição) e volta (resposta) no \textit{backend}.

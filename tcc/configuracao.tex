@@ -259,6 +259,16 @@
 \newcommand{\campus}[1]{\def \ocampus {#1}}
 \newcommand{\imprimircampus}{\ocampus}
 
+% Defaults to avoid build errors when optional fields are not set
+\providecommand{\aInstituicaoOrientador}{}
+\providecommand{\aInstituicaoCoorientador}{}
+\providecommand{\aInstituicaoProfBancaA}{}
+\providecommand{\aInstituicaoProfBancaB}{}
+\providecommand{\ProfBancaAname}{}
+\providecommand{\ProfBancaBname}{}
+\providecommand{\imprimirorientadorrotulo}{Orientador: }
+\providecommand{\imprimircoorientadorrotulo}{Coorientador: }
+
 \newcommand{\instituicaoOrientador}[1]{\def \aInstituicaoOrientador {#1}}
 \newcommand{\imprimirInstituicaoOrientador}{\aInstituicaoOrientador}
 
