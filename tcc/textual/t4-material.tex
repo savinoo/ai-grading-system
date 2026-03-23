@@ -127,6 +127,8 @@ Adota-se um \textbf{estudo de caso controlado}, com uma prova pequena (de 2 a 4 
 
 No contexto deste estudo, o conjunto de respostas pode ser composto por \textbf{respostas sintéticas} elaboradas pelos autores, cobrindo níveis de qualidade (excelente, adequada/média, fraca/incompleta e fora do tema). O objetivo não é representar toda a diversidade de respostas humanas, mas viabilizar a verificação objetiva do funcionamento do sistema em casos típicos e casos-limite.
 
+Esse delineamento, por ser deliberadamente restrito (prova pequena, rubrica simplificada e, quando aplicável, respostas sintéticas), \textbf{limita o alcance das inferências}. Assim, os resultados obtidos devem ser interpretados como evidência de \textbf{viabilidade técnica e operacional} e de consistência interna do fluxo proposto, não como base suficiente para conclusões amplas sobre eficácia educacional, impacto pedagógico ou desempenho comparativo geral em contextos reais e diversos. Para sustentar generalizações mais robustas, seriam necessários estudos com maior variedade de provas, materiais, perfis de estudantes e validação sistemática com docentes em cenários de uso.
+
 \subsection{Procedimento experimental}
 O procedimento é dividido em duas condições para observar o efeito do RAG, mantendo as demais variáveis constantes.
 
@@ -177,6 +179,8 @@ Considera-se que a avaliação cumpre seu papel quando:
 \subsection{Ameaças à validade}
 \begin{itemize}
     \item \textbf{Respostas sintéticas:} não representam toda a diversidade de respostas humanas; mitigação: cobrir níveis de qualidade e casos-limite.
+    \item \textbf{Validade externa (generalização):} o estudo utiliza uma prova pequena e um conjunto limitado de casos, o que restringe a extrapolação dos resultados para outras disciplinas, turmas, níveis de ensino e estilos de rubrica.
+    \item \textbf{Validade ecológica (uso em contexto real):} a avaliação ocorre em ambiente controlado e não captura integralmente fatores presentes na rotina docente (tempo, volume de respostas, variações de enunciado, ajustes de rubrica, pressão institucional), o que pode afetar a aplicabilidade prática em larga escala.
     \item \textbf{Não-determinismo de LLMs:} mitigação por configurações mais determinísticas (temperatura baixa) e repetição de casos.
     \item \textbf{Dependência do material:} resultados podem variar com PDFs e temas; mitigação: descrever claramente o conjunto utilizado.
 \end{itemize}
