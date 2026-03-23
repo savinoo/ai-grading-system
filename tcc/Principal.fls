@@ -471,6 +471,8 @@ INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\microtype\m
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype.cfg
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\microtype\microtype.cfg
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\epigraph\epigraph.sty
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\xurl\xurl.sty
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\xurl\xurl.sty
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\placeins\placeins.sty
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\placeins\placeins.sty
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\graphics\rotating.sty
@@ -688,14 +690,6 @@ INPUT pre\09-tabelas.tex
 INPUT .\Principal.lot
 INPUT .\Principal.lot
 INPUT Principal.lot
-INPUT .\pre\10-codigos.tex
-INPUT .\pre\10-codigos.tex
-INPUT .\pre\10-codigos.tex
-INPUT .\pre\10-codigos.tex
-INPUT pre\10-codigos.tex
-INPUT .\Principal.loc
-INPUT .\Principal.loc
-INPUT Principal.loc
 INPUT .\pre\11-siglas.tex
 INPUT .\pre\11-siglas.tex
 INPUT .\pre\11-siglas.tex
@@ -757,12 +751,12 @@ INPUT .\textual\t3-trabalhos.tex
 INPUT .\textual\t3-trabalhos.tex
 INPUT .\textual\t3-trabalhos.tex
 INPUT textual\t3-trabalhos.tex
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmr10.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\ts1lmr.fd
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\ts1lmr.fd
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\ts1lmr.fd
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ts1-lmr12.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-ts1.enc
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmr10.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmr10.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmi10.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmsy10.tfm
@@ -802,9 +796,10 @@ INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\e
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt12.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt10.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-mathit.enc
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-rm.enc
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt12.tfm
 INPUT .\textual\t5-desenvolvimento.tex
 INPUT .\textual\t5-desenvolvimento.tex
 INPUT .\textual\t5-desenvolvimento.tex
@@ -817,7 +812,6 @@ INPUT .\media\arquitetura_sistema.png
 INPUT .\media\arquitetura_sistema.png
 INPUT .\media\arquitetura_sistema.png
 INPUT .\media\arquitetura_sistema.png
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt10.tfm
 INPUT .\media\fluxo_requisicao.png
 INPUT .\media\fluxo_requisicao.png
 INPUT .\media\fluxo_requisicao.png
@@ -863,7 +857,6 @@ INPUT .\media\sql_schemas.png
 OUTPUT Principal.lof
 OUTPUT Principal.loq
 OUTPUT Principal.lot
-OUTPUT Principal.loc
 OUTPUT Principal.toc
 INPUT Principal.aux
 INPUT .\Principal.brf
@@ -874,6 +867,8 @@ INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx12.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbxi10.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbxi10.pfb
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi10.pfb
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi10.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi12.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi12.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi8.pfb

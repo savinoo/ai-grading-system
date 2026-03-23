@@ -140,20 +140,23 @@ Para avaliar estabilidade (QA4), seleciona-se um subconjunto de \(A_{rep}=4\) re
     \centering
     \caption{Parâmetros experimentais utilizados no estudo}
     \label{tab:parametros-experimentais}
-    \begin{tabular}{p{0.46\textwidth} p{0.46\textwidth}}
+    {\small
+    \setlength{\tabcolsep}{0pt}
+    \begin{tabularx}{\textwidth}{@{}p{0.42\textwidth}@{\hspace{6pt}}X@{}}
         \hline
         \textbf{Parâmetro} & \textbf{Valor/controle} \\
         \hline
         Modelo do LLM & registrar provedor e nome do modelo configurado \\
-        Temperatura do LLM & \(0{,}0\) (configuração determinística; \texttt{LLM\_TEMPERATURE=0.0}) \\
-        Top-$k$ do RAG (Condição A) & \(k=4\) trechos recuperados por consulta (\texttt{RAG\_TOP\_K=4}) \\
+        Temperatura do LLM & \(0{,}0\) (configuração determinística; \texttt{LLM\_\allowbreak TEMPERATURE=0.0}) \\
+        Top-$k$ do RAG (Condição A) & \(k=4\) trechos recuperados por consulta (\texttt{RAG\_TOP\_\allowbreak K=4}) \\
         Top-$k$ do RAG (Condição B) & \(k=0\) (RAG desativado; controle equivalente) \\
-        Limiar de divergência & \(2{,}0\) pontos na escala da questão (\texttt{DIVERGENCE\_THRESHOLD=2.0}) \\
+        Limiar de divergência & \(2{,}0\) pontos na escala da questão (\texttt{DIVERGENCE\_\allowbreak THRESHOLD=2.0}) \\
         Quantidade de questões & \(Q=3\) (prova pequena, dentro do intervalo 2--4) \\
         Quantidade de respostas & \(Q \times A = 12\) respostas (\(A=4\) níveis de qualidade por questão) \\
         Repetições (estabilidade) & \(R=3\) repetições para \(A_{rep}=4\) respostas selecionadas \\
         \hline
-    \end{tabular}
+    \end{tabularx}
+    }
 \end{table}
 
 \subsection{Procedimento experimental}
@@ -216,7 +219,11 @@ Considera-se que a avaliação cumpre seu papel quando os resultados satisfazem 
 Para permitir repetição do estudo:
 
 \begin{itemize}
-    \item registrar configurações relevantes (provedor/modelo, \texttt{LLM\_TEMPERATURE=0.0}, \texttt{RAG\_TOP\_K=4} na condição A, \texttt{DIVERGENCE\_THRESHOLD=2.0});
+    \item registrar configurações relevantes (provedor/modelo, \texttt{LLM\_\allowbreak% 
+    TEMPERATURE\allowbreak=0.0}, \texttt{RAG\_\allowbreak% 
+    TOP\_\allowbreak% 
+    K\allowbreak=4} na condição A, \texttt{DIVERGENCE\_\allowbreak% 
+    THRESHOLD\allowbreak=2.0});
     \item manter a mesma prova, rubrica e conjunto de respostas nas duas condições;
     \item explicitar \(Q\), \(A\), \(A_{rep}\) e \(R\) utilizados (quantidade de questões, respostas, subconjunto repetido e número de repetições);
     \item documentar o procedimento de extração dos resultados (relatório/consulta).
