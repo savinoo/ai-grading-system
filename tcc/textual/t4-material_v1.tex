@@ -4,15 +4,7 @@
 
 O presente trabalho desenvolveu um sistema para a correção automatizada de provas discursivas. Esse sistema utiliza técnicas de inteligência artificial, como \textit{Large Language Models} (LLM) e \textit{Retrieval-Augmented Generation} (RAG), para apoiar uma correção inicial estruturada e rastreável, mantendo a revisão docente como etapa necessária para confirmação e ajustes. Assim, busca-se reduzir esforço operacional na correção e ampliar a consistência dos artefatos produzidos (notas, justificativas e detalhamento por critério), sem substituir a decisão final do professor.
 
-A organização deste capítulo segue uma progressão metodológica. Inicialmente, delimita-se o \textbf{tipo de pesquisa} adotado. Em seguida, descrevem-se os \textbf{subprocessos} do sistema e seus fluxos de execução, detalham-se as \textbf{ferramentas e tecnologias} empregadas e, por fim, apresenta-se o \textbf{método de avaliação} adotado.
-
-\section{Tipo de Pesquisa}
-
-Este trabalho caracteriza-se como uma pesquisa aplicada, pois desenvolveu um sistema para correção automatizada de provas, visando solucionar um problema prático no contexto educacional. Quanto aos objetivos, classifica-se como uma pesquisa exploratória, já que analisou a viabilidade de implementação de técnicas de inteligência artificial, como LLM e RAG, no processo de correção de avaliações.
-
-\section{Processo de Correção de Prova}
-
-Esta seção descreve o funcionamento do sistema conforme implementado, organizado em três subprocessos principais: a configuração da prova, a correção geral da prova e a correção específica das respostas que exigem intervenção adicional. Cada subprocesso é explicado detalhadamente, utilizando fluxogramas para ilustrar os passos realizados (Figuras
+Este capítulo apresenta o detalhamento do desenvolvimento do sistema implementado, que é dividido em três subprocessos principais: a configuração da prova, a correção geral da prova e a correção específica das respostas que exigem intervenção adicional. Cada subprocesso é explicado detalhadamente, utilizando fluxogramas para ilustrar os passos realizados. A seguir, são apresentados os fluxogramas que ilustram cada um dos subprocessos mencionados (Figuras
 \autoref{fig:fluxo-configuracao},
 \autoref{fig:fluxo-correcao-prova} e
 \autoref{fig:fluxo-correcao-pergunta}).
@@ -42,6 +34,17 @@ Esta seção descreve o funcionamento do sistema conforme implementado, organiza
 \end{figure}
 
 No fluxo da \autoref{fig:fluxo-correcao-prova}, a revisão do professor ocorre após a correção automatizada e a persistência dos resultados no banco de dados, e antes da consolidação/finalização das notas. Já no fluxo da \autoref{fig:fluxo-correcao-pergunta}, o Corretor 3 atua apenas quando a divergência entre o Corretor 1 e o Corretor 2 ultrapassa o limiar configurado, mantendo o caminho condicional de arbitragem alinhado à implementação.
+
+\section{Tipo de Pesquisa}
+
+Este trabalho caracteriza-se como uma pesquisa aplicada, pois desenvolveu um sistema para correção automatizada de provas, visando solucionar um problema prático no contexto educacional. Quanto aos objetivos, classifica-se como uma pesquisa exploratória, já que analisou a viabilidade de implementação de técnicas de inteligência artificial, como LLM e RAG, no processo de correção de avaliações.
+
+\section{Processo de Correção de Prova}
+
+Esta seção descreve o funcionamento do sistema conforme implementado, tomando como referência os fluxos apresentados nas Figuras
+\autoref{fig:fluxo-configuracao},
+\autoref{fig:fluxo-correcao-prova} e
+\autoref{fig:fluxo-correcao-pergunta}.
 
 \subsection{Subprocesso de Configuração da Prova}
 
