@@ -152,6 +152,18 @@ O banco de dados relacional foi modelado para suportar as etapas de configuraç�
 
 O esquema completo do banco de dados, com todas as tabelas e relacionamentos, é apresentado no \autoref{ap:schema-completo}.
 
+Mais do que armazenar entidades do domínio, a modelagem foi projetada para sustentar três requisitos do protótipo: (i) \textbf{rastreabilidade do processo} (o que foi feito, quando e em que estado), (ii) \textbf{revisão docente baseada em evidências} (inspecionar a composição da nota e ajustar com segurança) e (iii) \textbf{persistência e governança do pipeline} (registrar o resultado e reduzir ambiguidades em reprocessamentos).
+
+\subsection{Justificativa das entidades e relações}
+
+No centro do domínio, a prova (\texttt{exams}) funciona como agregador dos demais objetos: questões (\texttt{exam\_questions}), anexos de referência (\texttt{attachments}), critérios associados e pesos, e respostas submetidas. Essa organização é intencional porque permite isolar o ciclo de vida de uma prova (por exemplo, \texttt{DRAFT} $\rightarrow$ \texttt{PUBLISHED} $\rightarrow$ \texttt{GRADED}/\texttt{WARNING} $\rightarrow$ \texttt{FINALIZED}) e, ao mesmo tempo, associar de forma inequívoca todo artefato produzido pelo pipeline ao contexto correto.
+
+Para critérios de correção, a modelagem separa (i) um catálogo reutilizável de critérios (\texttt{grading\_criteria}) e (ii) a parametrização específica por prova (\texttt{exam\_criteria}). Essa tabela de associação permite que o mesmo critério seja reaproveitado em diferentes provas, mantendo, por prova, campos como \texttt{weight} e \texttt{max\_points}. Tecnicamente, isso reduz duplicação e melhora consistência: ajustes de pesos e máximos tornam-se mudanças de configuração da prova, sem “replicar” o critério.
+
+Para respostas, a entidade \texttt{student\_answers} vincula explicitamente aluno, prova e questão, com restrição de unicidade (por exemplo, um aluno não responde duas vezes a mesma questão na mesma prova, salvo alteração deliberada da regra). Essa escolha reduz ambiguidade de rastreabilidade e evita que o pipeline produza múltiplos resultados concorrentes para o mesmo alvo.
+
+Por fim, o detalhamento de nota foi normalizado em \texttt{student\_answer\_criteria\_scores}, com \textbf{uma linha por critério por resposta} e restrição de unicidade (resposta, critério). Esse desenho é superior a armazenar apenas uma nota total porque materializa a decomposição da avaliação e viabiliza inspeção e auditoria: o professor pode verificar onde a pontuação foi atribuída, comparar justificativas por critério e corrigir pontualmente sem perder o histórico de como a nota foi composta. Adicionalmente, armazenar \texttt{raw\_score} e (opcionalmente) \texttt{weighted\_score} dá suporte a cenários em que o peso do critério é tratado como configuração da prova, mantendo rastreabilidade do que foi pontuado e do que foi efetivamente computado.
+
 
 
 Alguns campos merecem destaque por seu papel na rastreabilidade do processo:
@@ -159,8 +171,10 @@ Alguns campos merecem destaque por seu papel na rastreabilidade do processo:
 \begin{itemize}
     \item \textbf{\textit{status} de prova e resposta}: permitem distinguir prova em rascunho, publicada, em correção, corrigida e finalizada, assim como respostas submetidas e avaliadas;
     \item \textbf{\textit{vector\_status} de anexo}: indica se o material anexado foi indexado com sucesso na base vetorial, sinalizando situações de falha que podem afetar o RAG;
-    \item \textbf{Indicadores de correção}: campos como \textit{is\_graded} e informações de divergência ajudam a controlar reprocessamentos e a direcionar revisão docente.
+    \item \textbf{Indicadores de correção}: campos como \textit{is\_graded} e informações de divergência (por exemplo, detecção e valor) ajudam a controlar reprocessamentos e a direcionar revisão docente.
 \end{itemize}
+
+Em conjunto, essas escolhas permitem que a revisão docente opere sobre dados consistentes e contextualizados: o estado da prova e das respostas indica em que fase do fluxo o item se encontra; o detalhamento por critério torna a avaliação explicável e ajustável; e os indicadores de divergência e de correção ajudam a priorizar inspeção humana nos casos em que a própria IA sinaliza maior incerteza.
 
 \section{Integrações e decisões técnicas}
 
