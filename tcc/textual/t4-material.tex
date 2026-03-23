@@ -129,6 +129,33 @@ No contexto deste estudo, o conjunto de respostas pode ser composto por \textbf{
 
 Esse delineamento, por ser deliberadamente restrito (prova pequena, rubrica simplificada e, quando aplicável, respostas sintéticas), \textbf{limita o alcance das inferências}. Assim, os resultados obtidos devem ser interpretados como evidência de \textbf{viabilidade técnica e operacional} e de consistência interna do fluxo proposto, não como base suficiente para conclusões amplas sobre eficácia educacional, impacto pedagógico ou desempenho comparativo geral em contextos reais e diversos. Para sustentar generalizações mais robustas, seriam necessários estudos com maior variedade de provas, materiais, perfis de estudantes e validação sistemática com docentes em cenários de uso.
 
+\subsection{Parâmetros experimentais (valores e controles)}
+Para fortalecer a reprodutibilidade e reduzir ambiguidades de interpretação, define-se explicitamente um conjunto de \textbf{parâmetros experimentais} e \textbf{controles} aplicados às duas condições (com RAG e sem RAG).
+
+Em termos de \textbf{quantidade de casos}, recomenda-se fixar uma configuração mínima que permita observar variação de qualidade e casos-limite, sem inviabilizar o prazo do trabalho. Assim, utiliza-se uma prova com \(Q=3\) questões (dentro do intervalo de 2 a 4), e para cada questão um conjunto de \(A=4\) respostas sintéticas (excelente, adequada/média, fraca/incompleta e fora do tema), totalizando \(Q \times A = 12\) respostas a serem corrigidas em cada condição.
+
+Para avaliar estabilidade (QA4), seleciona-se um subconjunto de \(A_{rep}=4\) respostas (uma por nível de qualidade) e repete-se sua correção \(R=3\) vezes em cada condição, mantendo constantes os demais parâmetros.
+
+\begin{table}[H]
+    \centering
+    \caption{Parâmetros experimentais utilizados no estudo}
+    \label{tab:parametros-experimentais}
+    \begin{tabular}{p{0.46\textwidth} p{0.46\textwidth}}
+        \hline
+        \textbf{Parâmetro} & \textbf{Valor/controle} \\
+        \hline
+        Modelo do LLM & registrar provedor e nome do modelo configurado \\
+        Temperatura do LLM & \(0{,}0\) (configuração determinística; \texttt{LLM\_TEMPERATURE=0.0}) \\
+        Top-$k$ do RAG (Condição A) & \(k=4\) trechos recuperados por consulta (\texttt{RAG\_TOP\_K=4}) \\
+        Top-$k$ do RAG (Condição B) & \(k=0\) (RAG desativado; controle equivalente) \\
+        Limiar de divergência & \(2{,}0\) pontos na escala da questão (\texttt{DIVERGENCE\_THRESHOLD=2.0}) \\
+        Quantidade de questões & \(Q=3\) (prova pequena, dentro do intervalo 2--4) \\
+        Quantidade de respostas & \(Q \times A = 12\) respostas (\(A=4\) níveis de qualidade por questão) \\
+        Repetições (estabilidade) & \(R=3\) repetições para \(A_{rep}=4\) respostas selecionadas \\
+        \hline
+    \end{tabular}
+\end{table}
+
 \subsection{Procedimento experimental}
 O procedimento é dividido em duas condições para observar o efeito do RAG, mantendo as demais variáveis constantes.
 
@@ -160,20 +187,20 @@ As métricas são propositalmente simples, visando viabilidade no prazo do traba
 \begin{itemize}
     \item \textbf{Completude estrutural:} porcentagem de respostas com todos os campos esperados (nota total, notas por critério e justificativa).
     \item \textbf{Aderência à rubrica (checklist):} verificação de que cada critério foi efetivamente pontuado e possui justificativa coerente.
-    \item \textbf{Efeito do RAG (checklist):} comparação das justificativas em A vs. B, registrando se, com RAG, há maior especificidade e ancoragem ao material anexado.
+    \item \textbf{Efeito do RAG (checklist):} comparação das justificativas em A vs. B, registrando se, com RAG, há maior especificidade e \textbf{ancoragem ao material anexado}. Para fins operacionais, considera-se uma justificativa \textit{ancorada} quando menciona explicitamente ao menos um conceito, definição ou evidência presente no material recuperado.
     \item \textbf{Taxa de arbitragem:} porcentagem de respostas em que o limiar de divergência aciona o árbitro.
     \item \textbf{Estabilidade:} variação absoluta da nota final entre execuções repetidas do mesmo caso.
 \end{itemize}
 
 \subsection{Critérios de sucesso}
-Considera-se que a avaliação cumpre seu papel quando:
+Considera-se que a avaliação cumpre seu papel quando os resultados satisfazem critérios objetivos compatíveis com as QAs e com as métricas definidas:
 
 \begin{itemize}
-    \item o sistema executa o fluxo end-to-end e persiste resultados;
-    \item as saídas são estruturadas, revisáveis e coerentes com a rubrica;
-    \item com RAG, as justificativas tendem a ser mais específicas e ancoradas ao material recuperado;
-    \item o árbitro é acionado em casos de divergência e contribui para a consolidação;
-    \item o sistema apresenta estabilidade operacional suficiente para uso com revisão docente.
+    \item \textbf{QA1 (end-to-end):} 100\% das respostas previstas são processadas e persistidas, e a prova é disponibilizada para revisão docente (sem falhas que impeçam a revisão).
+    \item \textbf{Completude estrutural:} pelo menos 95\% das respostas apresentam todos os campos esperados (nota final, notas por critério e justificativa).
+    \item \textbf{QA2 (RAG):} na condição A (com RAG), a proporção de justificativas classificadas como \textit{ancoradas} (conforme checklist) é maior do que na condição B (sem RAG), mantendo o mesmo conjunto de respostas.
+    \item \textbf{QA3 (arbitragem):} o árbitro é acionado quando \(|\mathrm{nota}_{C1}-\mathrm{nota}_{C2}|\geq 2{,}0\) (limiar) e não é acionado quando \(|\mathrm{nota}_{C1}-\mathrm{nota}_{C2}|< 2{,}0\), no conjunto de casos analisado.
+    \item \textbf{QA4 (estabilidade):} nas repetições (\(R=3\)) do subconjunto definido, a variação absoluta da nota final por caso permanece \(\leq 1{,}0\) ponto na escala da questão.
 \end{itemize}
 
 \subsection{Ameaças à validade}
@@ -189,7 +216,8 @@ Considera-se que a avaliação cumpre seu papel quando:
 Para permitir repetição do estudo:
 
 \begin{itemize}
-    \item registrar configurações relevantes (provedor/modelo, temperatura, \textit{top\_k}, limiar de divergência);
+    \item registrar configurações relevantes (provedor/modelo, \texttt{LLM\_TEMPERATURE=0.0}, \texttt{RAG\_TOP\_K=4} na condição A, \texttt{DIVERGENCE\_THRESHOLD=2.0});
     \item manter a mesma prova, rubrica e conjunto de respostas nas duas condições;
+    \item explicitar \(Q\), \(A\), \(A_{rep}\) e \(R\) utilizados (quantidade de questões, respostas, subconjunto repetido e número de repetições);
     \item documentar o procedimento de extração dos resultados (relatório/consulta).
 \end{itemize}
