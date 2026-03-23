@@ -89,7 +89,8 @@
 \contentsline {section}{\numberline {5.4}Modelagem do banco de dados}{56}{section.5.4}%
 \contentsline {section}{\numberline {5.5}Integrações e decisões técnicas}{58}{section.5.5}%
 \contentsline {subsection}{\numberline {5.5.1}Integrações principais}{58}{subsection.5.5.1}%
-\contentsline {subsection}{\numberline {5.5.2}Decisões e \textit {trade-offs}}{58}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.2}Disponibilização do código-fonte}{58}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Decisões e \textit {trade-offs}}{59}{subsection.5.5.3}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{60}{section*.20}%

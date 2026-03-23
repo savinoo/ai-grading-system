@@ -1,11 +1,11 @@
 # Fdb version 4
-["makeindex configuracao.idx"] 1774127414.80267 "configuracao.idx" "configuracao.ind" "configuracao" 1774127414.94815 2
-  "configuracao.idx" 0 -1 0 "pdflatex"
+["makeindex configuracao.idx"] 1774127414.80267 "configuracao.idx" "configuracao.ind" "configuracao" 1774237928.55038 2
+  "configuracao.idx" 1774237928 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "configuracao.ilg"
   "configuracao.ind"
   (rewritten before read)
-["pdflatex"] 1774127413.24576 "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/configuracao.tex" "configuracao.pdf" "configuracao" 1774127414.9483 2
+["pdflatex"] 1774237927.32871 "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/configuracao.tex" "configuracao.pdf" "configuracao" 1774237928.55064 2
   "C:/Users/Maycon Mendes/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774127238 13337757 a72a5df451ad51107ceaaa1b28447996 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr10.tfm" 1136765053 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr12.tfm" 1136765053 1288 655e228510b4c2a1abe905c368440826 ""
@@ -269,10 +269,10 @@
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
   "abntex2.cls" 1774112320 37987 566dd65c99748b7ab5b3d7d3986844e7 ""
-  "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/configuracao.tex" 1774127407 10384 0ea0f57e503b8e3e7f0f32bf20ee38d0 ""
+  "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/configuracao.tex" 1774203839 10761 0ea0f57e503b8e3e7f0f32bf20ee38d0 ""
   "configuracao.aux" 0 -1 0 "pdflatex"
   "configuracao.ind" 0 -1 0 "makeindex configuracao.idx"
-  "configuracao.tex" 1774127407 10384 0ea0f57e503b8e3e7f0f32bf20ee38d0 ""
+  "configuracao.tex" 1774203839 10761 0ea0f57e503b8e3e7f0f32bf20ee38d0 ""
   "lipsum.sty" 0 -1 0 ""
   "pendencias.tex" 1774112320 799 59c804b12f6ea0f86a663990969ec71b ""
   "tabu.sty" 0 -1 0 ""

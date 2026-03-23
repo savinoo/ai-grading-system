@@ -32,7 +32,7 @@ A organização do código segue uma separação em camadas, visando isolar resp
     \item \textbf{Resposta}: devolve ao cliente dados estruturados para inspeção e revisão docente.
 \end{itemize}
 
-A \autoref{fig:fluxo-requisicao} representa esse encadeamento de camadas, evidenciando o caminho de ida (requisição) e volta (resposta) no 	extit{backend}.
+A \autoref{fig:fluxo-requisicao} representa esse encadeamento de camadas, evidenciando o caminho de ida (requisição) e volta (resposta) no \textit{backend}.
 
 \begin{figure}[H]
     \centering
@@ -123,6 +123,10 @@ O desenvolvimento priorizou integrações que mantivessem o sistema reproduzíve
     \item \textbf{Provedores de LLM e \textit{embeddings}}: integração por uma camada de compatibilidade para alternar provedores e parâmetros de execução;
     \item \textbf{Docker e Docker Compose}: padronização do ambiente de execução, reduzindo divergências de configuração entre máquinas.
 \end{itemize}
+
+\subsection{Disponibilização do código-fonte}
+
+Com o objetivo de apoiar reprodutibilidade, inspeção técnica e evolução incremental do protótipo, o código-fonte do sistema foi disponibilizado publicamente em um repositório GitHub. O repositório contém a implementação do \textit{backend}, scripts de infraestrutura (por exemplo, Docker Compose) e instruções de execução e configuração. O acesso público está disponível em: \url{https://github.com/savinoo/ai-grading-system} \cite{ai_grading_system_repo_2026}.
 
 \subsection{Decisões e \textit{trade-offs}}
 

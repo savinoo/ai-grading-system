@@ -382,6 +382,12 @@ ISSN 0104-4036.
 Dispon{\'\i}vel em:
   \url{http://www.scielo.br/scielo.php?script=sci\_arttext&pid=S0104-40362016000300637&lng=pt&tlng=pt}.}
 
+\bibitem[Savino e Fernandes 2026]{ai_grading_system_repo_2026}
+\abntrefinfo{Savino e Fernandes}{SAVINO; FERNANDES}{2026}
+{SAVINO, L.~L.; FERNANDES, M.~M. \emph{{ai-grading-system}: código-fonte do
+  protótipo de correção automática de provas discursivas}. 2026.
+Dispon{\'\i}vel em: \url{https://github.com/savinoo/ai-grading-system}.}
+
 \bibitem[Seo et al. 2025]{seo_large_2025}
 \abntrefinfo{Seo et al.}{SEO et al.}{2025}
 {SEO, H. et al. Large {Language} {Models} as {Evaluators} in {Education}:
