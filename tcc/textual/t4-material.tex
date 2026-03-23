@@ -45,23 +45,23 @@ No fluxo da \autoref{fig:fluxo-correcao-prova}, a revisão do professor ocorre a
 
 \subsection{Subprocesso de Configuração da Prova}
 
-O subprocesso de configuração corresponde às etapas realizadas pelo professor antes da publicação da prova (\textit{status} de rascunho). Inicialmente, são definidos metadados gerais (por exemplo, título, descrição e turma), e os materiais didáticos são anexados (principalmente arquivos PDF). Esses anexos são armazenados pela aplicação e registrados no banco de dados relacional, permanecendo indisponíveis para busca semântica até o momento de publicação.
+O subprocesso de configuração corresponde às etapas realizadas pelo professor antes da publicação da prova (\textit{status} de rascunho). Inicialmente, são definidos metadados gerais (por exemplo, título, descrição e turma), e os materiais didáticos são anexados (arquivos PDF). Esses anexos são armazenados pela aplicação e registrados no banco de dados relacional, permanecendo indisponíveis para busca semântica até o momento de publicação.
 
 Em seguida, o professor associa critérios de avaliação à prova, definindo pesos e parâmetros de pontuação. Quando necessário, podem ser realizados ajustes específicos por questão, de modo que diferentes questões utilizem variações de rubrica dentro de uma mesma prova. Após essa configuração, as questões são cadastradas com seus enunciados, pontuação e ordem.
 
 Por fim, as respostas discursivas dos alunos são inseridas e persistidas, vinculadas às respectivas questões. Ao publicar a prova, o sistema valida se ela está apta a iniciar o processamento (por exemplo, se permanece em rascunho e se possui questões e respostas registradas). Caso a validação falhe, a publicação é interrompida e as inconsistências são informadas.
 
-\subsection{Subprocesso de Correção da Prova (background e revisão docente)}
+\subsection{Subprocesso de Correção da Prova}
 
 Uma vez publicada, a prova dispara um processamento assíncrono em \textit{background}. Esse processamento possui duas responsabilidades principais.
 
-Primeiro, o sistema prepara os materiais didáticos anexados para consulta por similaridade semântica, o que inclui carregar os PDFs, segmentar seu conteúdo em trechos e indexá-los em uma base vetorial. O resultado desse preparo é registrado como sucesso ou falha, o que subsidia a atribuição de um \textit{status} de atenção quando o processamento não se conclui adequadamente.
+Primeiro, o sistema prepara os materiais didáticos anexados para consulta por similaridade semântica, o que inclui carregar os PDFs, segmentar seu conteúdo em trechos (\textit{chunks}) e indexá-los em uma base vetorial. O resultado desse preparo é registrado como sucesso ou falha, o que subsidia a atribuição de um \textit{status} de atenção quando o processamento não se conclui adequadamente.
 
 Segundo, o sistema percorre as questões da prova e executa a correção das respostas discursivas. Para cada questão, o sistema recupera, uma única vez, trechos relevantes dos materiais didáticos utilizando o enunciado como consulta. O contexto recuperado é então reutilizado na correção de todas as respostas associadas àquela questão, reduzindo repetição de consultas e mantendo consistência de referência por questão.
 
 Ao término do processamento, os resultados são consolidados e persistidos, e a prova é marcada com um \textit{status} compatível com o sucesso do fluxo (por exemplo, corrigida quando não há falhas relevantes, ou atenção quando há falhas que exigem intervenção). Em seguida, o professor pode revisar os resultados por aluno e por questão, aprovar respostas e, quando necessário, ajustar manualmente a nota. Ao finalizar a revisão, o sistema registra a finalização da prova e, opcionalmente, disponibiliza um relatório em planilha com a consolidação das notas.
 
-\subsection{Subprocesso de Correção da Resposta (workflow de avaliação)}
+\subsection{Subprocesso de Correção da Resposta}
 
 O subprocesso de correção da resposta (\autoref{fig:fluxo-correcao-pergunta}) utiliza (i) o texto da resposta do aluno, (ii) a rubrica definida para a questão (critérios, pesos e limites de pontuação) e (iii) o contexto dos materiais didáticos recuperado previamente para a questão.
 
@@ -85,19 +85,19 @@ O fluxo de correção foi estruturado como um grafo de estados, empregando LangG
 \subsection{Agentes corretores com DSPy e LiteLLM}
 Os agentes de correção foram implementados com DSPy, adotando chamadas a modelos de linguagem por meio de uma camada de compatibilidade (LiteLLM). Essa combinação possibilita parametrizar modelos e provedores, manter configuração centralizada e aplicar cache quando aplicável, reduzindo variabilidade operacional e custo computacional \cite{dspy_docs_2026,litellm_docs_2026}.
 
-\subsection{Integração com LLMs e provedores de \textit{embeddings} (LangChain)}
+\subsection{Integração com LLMs e provedores de \textit{embeddings}}
 Para padronizar integrações com provedores de modelos e de \textit{embeddings}, foram utilizadas bibliotecas do ecossistema LangChain. No sistema, essa camada é empregada tanto para instanciar modelos de chat (conforme o provedor configurado) quanto para gerar \textit{embeddings} utilizados no processo de recuperação de contexto \cite{langchain_docs_2026}.
 
-\subsection{Recuperação de contexto e armazenamento vetorial (ChromaDB)}
+\subsection{Recuperação de contexto e armazenamento vetorial}
 O armazenamento vetorial e a recuperação por similaridade foram realizados com ChromaDB, utilizado como \textit{vector store} persistente. O banco vetorial armazena representações vetoriais dos materiais didáticos e permite consultas para obtenção de trechos relevantes, compondo o contexto adicional necessário à estratégia de \textit{Retrieval-Augmented Generation} (RAG) \cite{chromadb_docs_2026}.
 
-\subsection{Persistência relacional e migrações (PostgreSQL, SQLAlchemy e Alembic)}
+\subsection{Persistência relacional e migrações}
 Os dados estruturados do sistema (usuários, turmas, provas, questões, respostas, critérios e resultados) são persistidos em banco de dados relacional PostgreSQL. Para a camada de acesso a dados, utiliza-se SQLAlchemy, enquanto Alembic é empregado para versionamento e execução de migrações, assegurando reprodutibilidade do esquema entre ambientes \cite{postgresql_docs_2026,sqlalchemy_docs_2026,alembic_docs_2026}.
 
-\subsection{Conteinerização (Docker e Docker Compose)}
+\subsection{Conteinerização}
 O ambiente de execução foi padronizado por meio de Docker e Docker Compose, viabilizando a composição de serviços (API, banco de dados relacional e serviços auxiliares) e reduzindo diferenças de configuração entre execução local e implantação \cite{docker_docs_2026,docker_compose_docs_2026}.
 
-\subsection{Ollama e Streamlit (apoio a desenvolvimento e inspeção)}
+\subsection{Ollama e Streamlit}
 Quando configurado, o Ollama é utilizado como provedor local para modelos e/ou \textit{embeddings}, favorecendo experimentação sem dependência exclusiva de serviços externos. Além disso, uma aplicação auxiliar em Streamlit é utilizada para fins de observabilidade e inspeção do pipeline de correção durante o desenvolvimento \cite{ollama_docs_2026,streamlit_docs_2026}.
 
 \subsection{JSON (\textit{JavaScript Object Notation})}
@@ -129,7 +129,7 @@ No contexto deste estudo, o conjunto de respostas pode ser composto por \textbf{
 
 Esse delineamento, por ser deliberadamente restrito (prova pequena, rubrica simplificada e, quando aplicável, respostas sintéticas), \textbf{limita o alcance das inferências}. Assim, os resultados obtidos devem ser interpretados como evidência de \textbf{viabilidade técnica e operacional} e de consistência interna do fluxo proposto, não como base suficiente para conclusões amplas sobre eficácia educacional, impacto pedagógico ou desempenho comparativo geral em contextos reais e diversos. Para sustentar generalizações mais robustas, seriam necessários estudos com maior variedade de provas, materiais, perfis de estudantes e validação sistemática com docentes em cenários de uso.
 
-\subsection{Parâmetros experimentais (valores e controles)}
+\subsection{Parâmetros experimentais}
 Para fortalecer a reprodutibilidade e reduzir ambiguidades de interpretação, define-se explicitamente um conjunto de \textbf{parâmetros experimentais} e \textbf{controles} aplicados às duas condições (com RAG e sem RAG).
 
 Em termos de \textbf{quantidade de casos}, recomenda-se fixar uma configuração mínima que permita observar variação de qualidade e casos-limite, sem inviabilizar o prazo do trabalho. Assim, utiliza-se uma prova com \(Q=3\) questões (dentro do intervalo de 2 a 4), e para cada questão um conjunto de \(A=4\) respostas sintéticas (excelente, adequada/média, fraca/incompleta e fora do tema), totalizando \(Q \times A = 12\) respostas a serem corrigidas em cada condição.

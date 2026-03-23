@@ -23,14 +23,21 @@ Na arquitetura adotada, o banco relacional centraliza os dados estruturados do d
 Na prática, essa arquitetura se materializa em um fluxo ponta-a-ponta que pode ser observado por meio da própria API. Um cenário típico de uso (professor configurando e revisando uma prova) pode ser descrito, de forma simplificada, como:
 
 \begin{itemize}
-    \item \textbf{Configuração (síncrona via API):} criação da prova (\texttt{POST /exams}), associação de critérios (\texttt{POST /exam-criteria}), cadastro de questões (\texttt{POST /exam-questions}), cadastro de respostas (\texttt{POST /student-answers}) e upload de materiais PDF (\texttt{POST /attachments/upload?exam\_uuid=...}).
-    \item \textbf{Publicação (gatilho do processamento):} publicação da prova (\texttt{POST /exams/\{exam\_uuid\}/publish}), que atualiza o \textit{status} e agenda o processamento em \textit{background}.
-    \item \textbf{Revisão docente (inspeção e ajustes):} consulta dos dados consolidados para revisão (\texttt{GET /reviews/exams/\{exam\_uuid\}}), com possibilidade de ajuste manual de nota (\texttt{PUT /reviews/grades/adjust}), aprovação de respostas (\texttt{POST /reviews/approve-answer/\{answer\_uuid\}}) e finalização da revisão (\texttt{POST /reviews/finalize}).
+    \item \textbf{Configuração (síncrona via API):} criação da prova (\texttt{POST /exams}), associação de critérios (\texttt{POST /exam-criteria}), cadastro de questões (\texttt{POST /exam-questions}), cadastro de respostas (\texttt{POST /student-answers}) e upload de materiais PDF (\texttt{POST \allowbreak /attachments\allowbreak /upload\allowbreak ?exam\_uuid=...}).
+    \item \textbf{Publicação (gatilho do processamento):} publicação da prova (\texttt{POST \allowbreak /exams\allowbreak /\{exam\_uuid\}\allowbreak /publish}), que atualiza o \textit{status} e agenda o processamento em \textit{background}.
+    \item \textbf{Revisão docente (inspeção e ajustes):} consulta dos dados consolidados para revisão
+    (\texttt{GET \allowbreak /reviews\allowbreak /exams\allowbreak /\{\allowbreak exam\_\allowbreak uuid\allowbreak \}});\\
+    ajuste manual de nota
+    (\texttt{PUT \allowbreak /reviews\allowbreak /grades\allowbreak /adjust});\\
+    aprovação de respostas
+    (\texttt{POST \allowbreak /reviews\allowbreak /approve-\allowbreak answer\allowbreak /\{\allowbreak answer\_\allowbreak uuid\allowbreak \}});\\
+    finalização da revisão
+    (\texttt{POST \allowbreak /reviews\allowbreak /finalize}).
 \end{itemize}
 
 Esse encadeamento ajuda a tornar explícito que o protótipo foi implementado como um sistema operacional, com etapas observáveis, persistência de estado e pontos de intervenção docente.
 
-\section{Backend (API e organização em camadas)}
+\section{Backend}
 
 A organização do código segue uma separação em camadas, visando isolar responsabilidades e facilitar evolução e testes. Em termos funcionais, o fluxo de uma operação típica consiste em:
 
@@ -52,10 +59,10 @@ Para tornar essa organização mais concreta, a Tabela~\ref{tab:endpoints-chave}
         \hline
         \textbf{Domínio} & \textbf{Exemplos (rota)} \\
         \hline
-        Provas & \texttt{POST /exams}, \texttt{GET /exams/\{exam\_uuid\}}, \texttt{POST /exams/\{exam\_uuid\}/publish} \\
-        Anexos (PDF) & \texttt{POST /attachments/upload?exam\_uuid=...} \\
-        Questões e respostas & \texttt{POST /exam-questions}, \texttt{POST /student-answers}, \texttt{GET /student-answers/question/\{question\_uuid\}} \\
-        Revisão docente & \texttt{GET /reviews/exams/\{exam\_uuid\}}, \texttt{PUT /reviews/grades/adjust}, \texttt{POST /reviews/approve-answer/\{answer\_uuid\}}, \texttt{POST /reviews/finalize} \\
+        Provas & \texttt{POST /exams}, \texttt{GET \allowbreak /exams\allowbreak /\{exam\_uuid\}}, \texttt{POST \allowbreak /exams\allowbreak /\{exam\_uuid\}\allowbreak /publish} \\
+        Anexos (PDF) & \texttt{POST \allowbreak /attachments\allowbreak /upload\allowbreak ?exam\_uuid=...} \\
+        Questões e respostas & \texttt{POST /exam-questions}, \texttt{POST /student-answers}, \texttt{GET \allowbreak /student-answers\allowbreak /question\allowbreak /\{question\_uuid\}} \\
+        Revisão docente & \texttt{GET \allowbreak /reviews\allowbreak /exams\allowbreak /\{\allowbreak exam\_\allowbreak uuid\allowbreak \}}, \texttt{PUT \allowbreak /reviews\allowbreak /grades\allowbreak /adjust}, \texttt{POST \allowbreak /reviews\allowbreak /approve-\allowbreak answer\allowbreak /\{\allowbreak answer\_\allowbreak uuid\allowbreak \}}, \texttt{POST \allowbreak /reviews\allowbreak /finalize} \\
         \hline
     \end{tabular}
 \end{table}
@@ -76,7 +83,7 @@ Essa estrutura favorece a rastreabilidade das operações e torna mais claras as
 
 Determinadas etapas do sistema são executadas de forma assíncrona, especialmente as relacionadas à preparação de anexos e à correção de respostas, que podem envolver operações de maior custo computacional (por exemplo, segmentação de PDF, geração de \textit{embeddings} e chamadas a LLMs). Para permitir controle operacional e revisão, o modelo de dados utiliza campos de \textit{status} e sinalizações que indicam se uma etapa foi concluída com sucesso ou se exige atenção.
 
-De forma concreta, a publicação de uma prova (\texttt{POST /exams/\{exam\_uuid\}/publish}) segue o padrão: (i) valida a existência da prova e que ela está em \texttt{DRAFT}, (ii) atualiza seu \textit{status} para \texttt{PUBLISHED} de forma síncrona, e (iii) agenda uma tarefa em \textit{background} para indexar anexos e executar a correção automática. Ao final do processamento, o \textit{status} da prova é atualizado para um estado final de sucesso (por exemplo, \texttt{GRADED}) ou atenção (por exemplo, \texttt{WARNING}), permitindo distinguir casos que exigem intervenção.
+De forma concreta, a publicação de uma prova (\texttt{POST \allowbreak /exams\allowbreak /\{exam\_uuid\}\allowbreak /publish}) segue o padrão: (i) valida a existência da prova e que ela está em \texttt{DRAFT}, (ii) atualiza seu \textit{status} para \texttt{PUBLISHED} de forma síncrona, e (iii) agenda uma tarefa em \textit{background} para indexar anexos e executar a correção automática. Ao final do processamento, o \textit{status} da prova é atualizado para um estado final de sucesso (\texttt{GRADED}) ou atenção (\texttt{WARNING}), permitindo distinguir casos que exigem intervenção.
 
 Nos anexos, um campo como \texttt{vector\_status} permite sinalizar se o PDF foi efetivamente preparado para busca vetorial. Isso torna observáveis falhas de indexação que podem comprometer a etapa de RAG, sem impedir a continuidade da revisão docente.
 
@@ -106,7 +113,7 @@ A \autoref{fig:pipeline-correcao} apresenta um diagrama simplificado desse \text
     \source{Elaborado pelos autores.}
 \end{figure}
 
-\subsection{Recuperação de contexto (RAG)}
+\subsection{Recuperação de contexto}
 
 Para viabilizar RAG, os materiais didáticos anexados são processados em duas fases: (i) segmentação em trechos e geração de \textit{embeddings} para indexação, e (ii) recuperação por similaridade durante a correção. No protótipo, a segmentação utiliza trechos com sobreposição para preservar contexto local, enquanto a consulta recupera um conjunto pequeno de trechos mais relevantes (\textit{top-k}) para compor o contexto fornecido aos agentes.
 
@@ -136,7 +143,7 @@ Quando a divergência entre as notas dos corretores ultrapassa um limiar configu
 
 Esse mecanismo também fortalece a coerência do sistema sob a ótica de governança: em vez de “forçar” uma nota única, o pipeline sinaliza quando a própria IA está em desacordo consigo mesma e, portanto, quando há maior probabilidade de que o professor precise inspecionar a resposta com mais atenção. Em termos de apoio à decisão, esse comportamento é preferível porque direciona esforço humano para os casos mais ambíguos.
 
-Após a execução do \textit{workflow}, o resultado é persistido no banco relacional, marcando a resposta como avaliada (por exemplo, \texttt{is\_graded}) e registrando pontuações por critério em uma estrutura normalizada (uma linha por critério). Dessa forma, a API de revisão pode recuperar tanto a nota final quanto o detalhamento necessário para inspeção e ajuste docente.
+Após a execução do \textit{workflow}, o resultado é persistido no banco relacional, marcando a resposta como avaliada (\texttt{is\_graded}) e registrando pontuações por critério em uma estrutura normalizada (uma linha por critério). Dessa forma, a API de revisão pode recuperar tanto a nota final quanto o detalhamento necessário para inspeção e ajuste docente.
 
 \section{Modelagem do banco de dados}
 
@@ -163,8 +170,6 @@ Para critérios de correção, a modelagem separa (i) um catálogo reutilizável
 Para respostas, a entidade \texttt{student\_answers} vincula explicitamente aluno, prova e questão, com restrição de unicidade (por exemplo, um aluno não responde duas vezes a mesma questão na mesma prova, salvo alteração deliberada da regra). Essa escolha reduz ambiguidade de rastreabilidade e evita que o pipeline produza múltiplos resultados concorrentes para o mesmo alvo.
 
 Por fim, o detalhamento de nota foi normalizado em \texttt{student\_answer\_criteria\_scores}, com \textbf{uma linha por critério por resposta} e restrição de unicidade (resposta, critério). Esse desenho é superior a armazenar apenas uma nota total porque materializa a decomposição da avaliação e viabiliza inspeção e auditoria: o professor pode verificar onde a pontuação foi atribuída, comparar justificativas por critério e corrigir pontualmente sem perder o histórico de como a nota foi composta. Adicionalmente, armazenar \texttt{raw\_score} e (opcionalmente) \texttt{weighted\_score} dá suporte a cenários em que o peso do critério é tratado como configuração da prova, mantendo rastreabilidade do que foi pontuado e do que foi efetivamente computado.
-
-
 
 Alguns campos merecem destaque por seu papel na rastreabilidade do processo:
 
