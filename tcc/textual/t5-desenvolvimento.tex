@@ -1,179 +1,136 @@
-\chapter{DESENVOLVIMENTO}
+\chapter{Desenvolvimento}
 \label{cap:desenvolvimento}
-Vestibulum ac arcu suscipit, consequat orci sit amet, maximus dolor. Vestibulum condimentum nulla vitae fermentum venenatis. In sit amet tincidunt ex, quis molestie turpis. Proin eleifend fringilla tincidunt. Curabitur pellentesque nisi in risus iaculis, in tristique odio maximus. Donec condimentum massa a erat malesuada, ut lacinia elit maximus. Integer feugiat volutpat luctus. Vestibulum commodo varius venenatis. Ut diam ante, feugiat non consectetur id, suscipit at dolor. Duis tempor quam ligula, id volutpat ligula dapibus id. Phasellus at fermentum nibh.
 
-\section{Levantamento das Estórias}
+Este capítulo descreve o desenvolvimento do sistema de correção automática de provas, enfatizando a organização arquitetural, a implementação do \textit{backend}, o pipeline de inteligência artificial e as principais integrações empregadas. A intenção é apresentar detalhes suficientes para que um leitor compreenda como o sistema foi construído e como suas partes se articulam, sem depender da leitura direta do código-fonte.
 
-As estórias foram identificadas, analisadas e descritas abaixo:
+\section{Arquitetura do sistema}
+
+O sistema foi concebido como uma aplicação de \textit{backend} exposta por uma API REST, integrada a mecanismos de persistência relacional e vetorial, e a provedores de modelos de linguagem e de \textit{embeddings}. Além do fluxo síncrono de requisições HTTP, há etapas assíncronas executadas em \textit{background}, necessárias para preparar materiais anexados e processar correções.
+
+De forma resumida, a arquitetura organiza-se em: (i) camada de apresentação/consumo (clientes e ferramentas de inspeção), (ii) camada de API (rotas e controladores), (iii) camada de serviços (regras de negócio, orquestração e pipeline), e (iv) camada de dados (banco relacional e base vetorial). A \autoref{fig:arquitetura-sistema} apresenta a visão geral.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{media/arquitetura_sistema.png}
+    \caption{Visão geral da arquitetura do sistema}
+    \label{fig:arquitetura-sistema}
+    \source{Elaborado pelos autores.}
+\end{figure}
+
+Na arquitetura adotada, o banco relacional centraliza os dados estruturados do domínio (provas, questões, respostas, rubricas e resultados), enquanto a base vetorial armazena representações vetoriais de trechos de materiais didáticos para recuperaçãoo semântica. A correçãpao em si depende de chamadas a modelos de linguagem; para reduzir acoplamento a um único provedor e permitir experimentação, o sistema utiliza uma camada de compatibilidade para parametrizar modelo, provedor e configurações de execução.
+
+\section{Backend (API e organização em camadas)}
+
+A organização do código segue uma separação em camadas, visando isolar responsabilidades e facilitar evolução e testes. Em termos funcionais, o fluxo de uma operação típica consiste em:
 
 \begin{itemize}
-	\item \textbf{Estória 01: Cadastrar Catador}\par
-Descrição: Permite a criação do usuário responsável pelo recolhimento do material descartado.
-
-	\item \textbf{Estória 02: Cadastrar Separador}\par
-Descrição: Permite a criação do usuário responsável pelo descarte do material.
-
-	\item \textbf{Estória 03: Efetuar login}\par
-Descrição: Autoriza o acesso às funcionalidades do sistema. 
-
-	\item \textbf{Estória 04: Recuperar senha }\par
-Descrição: Possibilita que o usuário redefina a senha.
-
-	\item \textbf{Estória 05: Tirar dúvidas }\par
-Descrição: Esclarece sobre a definição dos perfis. 
-
-	\item \textbf{Estória 06: Solicitar recolhimento}\par
-Descrição: Requisita a coleta do material descartado.
-
-	\item \textbf{Estória 07: Realizar logoff}\par
-Descrição: Permite que o usuário saia do sistema.
-
+    \item \textbf{Rotas}: definem os endpoints por domínio (por exemplo, provas, questões, anexos, respostas e revisões) e validam aspectos básicos da requisição;
+    \item \textbf{Controladores}: traduzem a requisição para uma intenção de caso de uso, organizando entradas e saídas;
+    \item \textbf{Serviços}: concentram regras de negócio e orquestram operações, inclusive chamadas ao pipeline de IA;
+    \item \textbf{Persistência}: executa acesso ao banco relacional e garante consistência transacional;
+    \item \textbf{Resposta}: devolve ao cliente dados estruturados para inspeção e revisão docente.
 \end{itemize}
 
-
-\section{Diagramas do Modelo Proposto}
-
-\subsection{Diagrama de Classes}
-
-Na construção do diagrama de classes foi analisada as principais classes do sistema, suas características, seus relacionamentos e suas funcionalidades. É possível observar através da \autoref{fig:classe}, a estrutura do desenvolvimento do sistema.
-
-%%%%%%%%%%%%%%%%%%%% Figure/Image No: 8 starts here %%%%%%%%%%%%%%%%%%%%
+A \autoref{fig:fluxo-requisicao} representa esse encadeamento de camadas, evidenciando o caminho de ida (requisição) e volta (resposta) no 	extit{backend}.
 
 \begin{figure}[H]
-	\caption{Diagrama de Classes}
-	\begin{Center}
-		\includegraphics[width=6.4in,height=2.77in]{./media/image35.png}
-	\end{Center}
-	\label{fig:classe}
+    \centering
+    \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{media/fluxo_requisicao.png}
+    \caption{Fluxo de requisição e resposta entre camadas do backend}
+    \label{fig:fluxo-requisicao}
+    \source{Elaborado pelos autores.}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%% Figure/Image No: 8 Ends here %%%%%%%%%%%%%%%%%%%%
+Essa estrutura favorece a rastreabilidade das operações e torna mais claras as fronteiras entre a lógica de aplicação (por exemplo, publicação de prova e mudanças de \textit{status}) e a lógica de avaliação automática (por exemplo, recuperação de contexto, correção por agentes e arbitragem por divergência).
 
-Na \autoref{fig:classe} citada acima podemos observar o Diagrama de Classes utilizado para a construção do aplicativo.
+\subsection{Processamento assíncrono e \textit{status} de rastreabilidade}
 
-As classes Catador e Separador são extensões da classe Pessoa, que tem como objetivo informar seus dados, tirar dúvidas sobre a definição dos perfis, criar uma conta perfil, redefinir a senha esquecida, efetuar \textit{login}, salvar os dados do \textit{login} e realizar \textit{logoff}.
+Determinadas etapas do sistema são executadas de forma assíncrona, especialmente as relacionadas à preparação de anexos e à correção de respostas, que podem envolver operações de maior custo computacional (por exemplo, segmentação de PDF, geração de \textit{embeddings} e chamadas a LLMs). Para permitir controle operacional e revisão, o modelo de dados utiliza campos de \textit{status} e sinalizações que indicam se uma etapa foi concluída com sucesso ou se exige atenção.
 
-A classe Catador que faz parte de uma das contas perfil, é responsável pelo cadastro do usuário catador. Este usuário é encarregado por traçar a rota da coleta e recolher o material descartado.
+Além disso, campos como \textit{is\_graded} limitam alterações em entidades após a execução da correção, preservando consistência entre rubrica, respostas e resultados persistidos.
 
-A classe Separador que faz parte de uma das contas perfil, é responsável pelo cadastro do usuário separador. Ao informar sua localização e o tipo de material, o usuário poderá solicitar o recolhimento do material descartado.
+\section{Pipeline de IA (RAG, correção e arbitragem)}
 
-\subsection{Diagrama de Casos de Uso}
+O pipeline de correção foi estruturado como um \textit{workflow} com estado explícito, composto por nós que representam etapas do processo e por regras de encaminhamento condicional. A abordagem permite documentar e reproduzir a sequência de execução, o que é relevante tanto para depuração quanto para a revisão docente.
 
-Esse parágrafo descreve as funcionalidades do sistema e as interações entre os atores, através da \autoref{fig:casos}. 
+No sistema desenvolvido, o pipeline segue as seguintes macroetapas:
 
-%%%%%%%%%%%%%%%%%%%% Figure/Image No: 9 starts here %%%%%%%%%%%%%%%%%%%%
+\begin{itemize}
+    \item \textbf{Recuperação de contexto (RAG)}: busca de trechos relevantes dos materiais anexados, a partir do enunciado da questão;
+    \item \textbf{Correção independente}: avaliação por dois agentes corretores, sem comunicação entre si;
+    \item \textbf{Checagem de divergência}: cálculo de divergência entre as notas e decisão de acionar ou não um \textit{árbitro};
+    \item \textbf{Arbitragem condicional}: avaliação adicional quando a divergência supera um limiar;
+    \item \textbf{Consolidação e persistência}: definição de nota final, armazenamento de justificativas e pontuações por critério.
+\end{itemize}
+
+A \autoref{fig:pipeline-correcao} apresenta um diagrama simplificado desse \textit{workflow}.
 
 \begin{figure}[H]
-\caption{Diagrama de Casos de Uso}
-	\begin{Center}
-		\includegraphics[width=5.12in,height=3.02in]{./media/image32.png}
-	\end{Center}
-	\label{fig:casos}
+    \centering
+    \includegraphics[width=\textwidth,height=0.5\textheight,keepaspectratio]{media/pipeline.png}
+    \caption{Pipeline de correção com RAG e arbitragem por divergência}
+    \label{fig:pipeline-correcao}
+    \source{Elaborado pelos autores.}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%% Figure/Image No: 9 Ends here %%%%%%%%%%%%%%%%%%%%
+\subsection{Recuperação de contexto (RAG)}
 
-Na \autoref{fig:casos} citada acima, podemos ver o Diagrama de Casos de Uso. Na tela inicial do aplicativo, o usuário poderá realizar as seguintes funções: logar no APP, cadastrar usuário, tirar dúvidas, efetuar \textit{logoff} e recuperar a senha. Se o usuário ainda não estiver cadastrado, irá se cadastrar no perfil desejado: Catador ou Separador. Caso já tenha cadastro, basta efetuar o \textit{login}, o qual pode ser salvo pelo sistema. Em caso de senha esquecida, o sistema permite a recuperação através do \textit{e-mail}.
+Para viabilizar RAG, os materiais didáticos anexados são processados em duas fases: (i) segmentação em trechos e geração de \textit{embeddings} para indexação, e (ii) recuperação por similaridade durante a correção. No protótipo, a segmentação utiliza trechos com sobreposição para preservar contexto local, enquanto a consulta recupera um conjunto pequeno de trechos mais relevantes (\textit{top-k}) para compor o contexto fornecido aos agentes.
 
-A partir da inserção da localização e do tipo de material, o Separador poderá solicitar o recolhimento do rejeito. O Catador recebendo a solicitação do Separador, irá traçar a rota para a coleta do material. 
+Um aspecto de projeto relevante é o isolamento por prova: os trechos indexados incluem metadados que permitem limitar a busca aos materiais associados à prova em questão, evitando contaminação de contexto entre diferentes turmas e avaliações.
 
-\paragraph*{5.2.2.1 Especificação dos Casos de Uso}
+\subsection{Correção por agentes e saídas estruturadas}
 
-Esse capítulo é responsável pelo detalhamento das funcionalidades do sistema. O (\autoref{quad:catador}), descreve o passo a passo para o cadastro do usuário Catador.
+Cada resposta discursiva é avaliada por dois corretores independentes. Os agentes produzem uma saída estruturada que inclui: nota total, pontuação por critério e justificativas textuais. Essa estrutura atende ao objetivo de tornar o resultado revisável pelo professor, pois permite inspecionar como cada critério contribuiu para a nota final.
 
-%%%%%%%%%%%%%%%%%%%% Table No: 4 starts here %%%%%%%%%%%%%%%%%%%%
+Quando a divergência entre as notas dos corretores ultrapassa um limiar configurável, um terceiro agente (\textit{árbitro}) é acionado para produzir uma avaliação adicional. Na consolidação, o sistema utiliza a avaliação adicional como mecanismo de estabilização da nota final em casos de incerteza ou inconsciência entre corretores.
 
-\begin{quadro}[H]
-\caption{Cadastrar Catador}
-\label{quad:catador}
-\centering
-\begin{tabular}{p{1.25in}p{4.50in}}
-\hline
-%row no:1
-\multicolumn{1}{|p{1.25in}}{\textbf{Caso de Uso}} & 
-\multicolumn{1}{|p{4.50in}|}{Cadastrar Catador} \\
-\hhline{--}
-%row no:2
-\multicolumn{1}{|p{1.25in}}{\textbf{Descrição}} & 
-\multicolumn{1}{|p{4.50in}|}{Permite a criação de perfil usuário denominado catador.} \\
-\hhline{--}
-%row no:3
-\multicolumn{1}{|p{1.25in}}{\textbf{Ator}} & 
-\multicolumn{1}{|p{4.50in}|}{Catador} \\
-\hhline{--}
-%row no:4
-\multicolumn{1}{|p{1.25in}}{\textbf{Pré-condições}} & 
-\multicolumn{1}{|p{4.50in}|}{Preencher todos os dados solicitados} \\
-\hhline{--}
-%row no:5
-\multicolumn{1}{|p{1.25in}}{\textbf{Pós-condições}} & 
-\multicolumn{1}{|p{4.50in}|}{Cadastro do perfil catador no sistema} \\
-\hhline{--}
-%row no:6
-\multicolumn{1}{|p{1.25in}}{\textbf{Fluxo Principal}} & 
-\multicolumn{1}{|p{4.50in}|}{\begin{enumerate}[label*={\fontsize{12pt}{12pt}\selectfont \arabic*.}]
-	\item Na tela inicial, o usuário solicita o cadastro; \par 	\item Em seguida preenche todos os dados; \par 	\item O sistema valida os dados preenchidos; \par 	\item O cadastro é realizado.
-\end{enumerate}} \\
-\hhline{--}
-%row no:7
-\multicolumn{1}{|p{1.25in}}{\textbf{Fluxo de Exceção}} & 
-\multicolumn{1}{|p{4.50in}|}{\textbf{Dados incorretos} \par \begin{enumerate}[label*={\fontsize{12pt}{12pt}\selectfont \arabic*.}]
-	\item No passo 3 do Fluxo Principal, o usuário não preencheu os dados corretamente, o sistema sinaliza qual campo não foi preenchido.
-\end{enumerate} \par \textbf{Dados não cadastrados} \par \begin{enumerate}[label*={\fontsize{12pt}{12pt}\selectfont \arabic*.}]
-	\item No passo 3 do Fluxo Principal, o usuário preenche algum campo já cadastrado, o sistema exibe qual campo já foi cadastrado.
-\end{enumerate}} \\
-\hhline{--}
+\section{Modelagem do banco de dados}
 
-\end{tabular}
-\end{quadro}
+O banco de dados relacional foi modelado para suportar as etapas de configuração, publicação, correção, revisão e consolidação. As entidades centrais do domínio incluem provas, questões, alunos, respostas, critérios de correção e pontuações por critério. A \autoref{fig:er-simplificado} apresenta uma visão simplificada dessas relações.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{media/er.png}
+    \caption{Modelo entidade-relacionamento (ER) simplificado do domínio}
+    \label{fig:er-simplificado}
+    \source{Elaborado pelos autores.}
+\end{figure}
 
-%%%%%%%%%%%%%%%%%%%% Table No: 4 ends here %%%%%%%%%%%%%%%%%%%%
-
-O caso de uso Cadastrar Catador (\autoref{quad:catador}), citado acima é responsável por avaliar as ações necessárias para realizar o cadastro do perfil catador. 
-
-O \autoref{qua:separador} descreve o passo a passo para o cadastro do usuário Separador.
-
-%%%%%%%%%%%%%%%%%%%% Table No: 5 starts here %%%%%%%%%%%%%%%%%%%%
-
-
-\begin{quadro}[H]
-\caption{Cadastro Separador}
- \label{qua:separador}			\begin{tabular}{p{1.33in}p{3.96in}}
-\hline
-%row no:1
-\multicolumn{1}{|p{1.33in}}{\textbf{Caso de Uso}} & 
-\multicolumn{1}{|p{3.96in}|}{Cadastrar Separador} \\
-\hhline{--}
-%row no:2
-\multicolumn{1}{|p{1.33in}}{\textbf{Descrição}} & 
-\multicolumn{1}{|p{3.96in}|}{Permite a criação de perfil usuário denominado separador.} \\
-\hhline{--}
-%row no:3
-\multicolumn{1}{|p{1.33in}}{\textbf{Ator}} & 
-\multicolumn{1}{|p{3.96in}|}{Separador} \\
-\hhline{--}
-%row no:4
-\multicolumn{1}{|p{1.33in}}{\textbf{Pré-condições}} & 
-\multicolumn{1}{|p{3.96in}|}{Preencher todos os dados solicitados } \\
-\hhline{--}
-%row no:5
-\multicolumn{1}{|p{1.33in}}{\textbf{Pós-condições}} & 
-\multicolumn{1}{|p{3.96in}|}{Cadastro do perfil separador no sistema} \\
-\hhline{--}
-%row no:6
-\multicolumn{1}{|p{1.33in}}{\textbf{Fluxo Principal}} & 
-\multicolumn{1}{|p{3.96in}|}{\begin{enumerate}[label*={\fontsize{12pt}{12pt}\selectfont \arabic*.}]
-	\item Na tela inicial, o usuário solicita o cadastro; \par 	\item Em seguida, preenche todos os dados; \par 	\item O sistema verifica os dados; \par 	\item O cadastro é realizado.
-\end{enumerate}} \\
-\hhline{--}
-
-\end{tabular}
- \end{quadro}
-
-%%%%%%%%%%%%%%%%%%%% Table No: 5 ends here %%%%%%%%%%%%%%%%%%%%
-
-O caso de uso Cadastrar Separador (\autoref{qua:separador}), citado acima é responsável por avaliar as ações necessárias para realizar o cadastro do perfil separador.
+O esquema completo do banco de dados, com todas as tabelas e relacionamentos, é apresentado no \autoref{ap:schema-completo}.
 
 
 
+Alguns campos merecem destaque por seu papel na rastreabilidade do processo:
+
+\begin{itemize}
+    \item \textbf{\textit{status} de prova e resposta}: permitem distinguir prova em rascunho, publicada, em correção, corrigida e finalizada, assim como respostas submetidas e avaliadas;
+    \item \textbf{\textit{vector\_status} de anexo}: indica se o material anexado foi indexado com sucesso na base vetorial, sinalizando situações de falha que podem afetar o RAG;
+    \item \textbf{Indicadores de correção}: campos como \textit{is\_graded} e informações de divergência ajudam a controlar reprocessamentos e a direcionar revisão docente.
+\end{itemize}
+
+\section{Integrações e decisões técnicas}
+
+O desenvolvimento priorizou integrações que mantivessem o sistema reproduzível em ambiente local e coerente com as necessidades do domínio educacional.
+
+\subsection{Integrações principais}
+
+\begin{itemize}
+    \item \textbf{PostgreSQL}: adotado para persistência relacional das entidades do domínio, com suporte a transações e integridade;
+    \item \textbf{Migrações}: versionamento do esquema do banco, permitindo evolução controlada e reprodutibilidade entre ambientes;
+    \item \textbf{ChromaDB}: utilizado como \textit{vector store} persistente para a estratégia de recuperação por similaridade;
+    \item \textbf{Provedores de LLM e \textit{embeddings}}: integração por uma camada de compatibilidade para alternar provedores e parâmetros de execução;
+    \item \textbf{Docker e Docker Compose}: padronização do ambiente de execução, reduzindo divergências de configuração entre máquinas.
+\end{itemize}
+
+\subsection{Decisões e \textit{trade-offs}}
+
+\begin{itemize}
+    \item \textbf{Dois corretores e \textit{árbitro} condicional}: reduz sensibilidade a uma única saída de LLM e prioriza consistência, ao custo de maior consumo computacional em casos divergentes;
+    \item \textbf{Workflow com estado explícito}: favorece rastreabilidade e controle de execução, ao custo de maior complexidade estrutural em comparação a uma sequência linear;
+    \item \textbf{RAG por prova}: melhora a aderência ao material didático e reduz alucinações, mas depende da qualidade e da indexação bem-sucedida dos anexos;
+    \item \textbf{Não-determinismo de LLMs}: mitigado por configurações mais determinísticas e por revisão docente, mas não eliminado completamente.
+\end{itemize}
+
+Em conjunto, as decisões de arquitetura e implementação buscam equilibrar viabilidade técnica, rastreabilidade e utilidade prática no contexto de correção de respostas discursivas com apoio à revisão do professor.

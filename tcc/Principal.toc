@@ -15,7 +15,7 @@
 \contentsline {subsection}{\numberline {1.1.2}Objetivos Específicos}{2}{subsection.1.1.2}%
 \contentsline {section}{\numberline {1.2}Justificativa}{3}{section.1.2}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase []{FUNDAMENTAÇÃO TEÓRICA}}{5}{chapter.2}%
+\contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase []{Fundamentação Teórica}}{5}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Avaliação Educacional}{5}{section.2.1}%
 \contentsline {subsection}{\numberline {2.1.1}Conceitos e Importância da Avaliação no Processo Educacional}{5}{subsection.2.1.1}%
 \contentsline {subsection}{\numberline {2.1.2}Tipos de Avaliação Educacional}{6}{subsection.2.1.2}%
@@ -78,6 +78,26 @@
 \contentsline {subsection}{\numberline {4.4.7}Critérios de sucesso}{50}{subsection.4.4.7}%
 \contentsline {subsection}{\numberline {4.4.8}Ameaças à validade}{50}{subsection.4.4.8}%
 \contentsline {subsection}{\numberline {4.4.9}Reprodutibilidade (checklist)}{51}{subsection.4.4.9}%
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{Desenvolvimento}}{52}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Arquitetura do sistema}{52}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Backend (API e organização em camadas)}{53}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Processamento assíncrono e \textit {status} de rastreabilidade}{54}{subsection.5.2.1}%
+\contentsline {section}{\numberline {5.3}Pipeline de IA (RAG, correção e arbitragem)}{54}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Recuperação de contexto (RAG)}{55}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Correção por agentes e saídas estruturadas}{55}{subsection.5.3.2}%
+\contentsline {section}{\numberline {5.4}Modelagem do banco de dados}{56}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Integrações e decisões técnicas}{58}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Integrações principais}{58}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Decisões e \textit {trade-offs}}{58}{subsection.5.5.2}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{52}{section*.16}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{60}{section*.20}%
+\setlength {\cftpartindent }{\cftlastnumwidth } \setlength {\cftpartnumwidth }{2em}
+\cftinsert {A}
+\contentsline {part}{Appendices}{66}{section*.21}%
+\renewcommand *{\cftappendixname }{AP\^ENDICE \space }
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\cftinsert {A}
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{67}{appendix.A}%

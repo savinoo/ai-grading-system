@@ -14,13 +14,15 @@ Este capítulo apresenta o detalhamento do desenvolvimento do sistema implementa
     \includegraphics[width=\textwidth]{media/fluxo-configuracao.jpg}
     \caption{Fluxograma do subprocesso de configuração da prova}
     \label{fig:fluxo-configuracao}
+    \source{Elaborado pelos autores.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{media/fluxo-correcao-prova.jpg}
+    \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{media/fluxo-correcao-prova.jpg}
     \caption{Fluxograma do subprocesso de correção da prova, incluindo revisão docente antes da consolidação das notas finais}
     \label{fig:fluxo-correcao-prova}
+    \source{Elaborado pelos autores.}
 \end{figure}
 
 \begin{figure}[H]
@@ -28,6 +30,7 @@ Este capítulo apresenta o detalhamento do desenvolvimento do sistema implementa
     \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{media/fluxo-correcao-pergunta.jpg}
     \caption{Fluxograma do subprocesso de correção da resposta, com acionamento condicional do Corretor 3 por limiar de divergência}
     \label{fig:fluxo-correcao-pergunta}
+    \source{Elaborado pelos autores.}
 \end{figure}
 
 No fluxo da \autoref{fig:fluxo-correcao-prova}, a revisão do professor ocorre após a correção automatizada e a persistência dos resultados no banco de dados, e antes da consolidação/finalização das notas. Já no fluxo da \autoref{fig:fluxo-correcao-pergunta}, o Corretor 3 atua apenas quando a divergência entre o Corretor 1 e o Corretor 2 ultrapassa o limiar configurado, mantendo o caminho condicional de arbitragem alinhado à implementação.

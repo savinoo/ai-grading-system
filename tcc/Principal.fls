@@ -681,6 +681,27 @@ INPUT .\Principal.toc
 INPUT .\Principal.toc
 INPUT Principal.toc
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmsso12.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmr12.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmr10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmr7.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmi12.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmi10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmi7.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmsy10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmsy10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmsy7.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\lasy10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\lasy10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\latex-fonts\lasy7.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam7.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\wasy\wasy10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\wasy\wasy10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\wasy\wasy7.tfm
 INPUT .\textual\t1-introducao-v2.tex
 INPUT .\textual\t1-introducao-v2.tex
 INPUT .\textual\t1-introducao-v2.tex
@@ -745,6 +766,39 @@ INPUT .\media\fluxo-correcao-pergunta.jpg
 INPUT .\media\fluxo-correcao-pergunta.jpg
 INPUT .\media\fluxo-correcao-pergunta.jpg
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmsso12.tfm
+INPUT .\textual\t5-desenvolvimento.tex
+INPUT .\textual\t5-desenvolvimento.tex
+INPUT .\textual\t5-desenvolvimento.tex
+INPUT .\textual\t5-desenvolvimento.tex
+INPUT textual\t5-desenvolvimento.tex
+INPUT .\media\arquitetura_sistema.png
+INPUT .\media\arquitetura_sistema.png
+INPUT .\media\arquitetura_sistema.png
+INPUT .\media\arquitetura_sistema.png
+INPUT .\media\arquitetura_sistema.png
+INPUT .\media\arquitetura_sistema.png
+INPUT .\media\arquitetura_sistema.png
+INPUT .\media\fluxo_requisicao.png
+INPUT .\media\fluxo_requisicao.png
+INPUT .\media\fluxo_requisicao.png
+INPUT .\media\fluxo_requisicao.png
+INPUT .\media\fluxo_requisicao.png
+INPUT .\media\fluxo_requisicao.png
+INPUT .\media\fluxo_requisicao.png
+INPUT .\media\pipeline.png
+INPUT .\media\pipeline.png
+INPUT .\media\pipeline.png
+INPUT .\media\pipeline.png
+INPUT .\media\pipeline.png
+INPUT .\media\pipeline.png
+INPUT .\media\pipeline.png
+INPUT .\media\er.png
+INPUT .\media\er.png
+INPUT .\media\er.png
+INPUT .\media\er.png
+INPUT .\media\er.png
+INPUT .\media\er.png
+INPUT .\media\er.png
 INPUT .\Principal.bbl
 INPUT .\Principal.bbl
 INPUT Principal.bbl
@@ -754,6 +808,18 @@ INPUT Principal.brf
 INPUT .\Principal.brf
 INPUT .\Principal.brf
 OUTPUT Principal.brf
+INPUT .\pos\apendice-schema-completo.tex
+INPUT .\pos\apendice-schema-completo.tex
+INPUT .\pos\apendice-schema-completo.tex
+INPUT .\pos\apendice-schema-completo.tex
+INPUT pos\apendice-schema-completo.tex
+INPUT .\media\sql_schemas.png
+INPUT .\media\sql_schemas.png
+INPUT .\media\sql_schemas.png
+INPUT .\media\sql_schemas.png
+INPUT .\media\sql_schemas.png
+INPUT .\media\sql_schemas.png
+INPUT .\media\sql_schemas.png
 OUTPUT Principal.lof
 OUTPUT Principal.loq
 OUTPUT Principal.lot
