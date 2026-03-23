@@ -18,7 +18,17 @@ De forma resumida, a arquitetura organiza-se em: (i) camada de apresentação/co
     \source{Elaborado pelos autores.}
 \end{figure}
 
-Na arquitetura adotada, o banco relacional centraliza os dados estruturados do domínio (provas, questões, respostas, rubricas e resultados), enquanto a base vetorial armazena representações vetoriais de trechos de materiais didáticos para recuperaçãoo semântica. A correçãpao em si depende de chamadas a modelos de linguagem; para reduzir acoplamento a um único provedor e permitir experimentação, o sistema utiliza uma camada de compatibilidade para parametrizar modelo, provedor e configurações de execução.
+Na arquitetura adotada, o banco relacional centraliza os dados estruturados do domínio (provas, questões, respostas, rubricas e resultados), enquanto a base vetorial armazena representações vetoriais de trechos de materiais didáticos para recuperação semântica. A correção em si depende de chamadas a modelos de linguagem; para reduzir acoplamento a um único provedor e permitir experimentação, o sistema utiliza uma camada de compatibilidade para parametrizar modelo, provedor e configurações de execução.
+
+Na prática, essa arquitetura se materializa em um fluxo ponta-a-ponta que pode ser observado por meio da própria API. Um cenário típico de uso (professor configurando e revisando uma prova) pode ser descrito, de forma simplificada, como:
+
+\begin{itemize}
+    \item \textbf{Configuração (síncrona via API):} criação da prova (\texttt{POST /exams}), associação de critérios (\texttt{POST /exam-criteria}), cadastro de questões (\texttt{POST /exam-questions}), cadastro de respostas (\texttt{POST /student-answers}) e upload de materiais PDF (\texttt{POST /attachments/upload?exam\_uuid=...}).
+    \item \textbf{Publicação (gatilho do processamento):} publicação da prova (\texttt{POST /exams/\{exam\_uuid\}/publish}), que atualiza o \textit{status} e agenda o processamento em \textit{background}.
+    \item \textbf{Revisão docente (inspeção e ajustes):} consulta dos dados consolidados para revisão (\texttt{GET /reviews/exams/\{exam\_uuid\}}), com possibilidade de ajuste manual de nota (\texttt{PUT /reviews/grades/adjust}), aprovação de respostas (\texttt{POST /reviews/approve-answer/\{answer\_uuid\}}) e finalização da revisão (\texttt{POST /reviews/finalize}).
+\end{itemize}
+
+Esse encadeamento ajuda a tornar explícito que o protótipo foi implementado como um sistema operacional, com etapas observáveis, persistência de estado e pontos de intervenção docente.
 
 \section{Backend (API e organização em camadas)}
 
@@ -31,6 +41,24 @@ A organização do código segue uma separação em camadas, visando isolar resp
     \item \textbf{Persistência}: executa acesso ao banco relacional e garante consistência transacional;
     \item \textbf{Resposta}: devolve ao cliente dados estruturados para inspeção e revisão docente.
 \end{itemize}
+
+Para tornar essa organização mais concreta, a Tabela~\ref{tab:endpoints-chave} resume alguns endpoints diretamente associados ao fluxo principal de configuração, publicação e revisão.
+
+\begin{table}[H]
+    \centering
+    \caption{Exemplos de endpoints do fluxo principal do sistema}
+    \label{tab:endpoints-chave}
+    \begin{tabular}{p{0.24\textwidth} p{0.68\textwidth}}
+        \hline
+        \textbf{Domínio} & \textbf{Exemplos (rota)} \\
+        \hline
+        Provas & \texttt{POST /exams}, \texttt{GET /exams/\{exam\_uuid\}}, \texttt{POST /exams/\{exam\_uuid\}/publish} \\
+        Anexos (PDF) & \texttt{POST /attachments/upload?exam\_uuid=...} \\
+        Questões e respostas & \texttt{POST /exam-questions}, \texttt{POST /student-answers}, \texttt{GET /student-answers/question/\{question\_uuid\}} \\
+        Revisão docente & \texttt{GET /reviews/exams/\{exam\_uuid\}}, \texttt{PUT /reviews/grades/adjust}, \texttt{POST /reviews/approve-answer/\{answer\_uuid\}}, \texttt{POST /reviews/finalize} \\
+        \hline
+    \end{tabular}
+\end{table}
 
 A \autoref{fig:fluxo-requisicao} representa esse encadeamento de camadas, evidenciando o caminho de ida (requisição) e volta (resposta) no \textit{backend}.
 
@@ -47,6 +75,10 @@ Essa estrutura favorece a rastreabilidade das operações e torna mais claras as
 \subsection{Processamento assíncrono e \textit{status} de rastreabilidade}
 
 Determinadas etapas do sistema são executadas de forma assíncrona, especialmente as relacionadas à preparação de anexos e à correção de respostas, que podem envolver operações de maior custo computacional (por exemplo, segmentação de PDF, geração de \textit{embeddings} e chamadas a LLMs). Para permitir controle operacional e revisão, o modelo de dados utiliza campos de \textit{status} e sinalizações que indicam se uma etapa foi concluída com sucesso ou se exige atenção.
+
+De forma concreta, a publicação de uma prova (\texttt{POST /exams/\{exam\_uuid\}/publish}) segue o padrão: (i) valida a existência da prova e que ela está em \texttt{DRAFT}, (ii) atualiza seu \textit{status} para \texttt{PUBLISHED} de forma síncrona, e (iii) agenda uma tarefa em \textit{background} para indexar anexos e executar a correção automática. Ao final do processamento, o \textit{status} da prova é atualizado para um estado final de sucesso (por exemplo, \texttt{GRADED}) ou atenção (por exemplo, \texttt{WARNING}), permitindo distinguir casos que exigem intervenção.
+
+Nos anexos, um campo como \texttt{vector\_status} permite sinalizar se o PDF foi efetivamente preparado para busca vetorial. Isso torna observáveis falhas de indexação que podem comprometer a etapa de RAG, sem impedir a continuidade da revisão docente.
 
 Além disso, campos como \textit{is\_graded} limitam alterações em entidades após a execução da correção, preservando consistência entre rubrica, respostas e resultados persistidos.
 
@@ -78,13 +110,15 @@ A \autoref{fig:pipeline-correcao} apresenta um diagrama simplificado desse \text
 
 Para viabilizar RAG, os materiais didáticos anexados são processados em duas fases: (i) segmentação em trechos e geração de \textit{embeddings} para indexação, e (ii) recuperação por similaridade durante a correção. No protótipo, a segmentação utiliza trechos com sobreposição para preservar contexto local, enquanto a consulta recupera um conjunto pequeno de trechos mais relevantes (\textit{top-k}) para compor o contexto fornecido aos agentes.
 
-Um aspecto de projeto relevante é o isolamento por prova: os trechos indexados incluem metadados que permitem limitar a busca aos materiais associados à prova em questão, evitando contaminação de contexto entre diferentes turmas e avaliações.
+Um aspecto de projeto relevante é o isolamento por prova: as consultas de recuperação utilizam um filtro obrigatório por \texttt{exam\_uuid}, garantindo que apenas trechos associados à prova em questão sejam retornados. Operacionalmente, o sistema utiliza \textit{top-k} pequeno (por padrão, \texttt{RAG\_TOP\_K=4}), de modo a produzir contexto suficiente sem exceder o orçamento de tokens e sem inundar os corretores com material pouco relevante.
 
 \subsection{Correção por agentes e saídas estruturadas}
 
 Cada resposta discursiva é avaliada por dois corretores independentes. Os agentes produzem uma saída estruturada que inclui: nota total, pontuação por critério e justificativas textuais. Essa estrutura atende ao objetivo de tornar o resultado revisável pelo professor, pois permite inspecionar como cada critério contribuiu para a nota final.
 
-Quando a divergência entre as notas dos corretores ultrapassa um limiar configurável, um terceiro agente (\textit{árbitro}) é acionado para produzir uma avaliação adicional. Na consolidação, o sistema utiliza a avaliação adicional como mecanismo de estabilização da nota final em casos de incerteza ou inconsciência entre corretores.
+Quando a divergência entre as notas dos corretores ultrapassa um limiar configurável (por padrão, \texttt{DIVERGENCE\_THRESHOLD=2.0} pontos), um terceiro agente (\textit{árbitro}) é acionado para produzir uma avaliação adicional. Na consolidação, o sistema utiliza a avaliação adicional como mecanismo de estabilização da nota final em casos de incerteza ou inconsistência entre corretores.
+
+Após a execução do \textit{workflow}, o resultado é persistido no banco relacional, marcando a resposta como avaliada (por exemplo, \texttt{is\_graded}) e registrando pontuações por critério em uma estrutura normalizada (uma linha por critério). Dessa forma, a API de revisão pode recuperar tanto a nota final quanto o detalhamento necessário para inspeção e ajuste docente.
 
 \section{Modelagem do banco de dados}
 
@@ -123,6 +157,8 @@ O desenvolvimento priorizou integrações que mantivessem o sistema reproduzíve
     \item \textbf{Provedores de LLM e \textit{embeddings}}: integração por uma camada de compatibilidade para alternar provedores e parâmetros de execução;
     \item \textbf{Docker e Docker Compose}: padronização do ambiente de execução, reduzindo divergências de configuração entre máquinas.
 \end{itemize}
+
+Além dessas integrações, a execução do protótipo foi desenhada para ser parametrizável por ambiente. Em particular, a seleção do provedor/modelo de LLM e de \textit{embeddings}, assim como parâmetros operacionais do pipeline (por exemplo, \texttt{LLM\_TEMPERATURE}, \texttt{RAG\_TOP\_K} e \texttt{DIVERGENCE\_THRESHOLD}) pode ser controlada via variáveis de ambiente, favorecendo reprodutibilidade e ajustes sem alteração do código.
 
 \subsection{Disponibilização do código-fonte}
 
