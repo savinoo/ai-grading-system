@@ -18,7 +18,17 @@ De forma resumida, a arquitetura organiza-se em: (i) camada de apresentação/co
     \source{Elaborado pelos autores.}
 \end{figure}
 
-Na arquitetura adotada, o banco relacional centraliza os dados estruturados do domínio (provas, questões, respostas, rubricas e resultados), enquanto a base vetorial armazena representações vetoriais de trechos de materiais didáticos para recuperaçãoo semântica. A correção em si depende de chamadas a modelos de linguagem; para reduzir acoplamento a um único provedor e permitir experimentação, o sistema utiliza uma camada de compatibilidade para parametrizar modelo, provedor e configurações de execução.
+Na arquitetura adotada, o banco relacional centraliza os dados estruturados do domínio (provas, questões, respostas, rubricas e resultados), enquanto a base vetorial armazena representações vetoriais de trechos de materiais didáticos para recuperação semântica. A correção em si depende de chamadas a modelos de linguagem; para reduzir acoplamento a um único provedor e permitir experimentação, o sistema utiliza uma camada de compatibilidade para parametrizar modelo, provedor e configurações de execução.
+
+Na prática, essa arquitetura se materializa em um fluxo ponta-a-ponta que pode ser observado por meio da própria API. Um cenário típico de uso (professor configurando e revisando uma prova) pode ser descrito, de forma simplificada, como:
+
+\begin{itemize}
+    \item \textbf{Configuração (síncrona via API):} criação da prova (\texttt{POST /exams}), associação de critérios (\texttt{POST /exam-criteria}), cadastro de questões (\texttt{POST /exam-questions}), cadastro de respostas (\texttt{POST /student-answers}) e upload de materiais PDF (\texttt{POST /attachments/upload?exam\_uuid=...}).
+    \item \textbf{Publicação (gatilho do processamento):} publicação da prova (\texttt{POST /exams/\{exam\_uuid\}/publish}), que atualiza o \textit{status} e agenda o processamento em \textit{background}.
+    \item \textbf{Revisão docente (inspeção e ajustes):} consulta dos dados consolidados para revisão (\texttt{GET /reviews/exams/\{exam\_uuid\}}), com possibilidade de ajuste manual de nota (\texttt{PUT /reviews/grades/adjust}), aprovação de respostas (\texttt{POST /reviews/approve-answer/\{answer\_uuid\}}) e finalização da revisão (\texttt{POST /reviews/finalize}).
+\end{itemize}
+
+Esse encadeamento ajuda a tornar explícito que o protótipo foi implementado como um sistema operacional, com etapas observáveis, persistência de estado e pontos de intervenção docente.
 
 \section{Backend (API e organização em camadas)}
 
@@ -31,6 +41,24 @@ A organização do código segue uma separação em camadas, visando isolar resp
     \item \textbf{Persistência}: executa acesso ao banco relacional e garante consistência transacional;
     \item \textbf{Resposta}: devolve ao cliente dados estruturados para inspeção e revisão docente.
 \end{itemize}
+
+Para tornar essa organização mais concreta, a Tabela~\ref{tab:endpoints-chave} resume alguns endpoints diretamente associados ao fluxo principal de configuração, publicação e revisão.
+
+\begin{table}[H]
+    \centering
+    \caption{Exemplos de endpoints do fluxo principal do sistema}
+    \label{tab:endpoints-chave}
+    \begin{tabular}{p{0.24\textwidth} p{0.68\textwidth}}
+        \hline
+        \textbf{Domínio} & \textbf{Exemplos (rota)} \\
+        \hline
+        Provas & \texttt{POST /exams}, \texttt{GET /exams/\{exam\_uuid\}}, \texttt{POST /exams/\{exam\_uuid\}/publish} \\
+        Anexos (PDF) & \texttt{POST /attachments/upload?exam\_uuid=...} \\
+        Questões e respostas & \texttt{POST /exam-questions}, \texttt{POST /student-answers}, \texttt{GET /student-answers/question/\{question\_uuid\}} \\
+        Revisão docente & \texttt{GET /reviews/exams/\{exam\_uuid\}}, \texttt{PUT /reviews/grades/adjust}, \texttt{POST /reviews/approve-answer/\{answer\_uuid\}}, \texttt{POST /reviews/finalize} \\
+        \hline
+    \end{tabular}
+\end{table}
 
 A \autoref{fig:fluxo-requisicao} representa esse encadeamento de camadas, evidenciando o caminho de ida (requisição) e volta (resposta) no \textit{backend}.
 
@@ -47,6 +75,10 @@ Essa estrutura favorece a rastreabilidade das operações e torna mais claras as
 \subsection{Processamento assíncrono e \textit{status} de rastreabilidade}
 
 Determinadas etapas do sistema são executadas de forma assíncrona, especialmente as relacionadas à preparação de anexos e à correção de respostas, que podem envolver operações de maior custo computacional (por exemplo, segmentação de PDF, geração de \textit{embeddings} e chamadas a LLMs). Para permitir controle operacional e revisão, o modelo de dados utiliza campos de \textit{status} e sinalizações que indicam se uma etapa foi concluída com sucesso ou se exige atenção.
+
+De forma concreta, a publicação de uma prova (\texttt{POST /exams/\{exam\_uuid\}/publish}) segue o padrão: (i) valida a existência da prova e que ela está em \texttt{DRAFT}, (ii) atualiza seu \textit{status} para \texttt{PUBLISHED} de forma síncrona, e (iii) agenda uma tarefa em \textit{background} para indexar anexos e executar a correção automática. Ao final do processamento, o \textit{status} da prova é atualizado para um estado final de sucesso (por exemplo, \texttt{GRADED}) ou atenção (por exemplo, \texttt{WARNING}), permitindo distinguir casos que exigem intervenção.
+
+Nos anexos, um campo como \texttt{vector\_status} permite sinalizar se o PDF foi efetivamente preparado para busca vetorial. Isso torna observáveis falhas de indexação que podem comprometer a etapa de RAG, sem impedir a continuidade da revisão docente.
 
 Além disso, campos como \textit{is\_graded} limitam alterações em entidades após a execução da correção, preservando consistência entre rubrica, respostas e resultados persistidos.
 
@@ -78,13 +110,33 @@ A \autoref{fig:pipeline-correcao} apresenta um diagrama simplificado desse \text
 
 Para viabilizar RAG, os materiais didáticos anexados são processados em duas fases: (i) segmentação em trechos e geração de \textit{embeddings} para indexação, e (ii) recuperação por similaridade durante a correção. No protótipo, a segmentação utiliza trechos com sobreposição para preservar contexto local, enquanto a consulta recupera um conjunto pequeno de trechos mais relevantes (\textit{top-k}) para compor o contexto fornecido aos agentes.
 
-Um aspecto de projeto relevante é o isolamento por prova: os trechos indexados incluem metadados que permitem limitar a busca aos materiais associados à prova em questão, evitando contaminação de contexto entre diferentes turmas e avaliações.
+Um aspecto de projeto relevante é o isolamento por prova: as consultas de recuperação utilizam um filtro obrigatório por \texttt{exam\_uuid}, garantindo que apenas trechos associados à prova em questão sejam retornados. Operacionalmente, o sistema utiliza \textit{top-k} pequeno (por padrão, \texttt{RAG\_TOP\_K=4}), de modo a produzir contexto suficiente sem exceder o orçamento de tokens e sem inundar os corretores com material pouco relevante.
+
+\subsection{Por que o desenho multiagente é superior a uma correção monolítica}
+
+Embora seja possível corrigir uma resposta com uma única chamada a LLM (um \textit{prompt} único e uma nota final), o protótipo adotou um desenho em etapas e com redundância controlada porque esse formato aumenta a robustez e melhora a qualidade operacional do sistema como artefato de apoio à decisão docente.
+
+Em uma correção monolítica, os principais riscos se concentram em um único ponto: uma saída potencialmente instável, pouco diagnosticável e difícil de auditar, na qual erros de entendimento do enunciado, recuperação de contexto inadequada ou interpretações subjetivas do critério se tornam indistinguíveis. Já no \textit{workflow} multiagente, cada etapa produz artefatos verificáveis (contexto recuperado, notas e justificativas por critério, medida de divergência e decisão de arbitragem), permitindo que a revisão docente se apoie em evidências intermediárias e não apenas no resultado final.
+
+De forma mais concreta, os benefícios técnicos desse desenho podem ser sintetizados em:
+
+\begin{itemize}
+    \item \textbf{Robustez por redundância e detecção de inconsistência}: dois corretores independentes reduzem a dependência de uma única amostra de resposta do modelo; a divergência explicita quando há instabilidade entre avaliações, em vez de ocultá-la no resultado final.
+    \item \textbf{Arbitragem condicional como controle de custo e de incerteza}: o terceiro agente não é acionado sempre; ele é reservado para casos em que a divergência supera um limiar (por padrão, \texttt{DIVERGENCE\_THRESHOLD=2.0}), equilibrando consistência e custo computacional.
+    \item \textbf{Separação de responsabilidades e depuração}: a recuperação (RAG), a correção e a consolidação são módulos distintos; assim, falhas de indexação ou de recuperação podem ser tratadas e observadas (por exemplo, via \texttt{vector\_status}) sem confundir o diagnóstico com a etapa de correção.
+    \item \textbf{Auditabilidade e revisabilidade}: saídas estruturadas (nota total, pontuação por critério e justificativas) tornam explícito como a nota foi composta, permitindo ao professor localizar rapidamente o ponto de discordância e ajustar o que for necessário.
+    \item \textbf{Reprodutibilidade operacional}: a execução como \textit{workflow} com estado explícito facilita repetir o processamento sob o mesmo conjunto de parâmetros (por exemplo, \texttt{LLM\_TEMPERATURE}, \texttt{RAG\_TOP\_K} e \texttt{DIVERGENCE\_THRESHOLD}) e comparar resultados entre rodadas de avaliação.
+\end{itemize}
 
 \subsection{Correção por agentes e saídas estruturadas}
 
 Cada resposta discursiva é avaliada por dois corretores independentes. Os agentes produzem uma saída estruturada que inclui: nota total, pontuação por critério e justificativas textuais. Essa estrutura atende ao objetivo de tornar o resultado revisável pelo professor, pois permite inspecionar como cada critério contribuiu para a nota final.
 
-Quando a divergência entre as notas dos corretores ultrapassa um limiar configurável, um terceiro agente (\textit{árbitro}) é acionado para produzir uma avaliação adicional. Na consolidação, o sistema utiliza a avaliação adicional como mecanismo de estabilização da nota final em casos de incerteza ou inconsciência entre corretores.
+Quando a divergência entre as notas dos corretores ultrapassa um limiar configurável (por padrão, \texttt{DIVERGENCE\_THRESHOLD=2.0} pontos), um terceiro agente (\textit{árbitro}) é acionado para produzir uma avaliação adicional. Na consolidação, o sistema utiliza a avaliação adicional como mecanismo de estabilização da nota final em casos de incerteza ou inconsistência entre corretores.
+
+Esse mecanismo também fortalece a coerência do sistema sob a ótica de governança: em vez de “forçar” uma nota única, o pipeline sinaliza quando a própria IA está em desacordo consigo mesma e, portanto, quando há maior probabilidade de que o professor precise inspecionar a resposta com mais atenção. Em termos de apoio à decisão, esse comportamento é preferível porque direciona esforço humano para os casos mais ambíguos.
+
+Após a execução do \textit{workflow}, o resultado é persistido no banco relacional, marcando a resposta como avaliada (por exemplo, \texttt{is\_graded}) e registrando pontuações por critério em uma estrutura normalizada (uma linha por critério). Dessa forma, a API de revisão pode recuperar tanto a nota final quanto o detalhamento necessário para inspeção e ajuste docente.
 
 \section{Modelagem do banco de dados}
 
@@ -100,6 +152,18 @@ O banco de dados relacional foi modelado para suportar as etapas de configuraç�
 
 O esquema completo do banco de dados, com todas as tabelas e relacionamentos, é apresentado no \autoref{ap:schema-completo}.
 
+Mais do que armazenar entidades do domínio, a modelagem foi projetada para sustentar três requisitos do protótipo: (i) \textbf{rastreabilidade do processo} (o que foi feito, quando e em que estado), (ii) \textbf{revisão docente baseada em evidências} (inspecionar a composição da nota e ajustar com segurança) e (iii) \textbf{persistência e governança do pipeline} (registrar o resultado e reduzir ambiguidades em reprocessamentos).
+
+\subsection{Justificativa das entidades e relações}
+
+No centro do domínio, a prova (\texttt{exams}) funciona como agregador dos demais objetos: questões (\texttt{exam\_questions}), anexos de referência (\texttt{attachments}), critérios associados e pesos, e respostas submetidas. Essa organização é intencional porque permite isolar o ciclo de vida de uma prova (por exemplo, \texttt{DRAFT} $\rightarrow$ \texttt{PUBLISHED} $\rightarrow$ \texttt{GRADED}/\texttt{WARNING} $\rightarrow$ \texttt{FINALIZED}) e, ao mesmo tempo, associar de forma inequívoca todo artefato produzido pelo pipeline ao contexto correto.
+
+Para critérios de correção, a modelagem separa (i) um catálogo reutilizável de critérios (\texttt{grading\_criteria}) e (ii) a parametrização específica por prova (\texttt{exam\_criteria}). Essa tabela de associação permite que o mesmo critério seja reaproveitado em diferentes provas, mantendo, por prova, campos como \texttt{weight} e \texttt{max\_points}. Tecnicamente, isso reduz duplicação e melhora consistência: ajustes de pesos e máximos tornam-se mudanças de configuração da prova, sem “replicar” o critério.
+
+Para respostas, a entidade \texttt{student\_answers} vincula explicitamente aluno, prova e questão, com restrição de unicidade (por exemplo, um aluno não responde duas vezes a mesma questão na mesma prova, salvo alteração deliberada da regra). Essa escolha reduz ambiguidade de rastreabilidade e evita que o pipeline produza múltiplos resultados concorrentes para o mesmo alvo.
+
+Por fim, o detalhamento de nota foi normalizado em \texttt{student\_answer\_criteria\_scores}, com \textbf{uma linha por critério por resposta} e restrição de unicidade (resposta, critério). Esse desenho é superior a armazenar apenas uma nota total porque materializa a decomposição da avaliação e viabiliza inspeção e auditoria: o professor pode verificar onde a pontuação foi atribuída, comparar justificativas por critério e corrigir pontualmente sem perder o histórico de como a nota foi composta. Adicionalmente, armazenar \texttt{raw\_score} e (opcionalmente) \texttt{weighted\_score} dá suporte a cenários em que o peso do critério é tratado como configuração da prova, mantendo rastreabilidade do que foi pontuado e do que foi efetivamente computado.
+
 
 
 Alguns campos merecem destaque por seu papel na rastreabilidade do processo:
@@ -107,8 +171,10 @@ Alguns campos merecem destaque por seu papel na rastreabilidade do processo:
 \begin{itemize}
     \item \textbf{\textit{status} de prova e resposta}: permitem distinguir prova em rascunho, publicada, em correção, corrigida e finalizada, assim como respostas submetidas e avaliadas;
     \item \textbf{\textit{vector\_status} de anexo}: indica se o material anexado foi indexado com sucesso na base vetorial, sinalizando situações de falha que podem afetar o RAG;
-    \item \textbf{Indicadores de correção}: campos como \textit{is\_graded} e informações de divergência ajudam a controlar reprocessamentos e a direcionar revisão docente.
+    \item \textbf{Indicadores de correção}: campos como \textit{is\_graded} e informações de divergência (por exemplo, detecção e valor) ajudam a controlar reprocessamentos e a direcionar revisão docente.
 \end{itemize}
+
+Em conjunto, essas escolhas permitem que a revisão docente opere sobre dados consistentes e contextualizados: o estado da prova e das respostas indica em que fase do fluxo o item se encontra; o detalhamento por critério torna a avaliação explicável e ajustável; e os indicadores de divergência e de correção ajudam a priorizar inspeção humana nos casos em que a própria IA sinaliza maior incerteza.
 
 \section{Integrações e decisões técnicas}
 
@@ -123,6 +189,8 @@ O desenvolvimento priorizou integrações que mantivessem o sistema reproduzíve
     \item \textbf{Provedores de LLM e \textit{embeddings}}: integração por uma camada de compatibilidade para alternar provedores e parâmetros de execução;
     \item \textbf{Docker e Docker Compose}: padronização do ambiente de execução, reduzindo divergências de configuração entre máquinas.
 \end{itemize}
+
+Além dessas integrações, a execução do protótipo foi desenhada para ser parametrizável por ambiente. Em particular, a seleção do provedor/modelo de LLM e de \textit{embeddings}, assim como parâmetros operacionais do pipeline (por exemplo, \texttt{LLM\_TEMPERATURE}, \texttt{RAG\_TOP\_K} e \texttt{DIVERGENCE\_THRESHOLD}) pode ser controlada via variáveis de ambiente, favorecendo reprodutibilidade e ajustes sem alteração do código.
 
 \subsection{Disponibilização do código-fonte}
 

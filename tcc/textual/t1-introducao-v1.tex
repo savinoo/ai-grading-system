@@ -14,14 +14,13 @@ Em relação às avaliações, prevalecem exames tradicionais centrados na memor
 
 Um desafio central nesse cenário educacional refere-se especificamente à correção de provas discursivas. Essa atividade exige alto empenho docente, análise minuciosa e critérios definidos para justiça na atribuição das notas. Estudos apontam que correções discursivas sofrem frequentemente de subjetividade e variação significativa entre avaliadores, impactando negativamente a equidade e a confiabilidade da avaliação educacional \cite{borges_avaliacao_2017}.
 
-Embora o uso de IA em avaliação educacional tenha avançado, ainda se observa uma lacuna entre resultados experimentais e aplicação institucional contínua. Parte relevante das abordagens existentes prioriza métricas de desempenho preditivo em cenários controlados, com menor ênfase na integração ao fluxo real de correção docente, na explicitação dos critérios pedagógicos utilizados e na rastreabilidade das decisões automatizadas \cite{borges_avaliacao_2017, shahzad_comprehensive_2025}. Como consequência, permanecem desafios relacionados à viabilidade prática de adoção, à auditabilidade do processo e à consistência preliminar entre correções.
+Como parte desta pesquisa, foi implementado um protótipo funcional do sistema proposto, cujo código-fonte foi disponibilizado publicamente em um repositório GitHub, visando transparência e reprodutibilidade \cite{ai_grading_system_repo_2026}.
 
-Nesse contexto, este trabalho adota como premissa que a IA deve ser empregada como ferramenta de suporte ao julgamento profissional do docente, e não como substituta do processo avaliativo. Assim, o sistema proposto realiza uma avaliação preliminar das respostas com base em critérios previamente definidos pelo professor e em contexto recuperado dos materiais didáticos, oferecendo justificativas e evidências para apoiar a tomada de decisão. A validação final, eventuais ajustes e a responsabilização pela nota atribuída permanecem sob a autoridade do professor, preservando o caráter pedagógico, contextual e formativo da avaliação.
 
 \section{Objetivos}
 
 \subsection{Objetivo Geral} 
-Desenvolver um sistema de apoio à decisão docente na correção de provas discursivas utilizando modelos avançados de linguagem (LLMs), apoiado pela recuperação dinâmica de contexto, de modo a produzir avaliações preliminares consistentes e alinhadas aos critérios pedagógicos estabelecidos pelos professores, mantendo a revisão, o ajuste e a decisão final sob responsabilidade do docente.
+Desenvolver um sistema de apoio à correção de provas discursivas utilizando modelos avançados de linguagem (LLMs), apoiado pela recuperação dinâmica de contexto, de modo a produzir avaliações preliminares consistentes e alinhadas aos critérios pedagógicos estabelecidos pelos professores, com revisão e ajuste docente no fluxo final.
 
 \subsection{Objetivos Específicos}
 \begin{enumerate}
@@ -31,9 +30,9 @@ Desenvolver um sistema de apoio à decisão docente na correção de provas disc
 
 \item Implementar um mecanismo de correção baseado em múltiplos agentes virtuais independentes, capazes de analisar as respostas individualmente, tratando automaticamente eventuais divergências entre suas avaliações.
 
-\item Disponibilizar um módulo de revisão docente que permita ao professor revisar, ajustar e confirmar as correções realizadas pelo sistema, favorecendo que as avaliações finais permaneçam alinhadas aos objetivos acadêmicos e critérios pedagógicos estabelecidos previamente.
+\item Disponibilizar uma interface intuitiva que permita aos professores revisar, ajustar e confirmar as correções realizadas pelo sistema, favorecendo que as avaliações finais permaneçam alinhadas aos objetivos acadêmicos e critérios pedagógicos estabelecidos previamente.
 
-\item Gerar indicadores analíticos e relatórios de desempenho da avaliação, incluindo distribuição de notas e lacunas de aprendizagem por critério, com sumários por turma e por estudante, de modo a apoiar a adaptação do planejamento de aulas.
+\item Gerar análises estatísticas e de desempenho da avaliação, incluindo distribuição de notas, lacunas de aprendizagem por critério e tendência de desempenho por turma, de modo a apoiar a adaptação do planejamento de aulas.
 
 \end{enumerate}
 
@@ -41,7 +40,7 @@ Desenvolver um sistema de apoio à decisão docente na correção de provas disc
 
 A correção de provas discursivas impõe uma demanda considerável sobre o tempo dos docentes, uma tarefa essencial que, no entanto, compete com outras atividades pedagógicas cruciais como o planejamento de aulas e o acompanhamento individualizado dos estudantes. Pesquisas sobre a jornada de trabalho docente indicam que uma parcela significativa de professores dedica entre 6 a 10 horas semanais a atividades extraclasse, que incluem a elaboração e correção de avaliações \cite{barbosa_tempo_2021}. Este cenário de sobrecarga não apenas afeta o bem-estar docente, mas possui o potencial de impactar a qualidade geral do ensino.
 
-A principal contribuição neste trabalho reside em oferecer ao professor uma ferramenta de suporte tecnológico capaz de agilizar a correção, liberando tempo para que o docente se dedique a aspectos mais estratégicos e humanizados da prática pedagógica. É crucial enfatizar que a solução proposta visa complementar, e não substituir, o papel central do professor, atuando como um assistente na análise inicial das respostas, sempre com base nos critérios definidos pelo educador.
+ A principal contribuição neste trabalho reside em oferecer ao professor uma ferramenta de suporte tecnológico capaz de agilizar a correção, liberando tempo para que o docente se dedique a aspectos mais estratégicos e humanizados da prática pedagógica. É crucial enfatizar que a solução proposta visa complementar, e não substituir, o papel central do professor, atuando como um assistente na análise inicial das respostas, sempre com base nos critérios definidos pelo educador.
 
 A otimização do tempo docente é um benefício direto esperado. A literatura científica aponta que a IA no ensino superior pode ser um recurso valioso para personalizar o aprendizado e apoiar decisões pedagógicas, transformando a realidade dos alunos e também desafiando professores a se manterem atualizados sobre as tendências e sua integração ao fazer pedagógico, sem, contudo, substituir a mediação humana essencial ao processo de aprendizagem \cite{bottentuit_junior_inteligencia_2024} . Ao automatizar parcialmente a verificação da conformidade das respostas, espera-se que os professores possam reinvestir o tempo economizado no aprimoramento de suas práticas de ensino e na interação com os alunos, promovendo uma educação de maior qualidade \cite{gatti_formacao_2017}.
 

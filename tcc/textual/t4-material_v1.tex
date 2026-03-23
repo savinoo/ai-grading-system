@@ -4,15 +4,7 @@
 
 O presente trabalho desenvolveu um sistema para a correção automatizada de provas discursivas. Esse sistema utiliza técnicas de inteligência artificial, como \textit{Large Language Models} (LLM) e \textit{Retrieval-Augmented Generation} (RAG), para apoiar uma correção inicial estruturada e rastreável, mantendo a revisão docente como etapa necessária para confirmação e ajustes. Assim, busca-se reduzir esforço operacional na correção e ampliar a consistência dos artefatos produzidos (notas, justificativas e detalhamento por critério), sem substituir a decisão final do professor.
 
-A organização deste capítulo segue uma progressão metodológica. Inicialmente, delimita-se o \textbf{tipo de pesquisa} adotado. Em seguida, descrevem-se os \textbf{subprocessos} do sistema e seus fluxos de execução, detalham-se as \textbf{ferramentas e tecnologias} empregadas e, por fim, apresenta-se o \textbf{método de avaliação} adotado.
-
-\section{Tipo de Pesquisa}
-
-Este trabalho caracteriza-se como uma pesquisa aplicada, pois desenvolveu um sistema para correção automatizada de provas, visando solucionar um problema prático no contexto educacional. Quanto aos objetivos, classifica-se como uma pesquisa exploratória, já que analisou a viabilidade de implementação de técnicas de inteligência artificial, como LLM e RAG, no processo de correção de avaliações.
-
-\section{Processo de Correção de Prova}
-
-Esta seção descreve o funcionamento do sistema conforme implementado, organizado em três subprocessos principais: a configuração da prova, a correção geral da prova e a correção específica das respostas que exigem intervenção adicional. Cada subprocesso é explicado detalhadamente, utilizando fluxogramas para ilustrar os passos realizados (Figuras
+Este capítulo apresenta o detalhamento do desenvolvimento do sistema implementado, que é dividido em três subprocessos principais: a configuração da prova, a correção geral da prova e a correção específica das respostas que exigem intervenção adicional. Cada subprocesso é explicado detalhadamente, utilizando fluxogramas para ilustrar os passos realizados. A seguir, são apresentados os fluxogramas que ilustram cada um dos subprocessos mencionados (Figuras
 \autoref{fig:fluxo-configuracao},
 \autoref{fig:fluxo-correcao-prova} e
 \autoref{fig:fluxo-correcao-pergunta}).
@@ -42,6 +34,17 @@ Esta seção descreve o funcionamento do sistema conforme implementado, organiza
 \end{figure}
 
 No fluxo da \autoref{fig:fluxo-correcao-prova}, a revisão do professor ocorre após a correção automatizada e a persistência dos resultados no banco de dados, e antes da consolidação/finalização das notas. Já no fluxo da \autoref{fig:fluxo-correcao-pergunta}, o Corretor 3 atua apenas quando a divergência entre o Corretor 1 e o Corretor 2 ultrapassa o limiar configurado, mantendo o caminho condicional de arbitragem alinhado à implementação.
+
+\section{Tipo de Pesquisa}
+
+Este trabalho caracteriza-se como uma pesquisa aplicada, pois desenvolveu um sistema para correção automatizada de provas, visando solucionar um problema prático no contexto educacional. Quanto aos objetivos, classifica-se como uma pesquisa exploratória, já que analisou a viabilidade de implementação de técnicas de inteligência artificial, como LLM e RAG, no processo de correção de avaliações.
+
+\section{Processo de Correção de Prova}
+
+Esta seção descreve o funcionamento do sistema conforme implementado, tomando como referência os fluxos apresentados nas Figuras
+\autoref{fig:fluxo-configuracao},
+\autoref{fig:fluxo-correcao-prova} e
+\autoref{fig:fluxo-correcao-pergunta}.
 
 \subsection{Subprocesso de Configuração da Prova}
 
@@ -105,12 +108,10 @@ O formato JSON é empregado na padronização e transmissão de informações en
 
 \section{Métodos de Avaliação}
 
-Esta seção descreve o método adotado para avaliar o sistema desenvolvido, com foco em evidências observáveis do próprio fluxo de correção e revisão docente. Em vez de executar um \textit{benchmark} multi-modelo, a avaliação busca demonstrar a \textbf{viabilidade técnica} e a \textbf{viabilidade operacional} do protótipo end-to-end (configurar \(\rightarrow\) publicar \(\rightarrow\) indexar \(\rightarrow\) corrigir \(\rightarrow\) persistir \(\rightarrow\) revisar \(\rightarrow\) consolidar), bem como observar efeitos do RAG e do mecanismo de arbitragem por divergência.
-
-Ressalta-se que o escopo desta avaliação é validar o funcionamento e a rastreabilidade do sistema como artefato tecnológico de apoio ao trabalho docente, e não mensurar, de forma ampla, eficácia educacional (por exemplo, ganhos de aprendizagem) nem sustentar superioridade definitiva da IA em relação à correção humana.
+Esta seção descreve o método adotado para avaliar o sistema desenvolvido, com foco em evidências observáveis do próprio fluxo de correção e revisão docente. Em vez de executar um \textit{benchmark} multi-modelo, a avaliação busca demonstrar a \textbf{viabilidade técnica} e a \textbf{utilidade prática} do sistema end-to-end (configurar \(\rightarrow\) publicar \(\rightarrow\) indexar \(\rightarrow\) corrigir \(\rightarrow\) persistir \(\rightarrow\) revisar \(\rightarrow\) consolidar), bem como observar efeitos do RAG e do mecanismo de arbitragem por divergência.
 
 \subsection{Objetivo da avaliação}
-O objetivo da avaliação é verificar se o sistema é capaz de executar o fluxo completo de correção automatizada de respostas discursivas, produzindo \textbf{artefatos estruturados e revisáveis} (nota final, notas por critério e justificativas), e mantendo o professor como responsável pela decisão final por meio de uma etapa explícita de revisão. Dessa forma, a avaliação está orientada à verificação de \textbf{viabilidade técnica e operacional} do protótipo, não a uma comparação conclusiva de desempenho pedagógico com a correção manual.
+O objetivo da avaliação é verificar se o sistema é capaz de executar o fluxo completo de correção automatizada de respostas discursivas, produzindo \textbf{artefatos estruturados e revisáveis} (nota final, notas por critério e justificativas), e mantendo o professor como responsável pela decisão final por meio de uma etapa explícita de revisão.
 
 \subsection{Questões avaliativas}
 A avaliação é organizada nas seguintes questões avaliativas (QAs):
@@ -126,35 +127,6 @@ A avaliação é organizada nas seguintes questões avaliativas (QAs):
 Adota-se um \textbf{estudo de caso controlado}, com uma prova pequena (de 2 a 4 questões discursivas) e materiais didáticos anexados em PDF. A prova é configurada com rubrica simples e objetiva, contendo de 3 a 5 critérios (por exemplo, correção conceitual, completude, clareza/organização e aderência ao enunciado), com pesos e limites de pontuação.
 
 No contexto deste estudo, o conjunto de respostas pode ser composto por \textbf{respostas sintéticas} elaboradas pelos autores, cobrindo níveis de qualidade (excelente, adequada/média, fraca/incompleta e fora do tema). O objetivo não é representar toda a diversidade de respostas humanas, mas viabilizar a verificação objetiva do funcionamento do sistema em casos típicos e casos-limite.
-
-Esse delineamento, por ser deliberadamente restrito (prova pequena, rubrica simplificada e, quando aplicável, respostas sintéticas), \textbf{limita o alcance das inferências}. Assim, os resultados obtidos devem ser interpretados como evidência de \textbf{viabilidade técnica e operacional} e de consistência interna do fluxo proposto, não como base suficiente para conclusões amplas sobre eficácia educacional, impacto pedagógico ou desempenho comparativo geral em contextos reais e diversos. Para sustentar generalizações mais robustas, seriam necessários estudos com maior variedade de provas, materiais, perfis de estudantes e validação sistemática com docentes em cenários de uso.
-
-\subsection{Parâmetros experimentais (valores e controles)}
-Para fortalecer a reprodutibilidade e reduzir ambiguidades de interpretação, define-se explicitamente um conjunto de \textbf{parâmetros experimentais} e \textbf{controles} aplicados às duas condições (com RAG e sem RAG).
-
-Em termos de \textbf{quantidade de casos}, recomenda-se fixar uma configuração mínima que permita observar variação de qualidade e casos-limite, sem inviabilizar o prazo do trabalho. Assim, utiliza-se uma prova com \(Q=3\) questões (dentro do intervalo de 2 a 4), e para cada questão um conjunto de \(A=4\) respostas sintéticas (excelente, adequada/média, fraca/incompleta e fora do tema), totalizando \(Q \times A = 12\) respostas a serem corrigidas em cada condição.
-
-Para avaliar estabilidade (QA4), seleciona-se um subconjunto de \(A_{rep}=4\) respostas (uma por nível de qualidade) e repete-se sua correção \(R=3\) vezes em cada condição, mantendo constantes os demais parâmetros.
-
-\begin{table}[H]
-    \centering
-    \caption{Parâmetros experimentais utilizados no estudo}
-    \label{tab:parametros-experimentais}
-    \begin{tabular}{p{0.46\textwidth} p{0.46\textwidth}}
-        \hline
-        \textbf{Parâmetro} & \textbf{Valor/controle} \\
-        \hline
-        Modelo do LLM & registrar provedor e nome do modelo configurado \\
-        Temperatura do LLM & \(0{,}0\) (configuração determinística; \texttt{LLM\_TEMPERATURE=0.0}) \\
-        Top-$k$ do RAG (Condição A) & \(k=4\) trechos recuperados por consulta (\texttt{RAG\_TOP\_K=4}) \\
-        Top-$k$ do RAG (Condição B) & \(k=0\) (RAG desativado; controle equivalente) \\
-        Limiar de divergência & \(2{,}0\) pontos na escala da questão (\texttt{DIVERGENCE\_THRESHOLD=2.0}) \\
-        Quantidade de questões & \(Q=3\) (prova pequena, dentro do intervalo 2--4) \\
-        Quantidade de respostas & \(Q \times A = 12\) respostas (\(A=4\) níveis de qualidade por questão) \\
-        Repetições (estabilidade) & \(R=3\) repetições para \(A_{rep}=4\) respostas selecionadas \\
-        \hline
-    \end{tabular}
-\end{table}
 
 \subsection{Procedimento experimental}
 O procedimento é dividido em duas condições para observar o efeito do RAG, mantendo as demais variáveis constantes.
@@ -187,27 +159,25 @@ As métricas são propositalmente simples, visando viabilidade no prazo do traba
 \begin{itemize}
     \item \textbf{Completude estrutural:} porcentagem de respostas com todos os campos esperados (nota total, notas por critério e justificativa).
     \item \textbf{Aderência à rubrica (checklist):} verificação de que cada critério foi efetivamente pontuado e possui justificativa coerente.
-    \item \textbf{Efeito do RAG (checklist):} comparação das justificativas em A vs. B, registrando se, com RAG, há maior especificidade e \textbf{ancoragem ao material anexado}. Para fins operacionais, considera-se uma justificativa \textit{ancorada} quando menciona explicitamente ao menos um conceito, definição ou evidência presente no material recuperado.
+    \item \textbf{Efeito do RAG (checklist):} comparação das justificativas em A vs. B, registrando se, com RAG, há maior especificidade e ancoragem ao material anexado.
     \item \textbf{Taxa de arbitragem:} porcentagem de respostas em que o limiar de divergência aciona o árbitro.
     \item \textbf{Estabilidade:} variação absoluta da nota final entre execuções repetidas do mesmo caso.
 \end{itemize}
 
 \subsection{Critérios de sucesso}
-Considera-se que a avaliação cumpre seu papel quando os resultados satisfazem critérios objetivos compatíveis com as QAs e com as métricas definidas:
+Considera-se que a avaliação cumpre seu papel quando:
 
 \begin{itemize}
-    \item \textbf{QA1 (end-to-end):} 100\% das respostas previstas são processadas e persistidas, e a prova é disponibilizada para revisão docente (sem falhas que impeçam a revisão).
-    \item \textbf{Completude estrutural:} pelo menos 95\% das respostas apresentam todos os campos esperados (nota final, notas por critério e justificativa).
-    \item \textbf{QA2 (RAG):} na condição A (com RAG), a proporção de justificativas classificadas como \textit{ancoradas} (conforme checklist) é maior do que na condição B (sem RAG), mantendo o mesmo conjunto de respostas.
-    \item \textbf{QA3 (arbitragem):} o árbitro é acionado quando \(|\mathrm{nota}_{C1}-\mathrm{nota}_{C2}|\geq 2{,}0\) (limiar) e não é acionado quando \(|\mathrm{nota}_{C1}-\mathrm{nota}_{C2}|< 2{,}0\), no conjunto de casos analisado.
-    \item \textbf{QA4 (estabilidade):} nas repetições (\(R=3\)) do subconjunto definido, a variação absoluta da nota final por caso permanece \(\leq 1{,}0\) ponto na escala da questão.
+    \item o sistema executa o fluxo end-to-end e persiste resultados;
+    \item as saídas são estruturadas, revisáveis e coerentes com a rubrica;
+    \item com RAG, as justificativas tendem a ser mais específicas e ancoradas ao material recuperado;
+    \item o árbitro é acionado em casos de divergência e contribui para a consolidação;
+    \item o sistema apresenta estabilidade operacional suficiente para uso com revisão docente.
 \end{itemize}
 
 \subsection{Ameaças à validade}
 \begin{itemize}
     \item \textbf{Respostas sintéticas:} não representam toda a diversidade de respostas humanas; mitigação: cobrir níveis de qualidade e casos-limite.
-    \item \textbf{Validade externa (generalização):} o estudo utiliza uma prova pequena e um conjunto limitado de casos, o que restringe a extrapolação dos resultados para outras disciplinas, turmas, níveis de ensino e estilos de rubrica.
-    \item \textbf{Validade ecológica (uso em contexto real):} a avaliação ocorre em ambiente controlado e não captura integralmente fatores presentes na rotina docente (tempo, volume de respostas, variações de enunciado, ajustes de rubrica, pressão institucional), o que pode afetar a aplicabilidade prática em larga escala.
     \item \textbf{Não-determinismo de LLMs:} mitigação por configurações mais determinísticas (temperatura baixa) e repetição de casos.
     \item \textbf{Dependência do material:} resultados podem variar com PDFs e temas; mitigação: descrever claramente o conjunto utilizado.
 \end{itemize}
@@ -216,8 +186,7 @@ Considera-se que a avaliação cumpre seu papel quando os resultados satisfazem 
 Para permitir repetição do estudo:
 
 \begin{itemize}
-    \item registrar configurações relevantes (provedor/modelo, \texttt{LLM\_TEMPERATURE=0.0}, \texttt{RAG\_TOP\_K=4} na condição A, \texttt{DIVERGENCE\_THRESHOLD=2.0});
+    \item registrar configurações relevantes (provedor/modelo, temperatura, \textit{top\_k}, limiar de divergência);
     \item manter a mesma prova, rubrica e conjunto de respostas nas duas condições;
-    \item explicitar \(Q\), \(A\), \(A_{rep}\) e \(R\) utilizados (quantidade de questões, respostas, subconjunto repetido e número de repetições);
     \item documentar o procedimento de extração dos resultados (relatório/consulta).
 \end{itemize}
