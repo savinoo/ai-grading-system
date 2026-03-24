@@ -8,7 +8,42 @@
 \vspace{\baselineskip}
 \setlength{\parskip}{9.96pt}
 
+% Evita que listas pré-textuais e o próprio "Sumário" apareçam dentro do Sumário
+\begingroup
+\makeatletter
+% Evita que o próprio \tableofcontents escreva a entrada "Sumário" no .toc
+% (isso elimina a linha na próxima compilação).
+\let\addcontentsline\@gobblethree
+\let\abn@origl@chapter\l@chapter
+\renewcommand*{\l@chapter}[2]{%
+	\begingroup
+	\def\abn@tmp{#1}%
+	\def\abn@listaquadrosA{Lista de quadros}%
+	\def\abn@listaquadrosB{\MakeTextUppercase []{Lista de quadros}}%
+	\def\abn@listaquadrosC{\MakeUppercase {Lista de quadros}}%
+	\def\abn@sumarioA{Sum\'ario}%
+	\def\abn@sumarioB{\MakeTextUppercase []{Sum\'ario}}%
+	\def\abn@sumarioC{\MakeUppercase {Sum\'ario}}%
+	\ifx\abn@tmp\abn@listaquadrosA
+		\endgroup
+	\else\ifx\abn@tmp\abn@listaquadrosB
+		\endgroup
+	\else\ifx\abn@tmp\abn@listaquadrosC
+		\endgroup
+	\else\ifx\abn@tmp\abn@sumarioA
+		\endgroup
+	\else\ifx\abn@tmp\abn@sumarioB
+		\endgroup
+	\else\ifx\abn@tmp\abn@sumarioC
+		\endgroup
+	\else
+		\endgroup\abn@origl@chapter{#1}{#2}%
+	\fi\fi\fi\fi\fi\fi
+}
 \tableofcontents
+\let\l@chapter\abn@origl@chapter
+\makeatother
+\endgroup
 
 \clearpage
  %%%%%%%%%%%%  Starting New Page here %%%%%%%%%%%%%%
