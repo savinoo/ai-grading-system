@@ -1,20 +1,20 @@
 # Fdb version 4
-["bibtex Principal"] 1774316168.71667 "Principal.aux" "Principal.bbl" "Principal" 1774316172.08042 0
+["bibtex Principal"] 1774316168.71667 "Principal.aux" "Principal.bbl" "Principal" 1774317080.65009 0
   "./Referencias.bib" 1774237917 148249 9ca40aae0ff04772f92da0723abde9b9 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/bibtex/bib/abntex2/abntex2-options.bib" 1543103229 5396 4eb260dac60f150ae608d45252853090 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/bibtex/bst/abntex2/abntex2-alf.bst" 1543103230 60064 0819ac8568f9a482510a46e3a8a6f605 ""
-  "Principal.aux" 1774316171 84876 90bf9afaf1e7c3303e6c5f15d90705b7 "pdflatex"
+  "Principal.aux" 1774317079 84876 90bf9afaf1e7c3303e6c5f15d90705b7 "pdflatex"
   (generated)
   "Principal.bbl"
   "Principal.blg"
   (rewritten before read)
-["makeindex Principal.idx"] 1774314033.04607 "Principal.idx" "Principal.ind" "Principal" 1774316172.08005 0
-  "Principal.idx" 1774316169 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex Principal.idx"] 1774314033.04607 "Principal.idx" "Principal.ind" "Principal" 1774317080.6498 0
+  "Principal.idx" 1774317078 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "Principal.ilg"
   "Principal.ind"
   (rewritten before read)
-["pdflatex"] 1774316168.89784 "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/Principal.tex" "Principal.pdf" "Principal" 1774316172.08084 0
+["pdflatex"] 1774317077.48917 "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/Principal.tex" "Principal.pdf" "Principal" 1774317080.65051 0
   "C:/Users/Maycon Mendes/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1774309570 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/Maycon Mendes/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1774127238 13337757 a72a5df451ad51107ceaaa1b28447996 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -365,16 +365,16 @@
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1656236919 4937 4ce600ce9bd4ec84d0250eb6892fcf4f ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
   "C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/xurl/xurl.sty" 1641733940 4675 e4b8c405820368c2dfb03526e16d725a ""
-  "Principal.aux" 1774316171 84876 90bf9afaf1e7c3303e6c5f15d90705b7 "pdflatex"
+  "Principal.aux" 1774317079 84876 90bf9afaf1e7c3303e6c5f15d90705b7 "pdflatex"
   "Principal.bbl" 1774316168 23661 3b27f95d2b891b7c1deb75612b978a1d "bibtex Principal"
-  "Principal.brf" 1774316171 9231 53f26b4d69f13de0815a1392cc73bde2 "pdflatex"
+  "Principal.brf" 1774317079 9231 53f26b4d69f13de0815a1392cc73bde2 "pdflatex"
   "Principal.ind" 1774316078 0 d41d8cd98f00b204e9800998ecf8427e "makeindex Principal.idx"
-  "Principal.lof" 1774316171 1219 e408622dca1ccb30ec8f620a6d95df17 "pdflatex"
-  "Principal.loq" 1774316171 117 c5bb5c87184677e0adb8e78f937fc502 "pdflatex"
-  "Principal.lot" 1774316171 502 3a00497eb78e37c65bf147a2d0d04c62 "pdflatex"
+  "Principal.lof" 1774317079 1219 e408622dca1ccb30ec8f620a6d95df17 "pdflatex"
+  "Principal.loq" 1774317079 117 c5bb5c87184677e0adb8e78f937fc502 "pdflatex"
+  "Principal.lot" 1774317079 502 3a00497eb78e37c65bf147a2d0d04c62 "pdflatex"
   "Principal.siglas" 0 -1 0 ""
   "Principal.tex" 1774316165 2905 5340f4ec9c14166d33613e4242935d91 ""
-  "Principal.toc" 1774316171 9839 2fcc4c580a794fb7db86d35f96ba6891 "pdflatex"
+  "Principal.toc" 1774317079 9839 2fcc4c580a794fb7db86d35f96ba6891 "pdflatex"
   "abntex2.cls" 1774112320 37987 566dd65c99748b7ab5b3d7d3986844e7 ""
   "c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/Principal.tex" 1774316165 2905 5340f4ec9c14166d33613e4242935d91 ""
   "configuracao.tex" 1774316078 11244 5d4cfb75bc1685c066e52e906edd2f3a ""
@@ -388,7 +388,7 @@
   "media/sql_schemas.png" 1774236259 95595 f6b1e703128846020d44e25cb63b959c ""
   "pendencias.tex" 1774112320 799 59c804b12f6ea0f86a663990969ec71b ""
   "pos/apendice-schema-completo.tex" 1774309614 583 310b4284f0e9036de356018e3009f1e9 ""
-  "pre/03-assinaturas.tex" 1774316078 1681 a67b09affffde9387602fed96966ae62 ""
+  "pre/03-assinaturas.tex" 1774317077 1893 6c3a32da655441ac319ab0a0ec51031b ""
   "pre/07-figuras.tex" 1774112320 72 e2131bfc3056e4ae608dd889e70f3650 ""
   "pre/08-quadros.tex" 1774313957 71 9a97a16bc81c207ae3ef45febbca0c94 ""
   "pre/09-tabelas.tex" 1774112320 70 97dc4e906f376c51490bff160fac1d9a ""

@@ -46,9 +46,16 @@
    
    \assinatura{\textbf{\imprimirorientadorrotulo \imprimirorientador} \\%
    \imprimirInstituicaoOrientador}
-   
-   \assinatura{\textbf{\imprimircoorientadorrotulo \imprimircoorientador} \\%
-   \imprimirInstituicaoCoorientador}
+
+% % Coorientador é opcional: só imprime se estiver definido e não vazio.
+% \makeatletter
+% \@ifundefined{imprimircoorientador}{}{%
+%   \ifblank{\imprimircoorientador}{}{%
+%     \assinatura{\textbf{\imprimircoorientadorrotulo \imprimircoorientador} \\%
+%     \imprimirInstituicaoCoorientador}%
+%   }%
+% }%
+% \makeatother
 
    \begin{center}
     \vspace*{0.5cm}
