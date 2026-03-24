@@ -650,27 +650,12 @@ INPUT .\pre\03-assinaturas.tex
 INPUT .\pre\03-assinaturas.tex
 INPUT pre\03-assinaturas.tex
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmbx12.tfm
-INPUT .\pre\04-agradecimentos.tex
-INPUT .\pre\04-agradecimentos.tex
-INPUT .\pre\04-agradecimentos.tex
-INPUT .\pre\04-agradecimentos.tex
-INPUT pre\04-agradecimentos.tex
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmss17.tfm
-INPUT .\pre\05-resumo.tex
-INPUT .\pre\05-resumo.tex
-INPUT .\pre\05-resumo.tex
-INPUT .\pre\05-resumo.tex
-INPUT pre\05-resumo.tex
-INPUT .\pre\06-abstract.tex
-INPUT .\pre\06-abstract.tex
-INPUT .\pre\06-abstract.tex
-INPUT .\pre\06-abstract.tex
-INPUT pre\06-abstract.tex
 INPUT .\pre\07-figuras.tex
 INPUT .\pre\07-figuras.tex
 INPUT .\pre\07-figuras.tex
 INPUT .\pre\07-figuras.tex
 INPUT pre\07-figuras.tex
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmss17.tfm
 INPUT .\Principal.lof
 INPUT .\Principal.lof
 INPUT Principal.lof
