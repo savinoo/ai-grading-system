@@ -1,14 +1,17 @@
+import logging
 import uuid
 
 from langchain_core.language_models import BaseChatModel
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
-from tenacity import retry, stop_after_attempt, wait_exponential
+from tenacity import retry, stop_after_attempt, wait_exponential, before_sleep_log, after_log
 
 from src.core.settings import settings
 from src.domain.ai.schemas import EvaluationCriterion, ExamQuestion, QuestionMetadata, StudentAnswer
 from src.core.llm_handler import get_chat_model
 from src.utils.helpers import measure_time
+
+_logger = logging.getLogger("mock_generator")
 
 
 class MockDataGeneratorAgent:
@@ -28,9 +31,11 @@ class MockDataGeneratorAgent:
         self._llm_answer = get_chat_model(temperature=1)
 
     @retry(
-        wait=wait_exponential(multiplier=1, min=4, max=60),
-        stop=stop_after_attempt(10),
-        reraise=True
+        wait=wait_exponential(multiplier=1, min=2, max=30),
+        stop=stop_after_attempt(3),
+        reraise=True,
+        before_sleep=before_sleep_log(_logger, logging.WARNING),
+        after=after_log(_logger, logging.WARNING),
     )
     async def generate_exam_question(self, topic: str, discipline: str, difficulty: str = "Medium") -> ExamQuestion:
         """
@@ -74,9 +79,11 @@ class MockDataGeneratorAgent:
         )
 
     @retry(
-        wait=wait_exponential(multiplier=1, min=4, max=60),
-        stop=stop_after_attempt(10),
-        reraise=True
+        wait=wait_exponential(multiplier=1, min=2, max=30),
+        stop=stop_after_attempt(3),
+        reraise=True,
+        before_sleep=before_sleep_log(_logger, logging.WARNING),
+        after=after_log(_logger, logging.WARNING),
     )
     async def generate_exam_questions(self, topic: str, discipline: str, difficulty: str = "Medium", count: int = 5) -> list[ExamQuestion]:
         """
@@ -137,9 +144,11 @@ class MockDataGeneratorAgent:
         return final_questions
 
     @retry(
-        wait=wait_exponential(multiplier=1, min=4, max=60),
-        stop=stop_after_attempt(10),
-        reraise=True
+        wait=wait_exponential(multiplier=1, min=2, max=30),
+        stop=stop_after_attempt(3),
+        reraise=True,
+        before_sleep=before_sleep_log(_logger, logging.WARNING),
+        after=after_log(_logger, logging.WARNING),
     )
     async def generate_student_answer(self, question: ExamQuestion, quality: str = "average", student_name: str = "Student") -> StudentAnswer:
         """
