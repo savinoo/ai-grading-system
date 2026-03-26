@@ -65,7 +65,7 @@ def save_persistence_data():
             os.makedirs("data/storage")
 
         with open(PERSISTENCE_FILE, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
+            json.dump(data, f, indent=2, ensure_ascii=False, default=str)
     except Exception as e:
         st.error(f"Erro ao salvar persistência: {e}")
 
