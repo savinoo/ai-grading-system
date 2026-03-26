@@ -489,7 +489,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                     class_uuid = cls['uuid']
 
                     students_payload = [
-                        {"full_name": s['name'], "email": f"aluno{i+1}@tcc.test"}
+                        {"full_name": s['name'], "email": f"aluno{i+1}@example.com"}
                         for i, s in enumerate(students_list)
                     ]
                     add_result = tcc_client.add_students_to_class(class_uuid, students_payload)
