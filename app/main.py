@@ -22,6 +22,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # --- Custom Modules (adapted for tcc architecture) ---
 from app.analytics_ui import render_analytics_selector, render_class_analytics_dashboard, render_plagiarism_dashboard, render_student_profile_card
+from app.experiment_store import get_experiment_store
 from app.persistence import load_persistence_data, save_persistence_data
 from app.ui_components import (
     render_class_ranking,
@@ -93,7 +94,8 @@ _t0 = time.time()
 tracker = _init_tracker()
 kb = _init_kb()
 analyzer = _init_analyzer()
-_perf_log.info(f"[INIT] analytics (tracker+kb+analyzer): {time.time()-_t0:.2f}s")
+exp_store = get_experiment_store()
+_perf_log.info(f"[INIT] analytics (tracker+kb+analyzer+exp_store): {time.time()-_t0:.2f}s")
 
 setup_page()
 render_custom_css()
@@ -210,8 +212,23 @@ with st.sidebar:
     st.divider()
     st.header("Parâmetros")
     divergence_threshold = st.slider("Limiar de Divergência", 0.5, 5.0, 1.5, 0.5)
-    # Persiste no session_state em vez de mutar o singleton global (thread-safe)
     st.session_state["divergence_threshold"] = divergence_threshold
+
+    # Experiment history
+    st.divider()
+    st.header("📦 Experimentos")
+    experiments = exp_store.list_experiments()
+    if experiments:
+        st.caption(f"{len(experiments)} experimento(s) salvo(s)")
+        for exp in experiments[:5]:
+            col_info, col_btn = st.columns([3, 1])
+            col_info.caption(f"#{exp['id']} — {exp.get('llm_model', '?')} | {exp.get('num_questions', '?')}Q {exp.get('num_students', '?')}A | {exp.get('status', '?')}")
+            if col_btn.button("📥", key=f"export_{exp['id']}", help="Exportar JSON"):
+                export_path = f"tcc/results/experiment_{exp['id']}.json"
+                exp_store.export_experiment(exp['id'], export_path)
+                st.success(f"Exportado: {export_path}")
+    else:
+        st.caption("Nenhum experimento ainda")
 
 # --- PAGES ---
 
@@ -316,8 +333,21 @@ elif operation_mode == "Batch Processing (Turma)":
                             questions = run_async(mock_agent.generate_exam_questions(sim_topic, discipline, "médio", count=qt_mock_questions))
                             _perf_log.info(f"[STEP1] {qt_mock_questions} questões geradas em {time.time()-_t1:.1f}s")
                             st.session_state['exam_questions'] = questions
+                            # Create experiment and save questions
+                            exp_id = exp_store.create_experiment({
+                                'llm_provider': settings.LLM_PROVIDER,
+                                'llm_model': settings.LLM_MODEL_NAME,
+                                'num_questions': qt_mock_questions,
+                                'num_students': qt_mock_students,
+                                'divergence_threshold': st.session_state.get('divergence_threshold', 2.0),
+                                'discipline': discipline,
+                                'topic': sim_topic,
+                            })
+                            st.session_state['current_experiment_id'] = exp_id
+                            exp_store.save_questions(exp_id, questions)
+                            _perf_log.info(f"[EXP-{exp_id}] Experiment created, {qt_mock_questions} questions saved")
                             save_persistence_data()
-                            st.success(f"{qt_mock_questions} questões geradas!")
+                            st.success(f"{qt_mock_questions} questões geradas! (Experimento #{exp_id})")
                         except Exception as e:
                             _perf_log.error(f"[STEP1] ERRO: {e}")
                             st.error(f"Erro ao gerar questões: {e}")
@@ -356,6 +386,11 @@ elif operation_mode == "Batch Processing (Turma)":
                                 qual = profiles[i % len(profiles)]
                                 students_list.append({"id": 200 + i, "name": f"Aluno {i+1} ({qual.title()})", "quality": qual})
                             st.session_state['batch_students_list'] = students_list
+
+                            # Save students to experiment
+                            exp_id = st.session_state.get('current_experiment_id')
+                            if exp_id:
+                                exp_store.save_students(exp_id, students_list)
 
                             all_mock_answers = {q.id: {} for q in questions}
                             gen_bar = status_container.progress(0)
@@ -401,6 +436,14 @@ elif operation_mode == "Batch Processing (Turma)":
                                 for s_idx, ans in enumerate(batch_answers):
                                     s_id = students_list[s_idx]['id']
                                     all_mock_answers[q.id][s_id] = ans
+                                    # Save answer to experiment
+                                    if exp_id:
+                                        exp_store.save_answer(
+                                            exp_id, str(q.id), str(s_id),
+                                            students_list[s_idx]['name'],
+                                            ans.text,
+                                            students_list[s_idx].get('quality')
+                                        )
 
                                 gen_bar.progress((q_idx + 1) / len(questions))
 
@@ -491,7 +534,18 @@ elif operation_mode == "Batch Processing (Turma)":
                                     })
                                     students_results_map[s_id]["total_grade"] += final_state.get('final_score', 0)
 
-                                    # **NEW**: Track this submission in analytics
+                                    # Save to experiment store
+                                    if exp_id:
+                                        student_name_for_exp = next(
+                                            (s['name'] for s in students_list if s['id'] == s_id),
+                                            f"Student_{s_id}"
+                                        )
+                                        exp_store.save_pipeline_state(
+                                            exp_id, str(q.id), str(s_id),
+                                            student_name_for_exp, final_state
+                                        )
+
+                                    # Track this submission in analytics
                                     from datetime import datetime
 
                                     # Extract criterion scores from corrections
@@ -544,6 +598,10 @@ elif operation_mode == "Batch Processing (Turma)":
                         st.session_state['exam_results'] = generated_batch_results
                         save_persistence_data()
                         _perf_log.info(f"[STEP3] Correção completa em {time.time()-_t3:.1f}s")
+                        # Finalize experiment
+                        if exp_id:
+                            exp_store.finish_experiment(exp_id, "completed")
+                            _perf_log.info(f"[EXP-{exp_id}] Experiment completed and saved")
                         status_container.update(label="Concluído!", state="complete", expanded=False)
                         st.rerun()
 
