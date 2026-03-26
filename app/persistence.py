@@ -3,12 +3,9 @@ import os
 
 import streamlit as st
 
-from src.domain.schemas import (
-    AgentCorrection,
-    ExamQuestion,
-    RetrievedContext,
-    StudentAnswer,
-)
+from src.domain.ai.schemas import ExamQuestion, StudentAnswer
+from src.domain.ai.agent_schemas import AgentCorrection
+from src.domain.ai.rag_schemas import RetrievedContext
 
 PERSISTENCE_FILE = "data/storage/exam_state.json"
 
@@ -45,14 +42,15 @@ def save_persistence_data():
 
                 # Manual serialization of the complex GraphState
                 state_ser = {
-                    "question": state['question'].model_dump(),
-                    "student_answer": state['student_answer'].model_dump(),
-                    "rag_context": [r.model_dump() for r in state['rag_context']],
-                    "individual_corrections": [c.model_dump() for c in state.get('individual_corrections', [])],
+                    "question": state['question'].model_dump() if hasattr(state.get('question'), 'model_dump') else state.get('question'),
+                    "student_answer": state['student_answer'].model_dump() if hasattr(state.get('student_answer'), 'model_dump') else state.get('student_answer'),
+                    "rag_contexts": [r.model_dump() for r in (state.get('rag_contexts') or []) if hasattr(r, 'model_dump')],
+                    "correction_1": state['correction_1'].model_dump() if state.get('correction_1') and hasattr(state['correction_1'], 'model_dump') else None,
+                    "correction_2": state['correction_2'].model_dump() if state.get('correction_2') and hasattr(state['correction_2'], 'model_dump') else None,
+                    "correction_arbiter": state['correction_arbiter'].model_dump() if state.get('correction_arbiter') and hasattr(state['correction_arbiter'], 'model_dump') else None,
                     "divergence_detected": state.get('divergence_detected'),
                     "divergence_value": state.get('divergence_value'),
-                    "final_grade": state.get('final_grade'),
-                    "processing_metadata": state.get('processing_metadata', {})
+                    "final_score": state.get('final_score'),
                 }
                 det_copy['state'] = state_ser
                 details_serialized.append(det_copy)
@@ -106,14 +104,15 @@ def load_persistence_data():
 
                     # Reconstruct objects
                     state_loaded = {
-                        "question": ExamQuestion(**state_raw['question']),
-                        "student_answer": StudentAnswer(**state_raw['student_answer']),
-                        "rag_context": [RetrievedContext(**r) for r in state_raw['rag_context']],
-                        "individual_corrections": [AgentCorrection(**c) for c in state_raw['individual_corrections']],
+                        "question": ExamQuestion(**state_raw['question']) if state_raw.get('question') else None,
+                        "student_answer": StudentAnswer(**state_raw['student_answer']) if state_raw.get('student_answer') else None,
+                        "rag_contexts": [RetrievedContext(**r) for r in (state_raw.get('rag_contexts') or [])],
+                        "correction_1": AgentCorrection(**state_raw['correction_1']) if state_raw.get('correction_1') else None,
+                        "correction_2": AgentCorrection(**state_raw['correction_2']) if state_raw.get('correction_2') else None,
+                        "correction_arbiter": AgentCorrection(**state_raw['correction_arbiter']) if state_raw.get('correction_arbiter') else None,
                         "divergence_detected": state_raw.get('divergence_detected'),
                         "divergence_value": state_raw.get('divergence_value'),
-                        "final_grade": state_raw.get('final_grade'),
-                        "processing_metadata": state_raw.get('processing_metadata', {})
+                        "final_score": state_raw.get('final_score'),
                     }
                     d_copy['state'] = state_loaded
                     details_loaded.append(d_copy)

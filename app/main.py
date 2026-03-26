@@ -11,7 +11,7 @@ import streamlit as st
 # Add project root to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-# --- Custom Modules ---
+# --- Custom Modules (adapted for tcc architecture) ---
 from app.analytics_ui import render_analytics_selector, render_class_analytics_dashboard, render_plagiarism_dashboard, render_student_profile_card
 from app.persistence import load_persistence_data, save_persistence_data
 from app.ui_components import (
@@ -23,49 +23,27 @@ from app.ui_components import (
 )
 from src.agents.mock_generator import MockDataGeneratorAgent
 from src.analytics import ClassAnalyzer, StudentTracker
-from src.config.settings import settings
+from src.core.settings import settings
 from src.domain.analytics_schemas import SubmissionRecord
-from src.domain.schemas import EvaluationCriterion, ExamQuestion, QuestionMetadata, StudentAnswer
-from src.infrastructure.langsmith_config import initialize_langsmith, is_langsmith_enabled
-
-# from langchain_openai import ChatOpenAI # SUBSTITUIDO PELO FACTORY
-from src.infrastructure.llm_factory import get_chat_model
-from src.infrastructure.vector_db import get_vector_store
+from src.domain.ai.schemas import EvaluationCriterion, ExamQuestion, QuestionMetadata, StudentAnswer
+from src.core.langsmith_config import initialize_langsmith, is_langsmith_enabled
+from src.core.llm_handler import get_chat_model
+from src.core.vector_db_handler import get_vector_store
 from src.memory import get_knowledge_base
-from src.rag.chunking import process_and_index_pdf
-from src.rag.retriever import search_context
+from src.services.rag.chunking_service import ChunkingService
+from src.services.rag.retrieval_service import RetrievalService
 from src.utils.helpers import run_async, safe_gather, save_uploaded_file
-from src.utils.logging_config import setup_logging
-from src.workflow.graph import build_grading_workflow
+from src.core.logging_config import get_logger
+from src.domain.ai.workflow.graph import get_grading_graph
 
 # --- Initialization ---
-setup_logging()
-initialize_langsmith()  # Inicializa LangSmith tracing
-from src.infrastructure.dspy_config import configure_dspy
+logger = get_logger("streamlit")
+initialize_langsmith()
 
-configure_dspy()
-# LLM para geração de questões — usa num_predict maior (questões são mais longas)
-# num_predict e num_ctx vêm de OLLAMA_NUM_PREDICT_QUESTIONS e OLLAMA_NUM_CTX no .env
-from src.config.settings import settings as _settings
-llm_creation = get_chat_model(
-    temperature=1,
-    num_predict=_settings.OLLAMA_NUM_PREDICT_QUESTIONS,
-)
+# LLM para geração de questões
+llm_creation = get_chat_model(temperature=1)
 mock_agent = MockDataGeneratorAgent(llm_creation)
-# Warmup: pré-carrega o modelo Ollama na RAM para evitar latência na primeira chamada do usuário
-if _settings.LLM_PROVIDER == "local":
-    import threading
-    def _warmup():
-        try:
-            import requests
-            requests.post(
-                f"{_settings.OLLAMA_BASE_URL}/api/generate",
-                json={"model": _settings.LOCAL_MODEL_NAME, "prompt": "ok", "stream": False, "options": {"num_predict": 1}},
-                timeout=30
-            )
-        except Exception:
-            pass
-    threading.Thread(target=_warmup, daemon=True).start()
+retrieval_service = RetrievalService()
 
 # Analytics initialization
 tracker = StudentTracker()
@@ -80,43 +58,43 @@ load_persistence_data()
 
 async def run_correction_pipeline(inputs, status_container=None):
     """Executa o LangGraph de forma assíncrona, com streaming de eventos reais"""
-    workflow = build_grading_workflow()
-
-    # Injeta o limiar de divergência do session_state para evitar mutação do singleton global
-    import streamlit as _st
-    try:
-        threshold = _st.session_state.get("divergence_threshold")
-        if threshold is not None:
-            inputs = {**inputs, "divergence_threshold": threshold}
-    except Exception:
-        pass
+    workflow = get_grading_graph()
 
     if status_container:
-        final_state = inputs.copy()
+        final_state = dict(inputs)
         async for output in workflow.astream(inputs):
             for key, value in output.items():
                 if isinstance(value, dict):
                     final_state.update(value)
 
-                # Feedback visual
+                # Feedback visual (node names from tcc graph)
                 if key == "retrieve_context":
-                    count = len(value.get('rag_context', []))
+                    contexts = value.get('rag_contexts', [])
+                    count = len(contexts) if contexts else 0
                     status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📚 RAG: {count} trechos recuperados.")
-                elif key == "corrector_1":
-                     res = value.get('individual_corrections', [])[0]
-                     status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🤖 Corretor 1: Nota {res.total_score:.1f}")
-                elif key == "corrector_2":
-                     res = value.get('individual_corrections', [])[0]
-                     status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🤖 Corretor 2: Nota {res.total_score:.1f}")
-                elif key == "check_divergence":
-                     is_div = value.get('divergence_detected', False)
-                     if is_div:
-                         status_container.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⚠️ Divergência! Acionando Árbitro...")
-                     else:
-                         status_container.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;✨ Consenso atingido.")
+                elif key == "examiner_1":
+                    c1 = value.get('correction_1')
+                    if c1:
+                        status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🤖 Corretor 1: Nota {c1.total_score:.1f}")
+                elif key == "examiner_2":
+                    c2 = value.get('correction_2')
+                    if c2:
+                        status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🤖 Corretor 2: Nota {c2.total_score:.1f}")
+                elif key == "divergence_check":
+                    is_div = value.get('divergence_detected', False)
+                    if is_div:
+                        diff = value.get('divergence_value', 0)
+                        status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⚠️ Divergência ({diff:.1f} pts)! Acionando Árbitro...")
+                    else:
+                        status_container.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;✨ Consenso atingido.")
                 elif key == "arbiter":
-                     res = value.get('individual_corrections', [])[-1]
-                     status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;👨‍⚖️ Árbitro: Nota final {res.total_score:.1f}")
+                    arb = value.get('correction_arbiter')
+                    if arb:
+                        status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;👨‍⚖️ Árbitro: Nota {arb.total_score:.1f}")
+                elif key == "finalize":
+                    score = value.get('final_score')
+                    if score is not None:
+                        status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;✅ Nota Final: {score:.1f}")
 
         return final_state
     else:
@@ -142,7 +120,7 @@ with st.sidebar:
 
     # LangSmith Status
     st.header("📊 Observabilidade")
-    st.caption(f"LLM model: {settings.MODEL_NAME}")
+    st.caption(f"LLM: {settings.LLM_PROVIDER} / {settings.LLM_MODEL_NAME}")
     if is_langsmith_enabled():
         st.success("✓ LangSmith Ativo", icon="🔍")
         st.caption(f"Projeto: {settings.LANGSMITH_PROJECT_NAME}")
@@ -166,7 +144,9 @@ with st.sidebar:
     if uploaded_file and st.button("Indexar Material"):
         with st.spinner("Processando..."):
             path = save_uploaded_file(uploaded_file)
-            count = process_and_index_pdf(path, discipline, topic)
+            chunking = ChunkingService()
+            chunks = run_async(chunking.process_pdf(path))
+            count = len(chunks)
             st.success(f"Adicionado {count} chunks!")
             time.sleep(1)
             st.rerun()
@@ -209,7 +189,7 @@ if operation_mode == "Single Student (Debug)":
                 st.session_state['single_input'] = {
                     "question": ExamQuestion(id="Q1", statement=q_text, rubric=rubric_objs, metadata=QuestionMetadata(discipline=discipline, topic=topic)),
                     "student_answer": StudentAnswer(student_id="ALUNO_01", question_id="Q1", text=student_text),
-                    "rag_context": [], "individual_corrections": [], "divergence_detected": False, "divergence_value": 0.0, "final_grade": None
+                    "rag_contexts": [], "correction_1": None, "correction_2": None, "correction_arbiter": None, "divergence_detected": False, "divergence_value": 0.0, "all_corrections": [], "final_score": None
                 }
                 st.success("Pronto para executar!")
             except Exception as e: st.error(f"Erro: {e}")
@@ -223,7 +203,7 @@ if operation_mode == "Single Student (Debug)":
 
         if 'single_result' in st.session_state:
             res = st.session_state['single_result']
-            st.metric("Nota Final", f"{res['final_grade']:.2f}")
+            st.metric("Nota Final", f"{res.get('final_score', 0):.2f}")
             with st.expander("Detalhes da Correção"):
                 st.json(res)
 
@@ -399,7 +379,7 @@ elif operation_mode == "Batch Processing (Turma)":
 
                         for q_idx, q in enumerate(questions):
                             status_container.write(f"Corrigindo Q{q_idx+1}...")
-                            rag_context = search_context(q.statement, q.metadata.discipline, q.metadata.topic)
+                            rag_context = []  # RAG context fetched by pipeline nodes
 
                             # Prepare inputs
                             inputs_by_student = {}
@@ -407,8 +387,9 @@ elif operation_mode == "Batch Processing (Turma)":
                                 if s['id'] in all_mock_answers[q.id]:
                                     ans = all_mock_answers[q.id][s['id']]
                                     inputs_by_student[s['id']] = {
-                                        "question": q, "student_answer": ans, "rag_context": rag_context,
-                                        "individual_corrections": []
+                                        "question": q, "student_answer": ans, "rag_contexts": [],
+                                        "correction_1": None, "correction_2": None, "correction_arbiter": None,
+                                        "divergence_detected": False, "divergence_value": 0.0, "all_corrections": [], "final_score": None
                                     }
 
                             # Execute Batch
@@ -441,19 +422,20 @@ elif operation_mode == "Batch Processing (Turma)":
                                     students_results_map[s_id]["results"].append({
                                         "question_id": q.id, "question_text": q.statement,
                                         "answer_text": inp['student_answer'].text,
-                                        "grade": final_state.get('final_grade', 0),
+                                        "grade": final_state.get('final_score', 0),
                                         "divergence": final_state.get('divergence_detected', False),
                                         "state": final_state
                                     })
-                                    students_results_map[s_id]["total_grade"] += final_state.get('final_grade', 0)
+                                    students_results_map[s_id]["total_grade"] += final_state.get('final_score', 0)
 
                                     # **NEW**: Track this submission in analytics
                                     from datetime import datetime
 
                                     # Extract criterion scores from corrections
                                     criterion_scores = {}
-                                    if final_state.get('individual_corrections'):
-                                        last_correction = final_state['individual_corrections'][-1]
+                                    all_corr = final_state.get('all_corrections', [])
+                                    if all_corr:
+                                        last_correction = all_corr[-1]
                                         if hasattr(last_correction, 'criterion_scores'):
                                             for crit in last_correction.criterion_scores:
                                                 criterion_scores[crit.criterion] = crit.score
@@ -463,7 +445,7 @@ elif operation_mode == "Batch Processing (Turma)":
                                         question_id=q.id,
                                         question_text=q.statement,
                                         student_answer=inp['student_answer'].text,
-                                        grade=final_state.get('final_grade', 0),
+                                        grade=final_state.get('final_score', 0),
                                         max_score=10.0,
                                         criterion_scores=criterion_scores,
                                         divergence_detected=final_state.get('divergence_detected', False),

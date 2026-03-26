@@ -8,7 +8,6 @@ from statistics import mean, stdev
 
 import numpy as np
 
-from src.config.settings import settings
 from src.domain.analytics_schemas import LearningGap, Strength, StudentProfile, SubmissionRecord
 
 logger = logging.getLogger(__name__)
@@ -26,8 +25,8 @@ class StudentTracker:
         strength_threshold: float | None = None,
     ):
         self.profiles: dict[str, StudentProfile] = {}
-        self.gap_threshold = gap_threshold if gap_threshold is not None else settings.GAP_THRESHOLD
-        self.strength_threshold = strength_threshold if strength_threshold is not None else settings.STRENGTH_THRESHOLD
+        self.gap_threshold = gap_threshold if gap_threshold is not None else 6.0
+        self.strength_threshold = strength_threshold if strength_threshold is not None else 8.0
 
     def add_submission(
         self,
