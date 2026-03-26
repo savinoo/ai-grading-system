@@ -24,8 +24,7 @@ venv.bak/
 # Mac
 .DS_Store
 
-# Logs
-*.log
+
 
 # Project specific
 data/processed/
