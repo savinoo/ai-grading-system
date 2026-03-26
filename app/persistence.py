@@ -15,14 +15,14 @@ def save_persistence_data():
 
     # 1. Save Questions
     if 'exam_questions' in st.session_state:
-        data['exam_questions'] = [q.model_dump() for q in st.session_state['exam_questions']]
+        data['exam_questions'] = [q.model_dump(mode="json") for q in st.session_state['exam_questions']]
 
     # 2. Save Batch Answers
     if 'batch_all_mock_answers' in st.session_state:
         # structure: {question_id: {student_id: answer_obj}}
         serialized_answers = {}
         for q_id, s_map in st.session_state['batch_all_mock_answers'].items():
-            serialized_answers[q_id] = {s_id: ans.model_dump() for s_id, ans in s_map.items()}
+            serialized_answers[str(q_id)] = {str(s_id): ans.model_dump(mode="json") for s_id, ans in s_map.items()}
         data['batch_all_mock_answers'] = serialized_answers
 
         if 'batch_students_list' in st.session_state:
@@ -42,12 +42,12 @@ def save_persistence_data():
 
                 # Manual serialization of the complex GraphState
                 state_ser = {
-                    "question": state['question'].model_dump() if hasattr(state.get('question'), 'model_dump') else state.get('question'),
-                    "student_answer": state['student_answer'].model_dump() if hasattr(state.get('student_answer'), 'model_dump') else state.get('student_answer'),
-                    "rag_contexts": [r.model_dump() for r in (state.get('rag_contexts') or []) if hasattr(r, 'model_dump')],
-                    "correction_1": state['correction_1'].model_dump() if state.get('correction_1') and hasattr(state['correction_1'], 'model_dump') else None,
-                    "correction_2": state['correction_2'].model_dump() if state.get('correction_2') and hasattr(state['correction_2'], 'model_dump') else None,
-                    "correction_arbiter": state['correction_arbiter'].model_dump() if state.get('correction_arbiter') and hasattr(state['correction_arbiter'], 'model_dump') else None,
+                    "question": state['question'].model_dump(mode="json") if hasattr(state.get('question'), 'model_dump') else state.get('question'),
+                    "student_answer": state['student_answer'].model_dump(mode="json") if hasattr(state.get('student_answer'), 'model_dump') else state.get('student_answer'),
+                    "rag_contexts": [r.model_dump(mode="json") for r in (state.get('rag_contexts') or []) if hasattr(r, 'model_dump')],
+                    "correction_1": state['correction_1'].model_dump(mode="json") if state.get('correction_1') and hasattr(state['correction_1'], 'model_dump') else None,
+                    "correction_2": state['correction_2'].model_dump(mode="json") if state.get('correction_2') and hasattr(state['correction_2'], 'model_dump') else None,
+                    "correction_arbiter": state['correction_arbiter'].model_dump(mode="json") if state.get('correction_arbiter') and hasattr(state['correction_arbiter'], 'model_dump') else None,
                     "divergence_detected": state.get('divergence_detected'),
                     "divergence_value": state.get('divergence_value'),
                     "final_score": state.get('final_score'),
@@ -86,7 +86,7 @@ def load_persistence_data():
         if 'batch_all_mock_answers' in data and 'batch_all_mock_answers' not in st.session_state:
             deserialized_answers = {}
             for q_id, s_map in data['batch_all_mock_answers'].items():
-                deserialized_answers[q_id] = {int(s_id): StudentAnswer(**ans_dict) for s_id, ans_dict in s_map.items()}
+                deserialized_answers[q_id] = {s_id: StudentAnswer(**ans_dict) for s_id, ans_dict in s_map.items()}
             st.session_state['batch_all_mock_answers'] = deserialized_answers
 
         if 'batch_students_list' in data and 'batch_students_list' not in st.session_state:
