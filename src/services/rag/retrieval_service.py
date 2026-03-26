@@ -172,8 +172,8 @@ class RetrievalService(RetrievalServiceInterface):
                     source_document=doc.metadata.get("source", "unknown"),
                     page_number=doc.metadata.get("page"),
                     relevance_score=score,
-                    discipline=doc.metadata.get("discipline", discipline),
-                    topic=doc.metadata.get("topic", topic or ""),
+                    discipline=doc.metadata.get("discipline", discipline) or "Geral",
+                    topic=doc.metadata.get("topic", topic) or "Geral",
                     chunk_index=doc.metadata.get("chunk_index")
                 ))
             
