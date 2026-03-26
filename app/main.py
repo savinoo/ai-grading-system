@@ -190,12 +190,16 @@ with st.sidebar:
     topic = "Revolução Industrial"
 
     if uploaded_file and st.button("Indexar Material"):
-        with st.spinner("Processando..."):
+        with st.spinner("Processando e indexando..."):
             path = save_uploaded_file(uploaded_file)
             chunking = ChunkingService()
             chunks = run_async(chunking.process_pdf(path))
-            count = len(chunks)
-            st.success(f"Adicionado {count} chunks!")
+            if chunks:
+                vs_instance = get_vector_store()
+                vs_instance.add_documents(chunks)
+                st.success(f"Indexado {len(chunks)} chunks no VectorDB!")
+            else:
+                st.warning("Nenhum chunk extraído do PDF.")
             time.sleep(1)
             st.rerun()
 
