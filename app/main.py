@@ -269,7 +269,7 @@ elif operation_mode == "Batch Processing (Turma)":
             if st.checkbox("🤖 Usar Assistente de Criação (AI)"):
                 c1, c2, c3 = st.columns([3, 2, 1])
                 with c1: gen_topic = st.text_input("Tópico", f"{discipline}: {topic}")
-                with c2: gen_diff = st.selectbox("Dificuldade", ["Easy", "Medium", "Hard"], index=1)
+                with c2: gen_diff = st.selectbox("Dificuldade", ["fácil", "médio", "difícil"], index=1)
                 with c3:
                     st.write("")
                     if st.button("✨ Criar"):
@@ -313,7 +313,7 @@ elif operation_mode == "Batch Processing (Turma)":
                         _perf_log.info(f"[STEP1] Gerando {qt_mock_questions} questões via Gemini...")
                         _t1 = time.time()
                         try:
-                            questions = run_async(mock_agent.generate_exam_questions(sim_topic, discipline, "Medium", count=qt_mock_questions))
+                            questions = run_async(mock_agent.generate_exam_questions(sim_topic, discipline, "médio", count=qt_mock_questions))
                             _perf_log.info(f"[STEP1] {qt_mock_questions} questões geradas em {time.time()-_t1:.1f}s")
                             st.session_state['exam_questions'] = questions
                             save_persistence_data()

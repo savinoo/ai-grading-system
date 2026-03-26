@@ -37,7 +37,7 @@ class MockDataGeneratorAgent:
         before_sleep=before_sleep_log(_logger, logging.WARNING),
         after=after_log(_logger, logging.WARNING),
     )
-    async def generate_exam_question(self, topic: str, discipline: str, difficulty: str = "Medium") -> ExamQuestion:
+    async def generate_exam_question(self, topic: str, discipline: str, difficulty: str = "médio") -> ExamQuestion:
         """
         Gera uma questão de prova completa com rubrica baseada no tópico.
         """
@@ -85,7 +85,7 @@ class MockDataGeneratorAgent:
         before_sleep=before_sleep_log(_logger, logging.WARNING),
         after=after_log(_logger, logging.WARNING),
     )
-    async def generate_exam_questions(self, topic: str, discipline: str, difficulty: str = "Medium", count: int = 5) -> list[ExamQuestion]:
+    async def generate_exam_questions(self, topic: str, discipline: str, difficulty: str = "médio", count: int = 5) -> list[ExamQuestion]:
         """
         Gera uma lista de questões de uma única vez, com RUBRICA UNIFICADA para toda a prova.
         """
