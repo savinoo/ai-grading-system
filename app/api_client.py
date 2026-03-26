@@ -226,7 +226,7 @@ class APIClient:
             if self.token:
                 headers["Authorization"] = f"Bearer {self.token}"
             resp = self._session.post(
-                f"{self.base_url}/attachments/{exam_uuid}",
+                f"{self.base_url}/attachments/upload?exam_uuid={exam_uuid}",
                 files=files,
                 headers=headers,
                 timeout=120

@@ -494,13 +494,16 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                     ]
                     add_result = tcc_client.add_students_to_class(class_uuid, students_payload)
 
-                    # Map student names to UUIDs from backend
-                    backend_students = add_result.get('students', add_result.get('added', []))
+                    # Map student names to backend UUIDs
+                    # Response: {"details": {"enrolled": [{"uuid": ..., "full_name": ...}]}}
+                    enrolled = add_result.get('details', {}).get('enrolled', [])
                     student_uuid_map = {}
-                    if isinstance(backend_students, list):
-                        for i, bs in enumerate(backend_students):
-                            if isinstance(bs, dict):
-                                student_uuid_map[students_list[i]['id']] = bs.get('uuid', bs.get('student_uuid', str(students_list[i]['id'])))
+                    for enrolled_s in enrolled:
+                        # Match by name
+                        for local_s in students_list:
+                            if local_s['name'] == enrolled_s.get('full_name'):
+                                student_uuid_map[local_s['id']] = enrolled_s['uuid']
+                                break
                     status.write(f"✅ Turma criada + {len(students_list)} alunos cadastrados")
                     st.session_state['tcc_class_uuid'] = class_uuid
                     st.session_state['tcc_student_uuid_map'] = student_uuid_map
@@ -514,6 +517,21 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                     )
                     exam_uuid = exam['uuid']
                     status.write(f"✅ Prova criada: `{exam_uuid}`")
+
+                    # 2b. Upload PDF (pra RAG funcionar no backend)
+                    pdf_path = None
+                    import glob as _glob
+                    pdfs = _glob.glob("data/pdfs/*.pdf") + _glob.glob("data/raw/*.pdf")
+                    if pdfs:
+                        pdf_path = pdfs[0]
+                        status.write(f"**2b/6** Anexando material ({os.path.basename(pdf_path)})...")
+                        try:
+                            tcc_client.upload_attachment(exam_uuid, pdf_path)
+                            status.write(f"✅ PDF anexado ao exame")
+                        except Exception as e:
+                            status.write(f"⚠️ Erro ao anexar PDF: {e} (RAG pode não funcionar)")
+                    else:
+                        status.write("⚠️ Nenhum PDF encontrado em data/pdfs/ ou data/raw/")
 
                     # 3. Add questions
                     status.write(f"**3/6** Adicionando {len(questions)} questões...")
