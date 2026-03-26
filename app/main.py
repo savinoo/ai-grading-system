@@ -390,7 +390,9 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                     profile_labels = {"excellent": "Excelente", "average": "Adequado", "poor": "Fraco", "off_topic": "Fora do Tema"}
                     students_list = []
                     for i, qual in enumerate(profiles):
-                        students_list.append({"id": 200 + i, "name": f"Aluno {i+1} ({profile_labels[qual]})", "quality": qual})
+                        s_name = f"Aluno {i+1} ({profile_labels[qual]})"
+                        s_uuid = str(_uuid.uuid5(_uuid.NAMESPACE_DNS, f"simulated_{s_name}"))
+                        students_list.append({"id": s_uuid, "name": s_name, "quality": qual})
 
                     all_answers = {q.id: {} for q in questions}
 
@@ -967,7 +969,9 @@ elif operation_mode == "Batch Processing (Turma)":
                             students_list = []
                             for i in range(qt_mock_students):
                                 qual = profiles[i % len(profiles)]
-                                students_list.append({"id": 200 + i, "name": f"Aluno {i+1} ({profile_labels[qual]})", "quality": qual})
+                                s_name = f"Aluno {i+1} ({profile_labels[qual]})"
+                        s_uuid = str(_uuid.uuid5(_uuid.NAMESPACE_DNS, f"simulated_{s_name}"))
+                        students_list.append({"id": s_uuid, "name": s_name, "quality": qual})
                             st.session_state['batch_students_list'] = students_list
 
                             # Save students to experiment
