@@ -68,7 +68,7 @@ class MockDataGeneratorAgent:
 
         # Monta o objeto final ExamQuestion
         return ExamQuestion(
-            id=str(uuid.uuid4()),
+            id=uuid.uuid4(),
             statement=result.statement,
             rubric=result.rubric,
             metadata=QuestionMetadata(
@@ -131,7 +131,7 @@ class MockDataGeneratorAgent:
         final_questions = []
         for q_stmt in result.questions:
             final_questions.append(ExamQuestion(
-                id=str(uuid.uuid4()),
+                id=uuid.uuid4(),
                 statement=q_stmt,
                 rubric=result.global_rubric,
                 metadata=QuestionMetadata(
@@ -186,8 +186,9 @@ class MockDataGeneratorAgent:
 
         # AIMessage.content é o texto direto
         text = result.content if hasattr(result, "content") else str(result)
+        import uuid as _uuid
         return StudentAnswer(
-            student_id=f"simulated_{student_name.lower().replace(' ', '_')}",
+            student_id=_uuid.uuid5(_uuid.NAMESPACE_DNS, f"simulated_{student_name}"),
             question_id=question.id,
             text=text.strip()
         )
