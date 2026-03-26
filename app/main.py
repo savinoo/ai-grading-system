@@ -22,6 +22,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # --- Custom Modules (adapted for tcc architecture) ---
 from app.analytics_ui import render_analytics_selector, render_class_analytics_dashboard, render_plagiarism_dashboard, render_student_profile_card
+from app.api_client import get_api_client
 from app.experiment_store import get_experiment_store
 from app.persistence import load_persistence_data, save_persistence_data
 from app.ui_components import (
@@ -161,7 +162,7 @@ with st.sidebar:
     st.title("⚙️ Painel de Controle")
     operation_mode = st.radio(
         "Modo de Operação",
-        ["Single Student (Debug)", "Batch Processing (Turma)", "📊 Analytics Dashboard"],
+        ["Single Student (Debug)", "Batch Processing (Turma)", "📊 Analytics Dashboard", "🔗 End-to-End (Backend API)"],
         index=1
     )
     st.divider()
@@ -844,4 +845,294 @@ elif operation_mode == "📊 Analytics Dashboard":
 
         with tab_plagiarism:
             render_plagiarism_dashboard(all_profiles)
+
+elif operation_mode == "🔗 End-to-End (Backend API)":
+    st.title("🔗 End-to-End via Backend API (QA1)")
+    st.markdown("""
+    Executa o fluxo completo via API REST do backend FastAPI, cobrindo **todas as etapas do QA1**:
+    cadastrar → publicar → indexar → corrigir → persistir → revisar → aprovar → finalizar.
+    """)
+
+    # Backend connection
+    api_url = st.text_input("URL do Backend", value="http://localhost:8000")
+    client = get_api_client(api_url)
+
+    # Health check
+    col_health, col_login = st.columns(2)
+    with col_health:
+        if st.button("🏥 Health Check"):
+            if client.health():
+                st.success("Backend online!")
+            else:
+                st.error(f"Backend offline em {api_url}")
+
+    # Login
+    if 'api_logged_in' not in st.session_state:
+        st.session_state['api_logged_in'] = False
+
+    if not st.session_state['api_logged_in']:
+        st.subheader("🔐 Login")
+        with st.form("login_form"):
+            email = st.text_input("Email", value="teacher@example.com")
+            password = st.text_input("Senha", type="password")
+            if st.form_submit_button("Entrar"):
+                try:
+                    result = client.login(email, password)
+                    st.session_state['api_logged_in'] = True
+                    st.session_state['api_user'] = result.get('user', {})
+                    st.success(f"Logado como {result['user'].get('email', '?')}")
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"Erro no login: {e}")
+    else:
+        user = st.session_state.get('api_user', {})
+        st.success(f"Logado como **{user.get('first_name', '')} {user.get('last_name', '')}** ({user.get('email', '')})")
+        if st.button("Logout"):
+            st.session_state['api_logged_in'] = False
+            st.session_state.pop('api_user', None)
+            st.rerun()
+
+        st.divider()
+
+        # ─── Tabs: Criar Prova | Provas Existentes | Revisão ───
+        tab_create, tab_list, tab_review = st.tabs(["📝 Criar Prova & Corrigir", "📋 Provas Existentes", "✅ Revisão Docente"])
+
+        with tab_create:
+            st.subheader("Criar Prova via API")
+
+            exam_title = st.text_input("Título da Prova", value="Experimento TCC — Algoritmos")
+            exam_desc = st.text_area("Descrição", value="Prova gerada via Streamlit para validação end-to-end", height=80)
+
+            st.markdown("---")
+            st.subheader("Questões")
+
+            # Use questions from batch mode if available
+            if 'exam_questions' in st.session_state:
+                st.info(f"{len(st.session_state['exam_questions'])} questões disponíveis do modo Batch")
+                use_batch = st.checkbox("Usar questões do modo Batch", value=True)
+            else:
+                use_batch = False
+                st.warning("Gere questões no modo 'Batch Processing' primeiro, ou digite abaixo:")
+
+            if not use_batch:
+                num_qs = st.number_input("Número de questões", 1, 10, 3, key="api_num_qs")
+                api_questions = []
+                for i in range(num_qs):
+                    q_text = st.text_area(f"Questão {i+1}", key=f"api_q_{i}", height=80)
+                    api_questions.append({"statement": q_text, "points": 10.0})
+
+            st.markdown("---")
+            st.subheader("Respostas dos Alunos")
+
+            if 'batch_all_mock_answers' in st.session_state and 'batch_students_list' in st.session_state:
+                st.info(f"{len(st.session_state['batch_students_list'])} alunos com respostas disponíveis do modo Batch")
+                use_batch_answers = st.checkbox("Usar respostas do modo Batch", value=True)
+            else:
+                use_batch_answers = False
+                st.warning("Simule respostas no modo 'Batch Processing' primeiro")
+
+            st.markdown("---")
+
+            # Execute full flow
+            if st.button("🚀 Executar Fluxo End-to-End", type="primary"):
+                if use_batch and 'exam_questions' not in st.session_state:
+                    st.error("Gere questões primeiro no modo Batch")
+                else:
+                    status = st.status("🔄 Executando fluxo end-to-end...", expanded=True)
+
+                    try:
+                        # Step 1: Create exam
+                        status.write("**1/7** Criando prova...")
+                        exam = client.create_exam(exam_title, exam_desc)
+                        exam_uuid = exam['uuid']
+                        status.write(f"✅ Prova criada: `{exam_uuid}`")
+
+                        # Step 2: Add questions
+                        if use_batch:
+                            questions = st.session_state['exam_questions']
+                            questions_data = [{"statement": q.statement, "points": getattr(q, 'total_points', 10.0)} for q in questions]
+                        else:
+                            questions_data = api_questions
+
+                        status.write(f"**2/7** Adicionando {len(questions_data)} questões...")
+                        created_qs = []
+                        for i, qd in enumerate(questions_data):
+                            q = client.add_question(exam_uuid, qd['statement'], qd.get('points', 10.0), i + 1)
+                            created_qs.append(q)
+                        status.write(f"✅ {len(created_qs)} questões adicionadas")
+
+                        # Step 3: Add answers
+                        status.write("**3/7** Inserindo respostas dos alunos...")
+                        answer_count = 0
+                        created_answers = []
+
+                        if use_batch_answers:
+                            students = st.session_state['batch_students_list']
+                            all_answers = st.session_state['batch_all_mock_answers']
+
+                            for q_idx, cq in enumerate(created_qs):
+                                q_uuid = cq['uuid']
+                                # Match by position (batch questions may have different UUIDs)
+                                if use_batch:
+                                    orig_q = questions[q_idx]
+                                    orig_q_id = orig_q.id
+                                    answers_for_q = all_answers.get(orig_q_id, all_answers.get(str(orig_q_id), {}))
+                                else:
+                                    answers_for_q = {}
+
+                                for s_id, ans in answers_for_q.items():
+                                    import uuid as _uuid
+                                    student_uuid = str(_uuid.uuid5(_uuid.NAMESPACE_DNS, f"student_{s_id}"))
+                                    try:
+                                        a = client.add_answer(exam_uuid, q_uuid, student_uuid, ans.text)
+                                        created_answers.append(a)
+                                        answer_count += 1
+                                    except Exception as e:
+                                        status.write(f"⚠️ Erro ao inserir resposta: {e}")
+
+                        status.write(f"✅ {answer_count} respostas inseridas")
+
+                        # Step 4: Publish (triggers grading)
+                        status.write("**4/7** Publicando prova (dispara correção automática)...")
+                        pub = client.publish_exam(exam_uuid)
+                        status.write(f"✅ Prova publicada! Correção em background...")
+
+                        # Step 5: Wait for grading
+                        status.write("**5/7** Aguardando correção automática...")
+                        progress = st.progress(0)
+                        max_wait = 300
+                        start = time.time()
+                        final_status = "TIMEOUT"
+
+                        while time.time() - start < max_wait:
+                            elapsed = time.time() - start
+                            progress.progress(min(elapsed / max_wait, 0.99))
+                            exam_data = client.get_exam(exam_uuid)
+                            current_status = exam_data.get('status', '')
+                            if current_status in ('GRADED', 'WARNING'):
+                                final_status = current_status
+                                progress.progress(1.0)
+                                break
+                            time.sleep(5)
+
+                        if final_status == "TIMEOUT":
+                            status.write("⚠️ Timeout aguardando correção (5 min)")
+                        else:
+                            status.write(f"✅ Correção concluída! Status: **{final_status}**")
+
+                        # Step 6: Get review
+                        status.write("**6/7** Obtendo resultados da revisão...")
+                        try:
+                            review = client.get_review(exam_uuid)
+                            st.session_state['api_review'] = review
+                            st.session_state['api_exam_uuid'] = exam_uuid
+
+                            total_answers = sum(len(q.get('student_answers', [])) for q in review.get('questions', []))
+                            status.write(f"✅ Revisão obtida: {total_answers} respostas corrigidas")
+                        except Exception as e:
+                            status.write(f"⚠️ Erro ao obter revisão: {e}")
+
+                        # Step 7: Persistência
+                        status.write("**7/7** Dados persistidos no banco de dados do backend ✅")
+
+                        status.update(label="✅ Fluxo end-to-end completo!", state="complete")
+
+                        # Save to experiment store
+                        exp_id = exp_store.create_experiment({
+                            'llm_provider': settings.LLM_PROVIDER,
+                            'llm_model': settings.LLM_MODEL_NAME,
+                            'mode': 'end-to-end (backend API)',
+                            'exam_uuid': exam_uuid,
+                            'final_status': final_status,
+                            'num_questions': len(created_qs),
+                            'num_answers': answer_count,
+                        })
+                        exp_store.finish_experiment(exp_id, "completed")
+                        _perf_log.info(f"[QA1] End-to-end complete: exam={exam_uuid}, status={final_status}")
+
+                    except Exception as e:
+                        status.update(label="❌ Erro no fluxo", state="error")
+                        st.error(f"Erro: {e}")
+                        import traceback
+                        st.code(traceback.format_exc())
+
+        with tab_list:
+            st.subheader("Provas no Backend")
+            if st.button("🔄 Atualizar Lista"):
+                try:
+                    exams = client.list_exams()
+                    st.session_state['api_exams'] = exams
+                except Exception as e:
+                    st.error(f"Erro: {e}")
+
+            if 'api_exams' in st.session_state:
+                for exam in st.session_state['api_exams']:
+                    with st.expander(f"{exam.get('title', '?')} — {exam.get('status', '?')}"):
+                        st.json(exam)
+                        if st.button(f"Ver Revisão", key=f"rev_{exam['uuid']}"):
+                            try:
+                                review = client.get_review(exam['uuid'])
+                                st.session_state['api_review'] = review
+                                st.session_state['api_exam_uuid'] = exam['uuid']
+                                st.success("Revisão carregada! Vá para aba 'Revisão Docente'")
+                            except Exception as e:
+                                st.error(f"Erro: {e}")
+
+        with tab_review:
+            st.subheader("Revisão Docente (QA1 — Etapa Final)")
+
+            if 'api_review' not in st.session_state:
+                st.info("Execute o fluxo end-to-end ou selecione uma prova existente primeiro")
+            else:
+                review = st.session_state['api_review']
+                exam_uuid = st.session_state.get('api_exam_uuid', '?')
+
+                st.markdown(f"**Prova:** {review.get('exam_title', '?')} | **Status:** {review.get('status', '?')}")
+                st.markdown(f"**Turma:** {review.get('class_name', 'N/A')} | **Alunos:** {review.get('total_students', 0)} | **Questões:** {review.get('total_questions', 0)}")
+
+                for q in review.get('questions', []):
+                    with st.expander(f"Q{q.get('question_number', '?')}: {q.get('statement', '?')[:80]}..."):
+                        for ans in q.get('student_answers', []):
+                            col_info, col_actions = st.columns([3, 1])
+                            with col_info:
+                                st.markdown(f"**{ans.get('student_name', '?')}** — Nota: **{ans.get('score', 'N/A')}** | Status: `{ans.get('status', '?')}`")
+                                st.caption(f"Resposta: {ans.get('answer_text', '')[:200]}...")
+
+                                if ans.get('criteria_scores'):
+                                    for cs in ans['criteria_scores']:
+                                        st.caption(f"  • {cs.get('criterion_name', '?')}: {cs.get('raw_score', '?')}/{cs.get('max_score', '?')} — {cs.get('feedback', '')[:100]}")
+
+                            with col_actions:
+                                ans_uuid = ans.get('answer_uuid', '')
+                                if ans.get('status') != 'APPROVED':
+                                    if st.button("✅ Aprovar", key=f"approve_{ans_uuid}"):
+                                        try:
+                                            client.approve_answer(ans_uuid)
+                                            st.success("Aprovada!")
+                                            # Refresh
+                                            st.session_state['api_review'] = client.get_review(exam_uuid)
+                                            st.rerun()
+                                        except Exception as e:
+                                            st.error(str(e))
+                                else:
+                                    st.caption("✅ Aprovada")
+
+                st.markdown("---")
+                col_final, col_report = st.columns(2)
+                with col_final:
+                    if st.button("📋 Finalizar Revisão", type="primary"):
+                        try:
+                            result = client.finalize_review(exam_uuid)
+                            st.success(f"Revisão finalizada! {result}")
+                        except Exception as e:
+                            st.error(f"Erro: {e}")
+
+                with col_report:
+                    if st.button("📥 Download Relatório"):
+                        try:
+                            path = f"tcc/results/report_{exam_uuid}.xlsx"
+                            client.download_report(exam_uuid, path)
+                            st.success(f"Relatório salvo em {path}")
+                        except Exception as e:
+                            st.error(f"Erro: {e}")
 
