@@ -23,7 +23,7 @@
 \contentsline {subsection}{\numberline {2.2.2}Limitações e Desafios da Correção Manual}{9}{subsection.2.2.2}%
 \contentsline {subsection}{\numberline {2.2.3}Impacto da Subjetividade na Avaliação}{11}{subsection.2.2.3}%
 \contentsline {subsection}{\numberline {2.2.4}Necessidade de Automação no Processo de Correção}{12}{subsection.2.2.4}%
-\contentsline {section}{\numberline {2.3}Inteligência Artificial e Processamento de Liguagem Natural}{13}{section.2.3}%
+\contentsline {section}{\numberline {2.3}Inteligência Artificial e Processamento de Linguagem Natural}{13}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Fundamentos de Inteligência Artificial}{13}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Processamento de Linguagem Natural (PLN)}{14}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}Técnicas de Deep Learning para PLN}{15}{subsection.2.3.3}%
@@ -58,10 +58,10 @@
 \contentsline {subsection}{\numberline {4.3.1}Python}{46}{subsection.4.3.1}%
 \contentsline {subsection}{\numberline {4.3.2}FastAPI}{46}{subsection.4.3.2}%
 \contentsline {subsection}{\numberline {4.3.3}Orquestração do fluxo com LangGraph}{47}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Agentes corretores com DSPy e LiteLLM}{47}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.4}Agentes corretores com LangChain}{47}{subsection.4.3.4}%
 \contentsline {subsection}{\numberline {4.3.5}Integração com LLMs e provedores de \textit {embeddings}}{47}{subsection.4.3.5}%
 \contentsline {subsection}{\numberline {4.3.6}Recuperação de contexto e armazenamento vetorial}{47}{subsection.4.3.6}%
-\contentsline {subsection}{\numberline {4.3.7}Persistência relacional e migrações}{47}{subsection.4.3.7}%
+\contentsline {subsection}{\numberline {4.3.7}Persistência relacional e migrações}{48}{subsection.4.3.7}%
 \contentsline {subsection}{\numberline {4.3.8}Conteinerização}{48}{subsection.4.3.8}%
 \contentsline {subsection}{\numberline {4.3.9}Ollama e Streamlit}{48}{subsection.4.3.9}%
 \contentsline {subsection}{\numberline {4.3.10}JSON (\textit {JavaScript Object Notation})}{48}{subsection.4.3.10}%
@@ -72,9 +72,9 @@
 \contentsline {subsection}{\numberline {4.4.4}Parâmetros experimentais}{50}{subsection.4.4.4}%
 \contentsline {subsection}{\numberline {4.4.5}Procedimento experimental}{51}{subsection.4.4.5}%
 \contentsline {subsection}{\numberline {4.4.6}Evidências coletadas}{51}{subsection.4.4.6}%
-\contentsline {subsection}{\numberline {4.4.7}Métricas simples}{51}{subsection.4.4.7}%
+\contentsline {subsection}{\numberline {4.4.7}Métricas simples}{52}{subsection.4.4.7}%
 \contentsline {subsection}{\numberline {4.4.8}Critérios de sucesso}{52}{subsection.4.4.8}%
-\contentsline {subsection}{\numberline {4.4.9}Ameaças à validade}{52}{subsection.4.4.9}%
+\contentsline {subsection}{\numberline {4.4.9}Ameaças à validade}{53}{subsection.4.4.9}%
 \contentsline {subsection}{\numberline {4.4.10}Reprodutibilidade (checklist)}{53}{subsection.4.4.10}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{Desenvolvimento}}{54}{chapter.5}%
@@ -91,14 +91,38 @@
 \contentsline {subsection}{\numberline {5.5.1}Integrações principais}{63}{subsection.5.5.1}%
 \contentsline {subsection}{\numberline {5.5.2}Disponibilização do código-fonte}{64}{subsection.5.5.2}%
 \contentsline {subsection}{\numberline {5.5.3}Decisões e \textit {trade-offs}}{64}{subsection.5.5.3}%
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{RESULTADOS E DISCUSSÕES}}{65}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Configuração do experimento}{65}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Respostas sintéticas}{65}{subsection.6.1.1}%
+\contentsline {section}{\numberline {6.2}QA1 --- Execução \textit {end-to-end}}{66}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Resultados}{66}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Análise}{67}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}QA2 --- Utilidade do RAG}{67}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Comparação de notas}{67}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Ancoragem das justificativas}{67}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Exemplo comparativo de justificativas}{68}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.4}Análise}{68}{subsection.6.3.4}%
+\contentsline {section}{\numberline {6.4}QA3 --- Arbitragem por divergência}{68}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Resultados}{68}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Verificação do limiar}{68}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Efeito da arbitragem sobre a nota final}{68}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.4}Análise}{68}{subsection.6.4.4}%
+\contentsline {section}{\numberline {6.5}QA4 --- Estabilidade operacional}{68}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Resultados}{68}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}Análise}{69}{subsection.6.5.2}%
+\contentsline {section}{\numberline {6.6}Discussão integrada}{69}{section.6.6}%
+\contentsline {subsection}{\numberline {6.6.1}Síntese dos critérios de sucesso}{69}{subsection.6.6.1}%
+\contentsline {subsection}{\numberline {6.6.2}Viabilidade técnica}{69}{subsection.6.6.2}%
+\contentsline {subsection}{\numberline {6.6.3}Viabilidade operacional}{69}{subsection.6.6.3}%
+\contentsline {subsection}{\numberline {6.6.4}Contribuição do RAG}{69}{subsection.6.6.4}%
+\contentsline {subsection}{\numberline {6.6.5}Limitações observadas}{69}{subsection.6.6.5}%
 \vspace {\cftbeforechapterskip }
-\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{65}{section*.23}%
 \setlength {\cftpartindent }{\cftlastnumwidth } \setlength {\cftpartnumwidth }{2em}
 \cftinsert {A}
-\contentsline {part}{Appendices}{71}{section*.24}%
+\contentsline {part}{Appendices}{70}{section*.30}%
 \renewcommand *{\cftappendixname }{AP\^ENDICE \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{72}{appendix.A}%
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{71}{appendix.A}%

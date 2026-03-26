@@ -18,7 +18,8 @@ A \autoref{tab:config-experimento} resume os parâmetros efetivamente utilizados
         \textbf{Parâmetro} & \textbf{Valor utilizado} \\
         \hline
         % TODO: Preencher com os valores reais utilizados na execução
-        Provedor/Modelo do LLM & % ex: OpenAI / gpt-4o-mini \\
+        % ex: OpenAI / gpt-4o-mini
+        Provedor/Modelo do LLM & \textit{(preencher)} \\
         Temperatura do LLM & $0{,}0$ (\texttt{LLM\_TEMPERATURE=0.0}) \\
         Top-$k$ do RAG (Condição A) & $k=4$ (\texttt{RAG\_TOP\_K=4}) \\
         Top-$k$ do RAG (Condição B) & $k=0$ (RAG desativado) \\
@@ -28,7 +29,8 @@ A \autoref{tab:config-experimento} resume os parâmetros efetivamente utilizados
         Total de respostas por condição & 12 \\
         Repetições para estabilidade ($R$) & 3 \\
         Respostas repetidas ($A_{rep}$) & 4 (uma por nível de qualidade) \\
-        Critérios de avaliação & % ex: 4 critérios (Correção Conceitual, Completude, Clareza, Aderência) \\
+        % ex: 4 critérios (Correção Conceitual, Completude, Clareza, Aderência)
+        Critérios de avaliação & \textit{(preencher)} \\
         \hline
     \end{tabularx}
     }
@@ -81,19 +83,20 @@ A primeira questão avaliativa verifica se o sistema completa o fluxo de configu
         \textbf{Etapa} & \textbf{Status} & \textbf{Observações} \\
         \hline
         % TODO: Preencher com dados reais
-        Cadastro da prova e questões & % Sim/Não & % observação \\
-        Anexação de materiais (PDF) & % Sim/Não & % observação \\
-        Definição de critérios e rubrica & % Sim/Não & % observação \\
-        Inserção das respostas dos alunos & % Sim/Não & % observação \\
-        Publicação da prova & % Sim/Não & % observação \\
-        Indexação vetorial dos anexos & % Sim/Não & % status: SUCCESS/FAILED \\
-        Correção C1 (Corretor 1) & % Sim/Não & % observação \\
-        Correção C2 (Corretor 2) & % Sim/Não & % observação \\
-        Verificação de divergência & % Sim/Não & % observação \\
-        Arbitragem (quando acionada) & % Sim/Não & % observação \\
-        Persistência dos resultados & % Sim/Não & % observação \\
-        Disponibilização para revisão & % Sim/Não & % observação \\
-        Exportação de relatório & % Sim/Não & % observação \\
+        Cadastro da prova e questões & \textit{(preencher)} & \textit{(preencher)} \\
+        Anexação de materiais (PDF) & \textit{(preencher)} & \textit{(preencher)} \\
+        Definição de critérios e rubrica & \textit{(preencher)} & \textit{(preencher)} \\
+        Inserção das respostas dos alunos & \textit{(preencher)} & \textit{(preencher)} \\
+        Publicação da prova & \textit{(preencher)} & \textit{(preencher)} \\
+        % status ex: SUCCESS/FAILED
+        Indexação vetorial dos anexos & \textit{(preencher)} & \textit{(preencher)} \\
+        Correção C1 (Corretor 1) & \textit{(preencher)} & \textit{(preencher)} \\
+        Correção C2 (Corretor 2) & \textit{(preencher)} & \textit{(preencher)} \\
+        Verificação de divergência & \textit{(preencher)} & \textit{(preencher)} \\
+        Arbitragem (quando acionada) & \textit{(preencher)} & \textit{(preencher)} \\
+        Persistência dos resultados & \textit{(preencher)} & \textit{(preencher)} \\
+        Disponibilização para revisão & \textit{(preencher)} & \textit{(preencher)} \\
+        Exportação de relatório & \textit{(preencher)} & \textit{(preencher)} \\
         \hline
     \end{tabularx}
     }
@@ -118,7 +121,8 @@ A \autoref{tab:qa1-completude} apresenta a completude estrutural dos artefatos g
         % Q2 & Excelente & ...
         % (repetir para Q1, Q2, Q3 × 4 níveis = 12 linhas)
         \hline
-        \multicolumn{6}{r}{\textbf{Completude total:}} & % ex: 12/12 (100\%) \\
+        % ex: 12/12 (100\%)
+        \multicolumn{6}{r}{\textbf{Completude total:}} & \textit{(preencher)} \\
         \hline
     \end{tabularx}
     }
@@ -166,7 +170,8 @@ A \autoref{tab:qa2-notas} apresenta a comparação das notas finais (após conse
         % Q1 & Fora tema & 1,00 & 1,50 & -0,50 \\
         % (repetir para Q1, Q2, Q3 × 4 níveis = 12 linhas)
         \hline
-        \multicolumn{2}{r}{\textbf{Média}} & % ex: 5,42 & % ex: 5,58 & % ex: -0,17 \\
+        % ex: 5,42 & 5,58 & -0,17
+        \multicolumn{2}{r}{\textbf{Média}} & \textit{(preencher)} & \textit{(preencher)} & \textit{(preencher)} \\
         \hline
     \end{tabularx}
     }
@@ -193,7 +198,8 @@ Para avaliar o efeito do RAG sobre a qualidade das justificativas, aplicou-se o 
         % Q1 & Fora tema & Não & Não \\
         % (repetir para 12 respostas)
         \hline
-        \multicolumn{2}{r}{\textbf{Total ancoradas}} & % ex: 9/12 (75\%) & % ex: 2/12 (17\%) \\
+        % ex: 9/12 (75\%) & 2/12 (17\%)
+        \multicolumn{2}{r}{\textbf{Total ancoradas}} & \textit{(preencher)} & \textit{(preencher)} \\
         \hline
     \end{tabularx}
     }
@@ -358,11 +364,16 @@ A \autoref{tab:sintese-criterios} resume o atendimento aos critérios de sucesso
         \textbf{QA} & \textbf{Critério} & \textbf{Resultado obtido} & \textbf{Atendido?} \\
         \hline
         % TODO: Preencher com os resultados reais
-        QA1 & 100\% das respostas processadas e disponíveis para revisão & % ex: 12/12 (100\%) & % Sim/Não \\
-        --- & Completude estrutural $\geq$ 95\% & % ex: 12/12 (100\%) & % Sim/Não \\
-        QA2 & Ancoragem maior na Condição A do que na B & % ex: 75\% vs. 17\% & % Sim/Não \\
-        QA3 & Árbitro acionado quando $|$C1$-$C2$|$ $>$ 2,0 & % ex: correto em 12/12 & % Sim/Não \\
-        QA4 & Variação $\leq$ 1,0 ponto nas repetições & % ex: máx. 0,25 & % Sim/Não \\
+        % ex: 12/12 (100\%) | Sim
+        QA1 & 100\% das respostas processadas e disponíveis para revisão & \textit{(preencher)} & \textit{(preencher)} \\
+        % ex: 12/12 (100\%) | Sim
+        --- & Completude estrutural $\geq$ 95\% & \textit{(preencher)} & \textit{(preencher)} \\
+        % ex: 75\% vs. 17\% | Sim
+        QA2 & Ancoragem maior na Condição A do que na B & \textit{(preencher)} & \textit{(preencher)} \\
+        % ex: correto em 12/12 | Sim
+        QA3 & Árbitro acionado quando $|$C1$-$C2$|$ $>$ 2,0 & \textit{(preencher)} & \textit{(preencher)} \\
+        % ex: máx. 0,25 | Sim
+        QA4 & Variação $\leq$ 1,0 ponto nas repetições & \textit{(preencher)} & \textit{(preencher)} \\
         \hline
     \end{tabularx}
     }

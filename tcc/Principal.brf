@@ -130,10 +130,10 @@
 \backcite {fastapi_docs_2026,gunicorn_docs_2026,uvicorn_docs_2026}{{47}{4.3.2}{subsection.4.3.2}}
 \backcite {fastapi_docs_2026,gunicorn_docs_2026,uvicorn_docs_2026}{{47}{4.3.2}{subsection.4.3.2}}
 \backcite {langgraph_docs_2026}{{47}{4.3.3}{subsection.4.3.3}}
-\backcite {dspy_docs_2026,litellm_docs_2026}{{47}{4.3.4}{subsection.4.3.4}}
-\backcite {dspy_docs_2026,litellm_docs_2026}{{47}{4.3.4}{subsection.4.3.4}}
+\backcite {langchain_docs_2026}{{47}{4.3.4}{subsection.4.3.4}}
+\backcite {dspy_docs_2026}{{47}{4.3.4}{subsection.4.3.4}}
 \backcite {langchain_docs_2026}{{47}{4.3.5}{subsection.4.3.5}}
-\backcite {chromadb_docs_2026}{{47}{4.3.6}{subsection.4.3.6}}
+\backcite {chromadb_docs_2026}{{48}{4.3.6}{subsection.4.3.6}}
 \backcite {postgresql_docs_2026,sqlalchemy_docs_2026,alembic_docs_2026}{{48}{4.3.7}{subsection.4.3.7}}
 \backcite {postgresql_docs_2026,sqlalchemy_docs_2026,alembic_docs_2026}{{48}{4.3.7}{subsection.4.3.7}}
 \backcite {postgresql_docs_2026,sqlalchemy_docs_2026,alembic_docs_2026}{{48}{4.3.7}{subsection.4.3.7}}
