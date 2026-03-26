@@ -215,8 +215,17 @@ with st.sidebar:
 
     st.divider()
     st.header("Parâmetros")
-    divergence_threshold = st.slider("Limiar de Divergência", 0.5, 5.0, 1.5, 0.5)
+    divergence_threshold = st.slider("Limiar de Divergência", 0.5, 5.0, 2.0, 0.5)
     st.session_state["divergence_threshold"] = divergence_threshold
+
+    # RAG toggle (Condição A vs B do TCC)
+    rag_enabled = st.toggle("RAG Ativado (Condição A)", value=True,
+                            help="Desative para Condição B (sem RAG)")
+    st.session_state["rag_enabled"] = rag_enabled
+    if rag_enabled:
+        st.caption(f"Condição A: RAG ativo (top_k={getattr(settings, 'RAG_TOP_K', 4)})")
+    else:
+        st.caption("Condição B: RAG desativado (top_k=0)")
 
     # Experiment history
     st.divider()
@@ -317,8 +326,8 @@ elif operation_mode == "Batch Processing (Turma)":
 
             sim_topic = st.text_input("Tópico Geral", value="Geral")
             c_qtd1, c_qtd2 = st.columns(2)
-            qt_mock_questions = c_qtd1.number_input("Qtd Questões", 1, 10, 5)
-            qt_mock_students = c_qtd2.number_input("Qtd Alunos", 1, 50, 5)
+            qt_mock_questions = c_qtd1.number_input("Qtd Questões", 1, 10, 3)
+            qt_mock_students = c_qtd2.number_input("Qtd Alunos", 1, 50, 4)
 
             col_s1, col_s2 = st.columns(2)
 
@@ -338,12 +347,17 @@ elif operation_mode == "Batch Processing (Turma)":
                             _perf_log.info(f"[STEP1] {qt_mock_questions} questões geradas em {time.time()-_t1:.1f}s")
                             st.session_state['exam_questions'] = questions
                             # Create experiment and save questions
+                            _rag_on = st.session_state.get("rag_enabled", True)
                             exp_id = exp_store.create_experiment({
                                 'llm_provider': settings.LLM_PROVIDER,
                                 'llm_model': settings.LLM_MODEL_NAME,
+                                'llm_temperature': settings.LLM_TEMPERATURE,
                                 'num_questions': qt_mock_questions,
                                 'num_students': qt_mock_students,
                                 'divergence_threshold': st.session_state.get('divergence_threshold', 2.0),
+                                'rag_enabled': _rag_on,
+                                'rag_top_k': getattr(settings, 'RAG_TOP_K', 4) if _rag_on else 0,
+                                'condition': 'A (com RAG)' if _rag_on else 'B (sem RAG)',
                                 'discipline': discipline,
                                 'topic': sim_topic,
                             })
@@ -384,11 +398,13 @@ elif operation_mode == "Batch Processing (Turma)":
                         status_container = st.status("✍️ Alunos realizando a prova...", expanded=True)
                         try:
                             questions = st.session_state['exam_questions']
-                            profiles = ["excellent", "average", "average", "poor", "average"]
+                            # 4 níveis de qualidade conforme TCC: excelente, adequada, fraca, fora do tema
+                            profiles = ["excellent", "average", "poor", "off_topic"]
+                            profile_labels = {"excellent": "Excelente", "average": "Adequado", "poor": "Fraco", "off_topic": "Fora do Tema"}
                             students_list = []
                             for i in range(qt_mock_students):
                                 qual = profiles[i % len(profiles)]
-                                students_list.append({"id": 200 + i, "name": f"Aluno {i+1} ({qual.title()})", "quality": qual})
+                                students_list.append({"id": 200 + i, "name": f"Aluno {i+1} ({profile_labels[qual]})", "quality": qual})
                             st.session_state['batch_students_list'] = students_list
 
                             # Save students to experiment
@@ -412,21 +428,9 @@ elif operation_mode == "Batch Processing (Turma)":
                                     # Um aluno ruim pode acertar, e um bom pode errar.
                                     base_quality = s['quality']
 
-                                    if base_quality == "poor":
-                                        # 60% Errado, 30% Médio, 10% Bom (Sorte?)
-                                        weights = [0.6, 0.3, 0.1]
-                                    elif base_quality == "excellent":
-                                        # 10% Ruim (Nervosismo), 20% Médio, 70% Excelente
-                                        weights = [0.1, 0.2, 0.7]
-                                    else: # average
-                                        # 20% Ruim, 60% Médio, 20% Bom
-                                        weights = [0.2, 0.6, 0.2]
-
-                                    actual_quality = random.choices(
-                                        ["poor", "average", "excellent"],
-                                        weights=weights,
-                                        k=1
-                                    )[0]
+                                    # Para TCC: cada aluno responde com seu nível fixo
+                                    # (sem randomização, pra garantir reprodutibilidade)
+                                    actual_quality = base_quality
 
                                     tasks.append(mock_agent.generate_student_answer(q, actual_quality, s['name']))
 
@@ -493,11 +497,13 @@ elif operation_mode == "Batch Processing (Turma)":
 
                             # Prepare inputs
                             inputs_by_student = {}
+                            _rag_on = st.session_state.get("rag_enabled", True)
                             for s in students_list:
                                 if s['id'] in all_mock_answers[q.id]:
                                     ans = all_mock_answers[q.id][s['id']]
                                     inputs_by_student[s['id']] = {
-                                        "question": q, "student_answer": ans, "rag_contexts": [],
+                                        "question": q, "student_answer": ans,
+                                        "rag_contexts": None if _rag_on else [],  # None=fetch, []=skip
                                         "correction_1": None, "correction_2": None, "correction_arbiter": None,
                                         "divergence_detected": False, "divergence_value": 0.0, "all_corrections": [], "final_score": None
                                     }

@@ -161,7 +161,8 @@ class MockDataGeneratorAgent:
         quality_prompts = {
             "excellent": "A resposta deve ser exemplar: correta, completa, demonstrando domínio total do conteúdo e usando terminologia técnica adequada. Aborde todos os pontos da rubrica com precisão.",
             "average": "A resposta deve ser mediana: correta no geral, mas superficial. USE ESTRATÉGIAS DE GENERALIZAÇÃO para disfarçar o desconhecimento de detalhes específicos. Substitua termos técnicos precisos por explicações mais amplas e vagas, tentando 'enrolar' um pouco onde faltar profundidade, mas sem cometer erros graves.",
-            "poor": "A resposta deve ser insatisfatória: apresente conceitos errados ou confunda fatos. USE ESTRATÉGIAS DE GENERALIZAÇÃO EXCESSIVA ('embromação') para esconder que não sabe a resposta. Tente parecer que sabe falando de coisas vagamente relacionadas ou inventando fatos com confiança para mascarar sua ignorância. Tente enganar o corretor."
+            "poor": "A resposta deve ser insatisfatória: apresente conceitos errados ou confunda fatos. USE ESTRATÉGIAS DE GENERALIZAÇÃO EXCESSIVA ('embromação') para esconder que não sabe a resposta. Tente parecer que sabe falando de coisas vagamente relacionadas ou inventando fatos com confiança para mascarar sua ignorância. Tente enganar o corretor.",
+            "off_topic": "A resposta deve ser COMPLETAMENTE FORA DO TEMA. Responda sobre um assunto totalmente diferente do que foi perguntado, como se tivesse confundido a questão. Por exemplo, se a pergunta é sobre algoritmos, fale sobre culinária ou esportes. NÃO mencione nenhum conceito relacionado à questão."
         }
 
         instruction = quality_prompts.get(quality, quality_prompts["average"])
