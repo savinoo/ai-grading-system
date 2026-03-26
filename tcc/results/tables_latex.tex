@@ -1,0 +1,65 @@
+% ============================================
+% TABELAS GERADAS AUTOMATICAMENTE
+% Condição A: Experimento #7
+% Condição B: Experimento #8
+% Estabilidade: Experimentos [9, 10, 11]
+% ============================================
+
+% --- Configuração do Experimento ---
+% Gerado automaticamente pelo LaTeX Exporter (Experimento #7)
+        Provedor/Modelo do LLM & gemini / gemini-2.5-flash \\
+        Temperatura do LLM & $0{,}0$ (\texttt{LLM\_TEMPERATURE=0.0}) \\
+        Top-$k$ do RAG (Condição A) & $k=4$ (\texttt{RAG\_TOP\_K=4}) \\
+        Top-$k$ do RAG (Condição B) & $k=0$ (RAG desativado) \\
+        Limiar de divergência & $2.0$ pontos (\texttt{DIVERGENCE\_THRESHOLD=2.0}) \\
+        Questões ($Q$) & 3 \\
+        Respostas por questão ($A$) & 4 (excelente, adequada, fraca, fora do tema) \\
+        Total de respostas por condição & 12 \\
+        Repetições para estabilidade ($R$) & 3 \\
+        Critérios de avaliação & ver rubrica global da prova \\
+
+% --- QA1: End-to-End ---
+% Gerado automaticamente (Experimento #7)
+        Cadastro da prova e questões & Sim & 3 questões cadastradas \\
+        Anexação de materiais (PDF) & Sim & PDF indexado no VectorDB \\
+        Definição de critérios e rubrica & Sim & Rubrica global gerada com questões \\
+        Inserção das respostas dos alunos & Não & 0 respostas inseridas \\
+        Publicação da prova & Sim & Via Streamlit ou API \\
+        Indexação vetorial dos anexos & Sim & ChromaDB com embeddings \\
+        Correção C1 (Corretor 1) & Não & 0 correções \\
+        Correção C2 (Corretor 2) & Não & 0 correções \\
+        Verificação de divergência & Sim & Sem divergência \\
+        Arbitragem (quando acionada) & Sim & Não necessário \\
+        Persistência dos resultados & Não & SQLite + ExperimentStore \\
+        Disponibilização para revisão & Não & Dashboard Streamlit + API \\
+        Exportação de relatório & Sim & JSON exportado \\
+
+% --- QA1: Completude Estrutural (Condição A) ---
+% Gerado automaticamente (Experimento #7)
+        \hline
+        \multicolumn{6}{r}{\textbf{Completude total:}} & 0/0 (0\%) \\
+
+% --- QA2: Comparação de Notas (A vs B) ---
+% Gerado automaticamente (A=#7, B=#8)
+
+% --- QA2: Ancoragem (A vs B) ---
+% Gerado automaticamente (A=#7, B=#8)
+% NOTA: A coluna 'Ancorada' deve ser preenchida manualmente após análise das justificativas
+
+% --- QA3: Divergência e Arbitragem (Condição A) ---
+% Gerado automaticamente (Experimento #7)
+
+% --- QA4: Estabilidade (R repetições) ---
+% Gerado automaticamente (Experimentos: [9, 10, 11])
+        Excelente & 9.79 & 9.83 & 9.77 & 9.80 & 0.06 \\
+        Adequada & 9.96 & 9.98 & 9.96 & 9.97 & 0.02 \\
+        Fraca & 2.23 & 2.23 & 2.44 & 2.30 & 0.21 \\
+        Fora do tema & 0.33 & 0.17 & 0.33 & 0.28 & 0.17 \\
+
+% --- Síntese dos Critérios de Sucesso ---
+% Gerado automaticamente
+        QA1 & 100\% das respostas processadas & 0/0 & Não \\
+        --- & Completude estrutural $\geq$ 95\% & 0\% & Não \\
+        QA2 & Ancoragem maior na Condição A & \textit{(analisar)} & \textit{(analisar)} \\
+        QA3 & Árbitro acionado quando $|$C1$-$C2$|$ $>$ 2,0 & Verificado & Sim \\
+        QA4 & Variação $\leq$ 1,0 ponto nas repetições & Var. máx = 0.07 & Sim \\
