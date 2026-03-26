@@ -518,7 +518,26 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                     exam_uuid = exam['uuid']
                     status.write(f"✅ Prova criada: `{exam_uuid}`")
 
-                    # 2b. Upload PDF (pra RAG funcionar no backend)
+                    # 2b. Add grading criteria
+                    status.write("**2b/6** Configurando critérios de avaliação...")
+                    try:
+                        all_criteria = tcc_client.list_grading_criteria()
+                        # Use 3 main criteria: CLAREZA, CORRECAO_TECNICA, COMPLETUDE
+                        target_codes = ['CLAREZA', 'CORRECAO_TECNICA', 'COMPLETUDE']
+                        criteria_added = 0
+                        for gc in all_criteria:
+                            code = gc.get('code', '')
+                            if code in target_codes:
+                                try:
+                                    tcc_client.add_exam_criteria(exam_uuid, gc['uuid'], weight=1.0, max_points=10.0)
+                                    criteria_added += 1
+                                except Exception:
+                                    pass
+                        status.write(f"✅ {criteria_added} critérios configurados")
+                    except Exception as e:
+                        status.write(f"⚠️ Critérios: {e} (usando genérico)")
+
+                    # 2c. Upload PDF (pra RAG funcionar no backend)
                     pdf_path = None
                     import glob as _glob
                     pdfs = _glob.glob("data/pdfs/*.pdf") + _glob.glob("data/raw/*.pdf")
@@ -650,6 +669,18 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                     )
                     exam_uuid = exam['uuid']
                     status.write(f"✅ Prova criada: `{exam_uuid}`")
+
+                    # 1b. Add criteria (same as Condition A)
+                    try:
+                        all_criteria = tcc_client.list_grading_criteria()
+                        for gc in all_criteria:
+                            if gc.get('code') in ['CLAREZA', 'CORRECAO_TECNICA', 'COMPLETUDE']:
+                                try:
+                                    tcc_client.add_exam_criteria(exam_uuid, gc['uuid'], weight=1.0, max_points=10.0)
+                                except Exception:
+                                    pass
+                    except Exception:
+                        pass
 
                     # 2. Add questions (mesmas)
                     status.write(f"**2/5** Adicionando {len(questions)} questões...")

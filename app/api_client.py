@@ -217,6 +217,26 @@ class APIClient:
         logger.info(f"Report saved: {output_path}")
         return output_path
 
+    # ─── Criteria ───
+
+    def list_grading_criteria(self) -> list:
+        """List all available grading criteria (pre-seeded)."""
+        resp = self._request("GET", "/grading-criteria")
+        resp.raise_for_status()
+        data = resp.json()
+        return data.get('criteria', data) if isinstance(data, dict) else data
+
+    def add_exam_criteria(self, exam_uuid: str, criteria_uuid: str, weight: float = 1.0, max_points: float = 10.0) -> dict:
+        """Add a grading criterion to an exam."""
+        resp = self._request("POST", "/exam-criteria", json={
+            "exam_uuid": exam_uuid,
+            "criteria_uuid": criteria_uuid,
+            "weight": weight,
+            "max_points": max_points,
+        })
+        resp.raise_for_status()
+        return resp.json()
+
     # ─── Attachments ───
 
     def upload_attachment(self, exam_uuid: str, file_path: str) -> dict:
