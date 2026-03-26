@@ -272,27 +272,66 @@ with st.sidebar:
 if operation_mode == "📋 Experimento TCC (Guiado)":
     st.title("📋 Experimento TCC — Fluxo Guiado")
     st.markdown("""
-    Este modo executa o procedimento experimental completo do TCC, passo a passo:
-    **Condição A (com RAG)** → **Condição B (sem RAG)** → **QA4 Estabilidade** → **Exportar LaTeX**
+    Este modo executa o procedimento experimental completo do TCC via **Backend API**, passo a passo:
+    **Login** → **Upload Material** → **Gerar Questões** → **Simular Respostas** → **Condição A** → **Condição B** → **QA4** → **Exportar**
     """)
 
     # Initialize TCC experiment state
     if 'tcc_step' not in st.session_state:
-        st.session_state['tcc_step'] = 1
+        st.session_state['tcc_step'] = 0
 
     current_step = st.session_state['tcc_step']
 
     # Progress bar
-    steps_total = 8
-    st.progress(min((current_step - 1) / steps_total, 1.0))
+    steps_total = 9
+    st.progress(min(current_step / steps_total, 1.0))
     step_names = [
-        "1. Upload Material", "2. Gerar Questões", "3. Simular Respostas",
+        "0. Conectar ao Backend", "1. Upload Material", "2. Gerar Questões", "3. Simular Respostas",
         "4. Condição A (com RAG)", "5. Condição B (sem RAG)",
         "6. QA4 Estabilidade", "7. Exportar LaTeX", "8. Concluído"
     ]
-    st.caption(f"Passo {current_step}/{steps_total}: **{step_names[min(current_step-1, len(step_names)-1)]}**")
+    st.caption(f"Passo {current_step}/{steps_total}: **{step_names[min(current_step, len(step_names)-1)]}**")
 
     st.markdown("---")
+
+    # ═══════════════════════════════════════════════
+    # STEP 0: Conectar ao backend
+    # ═══════════════════════════════════════════════
+    if current_step == 0:
+        st.header("🔗 Passo 0 — Conectar ao Backend")
+        st.markdown("O wizard usa a API REST do backend FastAPI para persistir no PostgreSQL.")
+
+        api_url = st.text_input("URL do Backend", value="http://localhost:8000", key="tcc_api_url")
+        tcc_client = get_api_client(api_url)
+
+        col_h, col_l = st.columns(2)
+        with col_h:
+            if st.button("🏥 Health Check"):
+                if tcc_client.health():
+                    st.success("Backend online!")
+                else:
+                    st.error(f"Backend offline em {api_url}")
+
+        if st.session_state.get('tcc_logged_in'):
+            st.success(f"Logado como **{st.session_state.get('tcc_user_email', '?')}**")
+            if st.button("➡️ Próximo"):
+                st.session_state['tcc_step'] = 1
+                st.rerun()
+        else:
+            with st.form("tcc_login"):
+                email = st.text_input("Email", value="teacher@example.com")
+                password = st.text_input("Senha", type="password")
+                if st.form_submit_button("🔐 Login"):
+                    try:
+                        result = tcc_client.login(email, password)
+                        st.session_state['tcc_logged_in'] = True
+                        st.session_state['tcc_user_email'] = result['user'].get('email', email)
+                        st.session_state['tcc_user_uuid'] = result['user'].get('uuid', '')
+                        st.success("Login ok!")
+                        st.session_state['tcc_step'] = 1
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Erro: {e}")
 
     # ═══════════════════════════════════════════════
     # STEP 1: Upload e indexação do material
@@ -424,59 +463,106 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
     # STEP 4: Condição A (com RAG)
     # ═══════════════════════════════════════════════
     elif current_step == 4:
-        st.header("🅰️ Passo 4 — Condição A (com RAG)")
-        st.markdown("Correção com RAG **ativado** (top_k=4). Os corretores terão acesso ao material didático.")
+        st.header("🅰️ Passo 4 — Condição A (com RAG) via Backend API")
+        st.markdown("Cria prova no backend, insere questões e respostas, publica e aguarda correção automática.")
 
         questions = st.session_state.get('tcc_questions', [])
         all_answers = st.session_state.get('tcc_answers', {})
         students_list = st.session_state.get('tcc_students', [])
+        tcc_client = get_api_client(st.session_state.get('tcc_api_url', 'http://localhost:8000'))
 
         if not questions or not all_answers:
             st.error("Volte aos passos anteriores.")
+        elif not st.session_state.get('tcc_logged_in'):
+            st.error("Volte ao passo 0 e faça login.")
         else:
             st.info(f"Corrigindo {len(questions)} questões × {len(students_list)} alunos com RAG ativado")
 
-            if st.button("🅰️ Executar Condição A"):
-                _perf_log.info("[TCC-STEP4] Condição A (com RAG)...")
-                status = st.status("🅰️ Correção com RAG...", expanded=True)
+            if st.button("🅰️ Executar Condição A (via API)"):
+                _perf_log.info("[TCC-STEP4] Condição A via Backend API...")
+                status = st.status("🅰️ Condição A via Backend...", expanded=True)
                 try:
+                    # 1. Create exam
+                    status.write("**1/5** Criando prova no backend...")
+                    exam = tcc_client.create_exam(
+                        f"TCC Condição A — {st.session_state.get('tcc_discipline', 'Geral')}",
+                        "Condição A (com RAG) — Experimento TCC"
+                    )
+                    exam_uuid = exam['uuid']
+                    status.write(f"✅ Prova criada: `{exam_uuid}`")
+
+                    # 2. Add questions
+                    status.write(f"**2/5** Adicionando {len(questions)} questões...")
+                    created_qs = []
+                    for i, q in enumerate(questions):
+                        cq = tcc_client.add_question(exam_uuid, q.statement, getattr(q, 'total_points', 10.0), i + 1)
+                        created_qs.append(cq)
+                    status.write(f"✅ {len(created_qs)} questões adicionadas")
+
+                    # 3. Add student answers
+                    status.write(f"**3/5** Inserindo respostas dos alunos...")
+                    answer_count = 0
+                    for q_idx, cq in enumerate(created_qs):
+                        orig_q = questions[q_idx]
+                        answers_for_q = all_answers.get(orig_q.id, {})
+                        for s in students_list:
+                            if s['id'] in answers_for_q:
+                                ans = answers_for_q[s['id']]
+                                try:
+                                    tcc_client.add_answer(exam_uuid, cq['uuid'], str(s['id']), ans.text)
+                                    answer_count += 1
+                                except Exception as e:
+                                    status.write(f"⚠️ Erro inserindo resposta: {e}")
+                    status.write(f"✅ {answer_count} respostas inseridas")
+
+                    # 4. Publish (triggers grading)
+                    status.write("**4/5** Publicando prova (dispara correção)...")
+                    tcc_client.publish_exam(exam_uuid)
+                    status.write("✅ Publicada! Correção em background...")
+
+                    # 5. Wait for grading
+                    status.write("**5/5** Aguardando correção...")
+                    progress = st.progress(0)
+                    max_wait = 300
+                    start = time.time()
+                    final_status = "TIMEOUT"
+                    while time.time() - start < max_wait:
+                        progress.progress(min((time.time() - start) / max_wait, 0.99))
+                        exam_data = tcc_client.get_exam(exam_uuid)
+                        if exam_data.get('status') in ('GRADED', 'WARNING'):
+                            final_status = exam_data['status']
+                            progress.progress(1.0)
+                            break
+                        time.sleep(5)
+
+                    status.write(f"✅ Status: **{final_status}**")
+
+                    # Get review
+                    try:
+                        review = tcc_client.get_review(exam_uuid)
+                        st.session_state['tcc_review_a'] = review
+                    except Exception:
+                        pass
+
+                    # Save to experiment store too
                     exp_id = exp_store.create_experiment({
                         'llm_provider': settings.LLM_PROVIDER,
                         'llm_model': settings.LLM_MODEL_NAME,
-                        'llm_temperature': settings.LLM_TEMPERATURE,
+                        'condition': 'A (com RAG)',
+                        'mode': 'backend_api',
+                        'exam_uuid': exam_uuid,
+                        'final_status': final_status,
                         'num_questions': len(questions),
                         'num_students': len(students_list),
-                        'divergence_threshold': st.session_state.get('divergence_threshold', 2.0),
-                        'rag_enabled': True,
-                        'rag_top_k': getattr(settings, 'RAG_TOP_K', 4),
-                        'condition': 'A (com RAG)',
-                        'discipline': st.session_state.get('tcc_discipline', ''),
-                        'topic': st.session_state.get('tcc_topic', ''),
                     })
                     exp_store.save_questions(exp_id, questions)
                     exp_store.save_students(exp_id, students_list)
-
-                    for q_idx, q in enumerate(questions):
-                        status.write(f"Corrigindo Q{q_idx+1}/{len(questions)}...")
-                        for s in students_list:
-                            if s['id'] in all_answers.get(q.id, {}):
-                                ans = all_answers[q.id][s['id']]
-                                exp_store.save_answer(exp_id, str(q.id), str(s['id']), s['name'], ans.text, s['quality'])
-
-                                inp = {
-                                    "question": q, "student_answer": ans, "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
-                                    "rag_contexts": None,  # None = fetch RAG
-                                    "correction_1": None, "correction_2": None, "correction_arbiter": None,
-                                    "divergence_detected": False, "divergence_value": 0.0,
-                                    "all_corrections": [], "final_score": None
-                                }
-                                final_state = run_async(run_correction_pipeline(inp, status))
-                                exp_store.save_pipeline_state(exp_id, str(q.id), str(s['id']), s['name'], final_state)
-
                     exp_store.finish_experiment(exp_id, "completed")
+
                     st.session_state['tcc_exp_a'] = exp_id
-                    _perf_log.info(f"[TCC-STEP4] Condição A concluída: exp #{exp_id}")
-                    status.update(label=f"✅ Condição A concluída! (exp #{exp_id})", state="complete")
+                    st.session_state['tcc_exam_uuid_a'] = exam_uuid
+                    _perf_log.info(f"[TCC-STEP4] Condição A concluída: exam={exam_uuid}")
+                    status.update(label=f"✅ Condição A concluída!", state="complete")
                 except Exception as e:
                     status.update(label="❌ Erro", state="error")
                     st.error(str(e))
@@ -484,17 +570,17 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                     st.code(traceback.format_exc())
 
             if 'tcc_exp_a' in st.session_state:
-                st.success(f"Condição A salva no experimento **#{st.session_state['tcc_exp_a']}**")
+                st.success(f"Condição A salva (exp #{st.session_state['tcc_exp_a']})")
                 if st.button("➡️ Próximo (Condição B)"):
                     st.session_state['tcc_step'] = 5
                     st.rerun()
 
     # ═══════════════════════════════════════════════
-    # STEP 5: Condição B (sem RAG)
+    # STEP 5: Condição B (sem RAG) via API
     # ═══════════════════════════════════════════════
     elif current_step == 5:
-        st.header("🅱️ Passo 5 — Condição B (sem RAG)")
-        st.markdown("Correção com RAG **desativado** (top_k=0). Mesmas questões e respostas da Condição A.")
+        st.header("🅱️ Passo 5 — Condição B (sem RAG) via Backend API")
+        st.markdown("Mesmas questões e respostas, mas **sem material anexado** (RAG desativado).")
 
         questions = st.session_state.get('tcc_questions', [])
         all_answers = st.session_state.get('tcc_answers', {})
@@ -503,49 +589,92 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
         if not questions or not all_answers:
             st.error("Volte aos passos anteriores.")
         else:
-            st.info(f"Corrigindo {len(questions)} questões × {len(students_list)} alunos **sem RAG**")
+            st.info(f"Corrigindo {len(questions)} questões × {len(students_list)} alunos **sem RAG** (sem material anexado)")
+            tcc_client = get_api_client(st.session_state.get('tcc_api_url', 'http://localhost:8000'))
 
-            if st.button("🅱️ Executar Condição B"):
-                _perf_log.info("[TCC-STEP5] Condição B (sem RAG)...")
-                status = st.status("🅱️ Correção sem RAG...", expanded=True)
+            if st.button("🅱️ Executar Condição B (via API)"):
+                _perf_log.info("[TCC-STEP5] Condição B via Backend API...")
+                status = st.status("🅱️ Condição B via Backend...", expanded=True)
                 try:
+                    # 1. Create exam (sem anexos = sem RAG)
+                    status.write("**1/5** Criando prova no backend (sem material anexado)...")
+                    exam = tcc_client.create_exam(
+                        f"TCC Condição B — {st.session_state.get('tcc_discipline', 'Geral')}",
+                        "Condição B (sem RAG) — Experimento TCC"
+                    )
+                    exam_uuid = exam['uuid']
+                    status.write(f"✅ Prova criada: `{exam_uuid}`")
+
+                    # 2. Add questions (mesmas)
+                    status.write(f"**2/5** Adicionando {len(questions)} questões...")
+                    created_qs = []
+                    for i, q in enumerate(questions):
+                        cq = tcc_client.add_question(exam_uuid, q.statement, getattr(q, 'total_points', 10.0), i + 1)
+                        created_qs.append(cq)
+                    status.write(f"✅ {len(created_qs)} questões adicionadas")
+
+                    # 3. Add student answers (mesmas)
+                    status.write(f"**3/5** Inserindo respostas dos alunos...")
+                    answer_count = 0
+                    for q_idx, cq in enumerate(created_qs):
+                        orig_q = questions[q_idx]
+                        answers_for_q = all_answers.get(orig_q.id, {})
+                        for s in students_list:
+                            if s['id'] in answers_for_q:
+                                ans = answers_for_q[s['id']]
+                                try:
+                                    tcc_client.add_answer(exam_uuid, cq['uuid'], str(s['id']), ans.text)
+                                    answer_count += 1
+                                except Exception as e:
+                                    status.write(f"⚠️ {e}")
+                    status.write(f"✅ {answer_count} respostas inseridas")
+
+                    # 4. Publish (SEM anexar PDF = sem RAG)
+                    status.write("**4/5** Publicando prova (sem material = sem RAG)...")
+                    tcc_client.publish_exam(exam_uuid)
+                    status.write("✅ Publicada!")
+
+                    # 5. Wait
+                    status.write("**5/5** Aguardando correção...")
+                    progress = st.progress(0)
+                    max_wait = 300
+                    start = time.time()
+                    final_status = "TIMEOUT"
+                    while time.time() - start < max_wait:
+                        progress.progress(min((time.time() - start) / max_wait, 0.99))
+                        exam_data = tcc_client.get_exam(exam_uuid)
+                        if exam_data.get('status') in ('GRADED', 'WARNING'):
+                            final_status = exam_data['status']
+                            progress.progress(1.0)
+                            break
+                        time.sleep(5)
+
+                    status.write(f"✅ Status: **{final_status}**")
+
+                    try:
+                        review = tcc_client.get_review(exam_uuid)
+                        st.session_state['tcc_review_b'] = review
+                    except Exception:
+                        pass
+
                     exp_id = exp_store.create_experiment({
                         'llm_provider': settings.LLM_PROVIDER,
                         'llm_model': settings.LLM_MODEL_NAME,
-                        'llm_temperature': settings.LLM_TEMPERATURE,
+                        'condition': 'B (sem RAG)',
+                        'mode': 'backend_api',
+                        'exam_uuid': exam_uuid,
+                        'final_status': final_status,
                         'num_questions': len(questions),
                         'num_students': len(students_list),
-                        'divergence_threshold': st.session_state.get('divergence_threshold', 2.0),
-                        'rag_enabled': False,
-                        'rag_top_k': 0,
-                        'condition': 'B (sem RAG)',
-                        'discipline': st.session_state.get('tcc_discipline', ''),
-                        'topic': st.session_state.get('tcc_topic', ''),
                     })
                     exp_store.save_questions(exp_id, questions)
                     exp_store.save_students(exp_id, students_list)
-
-                    for q_idx, q in enumerate(questions):
-                        status.write(f"Corrigindo Q{q_idx+1}/{len(questions)}...")
-                        for s in students_list:
-                            if s['id'] in all_answers.get(q.id, {}):
-                                ans = all_answers[q.id][s['id']]
-                                exp_store.save_answer(exp_id, str(q.id), str(s['id']), s['name'], ans.text, s['quality'])
-
-                                inp = {
-                                    "question": q, "student_answer": ans, "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
-                                    "rag_contexts": [],  # [] = skip RAG
-                                    "correction_1": None, "correction_2": None, "correction_arbiter": None,
-                                    "divergence_detected": False, "divergence_value": 0.0,
-                                    "all_corrections": [], "final_score": None
-                                }
-                                final_state = run_async(run_correction_pipeline(inp, status))
-                                exp_store.save_pipeline_state(exp_id, str(q.id), str(s['id']), s['name'], final_state)
-
                     exp_store.finish_experiment(exp_id, "completed")
+
                     st.session_state['tcc_exp_b'] = exp_id
-                    _perf_log.info(f"[TCC-STEP5] Condição B concluída: exp #{exp_id}")
-                    status.update(label=f"✅ Condição B concluída! (exp #{exp_id})", state="complete")
+                    st.session_state['tcc_exam_uuid_b'] = exam_uuid
+                    _perf_log.info(f"[TCC-STEP5] Condição B concluída: exam={exam_uuid}")
+                    status.update(label=f"✅ Condição B concluída!", state="complete")
                 except Exception as e:
                     status.update(label="❌ Erro", state="error")
                     st.error(str(e))
