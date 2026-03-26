@@ -147,7 +147,7 @@ De forma mais concreta, os benefícios técnicos desse desenho podem ser sinteti
 
 \subsection{Correção por agentes e saídas estruturadas}
 
-Cada resposta discursiva é avaliada por dois corretores independentes. Os agentes produzem uma saída estruturada que inclui: nota total, pontuação por critério e justificativas textuais. Essa estrutura atende ao objetivo de tornar o resultado revisável pelo professor, pois permite inspecionar como cada critério contribuiu para a nota final.
+Cada resposta discursiva é avaliada por dois corretores logicamente independentes --- isto é, sem estado compartilhado entre si, de modo que a avaliação de um não influencia a do outro. Na implementação, os corretores são executados sequencialmente para respeitar limites de taxa da API do provedor de LLM (\textit{tokens por minuto}), sem prejuízo à independência lógica das avaliações. Os agentes produzem uma saída estruturada que inclui: nota total, pontuação por critério e justificativas textuais. Essa estrutura atende ao objetivo de tornar o resultado revisável pelo professor, pois permite inspecionar como cada critério contribuiu para a nota final.
 
 Quando a divergência entre as notas dos corretores ultrapassa um limiar configurável (por padrão, \texttt{DIVERGENCE\_THRESHOLD=2.0} pontos), um terceiro agente (\textit{árbitro}) é acionado para produzir uma avaliação adicional. Na consolidação, o sistema utiliza a avaliação adicional como mecanismo de estabilização da nota final em casos de incerteza ou inconsistência entre corretores.
 

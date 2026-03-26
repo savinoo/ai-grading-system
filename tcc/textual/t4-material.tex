@@ -82,8 +82,10 @@ O backend foi desenvolvido com o \textit{framework} FastAPI, utilizado para a im
 \subsection{Orquestração do fluxo com LangGraph}
 O fluxo de correção foi estruturado como um grafo de estados, empregando LangGraph para definir nós de execução (recuperação de contexto, correção independente, verificação de divergência, acionamento condicional do terceiro corretor e consolidação do resultado). Essa abordagem permite controlar o encadeamento das etapas e tornar o processo reprodutível e rastreável \cite{langgraph_docs_2026}.
 
-\subsection{Agentes corretores com DSPy e LiteLLM}
-Os agentes de correção foram implementados com DSPy, adotando chamadas a modelos de linguagem por meio de uma camada de compatibilidade (LiteLLM). Essa combinação possibilita parametrizar modelos e provedores, manter configuração centralizada e aplicar cache quando aplicável, reduzindo variabilidade operacional e custo computacional \cite{dspy_docs_2026,litellm_docs_2026}.
+\subsection{Agentes corretores com LangChain}
+Os agentes de correção utilizam o método \texttt{with\_structured\_output} do ecossistema LangChain para realizar a inferência em tempo de execução \cite{langchain_docs_2026}. Cada avaliação é resolvida em uma única chamada ao modelo de linguagem, cujo retorno é automaticamente validado e convertido em um objeto Pydantic (\texttt{AgentCorrection}), eliminando etapas intermediárias de \textit{parsing} e garantindo aderência ao \textit{schema} esperado.
+
+Essa abordagem substitui o uso anterior de DSPy no caminho de inferência. O DSPy é um \textit{framework} voltado à \textbf{otimização offline} de \textit{prompts}, e não à execução de inferência em produção \cite{dspy_docs_2026}. No projeto, o módulo \texttt{BootstrapFewShot} do DSPy permanece disponível como ferramenta auxiliar para otimização de \textit{prompts} com exemplos reais, porém não participa do fluxo de correção em tempo de execução. A separação entre otimização offline (DSPy) e inferência runtime (LangChain) reduz o número de chamadas ao modelo por correção e simplifica o rastreamento do pipeline.
 
 \subsection{Integração com LLMs e provedores de \textit{embeddings}}
 Para padronizar integrações com provedores de modelos e de \textit{embeddings}, foram utilizadas bibliotecas do ecossistema LangChain. No sistema, essa camada é empregada tanto para instanciar modelos de chat (conforme o provedor configurado) quanto para gerar \textit{embeddings} utilizados no processo de recuperação de contexto \cite{langchain_docs_2026}.
@@ -202,7 +204,7 @@ Considera-se que a avaliação cumpre seu papel quando os resultados satisfazem 
     \item \textbf{QA1 (end-to-end):} 100\% das respostas previstas são processadas e persistidas, e a prova é disponibilizada para revisão docente (sem falhas que impeçam a revisão).
     \item \textbf{Completude estrutural:} pelo menos 95\% das respostas apresentam todos os campos esperados (nota final, notas por critério e justificativa).
     \item \textbf{QA2 (RAG):} na condição A (com RAG), a proporção de justificativas classificadas como \textit{ancoradas} (conforme checklist) é maior do que na condição B (sem RAG), mantendo o mesmo conjunto de respostas.
-    \item \textbf{QA3 (arbitragem):} o árbitro é acionado quando \(|\mathrm{nota}_{C1}-\mathrm{nota}_{C2}|\geq 2{,}0\) (limiar) e não é acionado quando \(|\mathrm{nota}_{C1}-\mathrm{nota}_{C2}|< 2{,}0\), no conjunto de casos analisado.
+    \item \textbf{QA3 (arbitragem):} o árbitro é acionado quando \(|\mathrm{nota}_{C1}-\mathrm{nota}_{C2}|> 2{,}0\) (limiar) e não é acionado quando \(|\mathrm{nota}_{C1}-\mathrm{nota}_{C2}|\leq 2{,}0\), no conjunto de casos analisado.
     \item \textbf{QA4 (estabilidade):} nas repetições (\(R=3\)) do subconjunto definido, a variação absoluta da nota final por caso permanece \(\leq 1{,}0\) ponto na escala da questão.
 \end{itemize}
 

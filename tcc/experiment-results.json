@@ -1,0 +1,471 @@
+{
+  "exam_uuid": "2a6b16d7-93fa-4df2-b441-81efbb5e14e4",
+  "exam_title": "Avaliação - Inteligência Artificial na Educação",
+  "exam_description": "Prova discursiva sobre IA aplicada ao contexto educacional",
+  "class_name": "TCC-2026-Experimento",
+  "status": "WARNING",
+  "total_students": 4,
+  "total_questions": 3,
+  "graded_at": "2026-03-25T05:32:04.878363Z",
+  "questions": [
+    {
+      "question_uuid": "22791e2c-1be3-4c40-a349-cefe3fd4c3ae",
+      "question_number": 1,
+      "statement": "Explique o conceito de Retrieval-Augmented Generation (RAG) e como essa técnica pode ser aplicada em sistemas educacionais para melhorar a qualidade de respostas geradas por modelos de linguagem.",
+      "expected_answer": null,
+      "max_score": 10.0,
+      "student_answers": [
+        {
+          "answer_uuid": "6df58ac0-1cc0-4245-8fa1-d4a6c117156e",
+          "student_uuid": "6935748e-aca0-48e7-ad46-20c80a064c4a",
+          "student_name": "Aluno Fraca",
+          "student_email": "aluno.fraca@teste.com",
+          "answer_text": "RAG é quando a inteligência artificial busca coisas na internet para responder melhor. Isso pode ser usado na educação para ajudar os alunos.",
+          "score": null,
+          "status": "SUBMITTED",
+          "feedback": null,
+          "criteria_scores": [],
+          "graded_at": null
+        },
+        {
+          "answer_uuid": "bd009d11-9bf6-46cc-8cbc-dd5852857f96",
+          "student_uuid": "93132a6b-484b-4592-a0fb-e31d4a960042",
+          "student_name": "Aluno Fora do Tema",
+          "student_email": "aluno.fora_tema@teste.com",
+          "answer_text": "A inteligência artificial tem avançado muito nos últimos anos, especialmente com o surgimento do ChatGPT. Empresas como Google e OpenAI investem bilhões nessa tecnologia. O mercado de trabalho está sendo transformado e muitas profissões podem ser substituídas.",
+          "score": null,
+          "status": "SUBMITTED",
+          "feedback": null,
+          "criteria_scores": [],
+          "graded_at": null
+        },
+        {
+          "answer_uuid": "ca9c8441-ca5a-4ddc-af9f-f181b94c7805",
+          "student_uuid": "8bdb8160-d6ba-4cf6-84a9-bce345269df9",
+          "student_name": "Aluno Adequada",
+          "student_email": "aluno.adequada@teste.com",
+          "answer_text": "RAG é uma técnica que usa recuperação de documentos para complementar as respostas de um modelo de linguagem. O sistema busca textos relevantes em uma base de dados e passa para o LLM junto com a pergunta. Na educação, isso pode ser usado para fazer o modelo dar respostas mais baseadas no conteúdo do curso, em vez de inventar informações.",
+          "score": 8.0,
+          "status": "GRADED",
+          "feedback": null,
+          "criteria_scores": [
+            {
+              "criterion_uuid": "64525efc-7e74-400c-969d-f857b6550396",
+              "criterion_name": "Correção técnica",
+              "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+              "max_score": 10.0,
+              "weight": 0.3,
+              "raw_score": 8.0,
+              "weighted_score": 2.4,
+              "feedback": "O aluno demonstrou uma compreensão razoável do conceito de RAG, mas poderia ter aprofundado mais na aplicação em sistemas educacionais."
+            },
+            {
+              "criterion_uuid": "28ab84e5-6670-4527-a5b5-fee76d136a7c",
+              "criterion_name": "Completude da resposta",
+              "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 7.0,
+              "weighted_score": 1.75,
+              "feedback": "A resposta abordou os principais pontos solicitados, mas faltou uma discussão mais detalhada sobre como a técnica pode melhorar a qualidade das respostas geradas por modelos de linguagem."
+            },
+            {
+              "criterion_uuid": "d7a55a07-a166-432b-94a4-e05fae6237e9",
+              "criterion_name": "Clareza e objetividade",
+              "criterion_description": "Avalia se a resposta é clara, objetiva e fácil de compreender.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 9.0,
+              "weighted_score": 2.25,
+              "feedback": "A resposta foi clara e objetiva, fácil de compreender."
+            },
+            {
+              "criterion_uuid": "f0db4727-8d99-4275-ad18-3eafbd7fecf6",
+              "criterion_name": "Atendimento ao enunciado",
+              "criterion_description": "Avalia se a resposta atende exatamente ao que foi pedido (comando, recortes, restrições e formato).",
+              "max_score": 10.0,
+              "weight": 0.2,
+              "raw_score": 8.0,
+              "weighted_score": 1.6,
+              "feedback": "A resposta atendeu ao que foi pedido, mas poderia ter sido mais específica em relação ao comando e restrições."
+            }
+          ],
+          "graded_at": "2026-03-25T05:26:18.617232Z"
+        },
+        {
+          "answer_uuid": "6d5c24a2-6e76-4f37-8fc6-ca49251e9509",
+          "student_uuid": "d2c539e1-99b0-4976-9a9c-ac9048316a00",
+          "student_name": "Aluno Excelente",
+          "student_email": "aluno.excelente@teste.com",
+          "answer_text": "O Retrieval-Augmented Generation (RAG) é uma técnica que combina a capacidade generativa de modelos de linguagem (LLMs) com a recuperação de informações relevantes de bases de dados externas. O processo funciona em três etapas: primeiro, a consulta do usuário é convertida em um vetor de embeddings; segundo, esse vetor é utilizado para buscar documentos similares em uma base vetorial (como ChromaDB ou FAISS); terceiro, os trechos recuperados são incluídos no prompt enviado ao LLM, fornecendo contexto factual para a geração da resposta. Em sistemas educacionais, o RAG pode ser aplicado para personalizar o feedback ao aluno, ancorando as avaliações no material didático específico da disciplina. Por exemplo, ao corrigir uma prova discursiva, o sistema pode recuperar trechos do livro-texto ou das notas de aula para verificar se a resposta do aluno está alinhada com o conteúdo ensinado. Isso reduz alucinações do modelo e aumenta a rastreabilidade da avaliação.",
+          "score": 9.51,
+          "status": "GRADED",
+          "feedback": null,
+          "criteria_scores": [
+            {
+              "criterion_uuid": "64525efc-7e74-400c-969d-f857b6550396",
+              "criterion_name": "Correção técnica",
+              "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+              "max_score": 10.0,
+              "weight": 0.3,
+              "raw_score": 9.0,
+              "weighted_score": 2.7,
+              "feedback": "A resposta apresenta uma compreensão sólida do conceito de RAG e sua aplicação em sistemas educacionais."
+            },
+            {
+              "criterion_uuid": "28ab84e5-6670-4527-a5b5-fee76d136a7c",
+              "criterion_name": "Completude da resposta",
+              "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 9.5,
+              "weighted_score": 2.38,
+              "feedback": "A resposta aborda todos os pontos solicitados de forma adequada, com uma explicação clara do processo de RAG e seu potencial em sistemas educacionais."
+            },
+            {
+              "criterion_uuid": "d7a55a07-a166-432b-94a4-e05fae6237e9",
+              "criterion_name": "Clareza e objetividade",
+              "criterion_description": "Avalia se a resposta é clara, objetiva e fácil de compreender.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 9.8,
+              "weighted_score": 2.45,
+              "feedback": "A resposta é clara, objetiva e fácil de compreender, com uma estrutura lógica que facilita a absorção do conteúdo."
+            },
+            {
+              "criterion_uuid": "f0db4727-8d99-4275-ad18-3eafbd7fecf6",
+              "criterion_name": "Atendimento ao enunciado",
+              "criterion_description": "Avalia se a resposta atende exatamente ao que foi pedido (comando, recortes, restrições e formato).",
+              "max_score": 10.0,
+              "weight": 0.2,
+              "raw_score": 9.9,
+              "weighted_score": 1.98,
+              "feedback": "A resposta atende exatamente ao que foi pedido, abordando o conceito de RAG e sua aplicação em sistemas educacionais de forma precisa e relevante."
+            }
+          ],
+          "graded_at": "2026-03-25T05:26:15.210383Z"
+        }
+      ]
+    },
+    {
+      "question_uuid": "8628dcd5-4a56-47f7-855a-ad1c132418bd",
+      "question_number": 2,
+      "statement": "Descreva o funcionamento de um sistema multiagente para correção automatizada de provas discursivas. Quais são as vantagens de utilizar múltiplos agentes em comparação com um único modelo avaliador?",
+      "expected_answer": null,
+      "max_score": 10.0,
+      "student_answers": [
+        {
+          "answer_uuid": "a77671c0-e487-42d2-9056-33c01fb6f332",
+          "student_uuid": "d2c539e1-99b0-4976-9a9c-ac9048316a00",
+          "student_name": "Aluno Excelente",
+          "student_email": "aluno.excelente@teste.com",
+          "answer_text": "Um sistema multiagente para correção automatizada utiliza múltiplos agentes de IA que avaliam a mesma resposta de forma independente. Na arquitetura típica, dois corretores primários (C1 e C2) analisam a resposta contra uma rubrica predefinida, produzindo notas por critério e justificativas textuais. Após a avaliação independente, um mecanismo de verificação de divergência calcula a diferença absoluta entre as notas. Se a divergência ultrapassa um limiar configurado, um terceiro agente árbitro é acionado. A nota final é calculada por consenso: com duas avaliações, média simples; com três, média das duas mais próximas. As vantagens incluem: robustez, detecção de inconsistências, auditabilidade via Chain-of-Thought e reprodutibilidade do pipeline.",
+          "score": null,
+          "status": "SUBMITTED",
+          "feedback": null,
+          "criteria_scores": [],
+          "graded_at": null
+        },
+        {
+          "answer_uuid": "df55e97d-01b3-4e99-868b-1be815fe09d5",
+          "student_uuid": "6935748e-aca0-48e7-ad46-20c80a064c4a",
+          "student_name": "Aluno Fraca",
+          "student_email": "aluno.fraca@teste.com",
+          "answer_text": "Sistema multiagente é quando tem vários robôs corrigindo a prova. É melhor que um só porque dois é melhor que um.",
+          "score": null,
+          "status": "SUBMITTED",
+          "feedback": null,
+          "criteria_scores": [],
+          "graded_at": null
+        },
+        {
+          "answer_uuid": "50e02976-3b13-42a3-88a8-192e9db6ed02",
+          "student_uuid": "8bdb8160-d6ba-4cf6-84a9-bce345269df9",
+          "student_name": "Aluno Adequada",
+          "student_email": "aluno.adequada@teste.com",
+          "answer_text": "Um sistema multiagente usa vários agentes de IA que corrigem a mesma resposta separadamente. Cada um dá sua nota e justificativa, e depois o sistema compara. Se houver muita diferença, um terceiro corretor desempata. É mais confiável que usar apenas um.",
+          "score": 5.55,
+          "status": "GRADED",
+          "feedback": null,
+          "criteria_scores": [
+            {
+              "criterion_uuid": "64525efc-7e74-400c-969d-f857b6550396",
+              "criterion_name": "Correção técnica",
+              "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+              "max_score": 10.0,
+              "weight": 0.3,
+              "raw_score": 6.0,
+              "weighted_score": 1.8,
+              "feedback": "O aluno demonstrou compreensão parcial do conceito de sistema multiagente, mas apresentou alguns erros técnicos."
+            },
+            {
+              "criterion_uuid": "28ab84e5-6670-4527-a5b5-fee76d136a7c",
+              "criterion_name": "Completude da resposta",
+              "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 4.0,
+              "weighted_score": 1.0,
+              "feedback": "A resposta do aluno abordou alguns pontos solicitados, mas não todos."
+            },
+            {
+              "criterion_uuid": "d7a55a07-a166-432b-94a4-e05fae6237e9",
+              "criterion_name": "Clareza e objetividade",
+              "criterion_description": "Avalia se a resposta é clara, objetiva e fácil de compreender.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 7.0,
+              "weighted_score": 1.75,
+              "feedback": "A resposta do aluno foi clara e objetiva, mas poderia ser mais detalhada."
+            },
+            {
+              "criterion_uuid": "f0db4727-8d99-4275-ad18-3eafbd7fecf6",
+              "criterion_name": "Atendimento ao enunciado",
+              "criterion_description": "Avalia se a resposta atende exatamente ao que foi pedido (comando, recortes, restrições e formato).",
+              "max_score": 10.0,
+              "weight": 0.2,
+              "raw_score": 5.0,
+              "weighted_score": 1.0,
+              "feedback": "A resposta do aluno atendeu parcialmente ao que foi pedido."
+            }
+          ],
+          "graded_at": "2026-03-25T05:28:09.292334Z"
+        },
+        {
+          "answer_uuid": "6b9ff532-0046-4411-90b1-e3ec413868a5",
+          "student_uuid": "93132a6b-484b-4592-a0fb-e31d4a960042",
+          "student_name": "Aluno Fora do Tema",
+          "student_email": "aluno.fora_tema@teste.com",
+          "answer_text": "Os sistemas operacionais modernos utilizam arquiteturas multiprocessadas. O Linux implementa escalonamento com algoritmos como Round Robin e CFS. A comunicação entre processos pode ser feita via pipes, sockets ou memória compartilhada.",
+          "score": 1.8,
+          "status": "GRADED",
+          "feedback": null,
+          "criteria_scores": [
+            {
+              "criterion_uuid": "64525efc-7e74-400c-969d-f857b6550396",
+              "criterion_name": "Correção técnica",
+              "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+              "max_score": 10.0,
+              "weight": 0.3,
+              "raw_score": 2.0,
+              "weighted_score": 0.6,
+              "feedback": "A resposta apresenta conceitos técnicos, mas não aborda o tema solicitado."
+            },
+            {
+              "criterion_uuid": "28ab84e5-6670-4527-a5b5-fee76d136a7c",
+              "criterion_name": "Completude da resposta",
+              "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 1.0,
+              "weighted_score": 0.25,
+              "feedback": "A resposta não aborda todos os pontos solicitados."
+            },
+            {
+              "criterion_uuid": "d7a55a07-a166-432b-94a4-e05fae6237e9",
+              "criterion_name": "Clareza e objetividade",
+              "criterion_description": "Avalia se a resposta é clara, objetiva e fácil de compreender.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 3.0,
+              "weighted_score": 0.75,
+              "feedback": "A resposta é clara, mas não é objetiva."
+            },
+            {
+              "criterion_uuid": "f0db4727-8d99-4275-ad18-3eafbd7fecf6",
+              "criterion_name": "Atendimento ao enunciado",
+              "criterion_description": "Avalia se a resposta atende exatamente ao que foi pedido (comando, recortes, restrições e formato).",
+              "max_score": 10.0,
+              "weight": 0.2,
+              "raw_score": 1.0,
+              "weighted_score": 0.2,
+              "feedback": "A resposta não atende exatamente ao que foi pedido."
+            }
+          ],
+          "graded_at": "2026-03-25T05:31:47.532031Z"
+        }
+      ]
+    },
+    {
+      "question_uuid": "e59b4c06-56e9-445e-b9f2-95b354a29b98",
+      "question_number": 3,
+      "statement": "Discuta as limitações e os desafios éticos do uso de inteligência artificial para avaliação de respostas discursivas em contextos acadêmicos. Como o papel do professor pode ser preservado nesse cenário?",
+      "expected_answer": null,
+      "max_score": 10.0,
+      "student_answers": [
+        {
+          "answer_uuid": "679a037d-8561-4ac8-9830-9bec3317aca8",
+          "student_uuid": "6935748e-aca0-48e7-ad46-20c80a064c4a",
+          "student_name": "Aluno Fraca",
+          "student_email": "aluno.fraca@teste.com",
+          "answer_text": "IA tem problemas porque pode errar e não é justo usar robô para dar nota. O professor deveria corrigir tudo sozinho.",
+          "score": null,
+          "status": "SUBMITTED",
+          "feedback": null,
+          "criteria_scores": [],
+          "graded_at": null
+        },
+        {
+          "answer_uuid": "d52085ba-0308-4f62-afab-914dab21dac9",
+          "student_uuid": "93132a6b-484b-4592-a0fb-e31d4a960042",
+          "student_name": "Aluno Fora do Tema",
+          "student_email": "aluno.fora_tema@teste.com",
+          "answer_text": "A ética na ciência da computação abrange privacidade de dados até impacto ambiental dos data centers. A LGPD no Brasil estabelece regras para tratamento de dados pessoais. O GDPR na Europa é semelhante.",
+          "score": null,
+          "status": "SUBMITTED",
+          "feedback": null,
+          "criteria_scores": [],
+          "graded_at": null
+        },
+        {
+          "answer_uuid": "da998cd6-dc3f-42cb-89a2-f40ed4e27c01",
+          "student_uuid": "8bdb8160-d6ba-4cf6-84a9-bce345269df9",
+          "student_name": "Aluno Adequada",
+          "student_email": "aluno.adequada@teste.com",
+          "answer_text": "As limitações incluem o viés dos modelos de IA e a dificuldade de avaliar respostas criativas. Eticamente, é questionável usar IA para decidir notas. O professor deve continuar como decisor final, usando a IA apenas como ferramenta auxiliar.",
+          "score": 8.68,
+          "status": "GRADED",
+          "feedback": null,
+          "criteria_scores": [
+            {
+              "criterion_uuid": "64525efc-7e74-400c-969d-f857b6550396",
+              "criterion_name": "Correção técnica",
+              "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+              "max_score": 10.0,
+              "weight": 0.3,
+              "raw_score": 8.0,
+              "weighted_score": 2.4,
+              "feedback": "A resposta apresenta uma boa compreensão dos conceitos técnicos, mas poderia ser mais precisa em alguns pontos."
+            },
+            {
+              "criterion_uuid": "28ab84e5-6670-4527-a5b5-fee76d136a7c",
+              "criterion_name": "Completude da resposta",
+              "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 9.0,
+              "weighted_score": 2.25,
+              "feedback": "A resposta aborda todos os pontos solicitados, mas poderia ser mais detalhada em alguns aspectos."
+            },
+            {
+              "criterion_uuid": "d7a55a07-a166-432b-94a4-e05fae6237e9",
+              "criterion_name": "Clareza e objetividade",
+              "criterion_description": "Avalia se a resposta é clara, objetiva e fácil de compreender.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 8.5,
+              "weighted_score": 2.13,
+              "feedback": "A resposta é clara e objetiva, mas em alguns momentos pode ser um pouco confusa."
+            },
+            {
+              "criterion_uuid": "f0db4727-8d99-4275-ad18-3eafbd7fecf6",
+              "criterion_name": "Atendimento ao enunciado",
+              "criterion_description": "Avalia se a resposta atende exatamente ao que foi pedido (comando, recortes, restrições e formato).",
+              "max_score": 10.0,
+              "weight": 0.2,
+              "raw_score": 9.5,
+              "weighted_score": 1.9,
+              "feedback": "A resposta atende exatamente ao que foi pedido, com apenas alguns pequenos desvios."
+            }
+          ],
+          "graded_at": "2026-03-25T05:32:04.878363Z"
+        },
+        {
+          "answer_uuid": "4ed1883b-8cd8-47e8-958d-af19be60fff4",
+          "student_uuid": "d2c539e1-99b0-4976-9a9c-ac9048316a00",
+          "student_name": "Aluno Excelente",
+          "student_email": "aluno.excelente@teste.com",
+          "answer_text": "O uso de IA para avaliação de respostas discursivas apresenta limitações técnicas e desafios éticos. Tecnicamente, LLMs podem apresentar viés em relação a estilos de escrita e vocabulário, potencialmente desfavorecendo alunos com diferentes backgrounds. Além disso, operam por correlações estatísticas, podendo falhar em avaliar raciocínios originais. A reprodutibilidade também é um desafio. Eticamente, há questões sobre transparência, privacidade dos dados acadêmicos e o risco de automatizar decisões com impacto educacional. O papel do professor pode ser preservado posicionando a IA como ferramenta de apoio: o sistema gera avaliação inicial estruturada que o docente revisa, ajusta e aprova antes da consolidação. Isso mantém a autoridade pedagógica enquanto reduz o esforço operacional.",
+          "score": 8.7,
+          "status": "GRADED",
+          "feedback": null,
+          "criteria_scores": [
+            {
+              "criterion_uuid": "64525efc-7e74-400c-969d-f857b6550396",
+              "criterion_name": "Correção técnica",
+              "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+              "max_score": 10.0,
+              "weight": 0.3,
+              "raw_score": 8.0,
+              "weighted_score": 2.4,
+              "feedback": "A resposta apresenta uma boa compreensão dos conceitos técnicos relacionados às limitações e desafios éticos do uso de IA para avaliação de respostas discursivas."
+            },
+            {
+              "criterion_uuid": "28ab84e5-6670-4527-a5b5-fee76d136a7c",
+              "criterion_name": "Completude da resposta",
+              "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 9.0,
+              "weighted_score": 2.25,
+              "feedback": "A resposta aborda todos os pontos solicitados de forma adequada, incluindo as limitações técnicas e desafios éticos, bem como o papel do professor."
+            },
+            {
+              "criterion_uuid": "d7a55a07-a166-432b-94a4-e05fae6237e9",
+              "criterion_name": "Clareza e objetividade",
+              "criterion_description": "Avalia se a resposta é clara, objetiva e fácil de compreender.",
+              "max_score": 10.0,
+              "weight": 0.25,
+              "raw_score": 9.0,
+              "weighted_score": 2.25,
+              "feedback": "A resposta é clara, objetiva e fácil de compreender, com uma estrutura lógica e coerente."
+            },
+            {
+              "criterion_uuid": "f0db4727-8d99-4275-ad18-3eafbd7fecf6",
+              "criterion_name": "Atendimento ao enunciado",
+              "criterion_description": "Avalia se a resposta atende exatamente ao que foi pedido (comando, recortes, restrições e formato).",
+              "max_score": 10.0,
+              "weight": 0.2,
+              "raw_score": 9.0,
+              "weighted_score": 1.8,
+              "feedback": "A resposta atende exatamente ao que foi pedido, abordando as limitações e desafios éticos do uso de IA para avaliação de respostas discursivas e o papel do professor."
+            }
+          ],
+          "graded_at": "2026-03-25T05:31:52.937603Z"
+        }
+      ]
+    }
+  ],
+  "grading_criteria": [
+    {
+      "criterion_uuid": "64525efc-7e74-400c-969d-f857b6550396",
+      "criterion_name": "Correção técnica",
+      "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+      "max_score": 10.0,
+      "weight": 0.3,
+      "raw_score": 0.0,
+      "weighted_score": null,
+      "feedback": null
+    },
+    {
+      "criterion_uuid": "28ab84e5-6670-4527-a5b5-fee76d136a7c",
+      "criterion_name": "Completude da resposta",
+      "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+      "max_score": 10.0,
+      "weight": 0.25,
+      "raw_score": 0.0,
+      "weighted_score": null,
+      "feedback": null
+    },
+    {
+      "criterion_uuid": "d7a55a07-a166-432b-94a4-e05fae6237e9",
+      "criterion_name": "Clareza e objetividade",
+      "criterion_description": "Avalia se a resposta é clara, objetiva e fácil de compreender.",
+      "max_score": 10.0,
+      "weight": 0.25,
+      "raw_score": 0.0,
+      "weighted_score": null,
+      "feedback": null
+    },
+    {
+      "criterion_uuid": "f0db4727-8d99-4275-ad18-3eafbd7fecf6",
+      "criterion_name": "Atendimento ao enunciado",
+      "criterion_description": "Avalia se a resposta atende exatamente ao que foi pedido (comando, recortes, restrições e formato).",
+      "max_score": 10.0,
+      "weight": 0.2,
+      "raw_score": 0.0,
+      "weighted_score": null,
+      "feedback": null
+    }
+  ]
+}
