@@ -1,9 +1,15 @@
 """
 Streamlit observability app — debug interface for CorretumAI grading pipeline.
-Run: streamlit run backend/streamlit_app.py
-"""
-import streamlit as st
 
-st.title("CorretumAI — Debug Dashboard")
-st.info("Interface de observabilidade para o pipeline de correção automática.")
-st.write("Em desenvolvimento — conectar ao backend FastAPI via API endpoints.")
+Entrypoint que delega para app/main.py.
+Run: streamlit run streamlit_app.py
+"""
+import runpy
+import os
+import sys
+
+# Ensure project root is in path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# Delegate to the actual app
+runpy.run_module('app.main', run_name='__main__')
