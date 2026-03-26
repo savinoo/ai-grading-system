@@ -1,14 +1,7 @@
-"""
-Streamlit Observability App — Interface visual para o pipeline de correção CorretumAI.
-
-Rastreabilidade completa: exibe cada etapa do pipeline (RAG, Corretor 1, Corretor 2,
-Divergência, Árbitro) em tempo real com feedback visual.
-
-Adaptado da branch main para a arquitetura da branch tcc.
-"""
 import asyncio
 import json
 import os
+import random
 import sys
 import time
 
@@ -16,8 +9,10 @@ import pandas as pd
 import streamlit as st
 
 # Add project root to sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+# --- Custom Modules ---
+from app.analytics_ui import render_analytics_selector, render_class_analytics_dashboard, render_plagiarism_dashboard, render_student_profile_card
 from app.persistence import load_persistence_data, save_persistence_data
 from app.ui_components import (
     render_class_ranking,
@@ -26,113 +21,128 @@ from app.ui_components import (
     render_student_report,
     setup_page,
 )
-from src.core.settings import settings
-from src.core.langsmith_config import initialize_langsmith, is_langsmith_enabled
-from src.core.llm_handler import get_chat_model
-from src.core.vector_db_handler import get_vector_store
-from src.domain.ai.schemas import EvaluationCriterion, ExamQuestion, QuestionMetadata, StudentAnswer
-from src.domain.ai.workflow.graph import get_grading_graph
-from src.services.rag.retrieval_service import RetrievalService
+from src.agents.mock_generator import MockDataGeneratorAgent
+from src.analytics import ClassAnalyzer, StudentTracker
+from src.config.settings import settings
+from src.domain.analytics_schemas import SubmissionRecord
+from src.domain.schemas import EvaluationCriterion, ExamQuestion, QuestionMetadata, StudentAnswer
+from src.infrastructure.langsmith_config import initialize_langsmith, is_langsmith_enabled
 
+# from langchain_openai import ChatOpenAI # SUBSTITUIDO PELO FACTORY
+from src.infrastructure.llm_factory import get_chat_model
+from src.infrastructure.vector_db import get_vector_store
+from src.memory import get_knowledge_base
+from src.rag.chunking import process_and_index_pdf
+from src.rag.retriever import search_context
+from src.utils.helpers import run_async, safe_gather, save_uploaded_file
+from src.utils.logging_config import setup_logging
+from src.workflow.graph import build_grading_workflow
 
 # --- Initialization ---
+setup_logging()
+initialize_langsmith()  # Inicializa LangSmith tracing
+from src.infrastructure.dspy_config import configure_dspy
+
+configure_dspy()
+# LLM para geração de questões — usa num_predict maior (questões são mais longas)
+# num_predict e num_ctx vêm de OLLAMA_NUM_PREDICT_QUESTIONS e OLLAMA_NUM_CTX no .env
+from src.config.settings import settings as _settings
+llm_creation = get_chat_model(
+    temperature=1,
+    num_predict=_settings.OLLAMA_NUM_PREDICT_QUESTIONS,
+)
+mock_agent = MockDataGeneratorAgent(llm_creation)
+# Warmup: pré-carrega o modelo Ollama na RAM para evitar latência na primeira chamada do usuário
+if _settings.LLM_PROVIDER == "local":
+    import threading
+    def _warmup():
+        try:
+            import requests
+            requests.post(
+                f"{_settings.OLLAMA_BASE_URL}/api/generate",
+                json={"model": _settings.LOCAL_MODEL_NAME, "prompt": "ok", "stream": False, "options": {"num_predict": 1}},
+                timeout=30
+            )
+        except Exception:
+            pass
+    threading.Thread(target=_warmup, daemon=True).start()
+
+# Analytics initialization
+tracker = StudentTracker()
+kb = get_knowledge_base()
+analyzer = ClassAnalyzer()
+
 setup_page()
 render_custom_css()
-initialize_langsmith()
 load_persistence_data()
 
-retrieval_service = RetrievalService()
-
-
-# --- Helpers ---
-def run_async(coro):
-    """Run async coroutine from sync context (Streamlit)."""
-    try:
-        loop = asyncio.get_event_loop()
-        if loop.is_running():
-            import concurrent.futures
-            with concurrent.futures.ThreadPoolExecutor() as pool:
-                return pool.submit(asyncio.run, coro).result()
-    except RuntimeError:
-        pass
-    return asyncio.run(coro)
-
-
 # --- Workflow Logic ---
+
 async def run_correction_pipeline(inputs, status_container=None):
-    """Executa o LangGraph de forma assíncrona, com streaming de eventos reais."""
-    workflow = get_grading_graph()
+    """Executa o LangGraph de forma assíncrona, com streaming de eventos reais"""
+    workflow = build_grading_workflow()
+
+    # Injeta o limiar de divergência do session_state para evitar mutação do singleton global
+    import streamlit as _st
+    try:
+        threshold = _st.session_state.get("divergence_threshold")
+        if threshold is not None:
+            inputs = {**inputs, "divergence_threshold": threshold}
+    except Exception:
+        pass
 
     if status_container:
-        final_state = dict(inputs)
+        final_state = inputs.copy()
         async for output in workflow.astream(inputs):
             for key, value in output.items():
                 if isinstance(value, dict):
                     final_state.update(value)
 
-                # Feedback visual por etapa
+                # Feedback visual
                 if key == "retrieve_context":
-                    contexts = value.get('rag_contexts', [])
-                    count = len(contexts) if contexts else 0
+                    count = len(value.get('rag_context', []))
                     status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📚 RAG: {count} trechos recuperados.")
-
-                elif key == "examiner_1":
-                    c1 = value.get('correction_1')
-                    if c1:
-                        status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🤖 Corretor 1: Nota {c1.total_score:.1f}")
-
-                elif key == "examiner_2":
-                    c2 = value.get('correction_2')
-                    if c2:
-                        status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🤖 Corretor 2: Nota {c2.total_score:.1f}")
-
-                elif key == "divergence_check":
-                    is_div = value.get('divergence_detected', False)
-                    if is_div:
-                        diff = value.get('divergence_value', 0)
-                        status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⚠️ Divergência ({diff:.1f} pts)! Acionando Árbitro...")
-                    else:
-                        status_container.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;✨ Consenso atingido.")
-
+                elif key == "corrector_1":
+                     res = value.get('individual_corrections', [])[0]
+                     status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🤖 Corretor 1: Nota {res.total_score:.1f}")
+                elif key == "corrector_2":
+                     res = value.get('individual_corrections', [])[0]
+                     status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🤖 Corretor 2: Nota {res.total_score:.1f}")
+                elif key == "check_divergence":
+                     is_div = value.get('divergence_detected', False)
+                     if is_div:
+                         status_container.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⚠️ Divergência! Acionando Árbitro...")
+                     else:
+                         status_container.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;✨ Consenso atingido.")
                 elif key == "arbiter":
-                    arb = value.get('correction_arbiter')
-                    if arb:
-                        status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;👨‍⚖️ Árbitro: Nota {arb.total_score:.1f}")
-
-                elif key == "finalize":
-                    score = value.get('final_score')
-                    if score is not None:
-                        status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;✅ Nota Final: {score:.1f}")
+                     res = value.get('individual_corrections', [])[-1]
+                     status_container.write(f"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;👨‍⚖️ Árbitro: Nota final {res.total_score:.1f}")
 
         return final_state
     else:
         return await workflow.ainvoke(inputs)
 
-
 def get_rag_status_info():
-    """Retorna contagem de documentos no VectorDB."""
     try:
         vs = get_vector_store()
         count = vs._collection.count()
         return count, vs
-    except Exception:
+    except:
         return 0, None
-
 
 # --- SIDEBAR & SETUP ---
 with st.sidebar:
     st.title("⚙️ Painel de Controle")
     operation_mode = st.radio(
         "Modo de Operação",
-        ["Single Student (Debug)", "Batch Processing (Turma)"],
-        index=0
+        ["Single Student (Debug)", "Batch Processing (Turma)", "📊 Analytics Dashboard"],
+        index=1
     )
     st.divider()
 
     # LangSmith Status
     st.header("📊 Observabilidade")
-    model_name = getattr(settings, 'LLM_MODEL_NAME', 'unknown')
-    st.caption(f"LLM: {settings.LLM_PROVIDER} / {model_name}")
+    st.caption(f"LLM model: {settings.MODEL_NAME}")
     if is_langsmith_enabled():
         st.success("✓ LangSmith Ativo", icon="🔍")
         st.caption(f"Projeto: {settings.LANGSMITH_PROJECT_NAME}")
@@ -148,12 +158,24 @@ with st.sidebar:
     doc_count, vs = get_rag_status_info()
     st.caption(f"Status VectorDB: {doc_count} docs indexados")
 
+    uploaded_file = st.file_uploader("Upload de Material (PDF)", type="pdf")
+    if 'global_discipline' not in st.session_state: st.session_state['global_discipline'] = "História"
+    discipline = st.text_input("Disciplina", key="global_discipline")
+    topic = "Revolução Industrial"
+
+    if uploaded_file and st.button("Indexar Material"):
+        with st.spinner("Processando..."):
+            path = save_uploaded_file(uploaded_file)
+            count = process_and_index_pdf(path, discipline, topic)
+            st.success(f"Adicionado {count} chunks!")
+            time.sleep(1)
+            st.rerun()
+
     if doc_count > 0 and st.button("🗑️ Limpar Banco de Dados"):
-        if vs:
+         if vs:
             try:
                 all_ids = vs._collection.get()['ids']
-                if all_ids:
-                    vs._collection.delete(ids=all_ids)
+                if all_ids: vs._collection.delete(ids=all_ids)
                 st.success("Limpo!")
                 st.rerun()
             except Exception as e:
@@ -161,180 +183,433 @@ with st.sidebar:
 
     st.divider()
     st.header("Parâmetros")
-    divergence_threshold = st.slider("Limiar de Divergência", 0.5, 5.0, 2.0, 0.5)
+    divergence_threshold = st.slider("Limiar de Divergência", 0.5, 5.0, 1.5, 0.5)
+    # Persiste no session_state em vez de mutar o singleton global (thread-safe)
     st.session_state["divergence_threshold"] = divergence_threshold
-
 
 # --- PAGES ---
 
 if operation_mode == "Single Student (Debug)":
     st.title("🔬 Modo Debug: Correção Individual")
-    st.markdown("Rastreabilidade completa de cada etapa do pipeline de correção.")
 
     tab1, tab2, tab3 = st.tabs(["1. Configuração", "2. Execução", "3. Auditoria"])
 
     with tab1:
-        if 'global_discipline' not in st.session_state:
-            st.session_state['global_discipline'] = "Banco de Dados"
-
-        discipline = st.text_input("Disciplina", key="global_discipline")
-        topic = st.text_input("Tópico", value="Geral")
-
         col_q, col_a = st.columns(2)
         with col_q:
             q_text = st.text_area("Enunciado", "Explique a diferença entre Árvores B e B+.")
-            default_rubric = [
-                {"name": "Precisão Conceitual", "description": "Correção dos conceitos apresentados", "weight": 6, "max_score": 6},
-                {"name": "Clareza", "description": "Organização e clareza do texto", "weight": 4, "max_score": 4}
-            ]
-            rubric_json = st.text_area("Rubrica (JSON)", json.dumps(default_rubric, indent=2, ensure_ascii=False))
+            default_rubric = [{"name": "Precisão", "description": "Conceito correto", "weight": 6, "max_score": 6}, {"name": "Clareza", "description": "Texto claro", "weight": 4, "max_score": 4}]
+            rubric_json = st.text_area("Rubrica (JSON)", json.dumps(default_rubric, indent=2))
         with col_a:
-            student_text = st.text_area("Resposta do Aluno", "Árvores B armazenam dados em todos os nós, enquanto B+ armazenam apenas nas folhas...")
+            student_text = st.text_area("Resposta do Aluno", "Árvores B armazenam dados nos nós...")
 
         if st.button("Carregar Dados", key="single_load"):
             try:
                 rubric_objs = [EvaluationCriterion(**r) for r in json.loads(rubric_json)]
                 st.session_state['single_input'] = {
-                    "question": ExamQuestion(
-                        id="Q1",
-                        statement=q_text,
-                        rubric=rubric_objs,
-                        metadata=QuestionMetadata(discipline=discipline, topic=topic)
-                    ),
-                    "student_answer": StudentAnswer(
-                        student_id="ALUNO_01",
-                        question_id="Q1",
-                        text=student_text
-                    ),
-                    "rag_contexts": [],
-                    "correction_1": None,
-                    "correction_2": None,
-                    "correction_arbiter": None,
-                    "divergence_detected": False,
-                    "divergence_value": 0.0,
-                    "all_corrections": [],
-                    "final_score": None,
+                    "question": ExamQuestion(id="Q1", statement=q_text, rubric=rubric_objs, metadata=QuestionMetadata(discipline=discipline, topic=topic)),
+                    "student_answer": StudentAnswer(student_id="ALUNO_01", question_id="Q1", text=student_text),
+                    "rag_context": [], "individual_corrections": [], "divergence_detected": False, "divergence_value": 0.0, "final_grade": None
                 }
                 st.success("Pronto para executar!")
-            except Exception as e:
-                st.error(f"Erro na configuração: {e}")
+            except Exception as e: st.error(f"Erro: {e}")
 
     with tab2:
-        if 'single_input' in st.session_state and st.button("▶️ Executar Pipeline", key="single_exec"):
-            status_container = st.status("🧑‍🏫 Executando pipeline de correção...", expanded=True)
-            try:
-                final_state = run_async(run_correction_pipeline(
-                    st.session_state['single_input'],
-                    status_container
-                ))
+        if 'single_input' in st.session_state and st.button("▶️ Executar", key="single_exec"):
+            with st.spinner("Processando..."):
+                final_state = run_async(run_correction_pipeline(st.session_state['single_input']))
                 st.session_state['single_result'] = final_state
-                status_container.update(label="✅ Correção concluída!", state="complete")
-            except Exception as e:
-                status_container.update(label="❌ Erro na execução", state="error")
-                st.error(f"Erro: {e}")
+                st.success("Feito!")
 
         if 'single_result' in st.session_state:
             res = st.session_state['single_result']
-            final_score = res.get('final_score', 0)
-
-            st.metric("Nota Final", f"{final_score:.2f}" if final_score else "N/A")
-
-            with st.expander("📋 Detalhes da Correção", expanded=True):
-                # Corretor 1
-                c1 = res.get('correction_1')
-                c2 = res.get('correction_2')
-                arb = res.get('correction_arbiter')
-
-                col_c1, col_c2 = st.columns(2)
-                with col_c1:
-                    st.markdown("##### 🤖 Corretor 1")
-                    if c1:
-                        st.metric("Nota", f"{c1.total_score:.1f}")
-                        st.markdown(f"**Feedback:** {c1.feedback_text}")
-                        with st.popover("Ver Raciocínio (Chain-of-Thought)"):
-                            st.write(c1.reasoning_chain)
-                        if c1.criterion_scores:
-                            st.markdown("**Notas por critério:**")
-                            for cs in c1.criterion_scores:
-                                st.caption(f"• {cs.criterion}: {cs.score}/{cs.max_score}")
-                    else:
-                        st.warning("Não executou.")
-
-                with col_c2:
-                    st.markdown("##### 🤖 Corretor 2")
-                    if c2:
-                        st.metric("Nota", f"{c2.total_score:.1f}")
-                        st.markdown(f"**Feedback:** {c2.feedback_text}")
-                        with st.popover("Ver Raciocínio (Chain-of-Thought)"):
-                            st.write(c2.reasoning_chain)
-                        if c2.criterion_scores:
-                            st.markdown("**Notas por critério:**")
-                            for cs in c2.criterion_scores:
-                                st.caption(f"• {cs.criterion}: {cs.score}/{cs.max_score}")
-                    else:
-                        st.warning("Não executou.")
-
-                # Divergência
-                if res.get('divergence_detected'):
-                    st.error(f"⚠️ Divergência detectada: {res.get('divergence_value', 0):.1f} pontos")
-                else:
-                    st.success("✨ Consenso atingido entre corretores")
-
-                # Árbitro
-                if arb:
-                    st.markdown("##### 👨‍⚖️ Árbitro")
-                    st.metric("Nota Árbitro", f"{arb.total_score:.1f}")
-                    st.markdown(f"**Veredito:** {arb.feedback_text}")
-                    with st.popover("Ver Raciocínio de Desempate"):
-                        st.write(arb.reasoning_chain)
-
-            with st.expander("📚 Contexto RAG"):
-                rag_ctx = res.get('rag_contexts', [])
-                if rag_ctx:
-                    st.markdown(f"**{len(rag_ctx)} trechos recuperados do material:**")
-                    for r in rag_ctx:
-                        with st.popover(f"Chunk (Score: {r.relevance_score:.2f})"):
-                            st.write(r.content)
-                else:
-                    st.caption("Nenhum contexto RAG utilizado.")
-
-            with st.expander("🔍 Estado Completo (Debug JSON)"):
-                # Serialize for display
-                debug_data = {
-                    "final_score": res.get('final_score'),
-                    "divergence_detected": res.get('divergence_detected'),
-                    "divergence_value": res.get('divergence_value'),
-                    "correction_1": res['correction_1'].model_dump() if res.get('correction_1') else None,
-                    "correction_2": res['correction_2'].model_dump() if res.get('correction_2') else None,
-                    "correction_arbiter": res['correction_arbiter'].model_dump() if res.get('correction_arbiter') else None,
-                    "rag_contexts_count": len(res.get('rag_contexts', []) or []),
-                }
-                st.json(debug_data)
+            st.metric("Nota Final", f"{res['final_grade']:.2f}")
+            with st.expander("Detalhes da Correção"):
+                st.json(res)
 
     with tab3:
-        st.markdown("""
-        ### Pipeline de Correção — Etapas
-
-        | # | Etapa | Node | O que faz |
-        |---|-------|------|-----------|
-        | 1 | **RAG** | `retrieve_context` | Busca trechos relevantes do material didático |
-        | 2 | **Corretor 1** | `examiner_1` | Avaliação independente por critério |
-        | 3 | **Corretor 2** | `examiner_2` | Segunda avaliação independente |
-        | 4 | **Divergência** | `divergence_check` | Compara notas C1 vs C2 (limiar configurável) |
-        | 5 | **Árbitro** | `arbiter` | Acionado se divergência > limiar |
-        | 6 | **Consenso** | `finalize` | Média do par mais próximo (C1, C2, C3) |
-
-        **Limiar atual:** `DIVERGENCE_THRESHOLD = {threshold}`
-
-        Cada etapa é exibida em tempo real na aba "Execução".
-        """.format(threshold=st.session_state.get('divergence_threshold', 2.0)))
-
+        st.info("Funcionalidade detalhada disponível no modo Batch.")
 
 elif operation_mode == "Batch Processing (Turma)":
+    # --- MODO 2: BATCH PROCESSING ---
     st.title("🎓 Modo Turma: Correção em Escala")
-    st.markdown("Gerencie a correção automática de dezenas de respostas simultaneamente.")
-    st.info("💡 O modo batch utiliza o mesmo pipeline com rastreabilidade completa. "
-            "Cada resposta passa por RAG → C1 → C2 → Divergência → Árbitro (se necessário).")
+    st.markdown("Gerencie a correção automática de dezenas de alunos simultaneamente.")
 
-    st.warning("⚠️ Funcionalidade em desenvolvimento para a branch TCC. "
-               "Use o modo Single Student para rastreabilidade completa.")
+    batch_mode = st.radio("Fonte da Prova", ["Simulação Completa (IA)", "Configuração Manual (Texto/JSON)"], horizontal=True)
+
+    # A. CONFIG MANUAL
+    if batch_mode == "Configuração Manual (Texto/JSON)":
+        with st.expander("📝 1. Configuração da Prova e Gabarito", expanded=True):
+            if st.checkbox("🤖 Usar Assistente de Criação (AI)"):
+                c1, c2, c3 = st.columns([3, 2, 1])
+                with c1: gen_topic = st.text_input("Tópico", f"{discipline}: {topic}")
+                with c2: gen_diff = st.selectbox("Dificuldade", ["Easy", "Medium", "Hard"], index=1)
+                with c3:
+                    st.write("")
+                    if st.button("✨ Criar"):
+                        with st.spinner("Criando..."):
+                             q_obj = run_async(mock_agent.generate_exam_question(gen_topic, discipline, gen_diff))
+                             st.session_state['q_input_val'] = q_obj.statement
+                             st.session_state['r_input_val'] = json.dumps([r.model_dump() for r in q_obj.rubric], indent=2)
+                             st.rerun()
+
+            # Defaults
+            if 'q_input_val' not in st.session_state: st.session_state['q_input_val'] = "Discuta o impacto..."
+            if 'r_input_val' not in st.session_state: st.session_state['r_input_val'] = json.dumps([{"name": "Geral", "description": "...", "weight":10, "max_score":10}])
+
+            c1, c2 = st.columns(2)
+            c1.text_area("Enunciado", key="q_input_val", height=200)
+            c2.text_area("Rubrica (JSON)", key="r_input_val", height=200)
+
+    # B. SIMULAÇÂO & EXECUÇÃO
+    col_load1 = st.container()
+
+    if batch_mode == "Simulação Completa (IA)":
+        with col_load1:
+            st.subheader("👥 Simulação e Fluxo")
+
+            sim_topic = st.text_input("Tópico Geral", value="Geral")
+            c_qtd1, c_qtd2 = st.columns(2)
+            qt_mock_questions = c_qtd1.number_input("Qtd Questões", 1, 10, 5)
+            qt_mock_students = c_qtd2.number_input("Qtd Alunos", 1, 50, 5)
+
+            col_s1, col_s2 = st.columns(2)
+
+            # STEP 1: GENERATE
+            with col_s1:
+                if st.button("1️⃣ Gerar Questões (IA)"):
+                    with st.spinner(f"Gerando {qt_mock_questions} questões..."):
+                        # Clean old state
+                        for key in ['batch_all_mock_answers', 'exam_results']:
+                            if key in st.session_state: del st.session_state[key]
+
+                        questions = run_async(mock_agent.generate_exam_questions(sim_topic, discipline, "Medium", count=qt_mock_questions))
+                        st.session_state['exam_questions'] = questions
+                        save_persistence_data()
+                        st.rerun()
+
+            if 'exam_questions' in st.session_state:
+                st.success(f"{len(st.session_state['exam_questions'])} questões geradas.")
+
+                with st.expander("👁️ Visualizar Prova", expanded=True):
+                    # Rubric Table
+                    first_q = st.session_state['exam_questions'][0]
+                    rubric_data = [{"Critério": r.name, "Descrição": r.description, "Peso": r.weight} for r in first_q.rubric]
+                    st.markdown("### 📋 Rubrica de Avaliação (Global)")
+
+                    md_table = "| Critério | Descrição | Peso |\n|---|---|---|\n"
+                    for r in rubric_data: md_table += f"| {r['Critério']} | {r['Descrição']} | {r['Peso']} |\n"
+                    st.markdown(md_table)
+
+                    st.divider()
+                    st.markdown("### 📝 Questões")
+                    for i, q in enumerate(st.session_state['exam_questions']):
+                        st.markdown(f"**{i+1}.** {q.statement}")
+
+                # STEP 2: SIMULATE ANSWERS
+                with col_s2:
+                    if st.button("2️⃣ Simular Respostas"):
+                        status_container = st.status("✍️ Alunos realizando a prova...", expanded=True)
+                        try:
+                            questions = st.session_state['exam_questions']
+                            profiles = ["excellent", "average", "average", "poor", "average"]
+                            students_list = []
+                            for i in range(qt_mock_students):
+                                qual = profiles[i % len(profiles)]
+                                students_list.append({"id": 200 + i, "name": f"Aluno {i+1} ({qual.title()})", "quality": qual})
+                            st.session_state['batch_students_list'] = students_list
+
+                            all_mock_answers = {q.id: {} for q in questions}
+                            gen_bar = status_container.progress(0)
+
+                            # ESTRATÉGIA HÍBRIDA: Loop por Questão -> Paralelismo por Turma
+                            # Isso restaura o log visual ("Questão X de Y...") mas mantém velocidade
+
+                            for q_idx, q in enumerate(questions):
+                                status_container.write(f"📝 **Questão {q_idx+1}/{len(questions)}:** Simulando respostas da turma...")
+
+                                # Cria tasks apenas para ESTA questão (Todos os alunos ao mesmo tempo)
+                                tasks = []
+                                for s in students_list:
+                                    # Lógica probabilística de desempenho: O aluno não é estático
+                                    # Um aluno ruim pode acertar, e um bom pode errar.
+                                    base_quality = s['quality']
+
+                                    if base_quality == "poor":
+                                        # 60% Errado, 30% Médio, 10% Bom (Sorte?)
+                                        weights = [0.6, 0.3, 0.1]
+                                    elif base_quality == "excellent":
+                                        # 10% Ruim (Nervosismo), 20% Médio, 70% Excelente
+                                        weights = [0.1, 0.2, 0.7]
+                                    else: # average
+                                        # 20% Ruim, 60% Médio, 20% Bom
+                                        weights = [0.2, 0.6, 0.2]
+
+                                    actual_quality = random.choices(
+                                        ["poor", "average", "excellent"],
+                                        weights=weights,
+                                        k=1
+                                    )[0]
+
+                                    tasks.append(mock_agent.generate_student_answer(q, actual_quality, s['name']))
+
+                                # Executa o lote da questão
+                                async def run_question_batch():
+                                    return await safe_gather(*tasks)
+
+                                batch_answers = run_async(run_question_batch())
+
+                                # Salva resultados
+                                for s_idx, ans in enumerate(batch_answers):
+                                    s_id = students_list[s_idx]['id']
+                                    all_mock_answers[q.id][s_id] = ans
+
+                                gen_bar.progress((q_idx + 1) / len(questions))
+
+                            st.session_state['batch_all_mock_answers'] = all_mock_answers
+                            save_persistence_data()
+                            status_container.update(label="✅ Respostas Entregues!", state="complete", expanded=False)
+                            st.rerun()
+                        except Exception as e:
+                            status_container.update(label="Erro", state="error")
+                            st.error(str(e))
+
+            # STEP 3: CORRECT
+            if 'batch_all_mock_answers' in st.session_state:
+                st.markdown("---")
+                # Preview Answers
+                with st.expander("👀 Ver Respostas (Preview)"):
+                    stud_map = {s['id']: s['name'] for s in st.session_state.get('batch_students_list', [])}
+                    for q in st.session_state['exam_questions']:
+                        st.markdown(f"#### {q.statement}")
+                        answers = st.session_state['batch_all_mock_answers'].get(q.id, {})
+                        for s_id, ans in answers.items():
+                             st.markdown(f"**{stud_map.get(s_id, s_id)}:** {ans.text}")
+                             st.caption("---")
+
+                if st.button("3️⃣ Iniciar Correção Automática"):
+                     status_container = st.status("🧑‍🏫 Corrigindo...", expanded=True)
+                     try:
+                        questions = st.session_state['exam_questions']
+                        all_mock_answers = st.session_state['batch_all_mock_answers']
+                        students_list = st.session_state.get('batch_students_list', [])
+
+                        students_results_map = {s['id']: {"id": s['id'], "name": s['name'], "total_grade": 0, "results": []} for s in students_list}
+                        corr_bar = status_container.progress(0)
+
+                        for q_idx, q in enumerate(questions):
+                            status_container.write(f"Corrigindo Q{q_idx+1}...")
+                            rag_context = search_context(q.statement, q.metadata.discipline, q.metadata.topic)
+
+                            # Prepare inputs
+                            inputs_by_student = {}
+                            for s in students_list:
+                                if s['id'] in all_mock_answers[q.id]:
+                                    ans = all_mock_answers[q.id][s['id']]
+                                    inputs_by_student[s['id']] = {
+                                        "question": q, "student_answer": ans, "rag_context": rag_context,
+                                        "individual_corrections": []
+                                    }
+
+                            # Execute Batch
+                            if inputs_by_student:
+                                # [MODIFICAÇÃO] Chunking para evitar Rate Limit (Gemini 429)
+                                # Processa em lotes de 3 alunos por vez (3 * 2 corretores = 6 calls simultâneos)
+                                tasks = [run_correction_pipeline(inp, None) for inp in inputs_by_student.values()]
+
+                                async def process_q_batch():
+                                    results = []
+                                    chunk_size = int(os.getenv("BATCH_CHUNK_SIZE", "4"))
+                                    total = len(tasks)
+
+                                    for i in range(0, total, chunk_size):
+                                        chunk = tasks[i : i + chunk_size]
+                                        status_container.write(f"Corrigindo Q{q_idx+1}: Lote {i//chunk_size + 1}/{(total//chunk_size)+1}...")
+                                        chunk_results = await safe_gather(*chunk)
+                                        results.extend(chunk_results)
+                                        # Optional cooldown between chunks (avoid 429s)
+                                        cooldown = float(os.getenv("BATCH_COOLDOWN_SLEEP", "0.0"))
+                                        if cooldown > 0:
+                                            await asyncio.sleep(cooldown)
+                                    return results
+
+                                batch_results = run_async(process_q_batch())
+
+                                # Aggregate
+                                for i, (s_id, inp) in enumerate(inputs_by_student.items()):
+                                    final_state = batch_results[i]
+                                    students_results_map[s_id]["results"].append({
+                                        "question_id": q.id, "question_text": q.statement,
+                                        "answer_text": inp['student_answer'].text,
+                                        "grade": final_state.get('final_grade', 0),
+                                        "divergence": final_state.get('divergence_detected', False),
+                                        "state": final_state
+                                    })
+                                    students_results_map[s_id]["total_grade"] += final_state.get('final_grade', 0)
+
+                                    # **NEW**: Track this submission in analytics
+                                    from datetime import datetime
+
+                                    # Extract criterion scores from corrections
+                                    criterion_scores = {}
+                                    if final_state.get('individual_corrections'):
+                                        last_correction = final_state['individual_corrections'][-1]
+                                        if hasattr(last_correction, 'criterion_scores'):
+                                            for crit in last_correction.criterion_scores:
+                                                criterion_scores[crit.criterion] = crit.score
+
+                                    submission_record = SubmissionRecord(
+                                        submission_id=f"SUB_{s_id}_{q.id}_{datetime.now().timestamp()}",
+                                        question_id=q.id,
+                                        question_text=q.statement,
+                                        student_answer=inp['student_answer'].text,
+                                        grade=final_state.get('final_grade', 0),
+                                        max_score=10.0,
+                                        criterion_scores=criterion_scores,
+                                        divergence_detected=final_state.get('divergence_detected', False),
+                                        timestamp=datetime.now()
+                                    )
+
+                                    # Update student profile
+                                    student_name = next(
+                                        (s['name'] for s in students_list if s['id'] == s_id),
+                                        f"Student_{s_id}"
+                                    )
+
+                                    profile = tracker.add_submission(
+                                        student_id=str(s_id),
+                                        student_name=student_name,
+                                        submission=submission_record
+                                    )
+
+                                    # Persist to knowledge base
+                                    kb.add_or_update(profile)
+
+                            corr_bar.progress((q_idx + 1) / len(questions))
+
+                        # Finalize
+                        generated_batch_results = []
+                        for s_id, s_data in students_results_map.items():
+                             generated_batch_results.append({
+                                 "id": s_id, "name": s_data["name"],
+                                 "grade": s_data["total_grade"] / len(questions),
+                                 "details": s_data["results"]
+                             })
+                        st.session_state['exam_results'] = generated_batch_results
+                        save_persistence_data()
+                        status_container.update(label="Concluído!", state="complete", expanded=False)
+                        st.rerun()
+
+                     except Exception as e:
+                         status_container.update(label="Erro", state="error")
+                         st.error(f"Stack trace: {e}")
+
+    # C. RESULTS DASHBOARD
+    if 'exam_results' in st.session_state:
+        st.markdown("---")
+        st.header("📊 Painel de Resultados")
+        results = st.session_state['exam_results']
+        df_res = pd.DataFrame(results)
+
+        render_global_kpis(df_res)
+        st.subheader("🏆 Classificação")
+        render_class_ranking(df_res)
+
+        st.markdown("---")
+        st.subheader("📑 Boletim Individual")
+
+        col_sel, col_stats = st.columns([1, 2])
+        student_names = [r['name'] for r in results]
+        selected_name = col_sel.selectbox("Selecione Aluno", student_names)
+
+        if selected_name:
+            student_data = next(r for r in results if r['name'] == selected_name)
+            render_student_report(student_data)
+
+elif operation_mode == "📊 Analytics Dashboard":
+    # --- MODO 3: ANALYTICS DASHBOARD ---
+    st.title("📊 Professor Assistant - Analytics Dashboard")
+    st.markdown("Análise pedagógica avançada com tracking de alunos e insights de turma.")
+
+    # Load all profiles from knowledge base
+    all_profiles = kb.get_all()
+
+    if not all_profiles:
+        st.warning("⚠️ Nenhum dado disponível ainda. Execute correções em modo Batch primeiro para gerar analytics.")
+        st.info("💡 **Como usar:** Execute correções de uma turma, e os dados de tracking serão salvos automaticamente.")
+    else:
+        # Tabs for different analytics views
+        tab_overview, tab_student, tab_class, tab_plagiarism = st.tabs([
+            "📋 Visão Geral",
+            "👤 Perfil do Aluno",
+            "🏫 Análise da Turma",
+            "🔍 Similaridade"
+        ])
+
+        with tab_overview:
+            st.subheader("Resumo Geral")
+
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.metric("Total de Alunos Rastreados", len(all_profiles))
+
+            with col2:
+                total_submissions = sum(len(p.submissions_history) for p in all_profiles)
+                st.metric("Total de Submissões", total_submissions)
+
+            with col3:
+                all_grades = [s.grade for p in all_profiles for s in p.submissions_history]
+                avg_grade = sum(all_grades) / len(all_grades) if all_grades else 0
+                st.metric("Média Global", f"{avg_grade:.2f}")
+
+            st.divider()
+
+            # Trend summary
+            st.subheader("📈 Resumo de Tendências")
+            trend_counts = {
+                "improving": 0,
+                "stable": 0,
+                "declining": 0,
+                "insufficient_data": 0
+            }
+
+            for profile in all_profiles:
+                trend_counts[profile.trend] += 1
+
+            col_imp, col_stab, col_dec, col_insuf = st.columns(4)
+
+            with col_imp:
+                st.metric("📈 Melhorando", trend_counts["improving"])
+
+            with col_stab:
+                st.metric("➡️ Estável", trend_counts["stable"])
+
+            with col_dec:
+                st.metric("📉 Piorando", trend_counts["declining"])
+
+            with col_insuf:
+                st.metric("❓ Dados Insuficientes", trend_counts["insufficient_data"])
+
+        with tab_student:
+            st.subheader("Análise Individual de Aluno")
+
+            selected_profile = render_analytics_selector(all_profiles)
+
+            if selected_profile:
+                render_student_profile_card(selected_profile)
+
+        with tab_class:
+            st.subheader("Análise da Turma")
+
+            # Generate class insights
+            insights = analyzer.analyze_class(
+                class_id="current_class",
+                student_profiles=all_profiles
+            )
+
+            render_class_analytics_dashboard(insights, all_profiles)
+
+        with tab_plagiarism:
+            render_plagiarism_dashboard(all_profiles)
+
