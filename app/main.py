@@ -24,6 +24,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app.analytics_ui import render_analytics_selector, render_class_analytics_dashboard, render_plagiarism_dashboard, render_student_profile_card
 from app.api_client import get_api_client
 from app.experiment_store import get_experiment_store
+from app.latex_exporter import LaTeXExporter
 from app.persistence import load_persistence_data, save_persistence_data
 from app.ui_components import (
     render_class_ranking,
@@ -243,6 +244,27 @@ with st.sidebar:
                 st.success(f"Exportado: {export_path}")
     else:
         st.caption("Nenhum experimento ainda")
+
+    # LaTeX Export
+    if experiments and len(experiments) >= 1:
+        st.divider()
+        st.header("📄 Exportar LaTeX")
+        completed = [e for e in experiments if e.get('status') == 'completed']
+        if completed:
+            exp_labels = {f"#{e['id']} — {e.get('discipline', '?')}": e['id'] for e in completed}
+
+            latex_exp_a = st.selectbox("Condição A", list(exp_labels.keys()), key="latex_a")
+            latex_exp_b = st.selectbox("Condição B (opcional)", ["(nenhum)"] + list(exp_labels.keys()), key="latex_b")
+
+            if st.button("📄 Gerar Tabelas LaTeX"):
+                exporter = LaTeXExporter(exp_store)
+                eid_a = exp_labels[latex_exp_a]
+                eid_b = exp_labels.get(latex_exp_b) if latex_exp_b != "(nenhum)" else None
+                tables = exporter.generate_all(eid_a, eid_b)
+                output = "tcc/results/tables_latex.tex"
+                exporter.save_to_file(tables, output)
+                st.success(f"Tabelas LaTeX salvas em {output}")
+                st.code(tables[:500] + "\n...", language="latex")
 
 # --- PAGES ---
 
@@ -736,6 +758,92 @@ elif operation_mode == "Batch Processing (Turma)":
                      except Exception as e:
                          status_container.update(label="Erro", state="error")
                          st.error(f"Stack trace: {e}")
+
+    # QA4: STABILITY TEST (R repetitions)
+    if 'batch_all_mock_answers' in st.session_state and 'exam_questions' in st.session_state:
+        st.markdown("---")
+        with st.expander("🔁 QA4 — Teste de Estabilidade (R repetições)", expanded=False):
+            st.markdown("Re-corrige as **mesmas respostas** R vezes para medir variabilidade da nota final.")
+            num_reps = st.number_input("Repetições (R)", 2, 10, 3, key="qa4_reps")
+
+            if st.button("🔁 Executar R repetições"):
+                _perf_log.info(f"[QA4] Iniciando {num_reps} repetições...")
+                qa4_status = st.status(f"🔁 Executando {num_reps} repetições...", expanded=True)
+                qa4_exp_ids = []
+
+                try:
+                    questions = st.session_state['exam_questions']
+                    all_mock_answers = st.session_state['batch_all_mock_answers']
+                    students_list = st.session_state.get('batch_students_list', [])
+                    _rag_on = st.session_state.get("rag_enabled", True)
+
+                    for rep in range(num_reps):
+                        qa4_status.write(f"**Repetição {rep+1}/{num_reps}**")
+                        _t_rep = time.time()
+
+                        # Create experiment for this repetition
+                        rep_exp_id = exp_store.create_experiment({
+                            'llm_provider': settings.LLM_PROVIDER,
+                            'llm_model': settings.LLM_MODEL_NAME,
+                            'llm_temperature': settings.LLM_TEMPERATURE,
+                            'num_questions': len(questions),
+                            'num_students': len(students_list),
+                            'divergence_threshold': st.session_state.get('divergence_threshold', 2.0),
+                            'rag_enabled': _rag_on,
+                            'condition': f"QA4 R{rep+1}/{num_reps}",
+                            'discipline': discipline,
+                        })
+                        exp_store.save_questions(rep_exp_id, questions)
+                        if students_list:
+                            exp_store.save_students(rep_exp_id, students_list)
+
+                        # Run corrections for all Q×A
+                        for q_idx, q in enumerate(questions):
+                            inputs_by_student = {}
+                            for s in students_list:
+                                if s['id'] in all_mock_answers.get(q.id, all_mock_answers.get(str(q.id), {})):
+                                    ans = all_mock_answers.get(q.id, all_mock_answers.get(str(q.id), {}))[s['id']]
+                                    inputs_by_student[s['id']] = {
+                                        "question": q, "student_answer": ans,
+                                        "rag_contexts": None if _rag_on else [],
+                                        "correction_1": None, "correction_2": None, "correction_arbiter": None,
+                                        "divergence_detected": False, "divergence_value": 0.0,
+                                        "all_corrections": [], "final_score": None
+                                    }
+
+                            if inputs_by_student:
+                                tasks = [run_correction_pipeline(inp, None) for inp in inputs_by_student.values()]
+
+                                async def _run_batch():
+                                    return await safe_gather(*tasks)
+
+                                batch_results = run_async(_run_batch())
+
+                                for i, (s_id, inp) in enumerate(inputs_by_student.items()):
+                                    final_state = batch_results[i]
+                                    student_name = next((s['name'] for s in students_list if s['id'] == s_id), f"S_{s_id}")
+                                    exp_store.save_pipeline_state(rep_exp_id, str(q.id), str(s_id), student_name, final_state)
+
+                        exp_store.finish_experiment(rep_exp_id, "completed")
+                        qa4_exp_ids.append(rep_exp_id)
+                        qa4_status.write(f"  ✅ R{rep+1} concluída em {time.time()-_t_rep:.1f}s (exp #{rep_exp_id})")
+
+                    # Generate stability table
+                    exporter = LaTeXExporter(exp_store)
+                    stability_table = exporter.table_qa4_estabilidade(qa4_exp_ids)
+                    qa4_status.write("**Resultado:**")
+                    qa4_status.code(stability_table, language="latex")
+
+                    # Save
+                    st.session_state['qa4_exp_ids'] = qa4_exp_ids
+                    _perf_log.info(f"[QA4] {num_reps} repetições concluídas: {qa4_exp_ids}")
+                    qa4_status.update(label=f"✅ QA4 concluído ({num_reps} repetições)", state="complete")
+
+                except Exception as e:
+                    qa4_status.update(label="❌ Erro", state="error")
+                    st.error(f"Erro: {e}")
+                    import traceback
+                    st.code(traceback.format_exc())
 
     # C. RESULTS DASHBOARD
     if 'exam_results' in st.session_state:
