@@ -483,7 +483,7 @@ elif operation_mode == "Batch Processing (Turma)":
                                 for i, (s_id, inp) in enumerate(inputs_by_student.items()):
                                     final_state = batch_results[i]
                                     students_results_map[s_id]["results"].append({
-                                        "question_id": q.id, "question_text": q.statement,
+                                        "question_id": str(q.id), "question_text": q.statement,
                                         "answer_text": inp['student_answer'].text,
                                         "grade": final_state.get('final_score', 0),
                                         "divergence": final_state.get('divergence_detected', False),
@@ -505,7 +505,7 @@ elif operation_mode == "Batch Processing (Turma)":
 
                                     submission_record = SubmissionRecord(
                                         submission_id=f"SUB_{s_id}_{q.id}_{datetime.now().timestamp()}",
-                                        question_id=q.id,
+                                        question_id=str(q.id),
                                         question_text=q.statement,
                                         student_answer=inp['student_answer'].text,
                                         grade=final_state.get('final_score', 0),
