@@ -36,19 +36,44 @@ from src.utils.helpers import run_async, safe_gather, save_uploaded_file
 from src.core.logging_config import get_logger
 from src.domain.ai.workflow.graph import get_grading_graph
 
-# --- Initialization ---
+# --- Initialization (cached to avoid re-creation on every Streamlit rerun) ---
 logger = get_logger("streamlit")
-initialize_langsmith()
 
-# LLM para geração de questões
-llm_creation = get_chat_model(temperature=1)
-mock_agent = MockDataGeneratorAgent(llm_creation)
-retrieval_service = RetrievalService()
+@st.cache_resource
+def _init_langsmith():
+    initialize_langsmith()
+    return True
 
-# Analytics initialization
-tracker = StudentTracker()
-kb = get_knowledge_base()
-analyzer = ClassAnalyzer()
+@st.cache_resource
+def _init_llm():
+    return get_chat_model(temperature=1)
+
+@st.cache_resource
+def _init_mock_agent():
+    return MockDataGeneratorAgent(_init_llm())
+
+@st.cache_resource
+def _init_retrieval():
+    return RetrievalService()
+
+@st.cache_resource
+def _init_tracker():
+    return StudentTracker()
+
+@st.cache_resource
+def _init_kb():
+    return get_knowledge_base()
+
+@st.cache_resource
+def _init_analyzer():
+    return ClassAnalyzer()
+
+_init_langsmith()
+mock_agent = _init_mock_agent()
+retrieval_service = _init_retrieval()
+tracker = _init_tracker()
+kb = _init_kb()
+analyzer = _init_analyzer()
 
 setup_page()
 render_custom_css()
