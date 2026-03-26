@@ -84,8 +84,14 @@ class APIClient:
         resp.raise_for_status()
         data = resp.json()
         self.token = data.get("access_token")
-        self.user = data.get("user")
+        # Response has user fields directly (not nested under "user")
+        self.user = {
+            "uuid": str(data.get("user_uuid", "")),
+            "email": data.get("email", ""),
+            "user_type": data.get("user_type", ""),
+        }
         logger.info(f"Logged in as {self.user.get('email', '?')}")
+        data['user'] = self.user  # normalize for consumers
         return data
 
     def get_me(self) -> dict:
