@@ -220,8 +220,10 @@ class APIClient:
     # ─── Attachments ───
 
     def upload_attachment(self, exam_uuid: str, file_path: str) -> dict:
+        import os
+        filename = os.path.basename(file_path)
         with open(file_path, 'rb') as f:
-            files = {"file": f}
+            files = {"file": (filename, f, "application/pdf")}
             headers = {}
             if self.token:
                 headers["Authorization"] = f"Bearer {self.token}"
