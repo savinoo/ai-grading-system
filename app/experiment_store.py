@@ -463,6 +463,49 @@ class ExperimentStore:
         """, (exp_id,)).fetchall()
         return [dict(r) for r in rows]
 
+    # ─── Load for Reuse ───
+
+    def load_questions(self, exp_id: int) -> list:
+        """Load questions from a previous experiment for reuse."""
+        rows = self.conn.execute(
+            "SELECT question_uuid, statement, total_points, rubric_json, discipline, topic, difficulty "
+            "FROM experiment_questions WHERE experiment_id = ? ORDER BY id",
+            (exp_id,)
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def load_students(self, exp_id: int) -> list:
+        """Load students from a previous experiment for reuse."""
+        rows = self.conn.execute(
+            "SELECT student_id, student_name, quality_profile "
+            "FROM experiment_students WHERE experiment_id = ? ORDER BY id",
+            (exp_id,)
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def load_answers(self, exp_id: int) -> list:
+        """Load answers from a previous experiment for reuse."""
+        rows = self.conn.execute(
+            "SELECT question_uuid, student_id, student_name, quality_actual, answer_text "
+            "FROM experiment_answers WHERE experiment_id = ? ORDER BY id",
+            (exp_id,)
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+    def get_experiment(self, exp_id: int) -> dict:
+        """Get experiment metadata."""
+        row = self.conn.execute(
+            "SELECT * FROM experiments WHERE id = ?", (exp_id,)
+        ).fetchone()
+        if row is None:
+            return None
+        result = dict(row)
+        try:
+            result['config'] = json.loads(result.pop('config_json', '{}'))
+        except (json.JSONDecodeError, TypeError):
+            result['config'] = {}
+        return result
+
     def close(self):
         if self._conn:
             self._conn.close()

@@ -324,6 +324,99 @@ elif operation_mode == "Batch Processing (Turma)":
         with col_load1:
             st.subheader("👥 Simulação e Fluxo")
 
+            # ─── Reutilizar experimento anterior (TCC: mesmas questões/respostas pra Condição B) ───
+            prev_experiments = exp_store.list_experiments()
+            completed_exps = [e for e in prev_experiments if e.get('status') == 'completed']
+
+            if completed_exps:
+                with st.expander("🔄 Reutilizar questões/respostas de experimento anterior", expanded=False):
+                    st.caption("Use isso para rodar a Condição B com os mesmos dados da Condição A")
+                    exp_options = {f"#{e['id']} — {e.get('llm_model', '?')} | {e.get('num_questions', '?')}Q {e.get('num_students', '?')}A ({e.get('discipline', '?')})": e['id'] for e in completed_exps[:10]}
+                    selected_exp_label = st.selectbox("Selecione o experimento", list(exp_options.keys()))
+                    selected_exp_id = exp_options[selected_exp_label]
+
+                    col_load_q, col_load_qa = st.columns(2)
+
+                    if col_load_q.button("📋 Carregar só questões", key="load_q"):
+                        prev_questions = exp_store.load_questions(selected_exp_id)
+                        if prev_questions:
+                            from src.domain.ai.schemas import ExamQuestion, EvaluationCriterion, QuestionMetadata
+                            loaded_qs = []
+                            for pq in prev_questions:
+                                rubric = json.loads(pq['rubric_json']) if pq.get('rubric_json') else []
+                                rubric_objs = [EvaluationCriterion(**r) for r in rubric]
+                                loaded_qs.append(ExamQuestion(
+                                    id=pq['question_uuid'],
+                                    statement=pq['statement'],
+                                    total_points=pq.get('total_points', 10.0),
+                                    rubric=rubric_objs,
+                                    metadata=QuestionMetadata(
+                                        discipline=pq.get('discipline', ''),
+                                        topic=pq.get('topic', ''),
+                                        difficulty_level=pq.get('difficulty')
+                                    )
+                                ))
+                            st.session_state['exam_questions'] = loaded_qs
+                            for key in ['batch_all_mock_answers', 'exam_results']:
+                                if key in st.session_state: del st.session_state[key]
+                            st.success(f"{len(loaded_qs)} questões carregadas do experimento #{selected_exp_id}")
+                        else:
+                            st.warning("Nenhuma questão encontrada neste experimento")
+
+                    if col_load_qa.button("📋 Carregar questões + respostas", key="load_qa"):
+                        prev_questions = exp_store.load_questions(selected_exp_id)
+                        prev_answers = exp_store.load_answers(selected_exp_id)
+                        prev_students = exp_store.load_students(selected_exp_id)
+                        if prev_questions and prev_answers:
+                            from src.domain.ai.schemas import ExamQuestion, EvaluationCriterion, QuestionMetadata, StudentAnswer
+                            import uuid as _uuid
+                            # Load questions
+                            loaded_qs = []
+                            for pq in prev_questions:
+                                rubric = json.loads(pq['rubric_json']) if pq.get('rubric_json') else []
+                                rubric_objs = [EvaluationCriterion(**r) for r in rubric]
+                                loaded_qs.append(ExamQuestion(
+                                    id=pq['question_uuid'],
+                                    statement=pq['statement'],
+                                    total_points=pq.get('total_points', 10.0),
+                                    rubric=rubric_objs,
+                                    metadata=QuestionMetadata(
+                                        discipline=pq.get('discipline', ''),
+                                        topic=pq.get('topic', ''),
+                                        difficulty_level=pq.get('difficulty')
+                                    )
+                                ))
+                            st.session_state['exam_questions'] = loaded_qs
+
+                            # Load students
+                            students_list = [
+                                {"id": ps['student_id'], "name": ps['student_name'], "quality": ps.get('quality_profile')}
+                                for ps in prev_students
+                            ]
+                            st.session_state['batch_students_list'] = students_list
+
+                            # Load answers (reconstruct nested dict)
+                            all_mock_answers = {str(q.id): {} for q in loaded_qs}
+                            for pa in prev_answers:
+                                q_uuid = pa['question_uuid']
+                                s_id = pa['student_id']
+                                if q_uuid not in all_mock_answers:
+                                    all_mock_answers[q_uuid] = {}
+                                all_mock_answers[q_uuid][s_id] = StudentAnswer(
+                                    student_id=_uuid.UUID(s_id) if len(s_id) > 10 else s_id,
+                                    question_id=_uuid.UUID(q_uuid),
+                                    text=pa['answer_text']
+                                )
+                            st.session_state['batch_all_mock_answers'] = all_mock_answers
+
+                            if 'exam_results' in st.session_state:
+                                del st.session_state['exam_results']
+
+                            st.success(f"Carregado do exp #{selected_exp_id}: {len(loaded_qs)} questões, {len(prev_students)} alunos, {len(prev_answers)} respostas")
+                            st.info("Agora clique em '3️⃣ Iniciar Correção Automática' para corrigir com a condição atual (RAG on/off)")
+                        else:
+                            st.warning("Dados incompletos neste experimento")
+
             sim_topic = st.text_input("Tópico Geral", value="Geral")
             c_qtd1, c_qtd2 = st.columns(2)
             qt_mock_questions = c_qtd1.number_input("Qtd Questões", 1, 10, 3)
@@ -484,6 +577,30 @@ elif operation_mode == "Batch Processing (Turma)":
                      try:
                         questions = st.session_state['exam_questions']
                         all_mock_answers = st.session_state['batch_all_mock_answers']
+
+                        # Create experiment if not exists (e.g. loaded from previous)
+                        exp_id = st.session_state.get('current_experiment_id')
+                        if not exp_id:
+                            _rag_on = st.session_state.get("rag_enabled", True)
+                            exp_id = exp_store.create_experiment({
+                                'llm_provider': settings.LLM_PROVIDER,
+                                'llm_model': settings.LLM_MODEL_NAME,
+                                'llm_temperature': settings.LLM_TEMPERATURE,
+                                'num_questions': len(questions),
+                                'num_students': len(st.session_state.get('batch_students_list', [])),
+                                'divergence_threshold': st.session_state.get('divergence_threshold', 2.0),
+                                'rag_enabled': _rag_on,
+                                'rag_top_k': getattr(settings, 'RAG_TOP_K', 4) if _rag_on else 0,
+                                'condition': 'A (com RAG)' if _rag_on else 'B (sem RAG)',
+                                'discipline': discipline,
+                                'topic': st.session_state.get('global_discipline', ''),
+                                'reused_from_experiment': st.session_state.get('_reused_from_exp'),
+                            })
+                            st.session_state['current_experiment_id'] = exp_id
+                            exp_store.save_questions(exp_id, questions)
+                            if st.session_state.get('batch_students_list'):
+                                exp_store.save_students(exp_id, st.session_state['batch_students_list'])
+                            _perf_log.info(f"[EXP-{exp_id}] Created for correction (reuse mode)")
                         students_list = st.session_state.get('batch_students_list', [])
 
                         students_results_map = {s['id']: {"id": s['id'], "name": s['name'], "total_grade": 0, "results": []} for s in students_list}
