@@ -1,5 +1,6 @@
 import asyncio
 import json
+import logging
 import os
 import random
 import sys
@@ -7,6 +8,14 @@ import time
 
 import pandas as pd
 import streamlit as st
+
+# Configure logging to console with timestamps for debugging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+    datefmt='%H:%M:%S'
+)
+_perf_log = logging.getLogger("perf")
 
 # Add project root to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -68,16 +77,28 @@ def _init_kb():
 def _init_analyzer():
     return ClassAnalyzer()
 
+_t0 = time.time()
 _init_langsmith()
+_perf_log.info(f"[INIT] langsmith: {time.time()-_t0:.2f}s")
+
+_t0 = time.time()
 mock_agent = _init_mock_agent()
+_perf_log.info(f"[INIT] mock_agent (LLM x2): {time.time()-_t0:.2f}s")
+
+_t0 = time.time()
 retrieval_service = _init_retrieval()
+_perf_log.info(f"[INIT] retrieval_service (VectorDB): {time.time()-_t0:.2f}s")
+
+_t0 = time.time()
 tracker = _init_tracker()
 kb = _init_kb()
 analyzer = _init_analyzer()
+_perf_log.info(f"[INIT] analytics (tracker+kb+analyzer): {time.time()-_t0:.2f}s")
 
 setup_page()
 render_custom_css()
 load_persistence_data()
+_perf_log.info("[INIT] === Streamlit ready ===")
 
 # --- Workflow Logic ---
 
@@ -288,7 +309,10 @@ elif operation_mode == "Batch Processing (Turma)":
                         for key in ['batch_all_mock_answers', 'exam_results']:
                             if key in st.session_state: del st.session_state[key]
 
+                        _perf_log.info(f"[STEP1] Gerando {qt_mock_questions} questões via Gemini...")
+                        _t1 = time.time()
                         questions = run_async(mock_agent.generate_exam_questions(sim_topic, discipline, "Medium", count=qt_mock_questions))
+                        _perf_log.info(f"[STEP1] {qt_mock_questions} questões geradas em {time.time()-_t1:.1f}s")
                         st.session_state['exam_questions'] = questions
                         save_persistence_data()
                         st.rerun()
@@ -314,6 +338,8 @@ elif operation_mode == "Batch Processing (Turma)":
                 # STEP 2: SIMULATE ANSWERS
                 with col_s2:
                     if st.button("2️⃣ Simular Respostas"):
+                        _perf_log.info(f"[STEP2] Simulando respostas para {qt_mock_students} alunos...")
+                        _t2 = time.time()
                         status_container = st.status("✍️ Alunos realizando a prova...", expanded=True)
                         try:
                             questions = st.session_state['exam_questions']
@@ -373,6 +399,7 @@ elif operation_mode == "Batch Processing (Turma)":
 
                             st.session_state['batch_all_mock_answers'] = all_mock_answers
                             save_persistence_data()
+                            _perf_log.info(f"[STEP2] Respostas simuladas em {time.time()-_t2:.1f}s")
                             status_container.update(label="✅ Respostas Entregues!", state="complete", expanded=False)
                             st.rerun()
                         except Exception as e:
@@ -393,6 +420,8 @@ elif operation_mode == "Batch Processing (Turma)":
                              st.caption("---")
 
                 if st.button("3️⃣ Iniciar Correção Automática"):
+                     _perf_log.info("[STEP3] Iniciando correção automática...")
+                     _t3 = time.time()
                      status_container = st.status("🧑‍🏫 Corrigindo...", expanded=True)
                      try:
                         questions = st.session_state['exam_questions']
@@ -403,6 +432,8 @@ elif operation_mode == "Batch Processing (Turma)":
                         corr_bar = status_container.progress(0)
 
                         for q_idx, q in enumerate(questions):
+                            _tq = time.time()
+                            _perf_log.info(f"[STEP3] Corrigindo Q{q_idx+1}/{len(questions)}...")
                             status_container.write(f"Corrigindo Q{q_idx+1}...")
                             rag_context = []  # RAG context fetched by pipeline nodes
 
@@ -492,6 +523,7 @@ elif operation_mode == "Batch Processing (Turma)":
                                     # Persist to knowledge base
                                     kb.add_or_update(profile)
 
+                            _perf_log.info(f"[STEP3] Q{q_idx+1} corrigida em {time.time()-_tq:.1f}s")
                             corr_bar.progress((q_idx + 1) / len(questions))
 
                         # Finalize
@@ -504,6 +536,7 @@ elif operation_mode == "Batch Processing (Turma)":
                              })
                         st.session_state['exam_results'] = generated_batch_results
                         save_persistence_data()
+                        _perf_log.info(f"[STEP3] Correção completa em {time.time()-_t3:.1f}s")
                         status_container.update(label="Concluído!", state="complete", expanded=False)
                         st.rerun()
 
