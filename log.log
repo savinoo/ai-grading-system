@@ -1,0 +1,279 @@
+2026-03-26 02:55:21.935 | [2026-03-26 05:55:21 +0000] [1] [INFO] Starting gunicorn 23.0.0
+2026-03-26 02:55:21.935 | [2026-03-26 05:55:21 +0000] [1] [INFO] Listening at: http://0.0.0.0:8000 (1)
+2026-03-26 02:55:21.935 | [2026-03-26 05:55:21 +0000] [1] [INFO] Using worker: uvicorn.workers.UvicornWorker
+2026-03-26 02:55:21.937 | [2026-03-26 05:55:21 +0000] [7] [INFO] Booting worker with pid: 7
+2026-03-26 02:55:22.032 | [2026-03-26 05:55:22 +0000] [8] [INFO] Booting worker with pid: 8
+2026-03-26 02:55:22.096 | [2026-03-26 05:55:22 +0000] [9] [INFO] Booting worker with pid: 9
+2026-03-26 02:55:22.123 | [2026-03-26 05:55:22 +0000] [10] [INFO] Booting worker with pid: 10
+2026-03-26 02:55:23.452 | Failed to initialize disk cache, falling back to memory-only cache: [Errno 13] Cache directory "/home/appuser/.dspy_cache/000" does not exist and could not be created
+2026-03-26 02:55:23.457 | Failed to initialize disk cache, falling back to memory-only cache: [Errno 13] Cache directory "/home/appuser/.dspy_cache/000" does not exist and could not be created
+2026-03-26 02:55:23.577 | Failed to initialize disk cache, falling back to memory-only cache: [Errno 13] Cache directory "/home/appuser/.dspy_cache/000" does not exist and could not be created
+2026-03-26 02:55:23.585 | Failed to initialize disk cache, falling back to memory-only cache: [Errno 13] Cache directory "/home/appuser/.dspy_cache/000" does not exist and could not be created
+2026-03-26 02:55:26.036 | [INFO] 2026-03-26 05:55:26,036 - corretumai.main.routes - /app/src/main/server/server.py (47) - Iniciando aplicação CorretumAI
+2026-03-26 02:55:26.036 | [INFO] 2026-03-26 05:55:26,036 - corretumai.drivers - /app/src/core/langsmith_config.py (31) - LangSmith tracing está desabilitado (LANGSMITH_TRACING_ENABLED=false).
+2026-03-26 02:55:26.036 | [INFO] 2026-03-26 05:55:26,036 - corretumai.main.routes - /app/src/main/server/server.py (47) - Iniciando aplicação CorretumAI
+2026-03-26 02:55:26.036 | [INFO] 2026-03-26 05:55:26,036 - corretumai.drivers - /app/src/core/langsmith_config.py (31) - LangSmith tracing está desabilitado (LANGSMITH_TRACING_ENABLED=false).
+2026-03-26 02:55:26.036 | [INFO] 2026-03-26 05:55:26,036 - corretumai.main.routes - /app/src/main/server/server.py (55) - DSPy configurado no startup
+2026-03-26 02:55:26.036 | [INFO] 2026-03-26 05:55:26,036 - corretumai.main.routes - /app/src/main/server/server.py (59) - Aplicação inicializada com sucesso
+2026-03-26 02:55:26.036 | [INFO] 2026-03-26 05:55:26,036 - corretumai.main.routes - /app/src/main/server/server.py (55) - DSPy configurado no startup
+2026-03-26 02:55:26.036 | [INFO] 2026-03-26 05:55:26,036 - corretumai.main.routes - /app/src/main/server/server.py (59) - Aplicação inicializada com sucesso
+2026-03-26 02:55:26.038 | [INFO] 2026-03-26 05:55:26,038 - corretumai.main.routes - /app/src/main/server/server.py (47) - Iniciando aplicação CorretumAI
+2026-03-26 02:55:26.038 | [INFO] 2026-03-26 05:55:26,038 - corretumai.drivers - /app/src/core/langsmith_config.py (31) - LangSmith tracing está desabilitado (LANGSMITH_TRACING_ENABLED=false).
+2026-03-26 02:55:26.038 | [INFO] 2026-03-26 05:55:26,038 - corretumai.main.routes - /app/src/main/server/server.py (55) - DSPy configurado no startup
+2026-03-26 02:55:26.038 | [INFO] 2026-03-26 05:55:26,038 - corretumai.main.routes - /app/src/main/server/server.py (59) - Aplicação inicializada com sucesso
+2026-03-26 02:55:26.049 | [INFO] 2026-03-26 05:55:26,048 - corretumai.main.routes - /app/src/main/server/server.py (47) - Iniciando aplicação CorretumAI
+2026-03-26 02:55:26.049 | [INFO] 2026-03-26 05:55:26,048 - corretumai.drivers - /app/src/core/langsmith_config.py (31) - LangSmith tracing está desabilitado (LANGSMITH_TRACING_ENABLED=false).
+2026-03-26 02:55:26.049 | [INFO] 2026-03-26 05:55:26,048 - corretumai.main.routes - /app/src/main/server/server.py (55) - DSPy configurado no startup
+2026-03-26 02:55:26.049 | [INFO] 2026-03-26 05:55:26,049 - corretumai.main.routes - /app/src/main/server/server.py (59) - Aplicação inicializada com sucesso
+2026-03-26 02:57:07.255 | [ERROR] 2026-03-26 05:57:07,255 - corretumai.main.routes - /app/src/main/routes/attachments_routes.py (156) - Erro ao fazer upload de anexo: Tipo de arquivo não permitido: None. Apenas PDF é aceito.
+2026-03-26 02:57:07.255 | [ERROR] 2026-03-26 05:57:07,255 - corretumai.db - /app/src/models/settings/postgres_conn_handler.py (60) - Erro na sessão do banco de dados: 400: Tipo de arquivo não permitido: None. Apenas PDF é aceito.
+2026-03-26 02:55:26.632 | [INFO] 2026-03-26 05:55:26,632 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: GET /health
+2026-03-26 02:55:26.635 | [INFO] 2026-03-26 05:55:26,635 - corretumai.main.routes - /app/src/main/server/server.py (143) - Health check chamado
+2026-03-26 02:55:26.635 | [INFO] 2026-03-26 05:55:26,635 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: GET /health -> Status 200
+2026-03-26 02:55:26.635 | 127.0.0.1:43284 - "GET /health HTTP/1.1" 200
+2026-03-26 02:56:07.601 | [INFO] 2026-03-26 05:56:07,600 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /auth/login
+2026-03-26 02:56:07.837 | [INFO] 2026-03-26 05:56:07,836 - corretumai.repositories - /app/src/models/repositories/auth_refresh_token_repository.py (268) - Token revogado: JTI=637b09b9-bad0-42ef-919c-2e3274dc57c8
+2026-03-26 02:56:07.837 | [INFO] 2026-03-26 05:56:07,836 - corretumai.services - /app/src/services/auth/user_login.py (104) - Revogados 1 tokens antigos do usuário 38925bd8-cf6b-4c73-8d82-dce563895772 (limite de 4 sessões)
+2026-03-26 02:56:07.841 | [INFO] 2026-03-26 05:56:07,841 - corretumai.repositories - /app/src/models/repositories/auth_refresh_token_repository.py (231) - Token criado: ID=8, JTI=9e298610-5bfa-4f81-bda4-ae8ddfc4d312, subject=38925bd8-cf6b-4c73-8d82-dce563895772
+2026-03-26 02:56:07.851 | [INFO] 2026-03-26 05:56:07,851 - corretumai.services - /app/src/services/auth/user_login.py (143) - Login bem-sucedido para usuário: maycon.fenandes9@gmail.com
+2026-03-26 02:56:07.852 | [INFO] 2026-03-26 05:56:07,852 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /auth/login -> Status 200
+2026-03-26 02:56:07.852 | 172.19.0.1:55150 - "POST /auth/login HTTP/1.1" 200
+2026-03-26 02:57:07.062 | [INFO] 2026-03-26 05:57:07,062 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /classes
+2026-03-26 02:57:07.064 | [INFO] 2026-03-26 05:57:07,064 - corretumai.services - /app/src/services/classes/create_class_service.py (46) - Criando nova turma: TCC Turma — Algoritmos e Estrutura de Dados
+2026-03-26 02:57:07.076 | [INFO] 2026-03-26 05:57:07,076 - corretumai.repositories - /app/src/models/repositories/classes_repository.py (257) - Turma criada: TCC Turma — Algoritmos e Estrutura de Dados (UUID: 9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40)
+2026-03-26 02:57:07.076 | [INFO] 2026-03-26 05:57:07,076 - corretumai.services - /app/src/services/classes/create_class_service.py (59) - Turma criada com sucesso: 9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40
+2026-03-26 02:57:07.077 | [INFO] 2026-03-26 05:57:07,077 - corretumai.controllers - /app/src/controllers/classes/create_class_controller.py (62) - Turma criada com sucesso: 9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40
+2026-03-26 02:57:07.077 | [INFO] 2026-03-26 05:57:07,077 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /classes -> Status 201
+2026-03-26 02:57:07.077 | 172.19.0.1:49286 - "POST /classes HTTP/1.1" 201
+2026-03-26 02:57:07.079 | [INFO] 2026-03-26 05:57:07,079 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /classes/9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40/students
+2026-03-26 02:57:07.124 | [INFO] 2026-03-26 05:57:07,124 - corretumai.services - /app/src/services/classes/add_students_to_class_service.py (65) - Adicionando 4 alunos à turma 9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40
+2026-03-26 02:57:07.139 | [INFO] 2026-03-26 05:57:07,139 - corretumai.repositories - /app/src/models/repositories/class_student_repository.py (215) - Aluno acc141d9-f9e5-4f79-80ef-ca1c0e5b9e23 matriculado na turma 9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40
+2026-03-26 02:57:07.141 | [INFO] 2026-03-26 05:57:07,141 - corretumai.repositories - /app/src/models/repositories/class_student_repository.py (215) - Aluno 6616b3c8-4099-4160-b5c9-299c32176021 matriculado na turma 9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40
+2026-03-26 02:57:07.143 | [INFO] 2026-03-26 05:57:07,143 - corretumai.repositories - /app/src/models/repositories/class_student_repository.py (215) - Aluno f811bf80-6392-4434-95f9-032491c110cf matriculado na turma 9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40
+2026-03-26 02:57:07.145 | [INFO] 2026-03-26 05:57:07,145 - corretumai.repositories - /app/src/models/repositories/class_student_repository.py (215) - Aluno 619f6444-f07e-4cd8-9b99-ad9dccc7f1e0 matriculado na turma 9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40
+2026-03-26 02:57:07.145 | [INFO] 2026-03-26 05:57:07,145 - corretumai.services - /app/src/services/classes/add_students_to_class_service.py (130) - Processo concluído: 4 matriculados, 0 já existiam, 0 erros
+2026-03-26 02:57:07.145 | [INFO] 2026-03-26 05:57:07,145 - corretumai.controllers - /app/src/controllers/classes/add_students_to_class_controller.py (70) - Alunos adicionados à turma 9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40: 4 matriculados
+2026-03-26 02:57:07.146 | [INFO] 2026-03-26 05:57:07,145 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /classes/9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40/students -> Status 200
+2026-03-26 02:57:07.146 | 172.19.0.1:49286 - "POST /classes/9a0fc3b7-c8f0-419c-b1a6-626f2b6dfc40/students HTTP/1.1" 200
+2026-03-26 02:57:07.148 | [INFO] 2026-03-26 05:57:07,148 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /exams
+2026-03-26 02:57:07.191 | [INFO] 2026-03-26 05:57:07,191 - corretumai.services - /app/src/services/exams/create_exam_service.py (46) - Criando nova prova: TCC Condição A — Algoritmos e Estrutura de Dados
+2026-03-26 02:57:07.203 | [INFO] 2026-03-26 05:57:07,202 - corretumai.repositories - /app/src/models/repositories/exams_repository.py (395) - Prova criada: TCC Condição A — Algoritmos e Estrutura de Dados (UUID: c734f26a-8b35-4314-9899-e3ea5308eec5)
+2026-03-26 02:57:07.203 | [INFO] 2026-03-26 05:57:07,202 - corretumai.services - /app/src/services/exams/create_exam_service.py (60) - Prova criada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:07.203 | [INFO] 2026-03-26 05:57:07,203 - corretumai.controllers - /app/src/controllers/exams/create_exam_controller.py (63) - Prova criada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:07.203 | [INFO] 2026-03-26 05:57:07,203 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /exams -> Status 201
+2026-03-26 02:57:07.203 | 172.19.0.1:49286 - "POST /exams HTTP/1.1" 201
+2026-03-26 02:57:07.209 | [INFO] 2026-03-26 05:57:07,208 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /attachments/upload
+2026-03-26 02:57:07.256 | [INFO] 2026-03-26 05:57:07,255 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /attachments/upload -> Status 400
+2026-03-26 02:57:07.256 | 172.19.0.1:49286 - "POST /attachments/upload?exam_uuid=c734f26a-8b35-4314-9899-e3ea5308eec5 HTTP/1.1" 400
+2026-03-26 02:57:07.258 | [INFO] 2026-03-26 05:57:07,258 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /exam-questions
+2026-03-26 02:57:07.303 | [INFO] 2026-03-26 05:57:07,302 - corretumai.services - /app/src/services/exam_questions/create_exam_question_service.py (55) - Criando questão para prova c734f26a-8b35-4314-9899-e3ea5308eec5 (ordem: 1)
+2026-03-26 02:57:07.317 | [INFO] 2026-03-26 05:57:07,317 - corretumai.repositories - /app/src/models/repositories/exam_question_repository.py (184) - Questão criada: UUID=94d6a110-4fac-4ce0-891a-30bfbf237cdb (Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Ordem: 1)
+2026-03-26 02:57:07.317 | [INFO] 2026-03-26 05:57:07,317 - corretumai.services - /app/src/services/exam_questions/create_exam_question_service.py (100) - Questão criada com sucesso: 94d6a110-4fac-4ce0-891a-30bfbf237cdb
+2026-03-26 02:57:07.317 | [INFO] 2026-03-26 05:57:07,317 - corretumai.controllers - /app/src/controllers/exam_questions/create_exam_question_controller.py (55) - Questão de prova criada com sucesso: 94d6a110-4fac-4ce0-891a-30bfbf237cdb
+2026-03-26 02:57:07.317 | [INFO] 2026-03-26 05:57:07,317 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /exam-questions -> Status 201
+2026-03-26 02:57:07.317 | 172.19.0.1:49286 - "POST /exam-questions HTTP/1.1" 201
+2026-03-26 02:57:07.319 | [INFO] 2026-03-26 05:57:07,319 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /exam-questions
+2026-03-26 02:57:07.363 | [INFO] 2026-03-26 05:57:07,362 - corretumai.services - /app/src/services/exam_questions/create_exam_question_service.py (55) - Criando questão para prova c734f26a-8b35-4314-9899-e3ea5308eec5 (ordem: 2)
+2026-03-26 02:57:07.365 | [INFO] 2026-03-26 05:57:07,365 - corretumai.repositories - /app/src/models/repositories/exam_question_repository.py (184) - Questão criada: UUID=287cb9f2-bb05-47f6-a459-98e6759e8991 (Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Ordem: 2)
+2026-03-26 02:57:07.365 | [INFO] 2026-03-26 05:57:07,365 - corretumai.services - /app/src/services/exam_questions/create_exam_question_service.py (100) - Questão criada com sucesso: 287cb9f2-bb05-47f6-a459-98e6759e8991
+2026-03-26 02:57:07.365 | [INFO] 2026-03-26 05:57:07,365 - corretumai.controllers - /app/src/controllers/exam_questions/create_exam_question_controller.py (55) - Questão de prova criada com sucesso: 287cb9f2-bb05-47f6-a459-98e6759e8991
+2026-03-26 02:57:07.365 | [INFO] 2026-03-26 05:57:07,365 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /exam-questions -> Status 201
+2026-03-26 02:57:07.365 | 172.19.0.1:49286 - "POST /exam-questions HTTP/1.1" 201
+2026-03-26 02:57:07.367 | [INFO] 2026-03-26 05:57:07,367 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /exam-questions
+2026-03-26 02:57:07.410 | [INFO] 2026-03-26 05:57:07,410 - corretumai.services - /app/src/services/exam_questions/create_exam_question_service.py (55) - Criando questão para prova c734f26a-8b35-4314-9899-e3ea5308eec5 (ordem: 3)
+2026-03-26 02:57:07.413 | [INFO] 2026-03-26 05:57:07,412 - corretumai.repositories - /app/src/models/repositories/exam_question_repository.py (184) - Questão criada: UUID=003d1609-bdac-4a99-89fb-6e0d57a6e2d4 (Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Ordem: 3)
+2026-03-26 02:57:07.413 | [INFO] 2026-03-26 05:57:07,412 - corretumai.services - /app/src/services/exam_questions/create_exam_question_service.py (100) - Questão criada com sucesso: 003d1609-bdac-4a99-89fb-6e0d57a6e2d4
+2026-03-26 02:57:07.413 | [INFO] 2026-03-26 05:57:07,413 - corretumai.controllers - /app/src/controllers/exam_questions/create_exam_question_controller.py (55) - Questão de prova criada com sucesso: 003d1609-bdac-4a99-89fb-6e0d57a6e2d4
+2026-03-26 02:57:07.413 | [INFO] 2026-03-26 05:57:07,413 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /exam-questions -> Status 201
+2026-03-26 02:57:07.413 | 172.19.0.1:49286 - "POST /exam-questions HTTP/1.1" 201
+2026-03-26 02:57:07.415 | [INFO] 2026-03-26 05:57:07,415 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.459 | [INFO] 2026-03-26 05:57:07,458 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 94d6a110-4fac-4ce0-891a-30bfbf237cdb do aluno acc141d9-f9e5-4f79-80ef-ca1c0e5b9e23
+2026-03-26 02:57:07.475 | [INFO] 2026-03-26 05:57:07,475 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=ca2d07da-58db-476d-b54e-caee0bc25e84 (Aluno: acc141d9-f9e5-4f79-80ef-ca1c0e5b9e23, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 94d6a110-4fac-4ce0-891a-30bfbf237cdb)
+2026-03-26 02:57:07.475 | [INFO] 2026-03-26 05:57:07,475 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: ca2d07da-58db-476d-b54e-caee0bc25e84
+2026-03-26 02:57:07.475 | [INFO] 2026-03-26 05:57:07,475 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: ca2d07da-58db-476d-b54e-caee0bc25e84
+2026-03-26 02:57:07.476 | [INFO] 2026-03-26 05:57:07,475 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:07.476 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:07.477 | [INFO] 2026-03-26 05:57:07,477 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.519 | [INFO] 2026-03-26 05:57:07,519 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 94d6a110-4fac-4ce0-891a-30bfbf237cdb do aluno 6616b3c8-4099-4160-b5c9-299c32176021
+2026-03-26 02:57:07.522 | [INFO] 2026-03-26 05:57:07,522 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=3ee139dd-4fe4-468c-8586-9fe78c3099c1 (Aluno: 6616b3c8-4099-4160-b5c9-299c32176021, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 94d6a110-4fac-4ce0-891a-30bfbf237cdb)
+2026-03-26 02:57:07.522 | [INFO] 2026-03-26 05:57:07,522 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: 3ee139dd-4fe4-468c-8586-9fe78c3099c1
+2026-03-26 02:57:07.522 | [INFO] 2026-03-26 05:57:07,522 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: 3ee139dd-4fe4-468c-8586-9fe78c3099c1
+2026-03-26 02:57:07.522 | [INFO] 2026-03-26 05:57:07,522 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:07.522 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:07.524 | [INFO] 2026-03-26 05:57:07,523 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.566 | [INFO] 2026-03-26 05:57:07,566 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 94d6a110-4fac-4ce0-891a-30bfbf237cdb do aluno f811bf80-6392-4434-95f9-032491c110cf
+2026-03-26 02:57:07.569 | [INFO] 2026-03-26 05:57:07,569 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=63f7dcf1-1e49-47a8-9266-5298ae1f2e0c (Aluno: f811bf80-6392-4434-95f9-032491c110cf, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 94d6a110-4fac-4ce0-891a-30bfbf237cdb)
+2026-03-26 02:57:07.569 | [INFO] 2026-03-26 05:57:07,569 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: 63f7dcf1-1e49-47a8-9266-5298ae1f2e0c
+2026-03-26 02:57:07.569 | [INFO] 2026-03-26 05:57:07,569 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: 63f7dcf1-1e49-47a8-9266-5298ae1f2e0c
+2026-03-26 02:57:07.570 | [INFO] 2026-03-26 05:57:07,570 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:07.570 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:07.571 | [INFO] 2026-03-26 05:57:07,571 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.614 | [INFO] 2026-03-26 05:57:07,614 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 94d6a110-4fac-4ce0-891a-30bfbf237cdb do aluno 619f6444-f07e-4cd8-9b99-ad9dccc7f1e0
+2026-03-26 02:57:07.617 | [INFO] 2026-03-26 05:57:07,617 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=291d8616-0ef5-4cce-8715-1c6c136ad2f5 (Aluno: 619f6444-f07e-4cd8-9b99-ad9dccc7f1e0, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 94d6a110-4fac-4ce0-891a-30bfbf237cdb)
+2026-03-26 02:57:07.617 | [INFO] 2026-03-26 05:57:07,617 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: 291d8616-0ef5-4cce-8715-1c6c136ad2f5
+2026-03-26 02:57:07.617 | [INFO] 2026-03-26 05:57:07,617 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: 291d8616-0ef5-4cce-8715-1c6c136ad2f5
+2026-03-26 02:57:07.617 | [INFO] 2026-03-26 05:57:07,617 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:07.617 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:07.619 | [INFO] 2026-03-26 05:57:07,619 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.662 | [INFO] 2026-03-26 05:57:07,662 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 287cb9f2-bb05-47f6-a459-98e6759e8991 do aluno acc141d9-f9e5-4f79-80ef-ca1c0e5b9e23
+2026-03-26 02:57:07.665 | [INFO] 2026-03-26 05:57:07,665 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=721e71e3-ae74-483b-8dbd-2db92f11c0a4 (Aluno: acc141d9-f9e5-4f79-80ef-ca1c0e5b9e23, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 287cb9f2-bb05-47f6-a459-98e6759e8991)
+2026-03-26 02:57:07.665 | [INFO] 2026-03-26 05:57:07,665 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: 721e71e3-ae74-483b-8dbd-2db92f11c0a4
+2026-03-26 02:57:07.665 | [INFO] 2026-03-26 05:57:07,665 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: 721e71e3-ae74-483b-8dbd-2db92f11c0a4
+2026-03-26 02:57:07.666 | [INFO] 2026-03-26 05:57:07,665 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:07.666 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:07.667 | [INFO] 2026-03-26 05:57:07,667 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.710 | [INFO] 2026-03-26 05:57:07,710 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 287cb9f2-bb05-47f6-a459-98e6759e8991 do aluno 6616b3c8-4099-4160-b5c9-299c32176021
+2026-03-26 02:57:07.713 | [INFO] 2026-03-26 05:57:07,713 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=d277c01f-9bf4-4890-8cfb-1835f03ebe17 (Aluno: 6616b3c8-4099-4160-b5c9-299c32176021, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 287cb9f2-bb05-47f6-a459-98e6759e8991)
+2026-03-26 02:57:07.713 | [INFO] 2026-03-26 05:57:07,713 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: d277c01f-9bf4-4890-8cfb-1835f03ebe17
+2026-03-26 02:57:07.713 | [INFO] 2026-03-26 05:57:07,713 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: d277c01f-9bf4-4890-8cfb-1835f03ebe17
+2026-03-26 02:57:07.714 | [INFO] 2026-03-26 05:57:07,713 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:07.714 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:07.715 | [INFO] 2026-03-26 05:57:07,715 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.758 | [INFO] 2026-03-26 05:57:07,758 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 287cb9f2-bb05-47f6-a459-98e6759e8991 do aluno f811bf80-6392-4434-95f9-032491c110cf
+2026-03-26 02:57:07.762 | [INFO] 2026-03-26 05:57:07,761 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=ae489dd5-56c9-451c-9d62-d44531c8fae9 (Aluno: f811bf80-6392-4434-95f9-032491c110cf, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 287cb9f2-bb05-47f6-a459-98e6759e8991)
+2026-03-26 02:57:07.762 | [INFO] 2026-03-26 05:57:07,762 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: ae489dd5-56c9-451c-9d62-d44531c8fae9
+2026-03-26 02:57:07.762 | [INFO] 2026-03-26 05:57:07,762 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: ae489dd5-56c9-451c-9d62-d44531c8fae9
+2026-03-26 02:57:07.762 | [INFO] 2026-03-26 05:57:07,762 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:07.762 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:07.764 | [INFO] 2026-03-26 05:57:07,763 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.807 | [INFO] 2026-03-26 05:57:07,806 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 287cb9f2-bb05-47f6-a459-98e6759e8991 do aluno 619f6444-f07e-4cd8-9b99-ad9dccc7f1e0
+2026-03-26 02:57:07.810 | [INFO] 2026-03-26 05:57:07,809 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=68fe2f68-f575-49dd-ab75-56bdc029699e (Aluno: 619f6444-f07e-4cd8-9b99-ad9dccc7f1e0, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 287cb9f2-bb05-47f6-a459-98e6759e8991)
+2026-03-26 02:57:07.810 | [INFO] 2026-03-26 05:57:07,810 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: 68fe2f68-f575-49dd-ab75-56bdc029699e
+2026-03-26 02:57:07.810 | [INFO] 2026-03-26 05:57:07,810 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: 68fe2f68-f575-49dd-ab75-56bdc029699e
+2026-03-26 02:57:07.810 | [INFO] 2026-03-26 05:57:07,810 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:07.810 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:07.812 | [INFO] 2026-03-26 05:57:07,811 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.854 | [INFO] 2026-03-26 05:57:07,854 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 003d1609-bdac-4a99-89fb-6e0d57a6e2d4 do aluno acc141d9-f9e5-4f79-80ef-ca1c0e5b9e23
+2026-03-26 02:57:07.857 | [INFO] 2026-03-26 05:57:07,857 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=ef16af5f-65c8-4462-8a91-c8f9d40e9f44 (Aluno: acc141d9-f9e5-4f79-80ef-ca1c0e5b9e23, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 003d1609-bdac-4a99-89fb-6e0d57a6e2d4)
+2026-03-26 02:57:07.857 | [INFO] 2026-03-26 05:57:07,857 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: ef16af5f-65c8-4462-8a91-c8f9d40e9f44
+2026-03-26 02:57:07.857 | [INFO] 2026-03-26 05:57:07,857 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: ef16af5f-65c8-4462-8a91-c8f9d40e9f44
+2026-03-26 02:57:07.858 | [INFO] 2026-03-26 05:57:07,858 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:07.858 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:07.859 | [INFO] 2026-03-26 05:57:07,859 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.902 | [INFO] 2026-03-26 05:57:07,902 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 003d1609-bdac-4a99-89fb-6e0d57a6e2d4 do aluno 6616b3c8-4099-4160-b5c9-299c32176021
+2026-03-26 02:57:07.906 | [INFO] 2026-03-26 05:57:07,906 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=4d15c357-a72c-4cd1-a8d5-1e3b76ab0d54 (Aluno: 6616b3c8-4099-4160-b5c9-299c32176021, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 003d1609-bdac-4a99-89fb-6e0d57a6e2d4)
+2026-03-26 02:57:07.906 | [INFO] 2026-03-26 05:57:07,906 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: 4d15c357-a72c-4cd1-a8d5-1e3b76ab0d54
+2026-03-26 02:57:07.906 | [INFO] 2026-03-26 05:57:07,906 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: 4d15c357-a72c-4cd1-a8d5-1e3b76ab0d54
+2026-03-26 02:57:07.906 | [INFO] 2026-03-26 05:57:07,906 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:07.906 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:07.908 | [INFO] 2026-03-26 05:57:07,908 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.950 | [INFO] 2026-03-26 05:57:07,950 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 003d1609-bdac-4a99-89fb-6e0d57a6e2d4 do aluno f811bf80-6392-4434-95f9-032491c110cf
+2026-03-26 02:57:07.954 | [INFO] 2026-03-26 05:57:07,954 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=e84c4b23-a1b2-4846-8538-ae6d9cdb6034 (Aluno: f811bf80-6392-4434-95f9-032491c110cf, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 003d1609-bdac-4a99-89fb-6e0d57a6e2d4)
+2026-03-26 02:57:07.954 | [INFO] 2026-03-26 05:57:07,954 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: e84c4b23-a1b2-4846-8538-ae6d9cdb6034
+2026-03-26 02:57:07.954 | [INFO] 2026-03-26 05:57:07,954 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: e84c4b23-a1b2-4846-8538-ae6d9cdb6034
+2026-03-26 02:57:07.954 | [INFO] 2026-03-26 05:57:07,954 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:07.954 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:07.956 | [INFO] 2026-03-26 05:57:07,956 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /student-answers
+2026-03-26 02:57:07.998 | [INFO] 2026-03-26 05:57:07,998 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (61) - Criando resposta para questão 003d1609-bdac-4a99-89fb-6e0d57a6e2d4 do aluno 619f6444-f07e-4cd8-9b99-ad9dccc7f1e0
+2026-03-26 02:57:08.002 | [INFO] 2026-03-26 05:57:08,002 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (447) - Resposta criada: UUID=eae015da-39c8-4662-a2ef-7dcd98e82682 (Aluno: 619f6444-f07e-4cd8-9b99-ad9dccc7f1e0, Prova: c734f26a-8b35-4314-9899-e3ea5308eec5, Questão: 003d1609-bdac-4a99-89fb-6e0d57a6e2d4)
+2026-03-26 02:57:08.002 | [INFO] 2026-03-26 05:57:08,002 - corretumai.services - /app/src/services/student_answers/create_student_answer_service.py (139) - Resposta criada com sucesso: eae015da-39c8-4662-a2ef-7dcd98e82682
+2026-03-26 02:57:08.002 | [INFO] 2026-03-26 05:57:08,002 - corretumai.controllers - /app/src/controllers/student_answers/create_student_answer_controller.py (55) - Resposta de aluno criada com sucesso: eae015da-39c8-4662-a2ef-7dcd98e82682
+2026-03-26 02:57:08.002 | [INFO] 2026-03-26 05:57:08,002 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /student-answers -> Status 201
+2026-03-26 02:57:08.002 | 172.19.0.1:49286 - "POST /student-answers HTTP/1.1" 201
+2026-03-26 02:57:08.004 | [INFO] 2026-03-26 05:57:08,004 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: POST /exams/c734f26a-8b35-4314-9899-e3ea5308eec5/publish
+2026-03-26 02:57:08.110 | [INFO] 2026-03-26 05:57:08,110 - corretumai.services - /app/src/services/exams/publish_exam_service.py (103) - 📥 Iniciando publicação da prova c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:08.111 | [INFO] 2026-03-26 05:57:08,111 - corretumai.services - /app/src/services/exams/publish_exam_service.py (115) - 📋 Prova encontrada: 'TCC Condição A — Algoritmos e Estrutura de Dados' (status=DRAFT)
+2026-03-26 02:57:08.111 | [INFO] 2026-03-26 05:57:08,111 - corretumai.services - /app/src/services/exams/publish_exam_service.py (182) - 🔍 Validando dados da prova c734f26a-8b35-4314-9899-e3ea5308eec5 antes de publicar...
+2026-03-26 02:57:08.112 | [INFO] 2026-03-26 05:57:08,112 - corretumai.services - /app/src/services/exams/publish_exam_service.py (194) - ✓ Prova possui 3 questão(ões)
+2026-03-26 02:57:08.114 | [INFO] 2026-03-26 05:57:08,114 - corretumai.services - /app/src/services/exams/publish_exam_service.py (257) - ✅ Validação concluída: todos os dados estão válidos
+2026-03-26 02:57:08.116 | [INFO] 2026-03-26 05:57:08,116 - corretumai.repositories - /app/src/models/repositories/exams_repository.py (503) - Status da prova c734f26a-8b35-4314-9899-e3ea5308eec5 atualizado para PUBLISHED
+2026-03-26 02:57:08.118 | [INFO] 2026-03-26 05:57:08,117 - corretumai.services - /app/src/services/exams/publish_exam_service.py (138) - ✅ Status da prova c734f26a-8b35-4314-9899-e3ea5308eec5 atualizado para PUBLISHED
+2026-03-26 02:57:08.118 | [INFO] 2026-03-26 05:57:08,118 - corretumai.services - /app/src/services/exams/publish_exam_service.py (146) - 🚀 Background task agendada para prova c734f26a-8b35-4314-9899-e3ea5308eec5. Indexação e correção serão executadas assincronamente.
+2026-03-26 02:57:08.118 | [INFO] 2026-03-26 05:57:08,118 - corretumai.controllers - /app/src/controllers/exams/publish_exam_controller.py (91) - Prova publicada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:08.118 | [INFO] 2026-03-26 05:57:08,118 - corretumai.services - /app/src/services/exams/publish_exam_service.py (274) - 🚀 Iniciando processamento em background da prova c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:08.125 | [INFO] 2026-03-26 05:57:08,124 - corretumai.services - /app/src/services/exams/publish_exam_service.py (293) - 📄 Nenhum PDF para indexar. Prosseguindo para correção...
+2026-03-26 02:57:08.125 | [INFO] 2026-03-26 05:57:08,125 - corretumai.services - /app/src/services/exams/publish_exam_service.py (310) - 🤖 Iniciando correção automática...
+2026-03-26 02:57:08.125 | [INFO] 2026-03-26 05:57:08,125 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (380) - Iniciando correção completa da prova c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:08.125 | [INFO] 2026-03-26 05:57:08,125 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (403) - Encontradas 3 questões na prova
+2026-03-26 02:57:08.126 | [INFO] 2026-03-26 05:57:08,126 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (423) - Questão 94d6a110-4fac-4ce0-891a-30bfbf237cdb: 4 respostas para corrigir
+2026-03-26 02:57:08.136 | [WARNING] 2026-03-26 05:57:08,136 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (588) - Nenhum critério encontrado para prova c734f26a-8b35-4314-9899-e3ea5308eec5 - usando critério genérico
+2026-03-26 02:57:08.136 | [INFO] 2026-03-26 05:57:08,136 - corretumai.services - /app/src/services/rag/retrieval_service.py (106) - RAG Query
+2026-03-26 02:57:09.571 | [WARNING] 2026-03-26 05:57:09,570 - corretumai.services - /app/src/services/rag/retrieval_service.py (140) - RAG: sem resultados para exam_uuid=c734f26a-8b35-4314-9899-e3ea5308eec5. Buscando globalmente (sem filtro).
+2026-03-26 02:57:09.948 | [INFO] 2026-03-26 05:57:09,948 - corretumai.services - /app/src/services/rag/retrieval_service.py (186) - RAG retornou contextos
+2026-03-26 02:57:09.948 | [INFO] 2026-03-26 05:57:09,948 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (105) - Iniciando workflow LangGraph: aluno=acc141d9-f9e5-4f79-80ef-ca1c0e5b9e23, questão=94d6a110-4fac-4ce0-891a-30bfbf237cdb
+2026-03-26 02:57:09.948 | [INFO] 2026-03-26 05:57:09,948 - corretumai.domain - /app/src/domain/ai/workflow/graph.py (123) - Compilando grafo de correção pela primeira vez
+2026-03-26 02:57:09.950 | [INFO] 2026-03-26 05:57:09,949 - corretumai.domain - /app/src/domain/ai/workflow/graph.py (101) - Grafo de correção criado com sucesso
+2026-03-26 02:57:09.955 | [INFO] 2026-03-26 05:57:09,955 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: POST /exams/c734f26a-8b35-4314-9899-e3ea5308eec5/publish -> Status 202
+2026-03-26 02:57:09.955 | 172.19.0.1:49286 - "POST /exams/c734f26a-8b35-4314-9899-e3ea5308eec5/publish HTTP/1.1" 202
+2026-03-26 02:57:09.955 | [INFO] 2026-03-26 05:57:09,955 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (28) - [RAG Node] Contexto já fornecido para questão 94d6a110-4fac-4ce0-891a-30bfbf237cdb — pulando retrieval
+2026-03-26 02:57:09.956 | [INFO] 2026-03-26 05:57:09,956 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (61) - [Corretor 1 Node] Iniciando avaliação
+2026-03-26 02:57:09.972 | [INFO] 2026-03-26 05:57:09,972 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:09.972 | [INFO] 2026-03-26 05:57:09,972 - corretumai.services - /app/src/services/agents/examiner_agent.py (67) - [AgentID.CORRETOR_1] Iniciando avaliacao da questao 94d6a110-4fac-4ce0-891a-30bfbf237cdb para resposta do aluno acc141d9-f9e5-4f79-80ef-ca1c0e5b9e23
+2026-03-26 02:57:09.977 | [INFO] 2026-03-26 05:57:09,976 - corretumai.services - /app/src/services/exams/get_exam_by_uuid_service.py (46) - Buscando prova: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:10.005 | [INFO] 2026-03-26 05:57:10,004 - corretumai.controllers - /app/src/controllers/exams/get_exam_by_uuid_controller.py (69) - Prova recuperada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:10.005 | [INFO] 2026-03-26 05:57:10,005 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 -> Status 200
+2026-03-26 02:57:10.006 | 172.19.0.1:49286 - "GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 HTTP/1.1" 200
+2026-03-26 02:57:15.029 | [INFO] 2026-03-26 05:57:15,028 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:15.030 | [INFO] 2026-03-26 05:57:15,030 - corretumai.services - /app/src/services/exams/get_exam_by_uuid_service.py (46) - Buscando prova: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:15.032 | [INFO] 2026-03-26 05:57:15,031 - corretumai.controllers - /app/src/controllers/exams/get_exam_by_uuid_controller.py (69) - Prova recuperada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:15.032 | [INFO] 2026-03-26 05:57:15,032 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 -> Status 200
+2026-03-26 02:57:15.032 | 172.19.0.1:43474 - "GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 HTTP/1.1" 200
+2026-03-26 02:57:18.887 | [INFO] 2026-03-26 05:57:18,887 - corretumai.services - /app/src/services/agents/examiner_agent.py (82) - [AgentID.CORRETOR_1] Avaliacao concluida. Nota atribuida: 10.00
+2026-03-26 02:57:18.888 | [INFO] 2026-03-26 05:57:18,887 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (72) - [Corretor 1 Node] Nota: 10.00
+2026-03-26 02:57:18.889 | [INFO] 2026-03-26 05:57:18,889 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (90) - [Corretor 2 Node] Iniciando avaliação
+2026-03-26 02:57:18.903 | [INFO] 2026-03-26 05:57:18,903 - corretumai.services - /app/src/services/agents/examiner_agent.py (67) - [AgentID.CORRETOR_2] Iniciando avaliacao da questao 94d6a110-4fac-4ce0-891a-30bfbf237cdb para resposta do aluno acc141d9-f9e5-4f79-80ef-ca1c0e5b9e23
+2026-03-26 02:57:20.058 | [INFO] 2026-03-26 05:57:20,058 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:20.059 | [INFO] 2026-03-26 05:57:20,059 - corretumai.services - /app/src/services/exams/get_exam_by_uuid_service.py (46) - Buscando prova: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:20.061 | [INFO] 2026-03-26 05:57:20,061 - corretumai.controllers - /app/src/controllers/exams/get_exam_by_uuid_controller.py (69) - Prova recuperada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:20.061 | [INFO] 2026-03-26 05:57:20,061 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 -> Status 200
+2026-03-26 02:57:20.061 | 172.19.0.1:43478 - "GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 HTTP/1.1" 200
+2026-03-26 02:57:25.085 | [INFO] 2026-03-26 05:57:25,085 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:25.086 | [INFO] 2026-03-26 05:57:25,086 - corretumai.services - /app/src/services/exams/get_exam_by_uuid_service.py (46) - Buscando prova: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:25.087 | [INFO] 2026-03-26 05:57:25,087 - corretumai.controllers - /app/src/controllers/exams/get_exam_by_uuid_controller.py (69) - Prova recuperada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:25.088 | [INFO] 2026-03-26 05:57:25,088 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 -> Status 200
+2026-03-26 02:57:25.088 | 172.19.0.1:42170 - "GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 HTTP/1.1" 200
+2026-03-26 02:57:26.702 | [INFO] 2026-03-26 05:57:26,701 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: GET /health
+2026-03-26 02:57:26.702 | [INFO] 2026-03-26 05:57:26,702 - corretumai.main.routes - /app/src/main/server/server.py (143) - Health check chamado
+2026-03-26 02:57:26.702 | [INFO] 2026-03-26 05:57:26,702 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: GET /health -> Status 200
+2026-03-26 02:57:26.702 | 127.0.0.1:35202 - "GET /health HTTP/1.1" 200
+2026-03-26 02:57:28.737 | [INFO] 2026-03-26 05:57:28,737 - corretumai.services - /app/src/services/agents/examiner_agent.py (82) - [AgentID.CORRETOR_2] Avaliacao concluida. Nota atribuida: 10.00
+2026-03-26 02:57:28.738 | [INFO] 2026-03-26 05:57:28,737 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (101) - [Corretor 2 Node] Nota: 10.00
+2026-03-26 02:57:28.738 | [INFO] 2026-03-26 05:57:28,738 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (121) - [Divergence Check Node] Calculando divergência
+2026-03-26 02:57:28.739 | [INFO] 2026-03-26 05:57:28,738 - corretumai.domain - /app/src/domain/ai/utils/divergence_checker.py (55) - Divergência: 0.00 (threshold=2.00) → Divergente? False
+2026-03-26 02:57:28.739 | [INFO] 2026-03-26 05:57:28,738 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (129) - [Divergence Check Node] Divergente: False (diff=0.00)
+2026-03-26 02:57:28.741 | [INFO] 2026-03-26 05:57:28,740 - corretumai.domain - /app/src/domain/ai/workflow/graph.py (34) - [Router] Roteando para FINALIZE (sem divergência)
+2026-03-26 02:57:28.742 | [INFO] 2026-03-26 05:57:28,741 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (187) - [Finalize Node] Calculando consenso
+2026-03-26 02:57:28.742 | [INFO] 2026-03-26 05:57:28,742 - corretumai.domain - /app/src/domain/ai/utils/consensus_builder.py (44) - Consenso (2 notas): média simples = 10.00
+2026-03-26 02:57:28.742 | [INFO] 2026-03-26 05:57:28,742 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (198) - [Finalize Node] Nota final: 10.00 (baseada em 2 avaliações)
+2026-03-26 02:57:28.751 | [INFO] 2026-03-26 05:57:28,751 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (212) - Scores antigos removidos para resposta ca2d07da-58db-476d-b54e-caee0bc25e84
+2026-03-26 02:57:28.752 | [WARNING] 2026-03-26 05:57:28,752 - corretumai.repositories - /app/src/models/repositories/grading_criteria_repository.py (106) - Critério não encontrado: code=CRITERIO_GERAL
+2026-03-26 02:57:28.752 | [WARNING] 2026-03-26 05:57:28,752 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (237) - Critério 'CRITERIO_GERAL' não encontrado no banco: No row was found when one was required — será ignorado
+2026-03-26 02:57:28.752 | [WARNING] 2026-03-26 05:57:28,752 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (277) - UUID não encontrado para critério 'CRITERIO_GERAL' - pulando
+2026-03-26 02:57:28.752 | [INFO] 2026-03-26 05:57:28,752 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (305) - Nota normalizada: raw_weighted=0.00 / max_weighted=10.00 × question_pts=10.00 = 0.00 (IA reportou: 10.00)
+2026-03-26 02:57:28.754 | [INFO] 2026-03-26 05:57:28,754 - corretumai.repositories - /app/src/models/repositories/student_answer_repository.py (484) - Resposta atualizada: ID=25
+2026-03-26 02:57:28.754 | [INFO] 2026-03-26 05:57:28,754 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (320) - Resposta atualizada: UUID=ca2d07da-58db-476d-b54e-caee0bc25e84, nota=0.00
+2026-03-26 02:57:28.759 | [INFO] 2026-03-26 05:57:28,758 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (332) - Persistência concluída: 0 critérios salvos para resposta ca2d07da-58db-476d-b54e-caee0bc25e84
+2026-03-26 02:57:28.759 | [INFO] 2026-03-26 05:57:28,758 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (148) - Workflow concluído: nota=10.00, árbitro=False
+2026-03-26 02:57:28.759 | [INFO] 2026-03-26 05:57:28,759 - corretumai.services - /app/src/services/grading/grading_workflow_service.py (105) - Iniciando workflow LangGraph: aluno=6616b3c8-4099-4160-b5c9-299c32176021, questão=94d6a110-4fac-4ce0-891a-30bfbf237cdb
+2026-03-26 02:57:28.759 | [INFO] 2026-03-26 05:57:28,759 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (28) - [RAG Node] Contexto já fornecido para questão 94d6a110-4fac-4ce0-891a-30bfbf237cdb — pulando retrieval
+2026-03-26 02:57:28.760 | [INFO] 2026-03-26 05:57:28,760 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (61) - [Corretor 1 Node] Iniciando avaliação
+2026-03-26 02:57:28.775 | [INFO] 2026-03-26 05:57:28,775 - corretumai.services - /app/src/services/agents/examiner_agent.py (67) - [AgentID.CORRETOR_1] Iniciando avaliacao da questao 94d6a110-4fac-4ce0-891a-30bfbf237cdb para resposta do aluno 6616b3c8-4099-4160-b5c9-299c32176021
+2026-03-26 02:57:30.106 | [INFO] 2026-03-26 05:57:30,105 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:30.106 | [INFO] 2026-03-26 05:57:30,106 - corretumai.services - /app/src/services/exams/get_exam_by_uuid_service.py (46) - Buscando prova: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:30.108 | [INFO] 2026-03-26 05:57:30,108 - corretumai.controllers - /app/src/controllers/exams/get_exam_by_uuid_controller.py (69) - Prova recuperada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:30.108 | [INFO] 2026-03-26 05:57:30,108 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 -> Status 200
+2026-03-26 02:57:30.108 | 172.19.0.1:42174 - "GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 HTTP/1.1" 200
+2026-03-26 02:57:35.114 | [INFO] 2026-03-26 05:57:35,113 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:35.119 | [INFO] 2026-03-26 05:57:35,119 - corretumai.services - /app/src/services/exams/get_exam_by_uuid_service.py (46) - Buscando prova: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:35.158 | [INFO] 2026-03-26 05:57:35,158 - corretumai.controllers - /app/src/controllers/exams/get_exam_by_uuid_controller.py (69) - Prova recuperada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:35.158 | [INFO] 2026-03-26 05:57:35,158 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 -> Status 200
+2026-03-26 02:57:35.158 | 172.19.0.1:50484 - "GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 HTTP/1.1" 200
+2026-03-26 02:57:40.164 | [INFO] 2026-03-26 05:57:40,164 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:40.165 | [INFO] 2026-03-26 05:57:40,165 - corretumai.services - /app/src/services/exams/get_exam_by_uuid_service.py (46) - Buscando prova: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:40.167 | [INFO] 2026-03-26 05:57:40,167 - corretumai.controllers - /app/src/controllers/exams/get_exam_by_uuid_controller.py (69) - Prova recuperada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:40.167 | [INFO] 2026-03-26 05:57:40,167 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 -> Status 200
+2026-03-26 02:57:40.167 | 172.19.0.1:50488 - "GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 HTTP/1.1" 200
+2026-03-26 02:57:45.193 | [INFO] 2026-03-26 05:57:45,192 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:45.194 | [INFO] 2026-03-26 05:57:45,193 - corretumai.services - /app/src/services/exams/get_exam_by_uuid_service.py (46) - Buscando prova: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:45.195 | [INFO] 2026-03-26 05:57:45,195 - corretumai.controllers - /app/src/controllers/exams/get_exam_by_uuid_controller.py (69) - Prova recuperada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:45.195 | [INFO] 2026-03-26 05:57:45,195 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 -> Status 200
+2026-03-26 02:57:45.195 | 172.19.0.1:53848 - "GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 HTTP/1.1" 200
+2026-03-26 02:57:49.385 | [INFO] 2026-03-26 05:57:49,385 - corretumai.services - /app/src/services/agents/examiner_agent.py (82) - [AgentID.CORRETOR_1] Avaliacao concluida. Nota atribuida: 9.50
+2026-03-26 02:57:49.385 | [INFO] 2026-03-26 05:57:49,385 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (72) - [Corretor 1 Node] Nota: 9.50
+2026-03-26 02:57:49.386 | [INFO] 2026-03-26 05:57:49,386 - corretumai.domain - /app/src/domain/ai/workflow/nodes.py (90) - [Corretor 2 Node] Iniciando avaliação
+2026-03-26 02:57:49.400 | [INFO] 2026-03-26 05:57:49,400 - corretumai.services - /app/src/services/agents/examiner_agent.py (67) - [AgentID.CORRETOR_2] Iniciando avaliacao da questao 94d6a110-4fac-4ce0-891a-30bfbf237cdb para resposta do aluno 6616b3c8-4099-4160-b5c9-299c32176021
+2026-03-26 02:57:50.208 | [INFO] 2026-03-26 05:57:50,208 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (32) - Recebendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:50.209 | [INFO] 2026-03-26 05:57:50,209 - corretumai.services - /app/src/services/exams/get_exam_by_uuid_service.py (46) - Buscando prova: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:50.211 | [INFO] 2026-03-26 05:57:50,211 - corretumai.controllers - /app/src/controllers/exams/get_exam_by_uuid_controller.py (69) - Prova recuperada com sucesso: c734f26a-8b35-4314-9899-e3ea5308eec5
+2026-03-26 02:57:50.211 | [INFO] 2026-03-26 05:57:50,211 - corretumai.main.middlewares - /app/src/main/middlewares/request_logging.py (41) - Respondendo requisição: GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 -> Status 200
+2026-03-26 02:57:50.211 | 172.19.0.1:53860 - "GET /exams/c734f26a-8b35-4314-9899-e3ea5308eec5 HTTP/1.1" 200
