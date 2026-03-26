@@ -18,6 +18,7 @@ services:
       - ./data:/app/data
     ports:
       - "8000:8000"
+      - "8501:8501"
     depends_on:
       - postgres
       - ollama

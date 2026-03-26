@@ -1,6 +1,6 @@
-PWD C:\Users\Maycon Mendes\OneDrive\Área de Trabalho\IFF\TCC\ai-grading-system\tcc
+PWD c:\Users\Maycon Mendes\OneDrive\Área de Trabalho\IFF\TCC\ai-grading-system\tcc
 INPUT C:\Users\Maycon Mendes\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT Principal.tex
+INPUT c:\Users\Maycon Mendes\OneDrive\Área de Trabalho\IFF\TCC\ai-grading-system\tcc\Principal.tex
 OUTPUT Principal.log
 INPUT .\configuracao.tex
 INPUT .\configuracao.tex
@@ -828,6 +828,12 @@ INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\e
 INPUT .\Principal.bbl
 INPUT .\Principal.bbl
 INPUT Principal.bbl
+INPUT .\Principal.brf
+INPUT .\Principal.brf
+INPUT Principal.brf
+INPUT .\Principal.brf
+INPUT .\Principal.brf
+OUTPUT Principal.brf
 INPUT .\pos\apendice-schema-completo.tex
 INPUT .\pos\apendice-schema-completo.tex
 INPUT .\pos\apendice-schema-completo.tex
@@ -845,6 +851,8 @@ OUTPUT Principal.loq
 OUTPUT Principal.lot
 OUTPUT Principal.toc
 INPUT Principal.aux
+INPUT .\Principal.brf
+INPUT .\Principal.brf
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx10.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx10.pfb
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx12.pfb

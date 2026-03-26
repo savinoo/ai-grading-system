@@ -9,7 +9,6 @@ from langchain_core.language_models import BaseChatModel
 from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
-from langchain_anthropic import ChatAnthropic
 from src.core.settings import settings
 
 logger = logging.getLogger(__name__)
@@ -79,17 +78,6 @@ def get_chat_model(
             model=model,
             temperature=temp,
             google_api_key=settings.GOOGLE_API_KEY,
-            max_retries=retries
-        )
-
-    elif provider == "anthropic":
-        if not settings.ANTHROPIC_API_KEY:
-            raise ValueError("ANTHROPIC_API_KEY não configurada")
-
-        return ChatAnthropic(
-            model=model,
-            temperature=temp,
-            api_key=settings.ANTHROPIC_API_KEY,
             max_retries=retries
         )
 

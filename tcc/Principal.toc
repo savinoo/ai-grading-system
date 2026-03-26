@@ -118,11 +118,13 @@
 \contentsline {subsection}{\numberline {6.6.4}Contribuição do RAG}{69}{subsection.6.6.4}%
 \contentsline {subsection}{\numberline {6.6.5}Limitações observadas}{69}{subsection.6.6.5}%
 \vspace {\cftbeforechapterskip }
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{70}{section*.32}%
 \setlength {\cftpartindent }{\cftlastnumwidth } \setlength {\cftpartnumwidth }{2em}
 \cftinsert {A}
-\contentsline {part}{Appendices}{70}{section*.30}%
+\contentsline {part}{Appendices}{76}{section*.33}%
 \renewcommand *{\cftappendixname }{AP\^ENDICE \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{71}{appendix.A}%
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{77}{appendix.A}%
