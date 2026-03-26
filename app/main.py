@@ -303,7 +303,8 @@ elif operation_mode == "Batch Processing (Turma)":
 
             # STEP 1: GENERATE
             with col_s1:
-                if st.button("1️⃣ Gerar Questões (IA)"):
+                if st.button("1️⃣ Gerar Questões (IA)", disabled='_generating' in st.session_state):
+                    st.session_state['_generating'] = True
                     with st.spinner(f"Gerando {qt_mock_questions} questões..."):
                         # Clean old state
                         for key in ['batch_all_mock_answers', 'exam_results']:
@@ -311,11 +312,17 @@ elif operation_mode == "Batch Processing (Turma)":
 
                         _perf_log.info(f"[STEP1] Gerando {qt_mock_questions} questões via Gemini...")
                         _t1 = time.time()
-                        questions = run_async(mock_agent.generate_exam_questions(sim_topic, discipline, "Medium", count=qt_mock_questions))
-                        _perf_log.info(f"[STEP1] {qt_mock_questions} questões geradas em {time.time()-_t1:.1f}s")
-                        st.session_state['exam_questions'] = questions
-                        save_persistence_data()
-                        st.rerun()
+                        try:
+                            questions = run_async(mock_agent.generate_exam_questions(sim_topic, discipline, "Medium", count=qt_mock_questions))
+                            _perf_log.info(f"[STEP1] {qt_mock_questions} questões geradas em {time.time()-_t1:.1f}s")
+                            st.session_state['exam_questions'] = questions
+                            save_persistence_data()
+                            st.success(f"{qt_mock_questions} questões geradas!")
+                        except Exception as e:
+                            _perf_log.error(f"[STEP1] ERRO: {e}")
+                            st.error(f"Erro ao gerar questões: {e}")
+                        finally:
+                            del st.session_state['_generating']
 
             if 'exam_questions' in st.session_state:
                 st.success(f"{len(st.session_state['exam_questions'])} questões geradas.")
