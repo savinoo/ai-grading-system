@@ -970,8 +970,8 @@ elif operation_mode == "Batch Processing (Turma)":
                             for i in range(qt_mock_students):
                                 qual = profiles[i % len(profiles)]
                                 s_name = f"Aluno {i+1} ({profile_labels[qual]})"
-                        s_uuid = str(_uuid.uuid5(_uuid.NAMESPACE_DNS, f"simulated_{s_name}"))
-                        students_list.append({"id": s_uuid, "name": s_name, "quality": qual})
+                                s_uuid = str(_uuid.uuid5(_uuid.NAMESPACE_DNS, f"simulated_{s_name}"))
+                                students_list.append({"id": s_uuid, "name": s_name, "quality": qual})
                             st.session_state['batch_students_list'] = students_list
 
                             # Save students to experiment
