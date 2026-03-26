@@ -115,6 +115,28 @@ class APIClient:
         resp.raise_for_status()
         return resp.json()
 
+    # ─── Classes & Students ───
+
+    def create_class(self, name: str, description: str = "") -> dict:
+        resp = self._request("POST", "/classes", json={
+            "name": name,
+            "description": description,
+            "year": 2026,
+            "semester": 1,
+        })
+        resp.raise_for_status()
+        return resp.json()
+
+    def add_students_to_class(self, class_uuid: str, students: list) -> dict:
+        """Add students to class. Creates students if they don't exist.
+        students: list of {"full_name": str, "email": str|None}
+        """
+        resp = self._request("POST", f"/classes/{class_uuid}/students", json={
+            "students": students
+        })
+        resp.raise_for_status()
+        return resp.json()
+
     def list_exams(self) -> list:
         if not self.user:
             return []

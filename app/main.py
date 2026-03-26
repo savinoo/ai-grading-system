@@ -482,25 +482,49 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                 _perf_log.info("[TCC-STEP4] Condição A via Backend API...")
                 status = st.status("🅰️ Condição A via Backend...", expanded=True)
                 try:
-                    # 1. Create exam
-                    status.write("**1/5** Criando prova no backend...")
+                    # 1. Create class + students
+                    status.write("**1/6** Criando turma e cadastrando alunos...")
+                    class_name = f"TCC Turma — {st.session_state.get('tcc_discipline', 'Geral')}"
+                    cls = tcc_client.create_class(class_name, "Turma do experimento TCC")
+                    class_uuid = cls['uuid']
+
+                    students_payload = [
+                        {"full_name": s['name'], "email": f"aluno{i+1}@tcc.test"}
+                        for i, s in enumerate(students_list)
+                    ]
+                    add_result = tcc_client.add_students_to_class(class_uuid, students_payload)
+
+                    # Map student names to UUIDs from backend
+                    backend_students = add_result.get('students', add_result.get('added', []))
+                    student_uuid_map = {}
+                    if isinstance(backend_students, list):
+                        for i, bs in enumerate(backend_students):
+                            if isinstance(bs, dict):
+                                student_uuid_map[students_list[i]['id']] = bs.get('uuid', bs.get('student_uuid', str(students_list[i]['id'])))
+                    status.write(f"✅ Turma criada + {len(students_list)} alunos cadastrados")
+                    st.session_state['tcc_class_uuid'] = class_uuid
+                    st.session_state['tcc_student_uuid_map'] = student_uuid_map
+
+                    # 2. Create exam
+                    status.write("**2/6** Criando prova no backend...")
                     exam = tcc_client.create_exam(
                         f"TCC Condição A — {st.session_state.get('tcc_discipline', 'Geral')}",
-                        "Condição A (com RAG) — Experimento TCC"
+                        "Condição A (com RAG) — Experimento TCC",
+                        class_uuid=class_uuid
                     )
                     exam_uuid = exam['uuid']
                     status.write(f"✅ Prova criada: `{exam_uuid}`")
 
-                    # 2. Add questions
-                    status.write(f"**2/5** Adicionando {len(questions)} questões...")
+                    # 3. Add questions
+                    status.write(f"**3/6** Adicionando {len(questions)} questões...")
                     created_qs = []
                     for i, q in enumerate(questions):
                         cq = tcc_client.add_question(exam_uuid, q.statement, getattr(q, 'total_points', 10.0), i + 1)
                         created_qs.append(cq)
                     status.write(f"✅ {len(created_qs)} questões adicionadas")
 
-                    # 3. Add student answers
-                    status.write(f"**3/5** Inserindo respostas dos alunos...")
+                    # 4. Add student answers
+                    status.write(f"**4/6** Inserindo respostas dos alunos...")
                     answer_count = 0
                     for q_idx, cq in enumerate(created_qs):
                         orig_q = questions[q_idx]
@@ -509,19 +533,21 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                             if s['id'] in answers_for_q:
                                 ans = answers_for_q[s['id']]
                                 try:
-                                    tcc_client.add_answer(exam_uuid, cq['uuid'], str(s['id']), ans.text)
+                                    # Use backend UUID if available, fallback to local
+                                    s_uuid = student_uuid_map.get(s['id'], str(s['id']))
+                                    tcc_client.add_answer(exam_uuid, cq['uuid'], s_uuid, ans.text)
                                     answer_count += 1
                                 except Exception as e:
                                     status.write(f"⚠️ Erro inserindo resposta: {e}")
                     status.write(f"✅ {answer_count} respostas inseridas")
 
-                    # 4. Publish (triggers grading)
-                    status.write("**4/5** Publicando prova (dispara correção)...")
+                    # 5. Publish (triggers grading)
+                    status.write("**5/6** Publicando prova (dispara correção)...")
                     tcc_client.publish_exam(exam_uuid)
                     status.write("✅ Publicada! Correção em background...")
 
-                    # 5. Wait for grading
-                    status.write("**5/5** Aguardando correção...")
+                    # 6. Wait for grading
+                    status.write("**6/6** Aguardando correção...")
                     progress = st.progress(0)
                     max_wait = 300
                     start = time.time()
@@ -537,14 +563,12 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
 
                     status.write(f"✅ Status: **{final_status}**")
 
-                    # Get review
                     try:
                         review = tcc_client.get_review(exam_uuid)
                         st.session_state['tcc_review_a'] = review
                     except Exception:
                         pass
 
-                    # Save to experiment store too
                     exp_id = exp_store.create_experiment({
                         'llm_provider': settings.LLM_PROVIDER,
                         'llm_model': settings.LLM_MODEL_NAME,
@@ -596,11 +620,15 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                 _perf_log.info("[TCC-STEP5] Condição B via Backend API...")
                 status = st.status("🅱️ Condição B via Backend...", expanded=True)
                 try:
+                    # Reutilizar turma da Condição A
+                    class_uuid = st.session_state.get('tcc_class_uuid')
+
                     # 1. Create exam (sem anexos = sem RAG)
                     status.write("**1/5** Criando prova no backend (sem material anexado)...")
                     exam = tcc_client.create_exam(
                         f"TCC Condição B — {st.session_state.get('tcc_discipline', 'Geral')}",
-                        "Condição B (sem RAG) — Experimento TCC"
+                        "Condição B (sem RAG) — Experimento TCC",
+                        class_uuid=class_uuid
                     )
                     exam_uuid = exam['uuid']
                     status.write(f"✅ Prova criada: `{exam_uuid}`")
@@ -615,6 +643,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
 
                     # 3. Add student answers (mesmas)
                     status.write(f"**3/5** Inserindo respostas dos alunos...")
+                    student_uuid_map = st.session_state.get('tcc_student_uuid_map', {})
                     answer_count = 0
                     for q_idx, cq in enumerate(created_qs):
                         orig_q = questions[q_idx]
@@ -623,7 +652,8 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                             if s['id'] in answers_for_q:
                                 ans = answers_for_q[s['id']]
                                 try:
-                                    tcc_client.add_answer(exam_uuid, cq['uuid'], str(s['id']), ans.text)
+                                    s_uuid = student_uuid_map.get(s['id'], str(s['id']))
+                                    tcc_client.add_answer(exam_uuid, cq['uuid'], s_uuid, ans.text)
                                     answer_count += 1
                                 except Exception as e:
                                     status.write(f"⚠️ {e}")
