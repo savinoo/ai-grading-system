@@ -333,8 +333,8 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
         st.header("📝 Passo 2 — Gerar Questões (Q=3)")
         st.markdown("O sistema vai gerar 3 questões discursivas sobre o tema.")
 
-        tcc_discipline = st.text_input("Disciplina", value="Algoritmos e Estrutura de Dados", key="tcc_disc")
-        tcc_topic = st.text_input("Tópico", value="Geral", key="tcc_topic")
+        tcc_discipline = st.text_input("Disciplina", value="Algoritmos e Estrutura de Dados", key="tcc_disc_input")
+        tcc_topic = st.text_input("Tópico", value="Geral", key="tcc_topic_input")
         tcc_num_q = st.number_input("Questões (Q)", 1, 10, 3, key="tcc_q")
 
         if st.button("🤖 Gerar Questões via Gemini"):
