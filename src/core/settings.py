@@ -30,9 +30,10 @@ class Settings(BaseSettings):
     EMBEDDING_PROVIDER: str = Field(default="google", description="Provedor de embeddings (google, openai)")
     
     # === LLM Configuration ===
-    LLM_PROVIDER: str = Field(default="gemini", description="Provedor de LLM (openai, gemini, ollama, groq)")
+    LLM_PROVIDER: str = Field(default="gemini", description="Provedor de LLM (openai, gemini, anthropic, ollama, groq)")
     OPENAI_API_KEY: Optional[str] = Field(default=None, description="Chave da API OpenAI")
     GOOGLE_API_KEY: Optional[str] = Field(default=None, description="Chave da API Google")
+    ANTHROPIC_API_KEY: Optional[str] = Field(default=None, description="Chave da API Anthropic")
     GROQ_API_KEY: Optional[str] = Field(default=None, description="Chave da API Groq")
     LLM_BASE_URL: Optional[str] = Field(default=None, description="Base URL customizada (ex: Ollama)")
     LLM_MODEL_NAME: str = Field(default="gemini-2.0-flash-exp", description="Nome do modelo LLM")

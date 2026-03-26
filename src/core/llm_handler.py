@@ -1,6 +1,6 @@
 """
 Factory para criação de instâncias LLM.
-Suporta múltiplos provedores (OpenAI, Gemini).
+Suporta múltiplos provedores (OpenAI, Gemini, Anthropic, Groq, Ollama).
 """
 
 import logging
@@ -9,6 +9,7 @@ from langchain_core.language_models import BaseChatModel
 from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
+from langchain_anthropic import ChatAnthropic
 from src.core.settings import settings
 
 logger = logging.getLogger(__name__)
@@ -81,6 +82,17 @@ def get_chat_model(
             max_retries=retries
         )
 
+    elif provider == "anthropic":
+        if not settings.ANTHROPIC_API_KEY:
+            raise ValueError("ANTHROPIC_API_KEY não configurada")
+
+        return ChatAnthropic(
+            model=model,
+            temperature=temp,
+            api_key=settings.ANTHROPIC_API_KEY,
+            max_retries=retries
+        )
+
     elif provider == "groq":
         if not settings.GROQ_API_KEY:
             raise ValueError("GROQ_API_KEY não configurada")
@@ -108,5 +120,5 @@ def get_chat_model(
     else:
         raise ValueError(
             f"Provider '{provider}' não suportado. "
-            f"Use 'openai', 'gemini' ou 'ollama'."
+            f"Use 'openai', 'gemini', 'anthropic', 'groq' ou 'ollama'."
         )
