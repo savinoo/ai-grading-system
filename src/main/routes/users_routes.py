@@ -39,7 +39,7 @@ router = APIRouter(
     response_model=UserResponse,
     status_code=201
 )
-def register_user(
+async def register_user(
     request: Request,
     body: UserCreateRequest = Body(...),
     caller: CallerMeta = Depends(get_caller_meta),
@@ -67,7 +67,7 @@ def register_user(
     controller = make_create_user_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=http_response.body
@@ -83,7 +83,7 @@ def register_user(
     "/verify-email/{uuid}",
     status_code=200
 )
-def verify_email(
+async def verify_email(
     request: Request,
     uuid: str,
     caller: CallerMeta = Depends(get_caller_meta),
@@ -111,7 +111,7 @@ def verify_email(
     controller = make_verify_email_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         
         # Extrai o refresh_token do body
         refresh_token = http_response.body.get("refresh_token")
@@ -150,7 +150,7 @@ def verify_email(
     "/resend-verification",
     status_code=200
 )
-def resend_verification_email(
+async def resend_verification_email(
     request: Request,
     body: dict = Body(..., examples={"email": "usuario@exemplo.com"}),
     db=Depends(get_db),
@@ -175,7 +175,7 @@ def resend_verification_email(
     controller = make_resend_verification_email_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=http_response.body
@@ -191,7 +191,7 @@ def resend_verification_email(
     "/generate-recovery-code",
     status_code=200
 )
-def generate_recovery_code(
+async def generate_recovery_code(
     request: Request,
     body: dict = Body(..., examples={"email": "usuario@exemplo.com"}),
     db=Depends(get_db),
@@ -216,7 +216,7 @@ def generate_recovery_code(
     controller = make_generate_recovery_code_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=http_response.body
@@ -232,7 +232,7 @@ def generate_recovery_code(
     "/validate-recovery-code",
     status_code=200
 )
-def validate_recovery_code(
+async def validate_recovery_code(
     request: Request,
     body: dict = Body(..., examples={"email": "usuario@exemplo.com", "code": "123456"}),
     db=Depends(get_db),
@@ -259,7 +259,7 @@ def validate_recovery_code(
     controller = make_validate_recovery_code_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=http_response.body
@@ -275,7 +275,7 @@ def validate_recovery_code(
     "/password/reset",
     status_code=200
 )
-def reset_password(
+async def reset_password(
     request: Request,
     body: dict = Body(..., examples={"email": "usuario@exemplo.com", "code": "123456", "new_password": "novaSenha123"}),
     db=Depends(get_db),
@@ -302,7 +302,7 @@ def reset_password(
     controller = make_reset_password_controller()
     
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=http_response.body
@@ -320,7 +320,7 @@ def reset_password(
     summary="Trocar senha",
     description="Troca a senha do usuário autenticado verificando a senha atual."
 )
-def change_password(
+async def change_password(
     request: Request,
     body: dict = Body(..., examples={"current_password": "senhaAtual123", "new_password": "novaSenha456"}),
     db=Depends(get_db),
@@ -352,7 +352,7 @@ def change_password(
     controller = make_change_password_controller()
 
     try:
-        http_response: HttpResponse = controller.handle(http_request)
+        http_response: HttpResponse = await controller.handle(http_request)
         return JSONResponse(
             status_code=http_response.status_code,
             content=http_response.body
