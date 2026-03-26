@@ -586,7 +586,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                     # 6. Wait for grading
                     status.write("**6/6** Aguardando correção...")
                     progress = st.progress(0)
-                    max_wait = 300
+                    max_wait = 600
                     start = time.time()
                     final_status = "TIMEOUT"
                     while time.time() - start < max_wait:
@@ -716,7 +716,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                     # 5. Wait
                     status.write("**5/5** Aguardando correção...")
                     progress = st.progress(0)
-                    max_wait = 300
+                    max_wait = 600
                     start = time.time()
                     final_status = "TIMEOUT"
                     while time.time() - start < max_wait:
@@ -1767,7 +1767,7 @@ elif operation_mode == "🔗 End-to-End (Backend API)":
                         # Step 5: Wait for grading
                         status.write("**5/7** Aguardando correção automática...")
                         progress = st.progress(0)
-                        max_wait = 300
+                        max_wait = 600
                         start = time.time()
                         final_status = "TIMEOUT"
 
