@@ -92,37 +92,32 @@ def render_student_report(student_data):
                 st.markdown(f"#### 🔍 Correção Detalhada (Nota: {q_grade:.1f})")
 
                 full_state = q_res['state']
-                corrections = full_state.get('individual_corrections', [])
+                c1 = full_state.get('correction_1')
+                c2 = full_state.get('correction_2')
+                arb = full_state.get('correction_arbiter')
 
                 # Tabs para Deep Dive
                 t_overview, t_rag, t_agents, t_arbiter = st.tabs(["📝 Resultado", "📚 Contexto (RAG)", "🤖 Agentes (Thinking)", "⚖️ Árbitro"])
 
                 with t_overview:
-                    # Verifica se houve divergência
-                    if q_res['divergence']:
-                            st.error("⚠️ **Divergência Detectada!**")
-                            st.markdown("A IA detectou desacordo entre corretores e acionou o Árbitro.")
+                    if q_res.get('divergence'):
+                        st.error("⚠️ **Divergência Detectada!**")
+                        st.markdown("A IA detectou desacordo entre corretores e acionou o Árbitro.")
                     else:
-                            st.success("**Consenso Atingido**")
+                        st.success("**Consenso Atingido**")
 
-                    # Feedback Final (Usar o do árbitro ou do C1 como representativo)
-                    final_feedback = ""
-                    if corrections:
-                        final_feedback = corrections[-1].feedback_text
-                    st.info(f"**Feedback ao Aluno:**\n\n{final_feedback}")
+                    final_corr = arb or c2 or c1
+                    if final_corr:
+                        st.info(f"**Feedback ao Aluno:**\n\n{final_corr.feedback_text}")
 
                 with t_rag:
-                        rag_ctx = full_state.get('rag_context', [])
+                        rag_ctx = full_state.get('rag_contexts', []) or []
                         st.markdown(f"**{len(rag_ctx)} Trechos recuperados do material:**")
                         for r in rag_ctx:
-                            # Usando popover ou markdown para evitar erro de nested expander
                             with st.popover(f"Chunk (Score: {r.relevance_score:.2f})"):
                                 st.write(r.content)
 
                 with t_agents:
-                        c1 = next((c for c in corrections if c.agent_id == 'corretor_1'), None)
-                        c2 = next((c for c in corrections if c.agent_id == 'corretor_2'), None)
-
                         col_a1, col_a2 = st.columns(2)
                         with col_a1:
                             st.markdown("##### 🤖 Corretor 1")
@@ -143,7 +138,6 @@ def render_student_report(student_data):
                                 st.warning("Não executou.")
 
                 with t_arbiter:
-                        arb = next((c for c in corrections if c.agent_id == 'corretor_3_arbiter'), None)
                         if arb:
                             st.markdown("##### 👨‍⚖️ Intervenção do Árbitro")
                             st.metric("Nota Árbitro", arb.total_score)

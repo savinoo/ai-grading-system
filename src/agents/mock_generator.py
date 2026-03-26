@@ -5,9 +5,9 @@ from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 from tenacity import retry, stop_after_attempt, wait_exponential
 
-from src.config.settings import settings
-from src.domain.schemas import EvaluationCriterion, ExamQuestion, QuestionMetadata, StudentAnswer
-from src.infrastructure.llm_factory import get_chat_model
+from src.core.settings import settings
+from src.domain.ai.schemas import EvaluationCriterion, ExamQuestion, QuestionMetadata, StudentAnswer
+from src.core.llm_handler import get_chat_model
 from src.utils.helpers import measure_time
 
 
@@ -24,12 +24,8 @@ class MockDataGeneratorAgent:
 
     def __init__(self, llm: BaseChatModel):
         self.llm = llm
-        # Instância leve para respostas de alunos (output curto, contexto menor)
-        self._llm_answer = get_chat_model(
-            temperature=1,
-            num_predict=settings.OLLAMA_NUM_PREDICT_ANSWER,
-            num_ctx=settings.OLLAMA_NUM_CTX,
-        )
+        # Instância para respostas de alunos
+        self._llm_answer = get_chat_model(temperature=1)
 
     @retry(
         wait=wait_exponential(multiplier=1, min=4, max=60),
