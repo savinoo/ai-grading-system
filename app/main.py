@@ -163,8 +163,8 @@ with st.sidebar:
     st.title("⚙️ Painel de Controle")
     operation_mode = st.radio(
         "Modo de Operação",
-        ["Single Student (Debug)", "Batch Processing (Turma)", "📊 Analytics Dashboard", "🔗 End-to-End (Backend API)"],
-        index=1
+        ["📋 Experimento TCC (Guiado)", "Single Student (Debug)", "Batch Processing (Turma)", "📊 Analytics Dashboard", "🔗 End-to-End (Backend API)"],
+        index=0
     )
     st.divider()
 
@@ -268,7 +268,452 @@ with st.sidebar:
 
 # --- PAGES ---
 
-if operation_mode == "Single Student (Debug)":
+if operation_mode == "📋 Experimento TCC (Guiado)":
+    st.title("📋 Experimento TCC — Fluxo Guiado")
+    st.markdown("""
+    Este modo executa o procedimento experimental completo do TCC, passo a passo:
+    **Condição A (com RAG)** → **Condição B (sem RAG)** → **QA4 Estabilidade** → **Exportar LaTeX**
+    """)
+
+    # Initialize TCC experiment state
+    if 'tcc_step' not in st.session_state:
+        st.session_state['tcc_step'] = 1
+
+    current_step = st.session_state['tcc_step']
+
+    # Progress bar
+    steps_total = 8
+    st.progress(min((current_step - 1) / steps_total, 1.0))
+    step_names = [
+        "1. Upload Material", "2. Gerar Questões", "3. Simular Respostas",
+        "4. Condição A (com RAG)", "5. Condição B (sem RAG)",
+        "6. QA4 Estabilidade", "7. Exportar LaTeX", "8. Concluído"
+    ]
+    st.caption(f"Passo {current_step}/{steps_total}: **{step_names[min(current_step-1, len(step_names)-1)]}**")
+
+    st.markdown("---")
+
+    # ═══════════════════════════════════════════════
+    # STEP 1: Upload e indexação do material
+    # ═══════════════════════════════════════════════
+    if current_step == 1:
+        st.header("📚 Passo 1 — Upload do Material Didático")
+        st.markdown("Faça upload do PDF que será usado como base de conhecimento (RAG) para os corretores.")
+
+        doc_count, _ = get_rag_status_info()
+        if doc_count > 0:
+            st.success(f"VectorDB já contém **{doc_count} docs** indexados.")
+            st.info("Se quiser usar este material, pule para o próximo passo.")
+            if st.button("➡️ Próximo (usar material existente)"):
+                st.session_state['tcc_step'] = 2
+                st.rerun()
+        else:
+            st.warning("VectorDB vazio — faça upload do material.")
+
+        uploaded = st.file_uploader("Upload PDF", type="pdf", key="tcc_pdf")
+        if uploaded and st.button("📥 Indexar Material"):
+            with st.spinner("Processando e indexando..."):
+                path = save_uploaded_file(uploaded)
+                chunking = ChunkingService()
+                chunks = run_async(chunking.process_pdf(path))
+                if chunks:
+                    vs_instance = get_vector_store()
+                    vs_instance.add_documents(chunks)
+                    st.success(f"Indexado **{len(chunks)} chunks** no VectorDB!")
+                    st.session_state['tcc_step'] = 2
+                    time.sleep(1)
+                    st.rerun()
+                else:
+                    st.error("Nenhum chunk extraído do PDF.")
+
+    # ═══════════════════════════════════════════════
+    # STEP 2: Gerar questões
+    # ═══════════════════════════════════════════════
+    elif current_step == 2:
+        st.header("📝 Passo 2 — Gerar Questões (Q=3)")
+        st.markdown("O sistema vai gerar 3 questões discursivas sobre o tema.")
+
+        tcc_discipline = st.text_input("Disciplina", value="Algoritmos e Estrutura de Dados", key="tcc_disc")
+        tcc_topic = st.text_input("Tópico", value="Geral", key="tcc_topic")
+        tcc_num_q = st.number_input("Questões (Q)", 1, 10, 3, key="tcc_q")
+
+        if st.button("🤖 Gerar Questões via Gemini"):
+            with st.spinner(f"Gerando {tcc_num_q} questões..."):
+                _perf_log.info(f"[TCC-STEP2] Gerando {tcc_num_q} questões...")
+                _t = time.time()
+                try:
+                    questions = run_async(mock_agent.generate_exam_questions(
+                        tcc_topic, tcc_discipline, "médio", count=tcc_num_q
+                    ))
+                    st.session_state['tcc_questions'] = questions
+                    st.session_state['tcc_discipline'] = tcc_discipline
+                    st.session_state['tcc_topic'] = tcc_topic
+                    _perf_log.info(f"[TCC-STEP2] {tcc_num_q} questões em {time.time()-_t:.1f}s")
+                    st.success(f"{tcc_num_q} questões geradas!")
+                except Exception as e:
+                    st.error(f"Erro: {e}")
+
+        if 'tcc_questions' in st.session_state:
+            st.markdown("### Questões Geradas")
+            for i, q in enumerate(st.session_state['tcc_questions']):
+                st.markdown(f"**Q{i+1}.** {q.statement}")
+            if q.rubric:
+                st.markdown("**Rubrica:**")
+                for r in st.session_state['tcc_questions'][0].rubric:
+                    st.caption(f"• {r.name} (peso {r.weight}): {r.description}")
+
+            if st.button("➡️ Próximo"):
+                st.session_state['tcc_step'] = 3
+                st.rerun()
+
+    # ═══════════════════════════════════════════════
+    # STEP 3: Simular respostas (A=4 alunos)
+    # ═══════════════════════════════════════════════
+    elif current_step == 3:
+        st.header("✍️ Passo 3 — Simular Respostas (A=4 alunos)")
+        st.markdown("""
+        Gera 4 respostas por questão, uma para cada nível de qualidade:
+        **Excelente** | **Adequado** | **Fraco** | **Fora do Tema**
+        """)
+
+        questions = st.session_state.get('tcc_questions', [])
+        if not questions:
+            st.error("Volte ao passo 2 e gere as questões primeiro.")
+        else:
+            st.info(f"{len(questions)} questões prontas. Gerando respostas para 4 alunos.")
+
+            if st.button("✍️ Simular Respostas"):
+                status = st.status("Simulando respostas dos alunos...", expanded=True)
+                try:
+                    profiles = ["excellent", "average", "poor", "off_topic"]
+                    profile_labels = {"excellent": "Excelente", "average": "Adequado", "poor": "Fraco", "off_topic": "Fora do Tema"}
+                    students_list = []
+                    for i, qual in enumerate(profiles):
+                        students_list.append({"id": 200 + i, "name": f"Aluno {i+1} ({profile_labels[qual]})", "quality": qual})
+
+                    all_answers = {q.id: {} for q in questions}
+
+                    for q_idx, q in enumerate(questions):
+                        status.write(f"📝 Q{q_idx+1}/{len(questions)}...")
+                        tasks = [mock_agent.generate_student_answer(q, s['quality'], s['name']) for s in students_list]
+
+                        async def _batch():
+                            return await safe_gather(*tasks)
+
+                        batch_answers = run_async(_batch())
+                        for s_idx, ans in enumerate(batch_answers):
+                            all_answers[q.id][students_list[s_idx]['id']] = ans
+
+                    st.session_state['tcc_students'] = students_list
+                    st.session_state['tcc_answers'] = all_answers
+                    status.update(label="✅ Respostas simuladas!", state="complete")
+                except Exception as e:
+                    status.update(label="❌ Erro", state="error")
+                    st.error(str(e))
+
+            if 'tcc_answers' in st.session_state:
+                st.success(f"4 alunos × {len(questions)} questões = {4 * len(questions)} respostas")
+                if st.button("➡️ Próximo (Condição A)"):
+                    st.session_state['tcc_step'] = 4
+                    st.rerun()
+
+    # ═══════════════════════════════════════════════
+    # STEP 4: Condição A (com RAG)
+    # ═══════════════════════════════════════════════
+    elif current_step == 4:
+        st.header("🅰️ Passo 4 — Condição A (com RAG)")
+        st.markdown("Correção com RAG **ativado** (top_k=4). Os corretores terão acesso ao material didático.")
+
+        questions = st.session_state.get('tcc_questions', [])
+        all_answers = st.session_state.get('tcc_answers', {})
+        students_list = st.session_state.get('tcc_students', [])
+
+        if not questions or not all_answers:
+            st.error("Volte aos passos anteriores.")
+        else:
+            st.info(f"Corrigindo {len(questions)} questões × {len(students_list)} alunos com RAG ativado")
+
+            if st.button("🅰️ Executar Condição A"):
+                _perf_log.info("[TCC-STEP4] Condição A (com RAG)...")
+                status = st.status("🅰️ Correção com RAG...", expanded=True)
+                try:
+                    exp_id = exp_store.create_experiment({
+                        'llm_provider': settings.LLM_PROVIDER,
+                        'llm_model': settings.LLM_MODEL_NAME,
+                        'llm_temperature': settings.LLM_TEMPERATURE,
+                        'num_questions': len(questions),
+                        'num_students': len(students_list),
+                        'divergence_threshold': st.session_state.get('divergence_threshold', 2.0),
+                        'rag_enabled': True,
+                        'rag_top_k': getattr(settings, 'RAG_TOP_K', 4),
+                        'condition': 'A (com RAG)',
+                        'discipline': st.session_state.get('tcc_discipline', ''),
+                        'topic': st.session_state.get('tcc_topic', ''),
+                    })
+                    exp_store.save_questions(exp_id, questions)
+                    exp_store.save_students(exp_id, students_list)
+
+                    for q_idx, q in enumerate(questions):
+                        status.write(f"Corrigindo Q{q_idx+1}/{len(questions)}...")
+                        for s in students_list:
+                            if s['id'] in all_answers.get(q.id, {}):
+                                ans = all_answers[q.id][s['id']]
+                                exp_store.save_answer(exp_id, str(q.id), str(s['id']), s['name'], ans.text, s['quality'])
+
+                                inp = {
+                                    "question": q, "student_answer": ans,
+                                    "rag_contexts": None,  # None = fetch RAG
+                                    "correction_1": None, "correction_2": None, "correction_arbiter": None,
+                                    "divergence_detected": False, "divergence_value": 0.0,
+                                    "all_corrections": [], "final_score": None
+                                }
+                                final_state = run_async(run_correction_pipeline(inp, status))
+                                exp_store.save_pipeline_state(exp_id, str(q.id), str(s['id']), s['name'], final_state)
+
+                    exp_store.finish_experiment(exp_id, "completed")
+                    st.session_state['tcc_exp_a'] = exp_id
+                    _perf_log.info(f"[TCC-STEP4] Condição A concluída: exp #{exp_id}")
+                    status.update(label=f"✅ Condição A concluída! (exp #{exp_id})", state="complete")
+                except Exception as e:
+                    status.update(label="❌ Erro", state="error")
+                    st.error(str(e))
+                    import traceback
+                    st.code(traceback.format_exc())
+
+            if 'tcc_exp_a' in st.session_state:
+                st.success(f"Condição A salva no experimento **#{st.session_state['tcc_exp_a']}**")
+                if st.button("➡️ Próximo (Condição B)"):
+                    st.session_state['tcc_step'] = 5
+                    st.rerun()
+
+    # ═══════════════════════════════════════════════
+    # STEP 5: Condição B (sem RAG)
+    # ═══════════════════════════════════════════════
+    elif current_step == 5:
+        st.header("🅱️ Passo 5 — Condição B (sem RAG)")
+        st.markdown("Correção com RAG **desativado** (top_k=0). Mesmas questões e respostas da Condição A.")
+
+        questions = st.session_state.get('tcc_questions', [])
+        all_answers = st.session_state.get('tcc_answers', {})
+        students_list = st.session_state.get('tcc_students', [])
+
+        if not questions or not all_answers:
+            st.error("Volte aos passos anteriores.")
+        else:
+            st.info(f"Corrigindo {len(questions)} questões × {len(students_list)} alunos **sem RAG**")
+
+            if st.button("🅱️ Executar Condição B"):
+                _perf_log.info("[TCC-STEP5] Condição B (sem RAG)...")
+                status = st.status("🅱️ Correção sem RAG...", expanded=True)
+                try:
+                    exp_id = exp_store.create_experiment({
+                        'llm_provider': settings.LLM_PROVIDER,
+                        'llm_model': settings.LLM_MODEL_NAME,
+                        'llm_temperature': settings.LLM_TEMPERATURE,
+                        'num_questions': len(questions),
+                        'num_students': len(students_list),
+                        'divergence_threshold': st.session_state.get('divergence_threshold', 2.0),
+                        'rag_enabled': False,
+                        'rag_top_k': 0,
+                        'condition': 'B (sem RAG)',
+                        'discipline': st.session_state.get('tcc_discipline', ''),
+                        'topic': st.session_state.get('tcc_topic', ''),
+                    })
+                    exp_store.save_questions(exp_id, questions)
+                    exp_store.save_students(exp_id, students_list)
+
+                    for q_idx, q in enumerate(questions):
+                        status.write(f"Corrigindo Q{q_idx+1}/{len(questions)}...")
+                        for s in students_list:
+                            if s['id'] in all_answers.get(q.id, {}):
+                                ans = all_answers[q.id][s['id']]
+                                exp_store.save_answer(exp_id, str(q.id), str(s['id']), s['name'], ans.text, s['quality'])
+
+                                inp = {
+                                    "question": q, "student_answer": ans,
+                                    "rag_contexts": [],  # [] = skip RAG
+                                    "correction_1": None, "correction_2": None, "correction_arbiter": None,
+                                    "divergence_detected": False, "divergence_value": 0.0,
+                                    "all_corrections": [], "final_score": None
+                                }
+                                final_state = run_async(run_correction_pipeline(inp, status))
+                                exp_store.save_pipeline_state(exp_id, str(q.id), str(s['id']), s['name'], final_state)
+
+                    exp_store.finish_experiment(exp_id, "completed")
+                    st.session_state['tcc_exp_b'] = exp_id
+                    _perf_log.info(f"[TCC-STEP5] Condição B concluída: exp #{exp_id}")
+                    status.update(label=f"✅ Condição B concluída! (exp #{exp_id})", state="complete")
+                except Exception as e:
+                    status.update(label="❌ Erro", state="error")
+                    st.error(str(e))
+                    import traceback
+                    st.code(traceback.format_exc())
+
+            if 'tcc_exp_b' in st.session_state:
+                st.success(f"Condição B salva no experimento **#{st.session_state['tcc_exp_b']}**")
+                if st.button("➡️ Próximo (QA4 Estabilidade)"):
+                    st.session_state['tcc_step'] = 6
+                    st.rerun()
+
+    # ═══════════════════════════════════════════════
+    # STEP 6: QA4 Estabilidade (R=3)
+    # ═══════════════════════════════════════════════
+    elif current_step == 6:
+        st.header("🔁 Passo 6 — QA4 Estabilidade (R=3 repetições)")
+        st.markdown("Re-corrige as mesmas respostas 3 vezes para verificar variabilidade.")
+
+        questions = st.session_state.get('tcc_questions', [])
+        all_answers = st.session_state.get('tcc_answers', {})
+        students_list = st.session_state.get('tcc_students', [])
+        num_reps = st.number_input("Repetições (R)", 2, 10, 3, key="tcc_reps")
+
+        if not questions or not all_answers:
+            st.error("Volte aos passos anteriores.")
+        else:
+            if st.button(f"🔁 Executar {num_reps} repetições"):
+                _perf_log.info(f"[TCC-STEP6] QA4: {num_reps} repetições...")
+                status = st.status(f"🔁 Repetição 1/{num_reps}...", expanded=True)
+                qa4_ids = []
+                try:
+                    for rep in range(num_reps):
+                        status.update(label=f"🔁 Repetição {rep+1}/{num_reps}...")
+                        status.write(f"**R{rep+1}/{num_reps}**")
+                        _t = time.time()
+
+                        exp_id = exp_store.create_experiment({
+                            'llm_provider': settings.LLM_PROVIDER,
+                            'llm_model': settings.LLM_MODEL_NAME,
+                            'llm_temperature': settings.LLM_TEMPERATURE,
+                            'num_questions': len(questions),
+                            'num_students': len(students_list),
+                            'divergence_threshold': st.session_state.get('divergence_threshold', 2.0),
+                            'rag_enabled': True,
+                            'condition': f'QA4 R{rep+1}/{num_reps}',
+                            'discipline': st.session_state.get('tcc_discipline', ''),
+                        })
+                        exp_store.save_questions(exp_id, questions)
+                        exp_store.save_students(exp_id, students_list)
+
+                        for q_idx, q in enumerate(questions):
+                            for s in students_list:
+                                if s['id'] in all_answers.get(q.id, {}):
+                                    ans = all_answers[q.id][s['id']]
+                                    inp = {
+                                        "question": q, "student_answer": ans,
+                                        "rag_contexts": None,
+                                        "correction_1": None, "correction_2": None, "correction_arbiter": None,
+                                        "divergence_detected": False, "divergence_value": 0.0,
+                                        "all_corrections": [], "final_score": None
+                                    }
+                                    final_state = run_async(run_correction_pipeline(inp, None))
+                                    exp_store.save_pipeline_state(exp_id, str(q.id), str(s['id']), s['name'], final_state)
+
+                        exp_store.finish_experiment(exp_id, "completed")
+                        qa4_ids.append(exp_id)
+                        status.write(f"  ✅ R{rep+1} em {time.time()-_t:.1f}s (exp #{exp_id})")
+
+                    st.session_state['tcc_qa4_ids'] = qa4_ids
+                    _perf_log.info(f"[TCC-STEP6] QA4 concluído: {qa4_ids}")
+                    status.update(label=f"✅ QA4 concluído ({num_reps} repetições)", state="complete")
+                except Exception as e:
+                    status.update(label="❌ Erro", state="error")
+                    st.error(str(e))
+
+            if 'tcc_qa4_ids' in st.session_state:
+                st.success(f"QA4: {len(st.session_state['tcc_qa4_ids'])} repetições salvas")
+                if st.button("➡️ Próximo (Exportar LaTeX)"):
+                    st.session_state['tcc_step'] = 7
+                    st.rerun()
+
+            st.caption("⏭️ Quer pular QA4?")
+            if st.button("Pular QA4"):
+                st.session_state['tcc_step'] = 7
+                st.rerun()
+
+    # ═══════════════════════════════════════════════
+    # STEP 7: Exportar LaTeX
+    # ═══════════════════════════════════════════════
+    elif current_step == 7:
+        st.header("📄 Passo 7 — Exportar Tabelas LaTeX")
+        st.markdown("Gera todas as tabelas do capítulo 6 (Resultados) automaticamente.")
+
+        exp_a = st.session_state.get('tcc_exp_a')
+        exp_b = st.session_state.get('tcc_exp_b')
+        qa4_ids = st.session_state.get('tcc_qa4_ids', [])
+
+        if not exp_a:
+            st.error("Execute a Condição A primeiro (passo 4)")
+        else:
+            st.info(f"Condição A: exp #{exp_a}" + (f" | Condição B: exp #{exp_b}" if exp_b else "") + (f" | QA4: {qa4_ids}" if qa4_ids else ""))
+
+            if st.button("📄 Gerar Todas as Tabelas LaTeX"):
+                exporter = LaTeXExporter(exp_store)
+                tables = exporter.generate_all(exp_a, exp_b, qa4_ids if qa4_ids else None)
+                output = "tcc/results/tables_latex.tex"
+                exporter.save_to_file(tables, output)
+                st.success(f"Tabelas salvas em **{output}**")
+                st.code(tables, language="latex")
+
+                # Also export JSONs
+                exp_store.export_experiment(exp_a, f"tcc/results/experiment_A_{exp_a}.json")
+                if exp_b:
+                    exp_store.export_experiment(exp_b, f"tcc/results/experiment_B_{exp_b}.json")
+                for eid in qa4_ids:
+                    exp_store.export_experiment(eid, f"tcc/results/experiment_QA4_{eid}.json")
+                st.success("JSONs exportados em tcc/results/")
+
+            if st.button("➡️ Concluir"):
+                st.session_state['tcc_step'] = 8
+                st.rerun()
+
+    # ═══════════════════════════════════════════════
+    # STEP 8: Concluído
+    # ═══════════════════════════════════════════════
+    elif current_step == 8:
+        st.header("🎉 Experimento Concluído!")
+        st.balloons()
+        st.markdown("""
+        ### Resumo do Experimento
+        """)
+
+        exp_a = st.session_state.get('tcc_exp_a')
+        exp_b = st.session_state.get('tcc_exp_b')
+        qa4_ids = st.session_state.get('tcc_qa4_ids', [])
+
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Condição A", f"Exp #{exp_a}" if exp_a else "N/A")
+        col2.metric("Condição B", f"Exp #{exp_b}" if exp_b else "N/A")
+        col3.metric("QA4 Repetições", f"{len(qa4_ids)} runs" if qa4_ids else "N/A")
+
+        st.markdown("""
+        ### Próximos passos
+        1. Abra `tcc/results/tables_latex.tex` e copie as tabelas para o `t6-resultados.tex`
+        2. Analise os JSONs exportados para redigir as seções de análise
+        3. Complete as seções de "Análise" e "Discussão integrada" do capítulo 6
+        4. Para QA2 (ancoragem), revise manualmente as justificativas e marque Sim/Não
+        """)
+
+        if st.button("🔄 Recomeçar Experimento"):
+            for key in ['tcc_step', 'tcc_questions', 'tcc_answers', 'tcc_students',
+                        'tcc_exp_a', 'tcc_exp_b', 'tcc_qa4_ids', 'tcc_discipline', 'tcc_topic']:
+                st.session_state.pop(key, None)
+            st.rerun()
+
+    # Navigation
+    st.markdown("---")
+    col_back, col_reset = st.columns(2)
+    with col_back:
+        if current_step > 1 and st.button("⬅️ Voltar"):
+            st.session_state['tcc_step'] = current_step - 1
+            st.rerun()
+    with col_reset:
+        if st.button("🔄 Resetar Wizard"):
+            for key in ['tcc_step', 'tcc_questions', 'tcc_answers', 'tcc_students',
+                        'tcc_exp_a', 'tcc_exp_b', 'tcc_qa4_ids']:
+                st.session_state.pop(key, None)
+            st.rerun()
+
+elif operation_mode == "Single Student (Debug)":
     st.title("🔬 Modo Debug: Correção Individual")
 
     tab1, tab2, tab3 = st.tabs(["1. Configuração", "2. Execução", "3. Auditoria"])
