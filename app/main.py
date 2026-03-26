@@ -462,7 +462,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                                 exp_store.save_answer(exp_id, str(q.id), str(s['id']), s['name'], ans.text, s['quality'])
 
                                 inp = {
-                                    "question": q, "student_answer": ans, "exam_uuid": _uuid.uuid4(),
+                                    "question": q, "student_answer": ans, "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
                                     "rag_contexts": None,  # None = fetch RAG
                                     "correction_1": None, "correction_2": None, "correction_arbiter": None,
                                     "divergence_detected": False, "divergence_value": 0.0,
@@ -531,7 +531,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                                 exp_store.save_answer(exp_id, str(q.id), str(s['id']), s['name'], ans.text, s['quality'])
 
                                 inp = {
-                                    "question": q, "student_answer": ans, "exam_uuid": _uuid.uuid4(),
+                                    "question": q, "student_answer": ans, "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
                                     "rag_contexts": [],  # [] = skip RAG
                                     "correction_1": None, "correction_2": None, "correction_arbiter": None,
                                     "divergence_detected": False, "divergence_value": 0.0,
@@ -600,7 +600,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                                 if s['id'] in all_answers.get(q.id, {}):
                                     ans = all_answers[q.id][s['id']]
                                     inp = {
-                                        "question": q, "student_answer": ans, "exam_uuid": _uuid.uuid4(),
+                                        "question": q, "student_answer": ans, "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
                                         "rag_contexts": None,
                                         "correction_1": None, "correction_2": None, "correction_arbiter": None,
                                         "divergence_detected": False, "divergence_value": 0.0,
@@ -734,7 +734,7 @@ elif operation_mode == "Single Student (Debug)":
                 st.session_state['single_input'] = {
                     "question": ExamQuestion(id="Q1", statement=q_text, rubric=rubric_objs, metadata=QuestionMetadata(discipline=discipline, topic=topic)),
                     "student_answer": StudentAnswer(student_id="ALUNO_01", question_id="Q1", text=student_text),
-                    "exam_uuid": _uuid.uuid4(),
+                    "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
                     "rag_contexts": [], "correction_1": None, "correction_2": None, "correction_arbiter": None, "divergence_detected": False, "divergence_value": 0.0, "all_corrections": [], "final_score": None
                 }
                 st.success("Pronto para executar!")
@@ -1089,7 +1089,7 @@ elif operation_mode == "Batch Processing (Turma)":
                                 if s['id'] in all_mock_answers[q.id]:
                                     ans = all_mock_answers[q.id][s['id']]
                                     inputs_by_student[s['id']] = {
-                                        "question": q, "student_answer": ans, "exam_uuid": _uuid.uuid4(),
+                                        "question": q, "student_answer": ans, "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
                                         "rag_contexts": None if _rag_on else [],  # None=fetch, []=skip
                                         "correction_1": None, "correction_2": None, "correction_arbiter": None,
                                         "divergence_detected": False, "divergence_value": 0.0, "all_corrections": [], "final_score": None
@@ -1251,7 +1251,7 @@ elif operation_mode == "Batch Processing (Turma)":
                                 if s['id'] in all_mock_answers.get(q.id, all_mock_answers.get(str(q.id), {})):
                                     ans = all_mock_answers.get(q.id, all_mock_answers.get(str(q.id), {}))[s['id']]
                                     inputs_by_student[s['id']] = {
-                                        "question": q, "student_answer": ans, "exam_uuid": _uuid.uuid4(),
+                                        "question": q, "student_answer": ans, "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
                                         "rag_contexts": None if _rag_on else [],
                                         "correction_1": None, "correction_2": None, "correction_arbiter": None,
                                         "divergence_detected": False, "divergence_value": 0.0,
