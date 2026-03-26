@@ -41,7 +41,7 @@ class LaTeXExporter:
         model = config.get('llm_model', exp.get('llm_model', '?'))
         provider = config.get('llm_provider', exp.get('llm_provider', '?'))
         temp = config.get('llm_temperature', '0.0')
-        threshold = config.get('divergence_threshold', exp.get('divergence_threshold', 2.0))
+        threshold = config.get('divergence_threshold', exp.get('divergence_threshold')) or 2.0
         rag_top_k = config.get('rag_top_k', 4)
         num_q = exp.get('num_questions', '?')
         num_s = exp.get('num_students', '?')
