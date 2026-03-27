@@ -125,13 +125,45 @@ A \autoref{fig:pipeline-correcao} apresenta um diagrama simplificado desse \text
     \source{Elaborado pelos autores.}
 \end{figure}
 
+O \autoref{cod:graph-definition} apresenta uma versão simplificada da definição do grafo, ilustrando a composição dos nós e as regras de encaminhamento.
+
+\begin{codigo}[H]
+\begin{lstlisting}[language=Python, basicstyle=\ttfamily\footnotesize]
+# Definicao do grafo de correcao (LangGraph)
+workflow = StateGraph(GradingState)
+
+workflow.add_node("retrieve_context", retrieve_context_node)
+workflow.add_node("examiner_1", examiner_1_node)
+workflow.add_node("examiner_2", examiner_2_node)
+workflow.add_node("divergence_check", divergence_check_node)
+workflow.add_node("arbiter", arbiter_node)
+workflow.add_node("finalize", finalize_node)
+
+# Fluxo sequencial (respeita limites de taxa da API)
+workflow.set_entry_point("retrieve_context")
+workflow.add_edge("retrieve_context", "examiner_1")
+workflow.add_edge("examiner_1", "examiner_2")
+workflow.add_edge("examiner_2", "divergence_check")
+
+# Roteamento condicional: arbitro so se divergencia > threshold
+workflow.add_conditional_edges("divergence_check",
+    should_call_arbiter,
+    {"arbiter": "arbiter", "finalize": "finalize"})
+
+workflow.add_edge("arbiter", "finalize")
+workflow.add_edge("finalize", END)
+\end{lstlisting}
+\caption{Definição do grafo de correção com LangGraph}
+\label{cod:graph-definition}
+\end{codigo}
+
 \subsection{Recuperação de contexto}
 
 Para viabilizar RAG, os materiais didáticos anexados são processados em duas fases: (i) segmentação em trechos e geração de \textit{embeddings} para indexação, e (ii) recuperação por similaridade durante a correção. No protótipo, a segmentação utiliza trechos com sobreposição para preservar contexto local, enquanto a consulta recupera um conjunto pequeno de trechos mais relevantes (\textit{top-k}) para compor o contexto fornecido aos agentes.
 
 Um aspecto de projeto relevante é o isolamento por prova: as consultas de recuperação utilizam um filtro primário por \texttt{exam\_uuid}, priorizando trechos associados à prova em questão. Caso nenhum resultado seja encontrado com esse filtro (por exemplo, quando os materiais foram indexados sem associação explícita a uma prova), o sistema realiza uma busca global sem filtro como mecanismo de \textit{fallback}, evitando que a correção prossiga sem contexto quando há material disponível no banco vetorial. Operacionalmente, o sistema utiliza \textit{top-k} pequeno (por padrão, \texttt{RAG\_TOP\_K=4}), de modo a produzir contexto suficiente sem exceder o orçamento de tokens e sem inundar os corretores com material pouco relevante.
 
-\subsection{Por que o desenho multiagente é superior a uma correção monolítica}
+\subsection{Vantagens do desenho multiagente frente a uma correção monolítica}
 
 Embora seja possível corrigir uma resposta com uma única chamada a LLM (um \textit{prompt} único e uma nota final), o protótipo adotou um desenho em etapas e com redundância controlada porque esse formato aumenta a robustez e melhora a qualidade operacional do sistema como artefato de apoio à decisão docente.
 
@@ -254,4 +286,4 @@ Com o objetivo de apoiar reprodutibilidade, inspeção técnica e evolução inc
     \item \textbf{Não-determinismo de LLMs}: mitigado por configurações mais determinísticas e por revisão docente, mas não eliminado completamente.
 \end{itemize}
 
-Em conjunto, as decisões de arquitetura e implementação buscam equilibrar viabilidade técnica, rastreabilidade e utilidade prática no contexto de correção de respostas discursivas com apoio à revisão do professor.
+Em conjunto, as decisões de arquitetura e implementação buscam equilibrar viabilidade técnica, rastreabilidade e utilidade prática no contexto de correção de respostas discursivas com apoio à revisão do professor. O próximo capítulo apresenta os resultados obtidos a partir da execução do procedimento experimental sobre o sistema aqui descrito.

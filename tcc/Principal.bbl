@@ -189,6 +189,18 @@ Dispon{\'\i}vel em:
 ISBN 9798400716188. Dispon{\'\i}vel em:
   \url{https://dl.acm.org/doi/10.1145/3636555.3636850}.}
 
+\bibitem[{Instituto Nacional de Estudos e Pesquisas Educacionais Anísio
+  Teixeira} 2024]{inep_cartilha_redacao_2024}
+\abntrefinfo{{Instituto Nacional de Estudos e Pesquisas Educacionais Anísio
+  Teixeira}}{{Instituto Nacional de Estudos e Pesquisas Educacionais Anísio
+  Teixeira}}{2024}
+{{Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira}.
+  \emph{A Redação no {ENEM} 2024: Cartilha do Participante}. 2024.
+Diretoria de Avaliação da Educação Básica (DAEB). Ministério da
+  Educação.
+Dispon{\'\i}vel em:
+  \url{https://download.inep.gov.br/publicacoes/institucionais/avaliacoes\_e\_exames\_da\_educacao\_basica/a\_redacao\_no\_enem\_2024\_cartilha\_do\_participante.pdf}.}
+
 \bibitem[Janumpally 2025]{janumpally_role_2025}
 \abntrefinfo{Janumpally}{JANUMPALLY}{2025}
 {JANUMPALLY, R.~K. The {Role} of {Natural} {Language} {Processing} in
@@ -441,11 +453,12 @@ Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2003.01200}.}
 {{Uvicorn Contributors}. \emph{Uvicorn Documentation}. 2026.
 Dispon{\'\i}vel em: \url{https://www.uvicorn.org/}.}
 
-\bibitem[Vaswani et al. 2023]{vaswani_attention_2023}
-\abntrefinfo{Vaswani et al.}{VASWANI et al.}{2023}
-{VASWANI, A. et al. \emph{Attention {Is} {All} {You} {Need}}. arXiv, 2023.
-ArXiv:1706.03762.
-Dispon{\'\i}vel em: \url{http://arxiv.org/abs/1706.03762}.}
+\bibitem[Vaswani et al. 2017]{vaswani_attention_2023}
+\abntrefinfo{Vaswani et al.}{VASWANI et al.}{2017}
+{VASWANI, A. et al. Attention {Is} {All} {You} {Need}. In:  \emph{Advances in
+  Neural Information Processing Systems (NeurIPS)}. Curran Associates, 2017.
+  Publicado em NeurIPS 2017. arXiv:1706.03762. Dispon{\'\i}vel em:
+  \url{http://arxiv.org/abs/1706.03762}.}
 
 \bibitem[Wang et al. 2025]{wang_survey_2025}
 \abntrefinfo{Wang et al.}{WANG et al.}{2025}

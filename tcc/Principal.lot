@@ -1,14 +1,14 @@
 \babel@toc {brazil}{}\relax 
 \contentsline {table}{\numberline {1}{\ignorespaces Características dos estudos incluídos}}{30}{table.3.1}%
 \contentsline {table}{\numberline {1}{\ignorespaces Características dos estudos incluídos}}{31}{table.3.1}%
-\contentsline {table}{\numberline {2}{\ignorespaces Parâmetros experimentais utilizados no estudo}}{51}{table.caption.14}%
-\contentsline {table}{\numberline {4}{\ignorespaces Exemplos de endpoints do fluxo principal do sistema}}{56}{table.caption.16}%
-\contentsline {table}{\numberline {5}{\ignorespaces Parâmetros efetivos do experimento}}{65}{table.caption.20}%
-\contentsline {table}{\numberline {7}{\ignorespaces Caracterização dos níveis de qualidade das respostas sintéticas}}{66}{table.caption.21}%
-\contentsline {table}{\numberline {9}{\ignorespaces Verificação de execução \textit {end-to-end} do sistema}}{66}{table.caption.22}%
-\contentsline {table}{\numberline {11}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição A (com RAG)}}{67}{table.caption.23}%
-\contentsline {table}{\numberline {13}{\ignorespaces Comparação de notas finais --- Condição A (com RAG) vs. Condição B (sem RAG)}}{67}{table.caption.24}%
-\contentsline {table}{\numberline {15}{\ignorespaces Ancoragem das justificativas ao material didático}}{67}{table.caption.25}%
-\contentsline {table}{\numberline {17}{\ignorespaces Divergência entre corretores e acionamento do árbitro --- Condição A (com RAG)}}{68}{table.caption.26}%
-\contentsline {table}{\numberline {19}{\ignorespaces Estabilidade das notas em execuções repetidas --- Condição A (com RAG)}}{69}{table.caption.27}%
-\contentsline {table}{\numberline {21}{\ignorespaces Síntese do atendimento aos critérios de sucesso}}{69}{table.caption.28}%
+\contentsline {table}{\numberline {2}{\ignorespaces Parâmetros experimentais utilizados no estudo}}{51}{table.caption.13}%
+\contentsline {table}{\numberline {4}{\ignorespaces Exemplos de endpoints do fluxo principal do sistema}}{56}{table.caption.15}%
+\contentsline {table}{\numberline {5}{\ignorespaces Parâmetros efetivos do experimento}}{69}{table.caption.19}%
+\contentsline {table}{\numberline {7}{\ignorespaces Caracterização dos níveis de qualidade das respostas sintéticas}}{70}{table.caption.20}%
+\contentsline {table}{\numberline {9}{\ignorespaces Verificação de execução \textit {end-to-end} do sistema}}{71}{table.caption.21}%
+\contentsline {table}{\numberline {11}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição A (com RAG)}}{71}{table.caption.22}%
+\contentsline {table}{\numberline {13}{\ignorespaces Comparação de notas finais --- Condição A (com RAG) vs. Condição B (sem RAG)}}{72}{table.caption.23}%
+\contentsline {table}{\numberline {15}{\ignorespaces Ancoragem das justificativas ao material didático}}{73}{table.caption.24}%
+\contentsline {table}{\numberline {17}{\ignorespaces Divergência entre corretores e acionamento do árbitro --- Condição A (com RAG)}}{75}{table.caption.25}%
+\contentsline {table}{\numberline {19}{\ignorespaces Estabilidade das notas em execuções repetidas --- Condição A (com RAG)}}{77}{table.caption.26}%
+\contentsline {table}{\numberline {21}{\ignorespaces Síntese do atendimento aos critérios de sucesso}}{78}{table.caption.27}%
