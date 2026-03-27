@@ -153,6 +153,8 @@ Quando a divergência entre as notas dos corretores ultrapassa um limiar configu
 
 Esse mecanismo também fortalece a coerência do sistema sob a ótica de governança: em vez de “forçar” uma nota única, o pipeline sinaliza quando a própria IA está em desacordo consigo mesma e, portanto, quando há maior probabilidade de que o professor precise inspecionar a resposta com mais atenção. Em termos de apoio à decisão, esse comportamento é preferível porque direciona esforço humano para os casos mais ambíguos.
 
+A definição da nota final é realizada pelo módulo \texttt{ConsensusBuilder}, que emprega uma regra de consenso baseada em proximidade: quando há duas avaliações (sem divergência), a nota final é a média aritmética simples das notas dos Corretores 1 e 2; quando há três avaliações (com acionamento do árbitro), o sistema ordena as três notas, identifica o par com menor distância absoluta (\textit{closest-pair}) e calcula a média desse par, descartando o valor mais discrepante. Essa estratégia reduz o impacto de avaliações \textit{outlier} e produz notas finais mais estáveis.
+
 Após a execução do \textit{workflow}, o resultado é persistido no banco relacional, marcando a resposta como avaliada (\texttt{is\_graded}) e registrando pontuações por critério em uma estrutura normalizada (uma linha por critério). Dessa forma, a API de revisão pode recuperar tanto a nota final quanto o detalhamento necessário para inspeção e ajuste docente.
 
 \section{Modelagem do banco de dados}

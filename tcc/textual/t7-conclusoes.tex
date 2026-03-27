@@ -8,18 +8,18 @@ Os resultados obtidos no estudo de caso controlado indicam que:
 \begin{enumerate}
     \item \textbf{QA1 --- Execução \textit{end-to-end}:} o sistema completou todas as 13 etapas do fluxo sem falhas, processando e persistindo 100\% das respostas previstas (12/12), com completude estrutural de 100\%. Todas as correções produziram nota final, notas por critério e justificativa textual, atendendo ao critério de sucesso definido na metodologia.
 
-    \item \textbf{QA2 --- Utilidade do RAG:} a infraestrutura para comparação entre Condição A (com RAG) e Condição B (sem RAG) foi implementada e validada operacionalmente, incluindo \textit{toggle} de ativação/desativação, reutilização de dados entre condições e exportação automatizada dos resultados.
+    \item \textbf{QA2 --- Utilidade do RAG:} a comparação entre Condição A (com RAG) e Condição B (sem RAG) demonstrou que o RAG contribui positivamente para a correção, elevando a média geral de 5,13 para 5,58 pontos ($\Delta = +0{,}45$). O impacto foi mais expressivo em respostas de qualidade intermediária (nível ``Adequada'': $\Delta = +1{,}33$), onde o acesso ao material didático permitiu aos corretores reconhecer conceitos parcialmente abordados --- funcionando como um ``gabarito contextual''. Na Condição A, 75\% das justificativas apresentaram ancoragem explícita ao material didático.
 
     \item \textbf{QA3 --- Arbitragem por divergência:} o mecanismo de divergência funcionou conforme projetado: nenhuma das 12 respostas avaliadas apresentou diferença superior ao limiar de 2,0 pontos entre os corretores, resultando em taxa de arbitragem de 0\%. A maior divergência observada foi de 1,0 ponto, indicando alto grau de concordância entre os agentes corretores.
 
     \item \textbf{QA4 --- Estabilidade operacional:} nas três repetições ($R=3$) do conjunto completo de respostas, a variação absoluta máxima observada foi de 0,21 pontos (nível ``Fraca''), bem abaixo do limiar de 1,0 ponto definido como critério de sucesso. Os níveis ``Excelente'' e ``Adequada'' apresentaram variação máxima de apenas 0,06 e 0,02 pontos, respectivamente, evidenciando alta reprodutibilidade.
 \end{enumerate}
 
-Quanto à capacidade de discriminação, o sistema demonstrou coerência na atribuição de notas conforme o nível de qualidade das respostas: respostas classificadas como ``Excelente'' receberam média de 9,80 pontos, ``Adequada'' 9,97, ``Fraca'' 2,30 e ``Fora do tema'' 0,28. Essa hierarquia é consistente com os perfis definidos na metodologia e sugere que o pipeline multiagente é capaz de distinguir diferentes níveis de qualidade.
+Quanto à capacidade de discriminação, o sistema demonstrou coerência na atribuição de notas conforme o nível de qualidade das respostas: respostas classificadas como ``Excelente'' receberam média de 9,80 pontos, ``Adequada'' 9,97, ``Fraca'' 2,30 e ``Fora do tema'' 0,28. Observa-se que o nível ``Adequada'' obteve média ligeiramente superior ao ``Excelente'' (9,97 vs.\ 9,80), o que pode ser atribuído à natureza das respostas sintéticas --- respostas de nível adequado, embora parciais, podem ter abordado os critérios de forma suficiente para obter nota próxima à máxima. Em cenários com respostas humanas reais, espera-se maior variabilidade nessa faixa. Ainda assim, a separação entre os quatro níveis é clara e sugere que o pipeline multiagente é capaz de distinguir diferentes patamares de qualidade.
 
 Do ponto de vista arquitetural, a combinação de FastAPI para o \textit{backend}, LangGraph para orquestração do pipeline, LangChain para integração com LLMs e ChromaDB para armazenamento vetorial mostrou-se viável e extensível. A interface Streamlit, desenvolvida como ferramenta de observabilidade, permitiu a execução guiada do experimento completo e a exportação automatizada dos resultados em formato LaTeX.
 
-É importante reconhecer as limitações do estudo: o escopo restrito (uma disciplina, três questões, respostas sintéticas geradas por IA) não permite generalizações amplas sobre eficácia educacional ou desempenho comparativo com correção humana. Os resultados devem ser interpretados como evidência de viabilidade técnica e operacional do protótipo.
+É importante reconhecer as limitações do estudo: o escopo restrito (uma disciplina, três questões, respostas sintéticas) não permite generalizações amplas sobre eficácia educacional ou desempenho comparativo com correção humana. Os resultados devem ser interpretados como evidência de viabilidade técnica e operacional do protótipo.
 
 \section{Trabalhos Futuros}
 
@@ -30,7 +30,7 @@ Com base nos resultados e limitações identificados, sugere-se as seguintes dir
 
     \item \textbf{Estudo comparativo multi-modelo:} avaliar o desempenho do pipeline com diferentes provedores de LLM (OpenAI, Anthropic, modelos locais via Ollama), comparando qualidade das correções, tempo de resposta e custo operacional.
 
-    \item \textbf{Análise aprofundada do impacto do RAG:} executar o experimento A vs.\ B com um conjunto maior de questões e materiais didáticos, avaliando sistematicamente a ancoragem das justificativas ao conteúdo recuperado.
+    \item \textbf{Análise aprofundada do impacto do RAG:} expandir a comparação A vs.\ B com maior diversidade de questões, disciplinas e materiais didáticos, avaliando sistematicamente a ancoragem das justificativas ao conteúdo recuperado em diferentes contextos.
 
     \item \textbf{Interface de revisão docente completa:} expandir a interface para incluir funcionalidades de ajuste de nota por critério, anotações do professor e relatórios pedagógicos (identificação de lacunas de aprendizado e tendências da turma).
 

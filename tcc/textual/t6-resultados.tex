@@ -229,7 +229,7 @@ Esses resultados sugerem que o RAG funciona como um ``gabarito contextual'': aux
 
 As notas finais da Condição A apresentaram coerência com os níveis de qualidade das respostas: as respostas de nível excelente obtiveram média de 9,79 pontos, as adequadas atingiram 9,96, as fracas ficaram em 2,23 e as respostas fora do tema receberam média de 0,33 ponto. Essa distribuição demonstra a capacidade discriminativa do sistema, que atribuiu pontuações proporcionais à qualidade efetiva das respostas.
 
-Embora a comparação quantitativa A vs.\ B não tenha sido concluída, a infraestrutura necessária para essa comparação foi integralmente validada: o sistema executou ambas as condições pelo mesmo \textit{pipeline} de correção, com a diferença configuracional restrita ao parâmetro \texttt{RAG\_TOP\_K}. A realização dessa comparação completa fica como trabalho futuro, dependendo apenas da extração e pareamento dos dados da Condição B a partir do banco de dados PostgreSQL.
+A comparação quantitativa entre as Condições A e B foi realizada com sucesso, conforme apresentado na \autoref{tab:qa2-notas}. Ambas as condições foram executadas pelo mesmo \textit{pipeline} de correção, com a diferença configuracional restrita ao parâmetro \texttt{RAG\_TOP\_K} (4 na Condição A, 0 na Condição B). Os resultados confirmam que o RAG tem maior impacto em respostas de qualidade intermediária, funcionando como um ``gabarito contextual'' que permite aos corretores reconhecer conceitos parcialmente abordados.
 
 
 \section{QA3 --- Arbitragem por divergência}
@@ -283,7 +283,7 @@ Embora a ausência de arbitragem impeça a análise empírica do comportamento d
 
 O critério de sucesso da QA3 --- o árbitro deve ser acionado se e somente se $|$C1$-$C2$| > 2{,}0$ --- foi atendido em todos os 12 casos. Não houve acionamento indevido do árbitro (falso positivo) nem omissão de acionamento quando deveria ocorrer (falso negativo, que não se aplica neste cenário dado que nenhuma divergência ultrapassou o limiar).
 
-A distribuição das divergências observadas foi a seguinte: 5 respostas com divergência $0{,}00$ (concordância total), 4 respostas com divergência $0{,}25$, 1 resposta com divergência $0{,}38$ e 2 respostas com divergência $1{,}00$. A média das divergências absolutas foi de $0{,}20$ ponto, valor substancialmente inferior ao limiar de $2{,}0$.
+A distribuição das divergências observadas foi a seguinte: 6 respostas com divergência $0{,}00$ (concordância total), 4 respostas com divergência $0{,}25$, 1 resposta com divergência $0{,}38$ e 1 resposta com divergência $1{,}00$. A média das divergências absolutas foi de $0{,}20$ ponto, valor substancialmente inferior ao limiar de $2{,}0$.
 
 A alta concordância entre os corretores é um resultado relevante: sugere que, sob configuração determinística e com critérios de avaliação estruturados, o sistema é capaz de produzir avaliações consistentes sem necessidade de intervenção do mecanismo de arbitragem. Contudo, cabe ressalvar que esse resultado foi obtido com respostas sintéticas de níveis bem definidos; respostas reais de alunos, com maior ambiguidade e variação, poderiam produzir divergências mais frequentes, exercitando o mecanismo de arbitragem de forma mais extensiva.
 
@@ -372,7 +372,7 @@ Os dados da Condição A indicam que o mecanismo de RAG contribui para a ancorag
 
 O padrão observado é coerente com o esperado: o RAG agrega valor nas respostas que abordam o conteúdo solicitado (níveis excelente, adequada e fraca), onde o material recuperado pode ser utilizado como base de comparação. Nas respostas fora do tema, o RAG tem impacto limitado, pois o conteúdo da resposta não se relaciona com o material indexado --- nesse cenário, a avaliação se baseia essencialmente na detecção de irrelevância temática, que o LLM realiza independentemente do contexto recuperado.
 
-A comparação quantitativa completa entre as Condições A e B permanece como trabalho futuro. Contudo, a taxa de ancoragem de 75\% observada na Condição A, aliada à especificidade das referências ao material didático nas justificativas, constitui uma evidência preliminar positiva da utilidade do mecanismo de recuperação aumentada para a tarefa de correção automatizada.
+A comparação quantitativa entre as Condições A e B demonstrou que o RAG contribui de forma diferenciada conforme o nível de qualidade da resposta: o impacto é expressivo para respostas intermediárias ($\Delta = +1{,}33$ para nível ``Adequada''), modesto para respostas fracas ($\Delta = +0{,}33$) e negligenciável para os extremos (Excelente e Fora do tema). A taxa de ancoragem de 75\% na Condição A, aliada à especificidade das referências ao material didático nas justificativas, reforça a utilidade do mecanismo de RAG para contextualizar a correção automatizada.
 
 \subsection{Limitações observadas}
 

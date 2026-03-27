@@ -12,8 +12,7 @@ Este trabalho caracteriza-se como uma pesquisa aplicada, pois desenvolveu um sis
 
 \section{Processo de Correção de Prova}
 
-Esta seção descreve o funcionamento do sistema conforme implementado, organizado em três subprocessos principais: a configuração da prova, a correção geral da prova e a correção específica das respostas que exigem intervenção adicional. Cada subprocesso é explicado detalhadamente, utilizando fluxogramas para ilustrar os passos realizados (Figuras
-\autoref{fig:fluxo-configuracao},
+Esta seção descreve o funcionamento do sistema conforme implementado, organizado em três subprocessos principais: a configuração da prova, a correção geral da prova e a correção específica das respostas que exigem intervenção adicional. Cada subprocesso é explicado detalhadamente, utilizando fluxogramas para ilustrar os passos realizados (\autoref{fig:fluxo-configuracao},
 \autoref{fig:fluxo-correcao-prova} e
 \autoref{fig:fluxo-correcao-pergunta}).
 
@@ -148,7 +147,7 @@ Para avaliar estabilidade (QA4), seleciona-se um subconjunto de \(A_{rep}=4\) re
         \hline
         \textbf{Parâmetro} & \textbf{Valor/controle} \\
         \hline
-        Modelo do LLM & registrar provedor e nome do modelo configurado \\
+        Modelo do LLM & Google Gemini / \texttt{gemini-2.5-flash} \\
         Temperatura do LLM & \(0{,}0\) (configuração determinística; \texttt{LLM\_\allowbreak TEMPERATURE=0.0}) \\
         Top-$k$ do RAG (Condição A) & \(k=4\) trechos recuperados por consulta (\texttt{RAG\_TOP\_\allowbreak K=4}) \\
         Top-$k$ do RAG (Condição B) & \(k=0\) (RAG desativado; controle equivalente) \\
