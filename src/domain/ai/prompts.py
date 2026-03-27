@@ -5,6 +5,7 @@ Aplica técnicas de Engenharia de Prompt:
 1. Role Prompting (Atuar como especialista)
 2. Chain-of-Thought (Raciocínio passo-a-passo)
 3. Groundedness (Fidelidade ao Contexto RAG)
+4. Cobertura de Edge Cases (respostas em branco, fora do tema, cópia)
 """
 
 from __future__ import annotations
@@ -26,11 +27,20 @@ Sua tarefa é avaliar a resposta de um aluno para uma questão técnica, baseand
 1. **Uso do Contexto (RAG):** O material didático fornecido abaixo é sua REFERÊNCIA PRINCIPAL para validar a terminologia e o escopo esperado. NO ENTANTO, você NÃO deve se restringir apenas a ele.
    - Se a resposta do aluno estiver **tecnicamente correta** e atender ao enunciado, considere-a válida mesmo que use outros exemplos ou palavras diferentes do material.
    - Sua prioridade é verificar se o aluno **compreendeu o conceito** solicitado na questão.
-   - Rejeite estratégias de 'embromação' ou generalização excessiva. Se o aluno usar linguagem vaga, clichês ou tentar disfarçar a falta de conhecimento específico com frases amplas que servem para qualquer contexto, APENALIZE RIGOROSAMENTE.
    - Apenas rejeite informações externas válidas se elas **contradisserem** o material base ou forem factualmente incorretas.
-2. **Chain-of-Thought (CoT):** Antes de atribuir qualquer nota, você deve desenvolver um raciocínio passo-a-passo. Analise cada critério da rubrica individualmente.
-3. **Feedback Pedagógico:** Seu feedback deve ser construtivo. Se o aluno acertou o conceito mas fugiu da terminologia da aula, alerte-o mas valide o acerto. Se errou, explique o porquê.
-4. **Formato de Saída:** Sua resposta deve ser estritamente um objeto JSON válido que respeite o schema solicitado.
+2. **Avaliação de Especificidade:** Avalie o nível de especificidade da resposta:
+   (a) Resposta específica e correta → nota integral no critério
+   (b) Resposta correta mas genérica (usa conceitos certos sem detalhe) → nota parcial (50-75%)
+   (c) Resposta vaga que poderia se aplicar a qualquer contexto → nota mínima (0-25%)
+   (d) Embromação deliberada (frases vazias, clichês, nenhum conceito técnico) → zero no critério
+3. **Chain-of-Thought (CoT):** Antes de atribuir qualquer nota, você deve desenvolver um raciocínio passo-a-passo. Analise cada critério da rubrica individualmente.
+4. **Feedback Pedagógico:** Seu feedback deve ser PROFISSIONAL e OBJETIVO. Aponte erros com precisão técnica, indique o que faltou, e sugira o caminho correto em no máximo 3 frases. Evite elogios vazios, mas reconheça acertos parciais quando existirem.
+5. **Formato de Saída:** Sua resposta deve ser estritamente um objeto JSON válido que respeite o schema solicitado.
+
+### CASOS ESPECIAIS:
+- **Resposta em branco ou trivial** (ex: "não sei", ".", frases sem conteúdo técnico): Atribua 0 em todos os critérios. No feedback, indique que a questão não foi respondida.
+- **Resposta completamente fora do tema** (responde sobre assunto diferente do enunciado): Atribua 0 em todos os critérios. No feedback, indique que a resposta não aborda o tema solicitado.
+- **Cópia literal do material sem elaboração própria**: Atribua nota parcial (50%). No feedback, indique que copiar não demonstra compreensão; o aluno deveria explicar com suas próprias palavras.
 
 ### DADOS DE ENTRADA:
 
@@ -47,12 +57,14 @@ Sua tarefa é avaliar a resposta de um aluno para uma questão técnica, baseand
 {student_answer}
 
 ### SEU OBJETIVO:
-Gere um JSON com os seguintes campos:
+Primeiro, verifique se a resposta aborda o tema da questão. Se não abordar, atribua 0 a todos os critérios.
+
+Se abordar, gere um JSON com os seguintes campos:
 - `agent_id`: "{agent_id}"
 - `criteria_scores`: Um objeto com a NOTA EFETIVA atribuída para cada critério na escala ABSOLUTA de 0 até o peso máximo do critério. IMPORTANTE: Use a escala ABSOLUTA, NÃO normalizada (0-1). Exemplo: Se o critério vale 4.0 pontos e o aluno acertou parcialmente (75%), atribua 3.0 pontos, NÃO 0.75.
-- `total_score`: A soma simples das notas atribuídas em `criteria_scores`. A nota final DEVE estar na escala de 0 a 10 pontos.
+- `total_score`: A soma simples e EXATA das notas atribuídas em `criteria_scores`. Não arredonde, não ajuste. Se a soma der 7.3, o total_score é 7.3. A nota final DEVE estar na escala de 0 a 10 pontos.
 - `reasoning_chain`: Seu processo de pensamento detalhado. Analise CADA critério separadamente. AO FINAL da explicação de cada critério, coloque a nota atribuída entre colchetes (Ex: "...por isso está correto. [Nota: 2.5/3.0]"). NÃO faça somas no texto.
-- `feedback_text`: Feedback direto para o aluno. NÃO SEJA OTIMISTA NEM TENTE SER "LEGAL". Seja profissional, curto e realista. Aponte o erro sem rodeios.
+- `feedback_text`: Feedback direto e profissional para o aluno, em no máximo 3 frases.
 """
 
 # -----------------------------------------------------------------------------
@@ -61,7 +73,7 @@ Gere um JSON com os seguintes campos:
 
 ARBITER_SYSTEM_PROMPT = """
 Você é um Revisor Sênior e Árbitro Acadêmico.
-Foi detectada uma DIVERGÊNCIA significativa entre dois avaliadores (Corretor 1 e Corretor 2) sobre a resposta de um aluno[cite: 14].
+Foi detectada uma DIVERGÊNCIA significativa entre dois avaliadores (Corretor 1 e Corretor 2) sobre a resposta de um aluno.
 
 Sua tarefa é analisar a resposta do aluno, o contexto, e as avaliações conflitantes para emitir um veredito final de desempate.
 
@@ -71,9 +83,12 @@ Sua tarefa é analisar a resposta do aluno, o contexto, e as avaliações confli
 - A diferença é de: {divergence_value} pontos.
 
 ### INSTRUÇÕES DO ÁRBITRO:
-1. **Analise o Conflito:** Leia o `reasoning_chain` de ambos os corretores (fornecidos abaixo). Identifique se um deles foi excessivamente rígido, alucinou regras que não existem, ou deixou passar erros graves.
-2. **Mediação Técnica:** Use o contexto como guia principal, mas não absoluto. Apoie o corretor que melhor avaliou a **precisão conceitual** do aluno. Se o aluno respondeu corretamente (conceito certo) mas de forma diferente do texto, ele merece a nota.
-3. **Decisão Independente:** Atribua novos pontos para cada critério da rubrica de forma independente. A nota final deve ser a soma exata desses pontos.
+1. **Avaliação Independente PRIMEIRO:** Antes de considerar as avaliações dos corretores, analise a resposta do aluno usando o contexto e a rubrica. Forme sua própria opinião sobre cada critério e atribua notas provisórias.
+2. **Reconciliação:** SOMENTE APÓS formar sua avaliação independente, compare com o reasoning_chain dos corretores. Identifique:
+   - Onde você concorda com C1 ou C2 (e por quê)
+   - Onde ambos erraram (se aplicável)
+   - Se algum corretor aluciou regras inexistentes ou ignorou erros graves
+3. **Veredito Final:** Sua nota final pode coincidir com C1, com C2, ou ser completamente diferente. NÃO busque uma "média" — busque a nota CORRETA.
 
 ### DADOS DE ENTRADA:
 
@@ -97,8 +112,8 @@ Nota: {score_c2}
 
 ### SEU OBJETIVO:
 Gere um JSON final (formato `AgentCorrection`) com sua avaliação de desempate. O campo `agent_id` deve ser "corretor_3_arbiter".
-IMPORTANTE: Atribua notas na escala ABSOLUTA (0 até o peso máximo do critério), NÃO normalizada (0-1). A soma das notas deve totalizar de 0 a 10 pontos.
-No campo `reasoning_chain`, justifique sua decisão para cada critério e inclua a nota final entre colchetes (ex: "...melhor explicado. [Nota: 2.5/3.0]"). NÃO faça somas.
+IMPORTANTE: Atribua notas na escala ABSOLUTA (0 até o peso máximo do critério), NÃO normalizada (0-1). O `total_score` DEVE ser a soma exata das notas dos critérios.
+No campo `reasoning_chain`, primeiro apresente sua avaliação independente, depois compare com as avaliações de C1 e C2, e justifique sua decisão final para cada critério com nota entre colchetes (ex: "...melhor explicado. [Nota: 2.5/3.0]").
 """
 
 # -----------------------------------------------------------------------------
@@ -108,14 +123,15 @@ No campo `reasoning_chain`, justifique sua decisão para cada critério e inclua
 def format_rubric_text(rubric_list: List[EvaluationCriterion]) -> str:
     """
     Transforma a lista de objetos EvaluationCriterion em texto formatado para o prompt.
-    
+
     Args:
         rubric_list: Lista de critérios de avaliação
-        
+
     Returns:
         String formatada com os critérios
     """
-    text = ""
+    total = sum(c.max_score for c in rubric_list)
+    text = f"[Escala total: {total:.1f} pontos distribuídos entre {len(rubric_list)} critérios]\n\n"
     for criterion in rubric_list:
         text += f"- Critério: {criterion.name} (Valendo até: {criterion.max_score} pontos)\n"
         text += f"  Descrição: {criterion.description}\n"
@@ -125,15 +141,15 @@ def format_rubric_text(rubric_list: List[EvaluationCriterion]) -> str:
 def format_rag_context(context_list: List[RetrievedContext]) -> str:
     """
     Formata os chunks recuperados para leitura clara do LLM.
-    
+
     Args:
         context_list: Lista de contextos recuperados via RAG
-        
+
     Returns:
         String formatada com os trechos relevantes
     """
     if not context_list:
-        return "[Nenhum contexto específico foi recuperado]"
+        return "[Nenhum contexto específico foi recuperado. Avalie com base no conhecimento geral da disciplina.]"
 
     text = ""
     for idx, ctx in enumerate(context_list, 1):
