@@ -103,6 +103,8 @@ Além disso, campos como \textit{is\_graded} limitam alterações em entidades a
 
 O pipeline de correção foi estruturado como um \textit{workflow} com estado explícito, composto por nós que representam etapas do processo e por regras de encaminhamento condicional. A abordagem permite documentar e reproduzir a sequência de execução, o que é relevante tanto para depuração quanto para a revisão docente.
 
+O desenho multiagente adotado --- dois corretores independentes com acionamento condicional de um terceiro (árbitro) --- foi inspirado no processo oficial de correção de redações do Exame Nacional do Ensino Médio (ENEM). No ENEM, cada redação é avaliada por dois corretores de forma independente, e um terceiro avaliador é convocado quando a discrepância entre as notas excede um limiar predefinido (diferença superior a 100 pontos no total ou superior a 80 pontos em qualquer uma das cinco competências individuais). A nota final, quando há três avaliações, é calculada como a média das duas notas totais mais próximas, descartando a mais discrepante \cite{inep_cartilha_redacao_2024}. O sistema desenvolvido neste trabalho adota a mesma lógica estrutural --- dupla correção, limiar de divergência e consenso por proximidade --- adaptada ao contexto de avaliação automatizada com agentes de IA.
+
 No sistema desenvolvido, o pipeline segue as seguintes macroetapas:
 
 \begin{itemize}
@@ -201,7 +203,7 @@ O desenvolvimento priorizou integrações que mantivessem o sistema reproduzíve
 
 \begin{itemize}
     \item \textbf{PostgreSQL}: adotado para persistência relacional das entidades do domínio, com suporte a transações e integridade;
-    \item \textbf{Migrações}: versionamento do esquema do banco, permitindo evolução controlada e reprodutibilidade entre ambientes;
+    \item \textbf{Migrações (Alembic)}: versionamento do esquema do banco via Alembic, permitindo evolução controlada e reprodutibilidade entre ambientes;
     \item \textbf{ChromaDB}: utilizado como \textit{vector store} persistente para a estratégia de recuperação por similaridade;
     \item \textbf{Provedores de LLM e \textit{embeddings}}: integração por uma camada de compatibilidade para alternar provedores e parâmetros de execução;
     \item \textbf{Docker e Docker Compose}: padronização do ambiente de execução, reduzindo divergências de configuração entre máquinas.
