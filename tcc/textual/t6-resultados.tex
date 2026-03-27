@@ -387,7 +387,7 @@ Diversas limitações foram identificadas durante a execução do experimento e 
 
     \item \textbf{Ausência de comparação com correção humana:} O experimento não incluiu correção humana como referência (\textit{ground truth}), impossibilitando a mensuração da acurácia absoluta do sistema em relação ao julgamento docente.
 
-    \item \textbf{Comparação A vs.\ B incompleta:} Os dados da Condição B (sem RAG) foram armazenados exclusivamente no banco de dados PostgreSQL via execução pelo \textit{backend}, e não foram extraídos em formato pareado com os dados da Condição A para comparação direta. A infraestrutura para essa comparação foi validada, mas a análise completa não foi concluída.
+    \item \textbf{Respostas não pareadas entre condições:} Embora as questões e a rubrica tenham sido mantidas idênticas entre as Condições A e B, as respostas dos alunos foram geradas independentemente em cada condição (por se tratarem de respostas sintéticas produzidas pelo modelo). Assim, as diferenças de nota observadas refletem tanto o efeito do RAG quanto a variação natural das respostas geradas, não sendo possível isolar completamente o impacto do RAG.
 
     \item \textbf{Arbitragem não exercitada:} A alta concordância entre os corretores (nenhuma divergência superior a $1{,}00$ ponto) impediu o exercício empírico do mecanismo de arbitragem. A validação do Corretor 3 e da regra de consenso com três notas requer cenários com maior divergência, possivelmente obtidos com respostas mais ambíguas ou com temperatura do modelo diferente de zero.
 \end{enumerate}
