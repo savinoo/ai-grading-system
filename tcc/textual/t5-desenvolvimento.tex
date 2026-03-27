@@ -139,10 +139,11 @@ workflow.add_node("divergence_check", divergence_check_node)
 workflow.add_node("arbiter", arbiter_node)
 workflow.add_node("finalize", finalize_node)
 
-# Fluxo sequencial (respeita limites de taxa da API)
+# Corretores em PARALELO (independencia logica e temporal)
 workflow.set_entry_point("retrieve_context")
 workflow.add_edge("retrieve_context", "examiner_1")
-workflow.add_edge("examiner_1", "examiner_2")
+workflow.add_edge("retrieve_context", "examiner_2")
+workflow.add_edge("examiner_1", "divergence_check")
 workflow.add_edge("examiner_2", "divergence_check")
 
 # Roteamento condicional: arbitro so se divergencia > threshold
@@ -181,7 +182,7 @@ De forma mais concreta, os benefícios técnicos desse desenho podem ser sinteti
 
 \subsection{Correção por agentes e saídas estruturadas}
 
-Cada resposta discursiva é avaliada por dois corretores logicamente independentes --- isto é, sem estado compartilhado entre si, de modo que a avaliação de um não influencia a do outro. Na implementação, os corretores são executados sequencialmente para respeitar limites de taxa da API do provedor de LLM (\textit{tokens por minuto}), sem prejuízo à independência lógica das avaliações. Os agentes produzem uma saída estruturada que inclui: nota total, pontuação por critério e justificativas textuais. Essa estrutura atende ao objetivo de tornar o resultado revisável pelo professor, pois permite inspecionar como cada critério contribuiu para a nota final.
+Cada resposta discursiva é avaliada por dois corretores logicamente independentes --- isto é, sem estado compartilhado entre si, de modo que a avaliação de um não influencia a do outro. Na implementação, os corretores são executados em \textbf{paralelo} pelo LangGraph, garantindo independência tanto lógica quanto temporal entre as avaliações e reduzindo o tempo total de correção. Os agentes produzem uma saída estruturada que inclui: nota total, pontuação por critério e justificativas textuais. Essa estrutura atende ao objetivo de tornar o resultado revisável pelo professor, pois permite inspecionar como cada critério contribuiu para a nota final.
 
 Quando a divergência entre as notas dos corretores ultrapassa um limiar configurável (por padrão, \texttt{DIVERGENCE\_THRESHOLD=2.0} pontos), um terceiro agente (\textit{árbitro}) é acionado para produzir uma avaliação adicional. Na consolidação, o sistema utiliza a avaliação adicional como mecanismo de estabilização da nota final em casos de incerteza ou inconsistência entre corretores.
 
