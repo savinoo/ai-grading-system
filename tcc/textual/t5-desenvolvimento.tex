@@ -159,6 +159,24 @@ A definição da nota final é realizada pelo módulo \texttt{ConsensusBuilder},
 
 Após a execução do \textit{workflow}, o resultado é persistido no banco relacional, marcando a resposta como avaliada (\texttt{is\_graded}) e registrando pontuações por critério em uma estrutura normalizada (uma linha por critério). Dessa forma, a API de revisão pode recuperar tanto a nota final quanto o detalhamento necessário para inspeção e ajuste docente.
 
+\subsection{Engenharia de \textit{prompts} dos agentes corretores}
+
+Os \textit{prompts} que instruem os agentes corretores constituem um elemento central do sistema, pois determinam como o modelo de linguagem interpreta a resposta do aluno, aplica a rubrica e produz justificativas. O sistema utiliza três técnicas complementares de engenharia de \textit{prompts}, centralizadas no módulo \texttt{prompts.py}:
+
+\begin{enumerate}
+    \item \textbf{\textit{Role Prompting}:} cada agente recebe uma identidade especializada. Os Corretores 1 e 2 são instruídos como ``Especialista em Avaliação Educacional com foco em correção de provas discursivas'', enquanto o Árbitro recebe o papel de ``Revisor Sênior e Árbitro Acadêmico''. Essa atribuição de papel direciona o comportamento do modelo para um tom profissional e critérios de avaliação acadêmicos.
+
+    \item \textbf{\textit{Chain-of-Thought} (CoT):} os agentes são instruídos a desenvolver um raciocínio passo a passo antes de atribuir qualquer nota. O \textit{prompt} exige que cada critério da rubrica seja analisado individualmente, com a nota parcial registrada entre colchetes ao final de cada análise (por exemplo, ``\textit{[Nota: 2.5/3.0]}''). Esse raciocínio é armazenado no campo \texttt{reasoning\_chain} da saída estruturada, permitindo rastreabilidade completa da decisão avaliativa.
+
+    \item \textbf{\textit{Groundedness} (fidelidade ao contexto RAG):} o \textit{prompt} instrui o corretor a utilizar o material didático recuperado como referência principal para validar terminologia e escopo, mas com flexibilidade pedagógica --- respostas tecnicamente corretas que utilizem exemplos ou terminologia diferentes do material são consideradas válidas. Essa diretriz equilibra fidelidade ao conteúdo da disciplina com reconhecimento de compreensão conceitual genuína.
+\end{enumerate}
+
+Adicionalmente, o \textit{prompt} dos corretores incorpora uma diretriz explícita de \textbf{detecção de ``embromação''}: o agente é instruído a penalizar rigorosamente respostas que utilizem linguagem vaga, clichês ou generalização excessiva para disfarçar falta de conhecimento específico. Essa instrução é relevante no contexto de avaliação discursiva, onde alunos podem tentar obter pontuação parcial com respostas evasivas.
+
+O \textit{prompt} do Árbitro (C3) é estruturalmente diferente: além de receber os mesmos dados de entrada (enunciado, rubrica, contexto RAG e resposta do aluno), ele também recebe o \texttt{reasoning\_chain} e as notas de ambos os corretores. Suas instruções incluem: (i) identificar se algum corretor foi excessivamente rígido ou cometeu ``alucinação'' de regras inexistentes; (ii) apoiar o corretor que melhor avaliou a precisão conceitual; e (iii) atribuir notas de forma independente, funcionando como mediação técnica do conflito.
+
+Todas as saídas são exigidas em formato JSON estruturado (\texttt{AgentCorrection}), incluindo os campos \texttt{total\_score}, \texttt{criteria\_scores}, \texttt{reasoning\_chain} e \texttt{feedback\_text}. As notas são exigidas na escala absoluta (0 até o peso máximo de cada critério), e o \textit{prompt} inclui exemplos explícitos para evitar normalização indevida pelo modelo (por exemplo, atribuir 0,75 em vez de 3,0 em um critério de 4,0 pontos).
+
 \section{Modelagem do banco de dados}
 
 O banco de dados relacional foi modelado para suportar as etapas de configuração, publicação, correção, revisão e consolidação. As entidades centrais do domínio incluem provas, questões, alunos, respostas, critérios de correção e pontuações por critério. A \autoref{fig:er-simplificado} apresenta uma visão simplificada dessas relações.
