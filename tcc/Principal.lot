@@ -7,8 +7,12 @@
 \contentsline {table}{\numberline {7}{\ignorespaces Caracterização dos níveis de qualidade das respostas sintéticas}}{71}{table.caption.21}%
 \contentsline {table}{\numberline {9}{\ignorespaces Verificação de execução \textit {end-to-end} do sistema}}{72}{table.caption.22}%
 \contentsline {table}{\numberline {11}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição A (com RAG)}}{72}{table.caption.23}%
-\contentsline {table}{\numberline {13}{\ignorespaces Comparação de notas finais --- Condição A (com RAG) vs. Condição B (sem RAG)}}{73}{table.caption.24}%
-\contentsline {table}{\numberline {15}{\ignorespaces Ancoragem das justificativas ao material didático}}{74}{table.caption.25}%
-\contentsline {table}{\numberline {17}{\ignorespaces Divergência entre corretores e acionamento do árbitro --- Condição A (com RAG)}}{76}{table.caption.26}%
-\contentsline {table}{\numberline {19}{\ignorespaces Estabilidade das notas em execuções repetidas --- Condição A (com RAG)}}{78}{table.caption.27}%
-\contentsline {table}{\numberline {21}{\ignorespaces Síntese do atendimento aos critérios de sucesso}}{79}{table.caption.28}%
+\contentsline {table}{\numberline {13}{\ignorespaces Comparação de notas finais --- Condição A (com RAG) vs. Condição B (sem RAG)}}{74}{table.caption.24}%
+\contentsline {table}{\numberline {15}{\ignorespaces Comparação de notas médias por nível de qualidade}}{74}{table.caption.25}%
+\contentsline {table}{\numberline {17}{\ignorespaces Ancoragem das justificativas ao material didático}}{75}{table.caption.26}%
+\contentsline {table}{\numberline {19}{\ignorespaces Verificação de divergência --- Condição A (com RAG)}}{77}{table.caption.27}%
+\contentsline {table}{\numberline {21}{\ignorespaces Casos de divergência e acionamento do árbitro}}{78}{table.caption.28}%
+\contentsline {table}{\numberline {23}{\ignorespaces Estabilidade das notas em execuções repetidas ($R=3$)}}{79}{table.caption.29}%
+\contentsline {table}{\numberline {25}{\ignorespaces Tempos de execução do \textit {pipeline} de correção}}{80}{table.caption.30}%
+\contentsline {table}{\numberline {27}{\ignorespaces Tempo médio de correção por questão (4 alunos em paralelo)}}{81}{table.caption.31}%
+\contentsline {table}{\numberline {29}{\ignorespaces Síntese do atendimento aos critérios de sucesso}}{82}{table.caption.32}%

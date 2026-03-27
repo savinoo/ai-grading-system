@@ -356,10 +356,10 @@ A \autoref{tab:qa4-estabilidade} apresenta as notas finais obtidas em cada repet
         \hline
         \textbf{Nível} & \textbf{$R_1$} & \textbf{$R_2$} & \textbf{$R_3$} & \textbf{Média} & \textbf{Var. máx.} \\
         \hline
-        Excelente      & 10,00 & 9,92  & 10,00 & 9,97 & 0,08 \\
-        Intermediária  & 10,00 & 10,00 & 10,00 & 10,00 & 0,00 \\
-        Fraca          & 8,67  & 8,67  & 9,00  & 8,78 & 0,33 \\
-        Fora tema      & 0,00  & 0,00  & 0,00  & 0,00 & 0,00 \\
+        Excelente      & 10,00 & 10,00 & 10,00 & 10,00 & 0,00 \\
+        Intermediária  & 4,83  & 6,17  & 4,83  & 5,28  & 1,33 \\
+        Fraca          & 1,00  & 0,54  & 1,83  & 1,12  & 1,29 \\
+        Fora tema      & 0,00  & 0,00  & 0,00  & 0,00  & 0,00 \\
         \hline
     \end{tabularx}
     }
@@ -367,13 +367,11 @@ A \autoref{tab:qa4-estabilidade} apresenta as notas finais obtidas em cada repet
 
 \subsection{Análise}
 
-Nas execuções repetidas, a variação absoluta máxima observada foi de $0{,}33$ ponto (nível fraco), valor substancialmente inferior ao critério de sucesso definido na metodologia ($\leq 1{,}0$ ponto). Todos os quatro níveis de qualidade atenderam ao critério de estabilidade, confirmando que a configuração de baixa estocasticidade (temperatura $0{,}0$) do modelo \texttt{gemini-2.5-flash} é eficaz para manter a reprodutibilidade das avaliações.
+Os resultados revelam dois padrões distintos de estabilidade. Os níveis ``Excelente'' e ``Fora do tema'' apresentaram variação nula ($0{,}00$ ponto), demonstrando reprodutibilidade perfeita para respostas nos extremos da escala de qualidade. Os níveis ``Intermediária'' e ``Fraca'', por sua vez, apresentaram variação máxima de $1{,}33$ e $1{,}29$ pontos, respectivamente, ultrapassando o critério de sucesso definido na metodologia ($\leq 1{,}0$ ponto).
 
-A análise por nível de qualidade revela um padrão coerente: as respostas de nível intermediário apresentaram variação nula ($0{,}00$ ponto), as de nível excelente oscilaram minimamente ($0{,}08$ ponto), enquanto as de nível fraco apresentaram a maior variação ($0{,}33$ ponto). As respostas fora do tema mantiveram variação nula. Esse comportamento confirma o padrão já identificado na QA3: respostas fracas introduzem maior ambiguidade na atribuição de notas, gerando variações ligeiramente maiores entre execuções.
+Essa diferença de estabilidade é coerente com os achados da QA3: respostas intermediárias e fracas são intrinsecamente mais ambíguas, gerando maior desacordo entre os corretores e, consequentemente, maior variação entre execuções. Enquanto respostas excelentes e fora do tema permitem avaliação inequívoca (nota máxima ou zero), respostas parcialmente corretas envolvem julgamentos de valor sobre ``quanto'' do conteúdo foi abordado, o que introduz variabilidade natural.
 
-Apesar dessa diferença relativa, mesmo a maior variação observada ($0{,}33$ ponto) representa uma oscilação inferior a 3,5\% da escala de 0 a 10, indicando um nível de estabilidade operacional adequado para uso em contextos educacionais. A configuração de baixa estocasticidade demonstrou ser uma estratégia eficaz para minimizar o não determinismo inerente aos modelos de linguagem de grande porte, sem necessidade de mecanismos adicionais de estabilização como \textit{majority voting} ou médias de múltiplas execuções.
-
-Cabe notar que os dados de estabilidade foram obtidos com a versão anterior dos \textit{prompts}, refletindo a reprodutibilidade do sistema sob condições consistentes. A estabilidade é uma propriedade da configuração de baixa estocasticidade e da arquitetura de dupla correção, não dependendo da versão específica dos \textit{prompts}.
+As médias por nível ($10{,}00 > 5{,}28 > 1{,}12 > 0{,}00$) confirmam a hierarquia de discriminação do sistema. O critério QA4 foi atendido para os níveis extremos e parcialmente atendido para os níveis intermediários. Em cenários de uso real, essa variabilidade nos níveis ambíguos seria mitigada pela etapa de revisão docente, que permite ao professor inspecionar e ajustar as notas antes da consolidação.
 
 
 \section{Desempenho temporal}
@@ -446,7 +444,7 @@ A \autoref{tab:sintese-criterios} resume o atendimento aos critérios de sucesso
         QA1 & Completude $\geq$ 95\% & 100\% & Sim \\
         QA2 & Efeito do RAG observável & A=5,22 vs B=5,10 ($\Delta$=$+$0,11); RAG positivo & Sim \\
         QA3 & Árbitro acionado corretamente & 5 casos, todos com $|$diff$|>$2,0; limiar correto & Sim \\
-        QA4 & Variação $\leq$ 1,0 ponto & Máx. 0,33 ponto & Sim \\
+        QA4 & Variação $\leq$ 1,0 ponto & Extremos: 0,00; Intermediários: 1,33 & Parcial \\
         \hline
     \end{tabularx}
     }

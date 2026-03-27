@@ -84,8 +84,8 @@
 \contentsline {subsection}{\numberline {5.2.1}Processamento assíncrono e \textit {status} de rastreabilidade}{57}{subsection.5.2.1}%
 \contentsline {section}{\numberline {5.3}Pipeline de IA (RAG, correção e arbitragem)}{57}{section.5.3}%
 \contentsline {subsection}{\numberline {5.3.1}Recuperação de contexto}{60}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Vantagens do desenho multiagente frente a uma correção monolítica}{60}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Correção por agentes e saídas estruturadas}{61}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.2}Vantagens do desenho multiagente frente a uma correção monolítica}{61}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Correção por agentes e saídas estruturadas}{62}{subsection.5.3.3}%
 \contentsline {subsection}{\numberline {5.3.4}Engenharia de \textit {prompts} dos agentes corretores}{62}{subsection.5.3.4}%
 \contentsline {section}{\numberline {5.4}Modelagem do banco de dados}{64}{section.5.4}%
 \contentsline {subsection}{\numberline {5.4.1}Justificativa das entidades e relações}{66}{subsection.5.4.1}%
@@ -99,35 +99,38 @@
 \contentsline {section}{\numberline {6.1}Configuração do experimento}{70}{section.6.1}%
 \contentsline {subsection}{\numberline {6.1.1}Respostas sintéticas}{71}{subsection.6.1.1}%
 \contentsline {section}{\numberline {6.2}QA1 --- Execução \textit {end-to-end}}{71}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Resultados}{71}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Análise}{72}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.1}Resultados}{72}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Análise}{73}{subsection.6.2.2}%
 \contentsline {section}{\numberline {6.3}QA2 --- Utilidade do RAG}{73}{section.6.3}%
 \contentsline {subsection}{\numberline {6.3.1}Comparação de notas}{73}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Ancoragem das justificativas}{74}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {6.3.3}Exemplo comparativo de justificativas}{75}{subsection.6.3.3}%
-\contentsline {subsection}{\numberline {6.3.4}Análise}{75}{subsection.6.3.4}%
-\contentsline {section}{\numberline {6.4}QA3 --- Arbitragem por divergência}{76}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Resultados}{76}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Verificação do limiar}{76}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Efeito da arbitragem sobre a nota final}{77}{subsection.6.4.3}%
-\contentsline {subsection}{\numberline {6.4.4}Análise}{77}{subsection.6.4.4}%
-\contentsline {section}{\numberline {6.5}QA4 --- Estabilidade operacional}{78}{section.6.5}%
-\contentsline {subsection}{\numberline {6.5.1}Resultados}{78}{subsection.6.5.1}%
-\contentsline {subsection}{\numberline {6.5.2}Análise}{78}{subsection.6.5.2}%
-\contentsline {section}{\numberline {6.6}Discussão integrada}{79}{section.6.6}%
-\contentsline {subsection}{\numberline {6.6.1}Síntese dos critérios de sucesso}{79}{subsection.6.6.1}%
-\contentsline {subsection}{\numberline {6.6.2}Viabilidade técnica}{79}{subsection.6.6.2}%
-\contentsline {subsection}{\numberline {6.6.3}Viabilidade operacional}{80}{subsection.6.6.3}%
-\contentsline {subsection}{\numberline {6.6.4}Contribuição do RAG}{80}{subsection.6.6.4}%
-\contentsline {subsection}{\numberline {6.6.5}Limitações observadas}{81}{subsection.6.6.5}%
+\contentsline {subsection}{\numberline {6.3.2}Efeito do RAG sobre a precisão avaliativa}{75}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Ancoragem das justificativas}{75}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.4}Exemplo comparativo de justificativas}{76}{subsection.6.3.4}%
+\contentsline {subsection}{\numberline {6.3.5}Análise}{76}{subsection.6.3.5}%
+\contentsline {section}{\numberline {6.4}QA3 --- Arbitragem por divergência}{77}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Resultados}{77}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Padrões de divergência}{78}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Efeito da arbitragem sobre a nota final}{78}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.4}Análise}{79}{subsection.6.4.4}%
+\contentsline {section}{\numberline {6.5}QA4 --- Estabilidade operacional}{79}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Resultados}{79}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}Análise}{80}{subsection.6.5.2}%
+\contentsline {section}{\numberline {6.6}Desempenho temporal}{80}{section.6.6}%
+\contentsline {subsection}{\numberline {6.6.1}Análise}{81}{subsection.6.6.1}%
+\contentsline {section}{\numberline {6.7}Discussão integrada}{81}{section.6.7}%
+\contentsline {subsection}{\numberline {6.7.1}Síntese dos critérios de sucesso}{81}{subsection.6.7.1}%
+\contentsline {subsection}{\numberline {6.7.2}Viabilidade técnica}{82}{subsection.6.7.2}%
+\contentsline {subsection}{\numberline {6.7.3}Viabilidade operacional}{82}{subsection.6.7.3}%
+\contentsline {subsection}{\numberline {6.7.4}Contribuição do RAG}{83}{subsection.6.7.4}%
+\contentsline {subsection}{\numberline {6.7.5}Limitações observadas}{83}{subsection.6.7.5}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{82}{section*.31}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{85}{section*.35}%
 \setlength {\cftpartindent }{\cftlastnumwidth } \setlength {\cftpartnumwidth }{2em}
 \cftinsert {A}
-\contentsline {part}{Appendices}{88}{section*.32}%
+\contentsline {part}{Appendices}{91}{section*.36}%
 \renewcommand *{\cftappendixname }{AP\^ENDICE \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{89}{appendix.A}%
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{92}{appendix.A}%
