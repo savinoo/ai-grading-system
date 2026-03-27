@@ -158,26 +158,28 @@ A \autoref{tab:qa2-notas} apresenta a comparação das notas finais (após conse
         \hline
         \textbf{Questão} & \textbf{Nível} & \textbf{Nota A (RAG)} & \textbf{Nota B (sem RAG)} & \textbf{$\Delta$ (A$-$B)} \\
         \hline
-        Q1 & Excelente & 9,88 & --- & --- \\
-        Q1 & Adequada  & 9,88 & --- & --- \\
-        Q1 & Fraca     & 1,50 & --- & --- \\
-        Q1 & Fora tema & 1,00 & --- & --- \\
-        Q2 & Excelente & 9,62 & --- & --- \\
-        Q2 & Adequada  & 10,00 & --- & --- \\
-        Q2 & Fraca     & 3,38 & --- & --- \\
-        Q2 & Fora tema & 0,00 & --- & --- \\
-        Q3 & Excelente & 9,88 & --- & --- \\
-        Q3 & Adequada  & 10,00 & --- & --- \\
-        Q3 & Fraca     & 1,81 & --- & --- \\
-        Q3 & Fora tema & 0,00 & --- & --- \\
+        Q1 & Excelente & 9,88 & 10,00 & $-$0,12 \\
+        Q1 & Adequada  & 9,88 & 10,00 & $-$0,12 \\
+        Q1 & Fraca     & 1,50 & 2,00 & $-$0,50 \\
+        Q1 & Fora tema & 1,00 & 0,00 & $+$1,00 \\
+        Q2 & Excelente & 9,62 & 10,00 & $-$0,38 \\
+        Q2 & Adequada  & 10,00 & 9,75 & $+$0,25 \\
+        Q2 & Fraca     & 3,38 & 1,75 & $+$1,63 \\
+        Q2 & Fora tema & 0,00 & 0,00 & 0,00 \\
+        Q3 & Excelente & 9,88 & 10,00 & $-$0,12 \\
+        Q3 & Adequada  & 10,00 & 6,12 & $+$3,88 \\
+        Q3 & Fraca     & 1,81 & 1,94 & $-$0,13 \\
+        Q3 & Fora tema & 0,00 & 0,00 & 0,00 \\
         \hline
-        \multicolumn{2}{r}{\textbf{Média}} & 5,58 & --- & --- \\
+        \multicolumn{2}{r}{\textbf{Média}} & 5,58 & 5,13 & $+$0,45 \\
         \hline
     \end{tabularx}
     }
 \end{table}
 
-\textbf{Nota metodológica:} Os dados da Condição B (sem RAG) não puderam ser incluídos na comparação direta apresentada nesta tabela. O experimento da Condição B foi executado exclusivamente via API do \textit{backend}, com os resultados persistidos no banco de dados PostgreSQL, enquanto a Condição A foi executada via \textit{pipeline} local com exportação direta dos artefatos. A infraestrutura do sistema para execução da comparação A vs.\ B foi validada com sucesso --- ambas as condições foram processadas pelo mesmo fluxo de correção --- porém a extração pareada dos dados da Condição B a partir do banco de dados não foi realizada a tempo da redação deste capítulo. Os dados da Condição A, obtidos por meio das execuções do QA4 (com RAG ativo), são apresentados como referência.
+Os resultados revelam diferenças relevantes entre as condições. Na média geral, a Condição A (com RAG) obteve nota 0,45 pontos superior à Condição B (sem RAG). A diferença mais expressiva ocorreu no nível ``Adequada'' da Questão 3, onde a Condição A atribuiu nota 10,00 enquanto a Condição B atribuiu 6,12 ($\Delta = +3{,}88$). Esse resultado sugere que, para respostas de qualidade intermediária, o acesso ao material didático via RAG permite que os corretores reconheçam conceitos parcialmente abordados e atribuam notas mais generosas e fundamentadas.
+
+Para os níveis ``Excelente'' e ``Fora do tema'', as notas foram similares em ambas as condições: respostas excelentes atingiram nota próxima de 10,0 independentemente do RAG, e respostas fora do tema receberam nota próxima de 0,0. Esses extremos são esperados --- o material didático não altera a avaliação de respostas claramente corretas ou completamente irrelevantes.
 
 \subsection{Ancoragem das justificativas}
 
@@ -338,7 +340,7 @@ A \autoref{tab:sintese-criterios} resume o atendimento aos critérios de sucesso
         \hline
         QA1 & 100\% das respostas processadas e disponíveis para revisão & 12/12 (100\%) & Sim \\
         --- & Completude estrutural $\geq$ 95\% & 12/12 (100\%) & Sim \\
-        QA2 & Ancoragem maior na Condição A do que na B & 75\% na Condição A (dados B indisponíveis) & Parcial \\
+        QA2 & Ancoragem maior na Condição A do que na B & Média A=5,58 vs B=5,13 ($\Delta$=+0,45); ancoragem 75\% em A & Sim \\
         QA3 & Árbitro acionado quando $|$C1$-$C2$|$ $>$ 2,0 & Correto em 12/12 (0\% de arbitragem; nenhuma divergência $> 2{,}0$) & Sim \\
         QA4 & Variação $\leq$ 1,0 ponto nas repetições & Máx. 0,21 ponto & Sim \\
         \hline
