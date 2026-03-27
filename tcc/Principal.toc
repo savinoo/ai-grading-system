@@ -5,13 +5,14 @@
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase []{Introdução}}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Objetivos}{2}{section.1.1}%
 \contentsline {subsection}{\numberline {1.1.1}Objetivo Geral}{2}{subsection.1.1.1}%
 \contentsline {subsection}{\numberline {1.1.2}Objetivos Específicos}{2}{subsection.1.1.2}%
 \contentsline {section}{\numberline {1.2}Justificativa}{3}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Estrutura do Trabalho}{4}{section.1.3}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase []{Fundamentação Teórica}}{5}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Avaliação Educacional}{5}{section.2.1}%
@@ -95,7 +96,7 @@
 \contentsline {subsection}{\numberline {5.5.3}Disponibilização do código-fonte}{68}{subsection.5.5.3}%
 \contentsline {subsection}{\numberline {5.5.4}Decisões e \textit {trade-offs}}{68}{subsection.5.5.4}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{RESULTADOS E DISCUSSÕES}}{70}{chapter.6}%
+\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados e Discussões}}{70}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Configuração do experimento}{70}{section.6.1}%
 \contentsline {subsection}{\numberline {6.1.1}Respostas sintéticas}{71}{subsection.6.1.1}%
 \contentsline {section}{\numberline {6.2}QA1 --- Execução \textit {end-to-end}}{71}{section.6.2}%
@@ -123,14 +124,17 @@
 \contentsline {subsection}{\numberline {6.7.3}Viabilidade operacional}{82}{subsection.6.7.3}%
 \contentsline {subsection}{\numberline {6.7.4}Contribuição do RAG}{83}{subsection.6.7.4}%
 \contentsline {subsection}{\numberline {6.7.5}Limitações observadas}{83}{subsection.6.7.5}%
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Conclusão}}{85}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Trabalhos Futuros}{86}{section.7.1}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{85}{section*.39}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{88}{section*.45}%
 \setlength {\cftpartindent }{\cftlastnumwidth } \setlength {\cftpartnumwidth }{2em}
 \cftinsert {A}
-\contentsline {part}{Appendices}{91}{section*.40}%
+\contentsline {part}{Appendices}{94}{section*.46}%
 \renewcommand *{\cftappendixname }{AP\^ENDICE \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{92}{appendix.A}%
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{95}{appendix.A}%
