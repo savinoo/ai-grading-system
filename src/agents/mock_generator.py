@@ -160,8 +160,8 @@ class MockDataGeneratorAgent:
         """
         quality_prompts = {
             "excellent": "A resposta deve ser exemplar: correta, completa, demonstrando domínio total do conteúdo e usando terminologia técnica adequada. Aborde todos os pontos da rubrica com precisão.",
-            "average": "A resposta deve ser mediana: correta no geral, mas superficial. USE ESTRATÉGIAS DE GENERALIZAÇÃO para disfarçar o desconhecimento de detalhes específicos. Substitua termos técnicos precisos por explicações mais amplas e vagas, tentando 'enrolar' um pouco onde faltar profundidade, mas sem cometer erros graves.",
-            "poor": "A resposta deve ser insatisfatória: apresente conceitos errados ou confunda fatos. USE ESTRATÉGIAS DE GENERALIZAÇÃO EXCESSIVA ('embromação') para esconder que não sabe a resposta. Tente parecer que sabe falando de coisas vagamente relacionadas ou inventando fatos com confiança para mascarar sua ignorância. Tente enganar o corretor.",
+            "average": "A resposta deve ser INTERMEDIÁRIA: aborde APENAS 2 dos pontos solicitados na questão, ignorando os demais. Use terminologia correta nos pontos que abordar, mas deixe lacunas visíveis. NÃO seja completo — um aluno mediano não cobre tudo. Escreva no máximo 3 frases.",
+            "poor": "A resposta deve ser FRACA e INCORRETA. Cometa erros técnicos específicos: confunda os conceitos principais (ex: se a questão pede diferença entre A e B, atribua características de A para B e vice-versa). Demonstre confusão clara entre os termos. Escreva no máximo 2 frases curtas e superficiais. NÃO acerte nenhum ponto da rubrica.",
             "off_topic": "A resposta deve ser COMPLETAMENTE FORA DO TEMA. Responda sobre um assunto totalmente diferente do que foi perguntado, como se tivesse confundido a questão. Por exemplo, se a pergunta é sobre algoritmos, fale sobre culinária ou esportes. NÃO mencione nenhum conceito relacionado à questão."
         }
 

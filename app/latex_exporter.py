@@ -18,7 +18,7 @@ logger = logging.getLogger("latex_exporter")
 
 QUALITY_LABELS = {
     "excellent": "Excelente",
-    "average": "Adequada",
+    "average": "Intermediária",
     "poor": "Fraca",
     "off_topic": "Fora do tema",
 }
@@ -262,7 +262,7 @@ class LaTeXExporter:
 
         lines = [f"% Gerado automaticamente (Experimentos: {exp_ids})"]
 
-        for quality in ["Excelente", "Adequada", "Fraca", "Fora do tema"]:
+        for quality in ["Excelente", "Intermediária", "Fraca", "Fora do tema"]:
             runs = runs_by_quality.get(quality, [])
             avgs = []
             r_strs = []

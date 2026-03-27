@@ -413,7 +413,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
         st.header("✍️ Passo 3 — Simular Respostas (A=4 alunos)")
         st.markdown("""
         Gera 4 respostas por questão, uma para cada nível de qualidade:
-        **Excelente** | **Adequado** | **Fraco** | **Fora do Tema**
+        **Excelente** | **Intermediário** | **Fraco** | **Fora do Tema**
         """)
 
         questions = st.session_state.get('tcc_questions', [])
@@ -426,7 +426,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                 status = st.status("Simulando respostas dos alunos...", expanded=True)
                 try:
                     profiles = ["excellent", "average", "poor", "off_topic"]
-                    profile_labels = {"excellent": "Excelente", "average": "Adequado", "poor": "Fraco", "off_topic": "Fora do Tema"}
+                    profile_labels = {"excellent": "Excelente", "average": "Intermediário", "poor": "Fraco", "off_topic": "Fora do Tema"}
                     students_list = []
                     for i, qual in enumerate(profiles):
                         s_name = f"Aluno {i+1} ({profile_labels[qual]})"
@@ -1173,7 +1173,7 @@ elif operation_mode == "Batch Processing (Turma)":
                             questions = st.session_state['exam_questions']
                             # 4 níveis de qualidade conforme TCC: excelente, adequada, fraca, fora do tema
                             profiles = ["excellent", "average", "poor", "off_topic"]
-                            profile_labels = {"excellent": "Excelente", "average": "Adequado", "poor": "Fraco", "off_topic": "Fora do Tema"}
+                            profile_labels = {"excellent": "Excelente", "average": "Intermediário", "poor": "Fraco", "off_topic": "Fora do Tema"}
                             students_list = []
                             for i in range(qt_mock_students):
                                 qual = profiles[i % len(profiles)]
