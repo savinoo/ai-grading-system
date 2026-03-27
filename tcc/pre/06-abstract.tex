@@ -1,11 +1,9 @@
 \begin{resumo}[Abstract]
  \begin{otherlanguage*}{english}
 
-% O comando lipsum abaixo é um gerador automático de texto, e deve ser substituído pelo seu abstract, isto é, o seu resumo traduzido para a lingua inglesa.
+The grading of open-ended exam questions is one of the most time-consuming tasks in teaching practice, requiring significant effort and being subject to evaluator subjectivity. This work presents the development and evaluation of an automated essay grading system based on multiple Artificial Intelligence agents, with support for Retrieval-Augmented Generation (RAG) and a divergence-based arbitration mechanism. The system employs two independent grading agents that evaluate each response based on a rubric and the course's reference materials, conditionally triggering a third agent (arbiter) when the divergence between scores exceeds a configurable threshold --- a design inspired by Brazil's official ENEM essay grading process. The architecture uses FastAPI for the backend, LangGraph for pipeline orchestration, LangChain for integration with language models (Gemini 2.5 Flash), and ChromaDB for vector storage. The evaluation was conducted through a controlled case study with three open-ended questions on Algorithms and Data Structures, four response quality levels (excellent, adequate, poor, and off-topic), and two experimental conditions (with and without RAG). Results indicate that the system completed the end-to-end flow without failures (100\% structural completeness), exhibited high score stability (maximum variation of 0.21 points across three repetitions), and demonstrated that RAG positively contributes to the evaluation, especially for intermediate-quality responses. The prototype preserves teacher authority by making results available for review, adjustment, and approval before final consolidation.
 
-\lipsum*[10-12]
-
-\textbf{Keywords: } Curabitur, Malesuada, MassaAndroid, Aliquam. 
+\textbf{Keywords:} Automated Grading. Artificial Intelligence. Large Language Models (LLM). Retrieval-Augmented Generation (RAG). Multi-Agent Systems. Educational Assessment.
 
  \end{otherlanguage*}
 \end{resumo}
