@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.27)  27 MAR 2026 18:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.27)  27 MAR 2026 18:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2103,9 +2103,9 @@ Overfull \hbox (2.35287pt too wide) in paragraph at lines 178--178
 []|\T1/lmr/m/n/10.95 (-20) Ferramentas 
  []
 
-[29] [30] [31] [32] [33] [34] [35] [36] [37] [38]) [39]
+[29] [30] [31] [32] [33] [34] [35] [36] [37] [38] [39])
 (./textual/t4-material.tex [40]
-<media/fluxo-configuracao.jpg, id=964, 755.82375pt x 1059.96pt>
+<media/fluxo-configuracao.jpg, id=967, 755.82375pt x 1059.96pt>
 File: media/fluxo-configuracao.jpg Graphic file (type jpg)
 <use media/fluxo-configuracao.jpg>
 Package pdftex.def Info: media/fluxo-configuracao.jpg  used on input line 21.
@@ -2113,14 +2113,14 @@ Package pdftex.def Info: media/fluxo-configuracao.jpg  used on input line 21.
  [41
 
 ]
-<media/fluxo-correcao-prova.jpg, id=970, 824.07875pt x 1295.84125pt>
+<media/fluxo-correcao-prova.jpg, id=973, 824.07875pt x 1295.84125pt>
 File: media/fluxo-correcao-prova.jpg Graphic file (type jpg)
 <use media/fluxo-correcao-prova.jpg>
 Package pdftex.def Info: media/fluxo-correcao-prova.jpg  used on input line 29.
 
 (pdftex.def)             Requested size: 405.22302pt x 637.20212pt.
  [42 <./media/fluxo-configuracao.jpg>]
-<media/fluxo-correcao-pergunta.jpg, id=976, 487.8225pt x 934.49126pt>
+<media/fluxo-correcao-pergunta.jpg, id=979, 487.8225pt x 934.49126pt>
 File: media/fluxo-correcao-pergunta.jpg Graphic file (type jpg)
 <use media/fluxo-correcao-pergunta.jpg>
 Package pdftex.def Info: media/fluxo-correcao-pergunta.jpg  used on input line 
@@ -2148,7 +2148,7 @@ a ques-tão (\T1/lmtt/m/n/10.95 DIVERGENCE_
 
 [50{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/e
 nc/dvips/lm/lm-rm.enc}] [51] [52]) (./textual/t5-desenvolvimento.tex [53]
-<media/arquitetura_sistema.png, id=1096, 1276.77pt x 523.9575pt>
+<media/arquitetura_sistema.png, id=1099, 1276.77pt x 523.9575pt>
 File: media/arquitetura_sistema.png Graphic file (type png)
 <use media/arquitetura_sistema.png>
 Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 15.
@@ -2157,35 +2157,38 @@ Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 15.
 [54
 
  <./media/arquitetura_sistema.png>] [55]
-<media/fluxo_requisicao.png, id=1109, 1102.1175pt x 519.9425pt>
+<media/fluxo_requisicao.png, id=1112, 1102.1175pt x 519.9425pt>
 File: media/fluxo_requisicao.png Graphic file (type png)
 <use media/fluxo_requisicao.png>
 Package pdftex.def Info: media/fluxo_requisicao.png  used on input line 84.
 (pdftex.def)             Requested size: 454.99905pt x 214.65347pt.
  [56 <./media/fluxo_requisicao.png>] [57]
-<media/pipeline.png, id=1121, 362.35374pt x 512.91624pt>
+<media/pipeline.png, id=1124, 362.35374pt x 512.91624pt>
 File: media/pipeline.png Graphic file (type png)
 <use media/pipeline.png>
 Package pdftex.def Info: media/pipeline.png  used on input line 122.
 (pdftex.def)             Requested size: 250.08517pt x 353.99869pt.
- [58] [59 <./media/pipeline.png>] [60] [61] [62]
-<media/er.png, id=1150, 1439.3775pt x 1887.05pt>
+ [58] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2023/02/27 1.9 listings language file
+)
+[59 <./media/pipeline.png>] [60] [61] [62] [63]
+<media/er.png, id=1184, 1439.3775pt x 1887.05pt>
 File: media/er.png Graphic file (type png)
 <use media/er.png>
-Package pdftex.def Info: media/er.png  used on input line 186.
+Package pdftex.def Info: media/er.png  used on input line 218.
 (pdftex.def)             Requested size: 455.0pt x 596.49707pt.
- [63] [64 <./media/er.png>] [65] [66] [67]) (./textual/t6-resultados.tex [68] [
-69
+ [64] [65 <./media/er.png>]
+[66] [67] [68]) (./textual/t6-resultados.tex [69] [70
 
 ]
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <17.28> not available
 (Font)              Font shape `T1/lmss/m/sl' tried instead on input line 68.
- [70]
+ [71]
 Overfull \hbox (7.84827pt too wide) in alignment at lines 130--130
  [] [] [] [] [] [] [] 
  []
 
-[71] [72] [73] [74] [75] [76] [77]
+[72] [73] [74] [75] [76] [77] [78]
 Underfull \hbox (badness 5431) in paragraph at lines 349--349
 []|\T1/lmr/m/n/10.95 (+20) Completude es-tru-tu-ral $\OMS/lmsy/m/n/10.95 ^^U$
  []
@@ -2206,7 +2209,7 @@ Underfull \hbox (badness 6063) in paragraph at lines 349--349
 []|\T1/lmr/m/n/10.95 (+20) Árbitro aci-o-nado quando
  []
 
-[78] [79]
+[79] [80]
 Overfull \hbox (27.81593pt too wide) in paragraph at lines 386--387
 []\T1/lmr/bx/n/12 (-20) Modelo único: \T1/lmr/m/n/12 (-20) To-dos os ex-pe-ri-m
 en-tos fo-ram re-a-li-za-dos com o mo-delo \T1/lmtt/m/n/12 gemini-2.5-flash\T1/
@@ -2217,21 +2220,21 @@ lmr/m/n/12 (-20) .
 \tf@brf=\write6
 \openout6 = `Principal.brf'.
 
- [80]
+ [81]
 bibitemlist
-[81
+[82
 
-] [82] [83] [84] [85]) [86] [87
+] [83] [84] [85] [86]) [87] [88
 
 
 ] (./pos/apendice-schema-completo.tex
-<media/sql_schemas.png, id=1503, 1330.9725pt x 1216.545pt>
+<media/sql_schemas.png, id=1536, 1330.9725pt x 1216.545pt>
 File: media/sql_schemas.png Graphic file (type png)
 <use media/sql_schemas.png>
 Package pdftex.def Info: media/sql_schemas.png  used on input line 8.
 (pdftex.def)             Requested size: 454.98206pt x 415.86595pt.
 )
-[88
+[89
 
  <./media/sql_schemas.png (PNG copy)>]
 \tf@lof=\write7
@@ -2262,16 +2265,16 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Principal.brf' has not changed.
-(rerunfilecheck)             Checksum: BE7C8EF9FD1B6575440C7CB22DCB6564;9263.
+(rerunfilecheck)             Checksum: 574BCCD00DB6FCC523861280BFA2ED17;9319.
  ) 
 Here is how much of TeX's memory you used:
- 48889 strings out of 476089
- 915478 string characters out of 5793232
- 1966975 words of memory out of 5000000
- 69062 multiletter control sequences out of 15000+600000
- 683325 words of font info for 319 fonts, out of 8000000 for 9000
+ 49369 strings out of 476089
+ 920418 string characters out of 5793232
+ 2052975 words of memory out of 5000000
+ 69511 multiletter control sequences out of 15000+600000
+ 683644 words of font info for 320 fonts, out of 8000000 for 9000
  61 hyphenation exceptions out of 8191
- 104i,14n,139p,2377b,782s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 104i,14n,139p,2377b,1527s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbxi10.pfb></
 usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/
@@ -2285,10 +2288,10 @@ fb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts
 /type1/public/lm/lmsso12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso17.pf
 b></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on Principal.pdf (100 pages, 1108031 bytes).
+Output written on Principal.pdf (101 pages, 1113357 bytes).
 PDF statistics:
- 2026 PDF objects out of 2073 (max. 8388607)
- 1851 compressed objects within 19 object streams
- 433 named destinations out of 1000 (max. 500000)
- 65505 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 2063 PDF objects out of 2073 (max. 8388607)
+ 1887 compressed objects within 19 object streams
+ 460 named destinations out of 1000 (max. 500000)
+ 66017 words of extra memory for PDF output out of 74296 (max. 10000000)
 

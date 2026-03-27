@@ -34,15 +34,6 @@ ISSN 2525-3409.
 Dispon{\'\i}vel em:
   \url{https://rsdjournal.org/index.php/rsd/article/view/13234}.}
 
-\bibitem[Bastos 1997]{bastos_instrucao_1997}
-\abntrefinfo{Bastos}{BASTOS}{1997}
-{BASTOS, M. H.~C. A instrução pública e o ensino mútuo no {Brasil}: uma
-  história pouco conhecida (1808-1827).
-\emph{Revista História da Educação}, v.~1, n.~1, p. 115--133, 1997.
-ISSN 2236-3459.
-Dispon{\'\i}vel em:
-  \url{https://seer.ufrgs.br/index.php/asphe/article/view/30631}.}
-
 \bibitem[Beckford 2024]{beckford_revisit_2024}
 \abntrefinfo{Beckford}{BECKFORD}{2024}
 {BECKFORD, W. \emph{Revisit from 2024: {The} current {Status} and {Future} of
@@ -229,6 +220,12 @@ Dispon{\'\i}vel em:
 ArXiv:2004.12832.
 Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2004.12832}.}
 
+\bibitem[Kim 2014]{kim_convolutional_2014}
+\abntrefinfo{Kim}{KIM}{2014}
+{KIM, Y. Convolutional neural networks for sentence classification. In:
+  \emph{Proceedings of the 2014 Conference on Empirical Methods in Natural
+  Language Processing (EMNLP)}. [S.l.: s.n.], 2014. p. 1746--1751.}
+
 \bibitem[Kitzie et al. 2024]{kitzie_ai-empowered_2024}
 \abntrefinfo{Kitzie et al.}{KITZIE et al.}{2024}
 {KITZIE, V. et al. The {AI}-empowered {Researcher}: {Using} {AI}-based {Tools}
@@ -371,6 +368,12 @@ Dispon{\'\i}vel em: \url{https://arxiv.org/abs/2501.09092}.}
   {Models}}. arXiv, 2023.
 ArXiv:2302.00083.
 Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2302.00083}.}
+
+\bibitem[Russell e Norvig 2021]{russell_artificial_2021}
+\abntrefinfo{Russell e Norvig}{RUSSELL; NORVIG}{2021}
+{RUSSELL, S.; NORVIG, P. \emph{Artificial Intelligence: A Modern Approach}. 4.
+  ed. [S.l.]: Pearson, 2021.
+ISBN 978-0134610993.}
 
 \bibitem[Sahoo et al. 2025]{sahoo_systematic_2025}
 \abntrefinfo{Sahoo et al.}{SAHOO et al.}{2025}

@@ -22,7 +22,6 @@
 \backcite {borges_avaliacao_2017}{{4}{1.2}{section.1.2}}
 \backcite {santos_articulacao_2016}{{4}{1.2}{section.1.2}}
 \backcite {carregari_luckesi_2024}{{5}{2.1.1}{subsection.2.1.1}}
-\backcite {bastos_instrucao_1997}{{5}{2.1.1}{subsection.2.1.1}}
 \backcite {gatti_formacao_2017}{{6}{2.1.2}{subsection.2.1.2}}
 \backcite {santos_articulacao_2016}{{6}{2.1.2}{subsection.2.1.2}}
 \backcite {santos_articulacao_2016}{{6}{2.1.2}{subsection.2.1.2}}
@@ -44,6 +43,7 @@
 \backcite {barroso_subjetividade_2021}{{11}{1}{Item.26}}
 \backcite {heggler_as_2025}{{11}{2.2.3}{Item.30}}
 \backcite {lima_avaliacao_2023}{{12}{2.2.4}{Item.35}}
+\backcite {russell_artificial_2021}{{13}{2.3.1}{subsection.2.3.1}}
 \backcite {torfi_natural_2021}{{13}{2.3.1}{subsection.2.3.1}}
 \backcite {young_recent_2018, otter_survey_2021}{{14}{2.3.1}{Item.40}}
 \backcite {young_recent_2018, otter_survey_2021}{{14}{2.3.1}{Item.40}}
@@ -52,6 +52,7 @@
 \backcite {lima_avaliacao_2023}{{15}{2.3.2}{Item.45}}
 \backcite {young_recent_2018}{{15}{1}{Item.46}}
 \backcite {otter_survey_2021}{{15}{2}{Item.47}}
+\backcite {kim_convolutional_2014}{{15}{3}{Item.48}}
 \backcite {tavares_clarice_2024}{{16}{2.3.3}{Item.50}}
 \backcite {vaswani_attention_2023}{{16}{2.3.4}{subsection.2.3.4}}
 \backcite {chen_evaluating_2021}{{17}{2.3.4}{Item.54}}
@@ -143,4 +144,4 @@
 \backcite {ollama_docs_2026,streamlit_docs_2026}{{48}{4.3.9}{subsection.4.3.9}}
 \backcite {rfc8259_json_2017}{{48}{4.3.10}{subsection.4.3.10}}
 \backcite {inep_cartilha_redacao_2024}{{58}{5.3}{section.5.3}}
-\backcite {ai_grading_system_repo_2026}{{67}{5.5.3}{subsection.5.5.3}}
+\backcite {ai_grading_system_repo_2026}{{68}{5.5.3}{subsection.5.5.3}}

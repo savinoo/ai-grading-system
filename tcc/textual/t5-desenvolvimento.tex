@@ -284,7 +284,7 @@ Com o objetivo de apoiar reprodutibilidade, inspeção técnica e evolução inc
     \item \textbf{Dois corretores e \textit{árbitro} condicional}: reduz sensibilidade a uma única saída de LLM e prioriza consistência, ao custo de maior consumo computacional em casos divergentes;
     \item \textbf{Workflow com estado explícito}: favorece rastreabilidade e controle de execução, ao custo de maior complexidade estrutural em comparação a uma sequência linear;
     \item \textbf{RAG por prova}: melhora a aderência ao material didático e reduz alucinações, mas depende da qualidade e da indexação bem-sucedida dos anexos;
-    \item \textbf{Não-determinismo de LLMs}: mitigado por configurações mais determinísticas e por revisão docente, mas não eliminado completamente.
+    \item \textbf{Não-determinismo de LLMs}: mitigado por configuração de baixa estocasticidade (temperatura $= 0{,}0$) e por revisão docente, mas não eliminado completamente.
 \end{itemize}
 
 Em conjunto, as decisões de arquitetura e implementação buscam equilibrar viabilidade técnica, rastreabilidade e utilidade prática no contexto de correção de respostas discursivas com apoio à revisão do professor. O próximo capítulo apresenta os resultados obtidos a partir da execução do procedimento experimental sobre o sistema aqui descrito.

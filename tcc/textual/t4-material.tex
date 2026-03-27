@@ -120,7 +120,7 @@ A avaliação é organizada nas seguintes questões avaliativas (QAs):
     \item \textbf{QA1 --- Execução end-to-end:} o sistema completa o fluxo de configuração, publicação, processamento em \textit{background}, correção, persistência e disponibilização para revisão docente?
     \item \textbf{QA2 --- Utilidade do RAG:} ao ativar o RAG (materiais anexados), as justificativas e pontuações tendem a ficar mais ancoradas ao conteúdo recuperado do que em um cenário sem RAG?
     \item \textbf{QA3 --- Arbitragem por divergência:} o mecanismo de divergência e acionamento condicional do terceiro corretor (árbitro) é acionado quando esperado e contribui para estabilizar a nota final?
-    \item \textbf{QA4 --- Estabilidade operacional:} com configurações mais determinísticas (por exemplo, temperatura baixa), o sistema produz saídas com baixa variabilidade em execuções repetidas do mesmo caso?
+    \item \textbf{QA4 --- Estabilidade operacional:} com configuração de baixa estocasticidade (temperatura $= 0{,}0$), o sistema produz saídas com baixa variabilidade em execuções repetidas do mesmo caso?
 \end{itemize}
 
 \subsection{Desenho do estudo}
@@ -212,7 +212,7 @@ Considera-se que a avaliação cumpre seu papel quando os resultados satisfazem 
     \item \textbf{Respostas sintéticas:} não representam toda a diversidade de respostas humanas; mitigação: cobrir níveis de qualidade e casos-limite.
     \item \textbf{Validade externa (generalização):} o estudo utiliza uma prova pequena e um conjunto limitado de casos, o que restringe a extrapolação dos resultados para outras disciplinas, turmas, níveis de ensino e estilos de rubrica.
     \item \textbf{Validade ecológica (uso em contexto real):} a avaliação ocorre em ambiente controlado e não captura integralmente fatores presentes na rotina docente (tempo, volume de respostas, variações de enunciado, ajustes de rubrica, pressão institucional), o que pode afetar a aplicabilidade prática em larga escala.
-    \item \textbf{Não-determinismo de LLMs:} mitigação por configurações mais determinísticas (temperatura baixa) e repetição de casos.
+    \item \textbf{Não-determinismo de LLMs:} mitigação por configuração de baixa estocasticidade (temperatura $= 0{,}0$) e repetição de casos.
     \item \textbf{Dependência do material:} resultados podem variar com PDFs e temas; mitigação: descrever claramente o conjunto utilizado.
 \end{itemize}
 
