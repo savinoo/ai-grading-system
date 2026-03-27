@@ -246,11 +246,17 @@ Para avaliar o efeito do RAG sobre a qualidade das justificativas, aplicou-se o 
 
 Na Condição A, 9 das 12 justificativas (75\%) apresentaram ancoragem explícita ao material didático. As três justificativas não ancoradas correspondem às respostas de nível ``fora do tema'', resultado esperado, uma vez que essas respostas não abordam o conteúdo solicitado e, portanto, o material recuperado pelo RAG não se aplica diretamente à avaliação.
 
-\subsection{Exemplo comparativo de justificativas}
+\subsection{Estudo de caso: RAG como proteção contra erros de avaliação}
 
-A análise qualitativa das justificativas permite observar diferenças claras entre as condições. Na Condição A (com RAG), as correções fazem referência a conceitos específicos do material didático --- por exemplo, na Questão 1 (Fraca), o corretor com RAG identificou explicitamente quais conceitos do material de referência estavam presentes e quais estavam ausentes na resposta, resultando em uma avaliação mais detalhada ($3{,}25$ pontos) que reconhece o conhecimento parcial demonstrado.
+A análise detalhada das correções revelou um caso particularmente ilustrativo do papel do RAG na Questão 2 (\textit{Merge Sort} vs.\ \textit{Quick Sort}), resposta de nível fraco. O aluno escreveu: ``\textit{Merge Sort é instável e tem complexidade O(N²) no pior caso [\ldots] Quick Sort é estável}'' --- invertendo completamente as propriedades dos dois algoritmos.
 
-Na Condição B (sem RAG), as justificativas tendem a ser mais genéricas, baseadas no conhecimento geral do modelo de linguagem. Na mesma Questão 1 (Fraca), o corretor sem RAG atribuiu $2{,}50$ pontos, com uma avaliação menos granular que não distingue com a mesma precisão os acertos parciais. Essa diferença ilustra como o RAG funciona como instrumento de precisão avaliativa: ao fornecer o ``gabarito contextual'', permite ao corretor reconhecer acertos parciais que, sem a referência, poderiam ser desconsiderados.
+\textbf{Com RAG (Condição A):} O Corretor 1, com acesso ao material didático, identificou imediatamente os erros conceituais e atribuiu nota $3{,}5$. O Corretor 2 atribuiu $4{,}0$. O consenso resultou em $3{,}75$ pontos --- nota baixa, coerente com a quantidade de erros factuais.
+
+\textbf{Sem RAG (Condição B):} O Corretor 1, sem referência ao material, atribuiu nota $10{,}0$ --- aceitando uma resposta com todos os conceitos invertidos como se estivesse correta. O Corretor 2 atribuiu $4{,}0$ (nota adequada). A divergência de $6{,}0$ pontos acionou o árbitro, que mediou com nota $8{,}0$. O resultado final foi $9{,}00$ pontos --- uma nota alta para uma resposta factualmente incorreta.
+
+A diferença entre as condições neste caso foi de $\Delta = -5{,}25$ pontos. Esse resultado demonstra que o RAG funciona não apenas como ``gabarito contextual'' para reconhecimento de acertos parciais, mas sobretudo como \textbf{mecanismo de proteção contra erros de avaliação}: ao fornecer a referência correta, impede que o modelo de linguagem aceite respostas que ``parecem corretas'' mas contêm inversões conceituais. Sem o RAG, o LLM pode confundir conceitos com base em seu conhecimento geral, especialmente em respostas que utilizam terminologia técnica correta mas atribuída aos conceitos errados.
+
+Dos 12 casos avaliados, 11 tiveram notas idênticas em ambas as condições --- nos extremos da escala, o RAG não é necessário. Porém, no único caso ambíguo onde o aluno demonstrou conhecimento parcial com erros sutis, o RAG foi decisivo para uma avaliação correta. Em cenários com turmas reais, onde respostas ambíguas são mais frequentes, espera-se que o impacto do RAG seja proporcionalmente maior.
 
 \subsection{Análise}
 
