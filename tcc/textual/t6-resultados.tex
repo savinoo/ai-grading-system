@@ -285,13 +285,13 @@ O critério de sucesso da QA3 --- o árbitro deve ser acionado se e somente se $
 
 A distribuição das divergências observadas foi a seguinte: 6 respostas com divergência $0{,}00$ (concordância total), 4 respostas com divergência $0{,}25$, 1 resposta com divergência $0{,}38$ e 1 resposta com divergência $1{,}00$. A média das divergências absolutas foi de $0{,}20$ ponto, valor substancialmente inferior ao limiar de $2{,}0$.
 
-A alta concordância entre os corretores é um resultado relevante: sugere que, sob configuração determinística e com critérios de avaliação estruturados, o sistema é capaz de produzir avaliações consistentes sem necessidade de intervenção do mecanismo de arbitragem. Contudo, cabe ressalvar que esse resultado foi obtido com respostas sintéticas de níveis bem definidos; respostas reais de alunos, com maior ambiguidade e variação, poderiam produzir divergências mais frequentes, exercitando o mecanismo de arbitragem de forma mais extensiva.
+A alta concordância entre os corretores é um resultado relevante: sugere que, sob configuração de baixa estocasticidade e com critérios de avaliação estruturados, o sistema é capaz de produzir avaliações consistentes sem necessidade de intervenção do mecanismo de arbitragem. Contudo, cabe ressalvar que esse resultado foi obtido com respostas sintéticas de níveis bem definidos; respostas reais de alunos, com maior ambiguidade e variação, poderiam produzir divergências mais frequentes, exercitando o mecanismo de arbitragem de forma mais extensiva.
 
 
 \section{QA4 --- Estabilidade operacional}
 \label{sec:qa4}
 
-A quarta questão avaliativa verifica se, com configurações determinísticas (temperatura $= 0{,}0$), o sistema produz saídas com baixa variabilidade em execuções repetidas do mesmo caso. Conforme definido na metodologia, selecionou-se um subconjunto de $A_{rep}=4$ respostas (uma por nível de qualidade) e repetiu-se a correção $R=3$ vezes em cada condição.
+A quarta questão avaliativa verifica se, com configurações de baixa estocasticidade (temperatura $= 0{,}0$), o sistema produz saídas com baixa variabilidade em execuções repetidas do mesmo caso. Conforme definido na metodologia, selecionou-se um subconjunto de $A_{rep}=4$ respostas (uma por nível de qualidade) e repetiu-se a correção $R=3$ vezes em cada condição.
 
 \subsection{Resultados}
 
@@ -317,11 +317,11 @@ A \autoref{tab:qa4-estabilidade} apresenta as notas finais obtidas em cada repet
 
 \subsection{Análise}
 
-Nas execuções repetidas, a variação absoluta máxima observada foi de $0{,}21$ ponto (nível fraco), valor substancialmente inferior ao critério de sucesso definido na metodologia ($\leq 1{,}0$ ponto). Todos os quatro níveis de qualidade atenderam ao critério de estabilidade, confirmando que a configuração determinística (temperatura $0{,}0$) do modelo \texttt{gemini-2.5-flash} é eficaz para manter a reprodutibilidade das avaliações.
+Nas execuções repetidas, a variação absoluta máxima observada foi de $0{,}21$ ponto (nível fraco), valor substancialmente inferior ao critério de sucesso definido na metodologia ($\leq 1{,}0$ ponto). Todos os quatro níveis de qualidade atenderam ao critério de estabilidade, confirmando que a configuração de baixa estocasticidade (temperatura $0{,}0$) do modelo \texttt{gemini-2.5-flash} é eficaz para manter a reprodutibilidade das avaliações.
 
 A análise por nível de qualidade revela um padrão interessante: as respostas de melhor qualidade (excelente e adequada) apresentaram variações menores ($0{,}06$ e $0{,}02$ ponto, respectivamente), enquanto as respostas de menor qualidade (fraca e fora do tema) apresentaram variações ligeiramente maiores ($0{,}21$ e $0{,}17$ ponto). Esse comportamento pode ser explicado pelo fato de que respostas de alta qualidade ativam padrões de avaliação mais convergentes no modelo, ao passo que respostas fracas ou fora do tema introduzem maior ambiguidade na atribuição de notas parciais.
 
-Apesar dessa diferença relativa, mesmo a maior variação observada ($0{,}21$ ponto) representa uma oscilação inferior a 2,5\% da escala de 0 a 10, indicando um nível de estabilidade operacional adequado para uso em contextos educacionais. A configuração determinística demonstrou ser uma estratégia eficaz para minimizar o não determinismo inerente aos modelos de linguagem de grande porte, sem necessidade de mecanismos adicionais de estabilização como \textit{majority voting} ou médias de múltiplas execuções.
+Apesar dessa diferença relativa, mesmo a maior variação observada ($0{,}21$ ponto) representa uma oscilação inferior a 2,5\% da escala de 0 a 10, indicando um nível de estabilidade operacional adequado para uso em contextos educacionais. A configuração de baixa estocasticidade demonstrou ser uma estratégia eficaz para minimizar o não determinismo inerente aos modelos de linguagem de grande porte, sem necessidade de mecanismos adicionais de estabilização como \textit{majority voting} ou médias de múltiplas execuções.
 
 
 \section{Discussão integrada}

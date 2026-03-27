@@ -148,7 +148,7 @@ Para avaliar estabilidade (QA4), seleciona-se um subconjunto de \(A_{rep}=4\) re
         \textbf{Parâmetro} & \textbf{Valor/controle} \\
         \hline
         Modelo do LLM & Google Gemini / \texttt{gemini-2.5-flash} \\
-        Temperatura do LLM & \(0{,}0\) (configuração determinística; \texttt{LLM\_\allowbreak TEMPERATURE=0.0}) \\
+        Temperatura do LLM & \(0{,}0\) (baixa estocasticidade; \texttt{LLM\_\allowbreak TEMPERATURE=0.0}) \\
         Top-$k$ do RAG (Condição A) & \(k=4\) trechos recuperados por consulta (\texttt{RAG\_TOP\_\allowbreak K=4}) \\
         Top-$k$ do RAG (Condição B) & \(k=0\) (RAG desativado; controle equivalente) \\
         Limiar de divergência & \(2{,}0\) pontos na escala da questão (\texttt{DIVERGENCE\_\allowbreak THRESHOLD=2.0}) \\

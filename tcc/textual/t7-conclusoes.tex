@@ -19,7 +19,9 @@ Quanto à capacidade de discriminação, o sistema demonstrou coerência na atri
 
 Do ponto de vista arquitetural, a combinação de FastAPI para o \textit{backend}, LangGraph para orquestração do pipeline, LangChain para integração com LLMs e ChromaDB para armazenamento vetorial mostrou-se viável e extensível. A interface Streamlit, desenvolvida como ferramenta de observabilidade, permitiu a execução guiada do experimento completo e a exportação automatizada dos resultados em formato LaTeX.
 
-É importante reconhecer as limitações do estudo: o escopo restrito (uma disciplina, três questões, respostas sintéticas) não permite generalizações amplas sobre eficácia educacional ou desempenho comparativo com correção humana. Os resultados devem ser interpretados como evidência de viabilidade técnica e operacional do protótipo.
+Do ponto de vista prático, os resultados sugerem que um professor de uma disciplina como Algoritmos e Estrutura de Dados, ao utilizar o sistema com uma turma de dezenas de alunos, poderia obter uma pré-correção estruturada e revisável em minutos --- em contraste com as horas tipicamente necessárias para correção manual de provas discursivas. O sistema não substitui o julgamento docente, mas reduz a carga operacional ao direcionar o esforço humano para os casos mais ambíguos (sinalizados pelo mecanismo de divergência) e ao fornecer justificativas detalhadas que facilitam a revisão.
+
+É importante reconhecer as limitações do estudo: o escopo restrito (uma disciplina, três questões, respostas sintéticas) não permite generalizações amplas sobre eficácia educacional ou desempenho comparativo com correção humana. A ausência de \textit{ground truth} humano impede afirmar que as notas atribuídas pelo sistema são ``corretas'' --- apenas que são internamente consistentes e reprodutíveis. Os resultados devem ser interpretados como evidência de viabilidade técnica e operacional do protótipo, não como validação pedagógica conclusiva.
 
 \section{Trabalhos Futuros}
 
