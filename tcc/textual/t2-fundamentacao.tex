@@ -341,7 +341,7 @@ Um prompt, no contexto de LLMs, é mais do que uma simples pergunta; é uma inst
 \begin{enumerate}
     \item \textbf{\textit{Prompting Zero-Shot} e \textit{Few-Shot}:} A forma mais básica, onde o prompt contém apenas a instrução (\textit{zero-shot}) ou a instrução com alguns exemplos ilustrativos (\textit{few-shot}) para guiar o modelo.
 
-    \item \textbf{\textit{Prompting Chain-of-Thought} (CoT):} articularmente eficaz para tarefas que exigem raciocínio complexo, o CoT instrui o LLM a detalhar seu processo de pensamento passo a passo antes de chegar à resposta final. Isso melhora a capacidade de resolução de problemas do modelo \cite{wei_chain--thought_2023}.
+    \item \textbf{\textit{Prompting Chain-of-Thought} (CoT):} Particularmente eficaz para tarefas que exigem raciocínio complexo, o CoT instrui o LLM a detalhar seu processo de pensamento passo a passo antes de chegar à resposta final. Isso melhora a capacidade de resolução de problemas do modelo \cite{wei_chain--thought_2023}.
 
     \item \textbf{\textit{Self-Consistency}:} Uma extensão do CoT, onde múltiplas cadeias de pensamento são geradas para o mesmo problema, e a resposta final mais frequente entre elas é selecionada, aumentando a robustez \cite{wang_self-consistency_2023}.
 
@@ -370,9 +370,3 @@ A RAG aprimora os LLMs ao fundamentar suas respostas em informações relevantes
 A eficácia da RAG depende significativamente da qualidade dos \textit{embeddings} e da relevância dos documentos recuperados. Técnicas avançadas de RAG (\textit{Advanced RAG, Modular RAG}) buscam otimizar cada etapa, incluindo pré-processamento dos dados, estratégias de chunking, otimização dos modelos de embedding, técnicas de re-ranking dos documentos recuperados e métodos para refinar o prompt ou a resposta final \cite{gao_retrieval-augmented_2024}.
 
 No contexto da correção automática de provas discursivas, a RAG permite que o agente de IA "consulte" materiais específicos do curso, critérios de avaliação detalhados ou exemplos de respostas modelo (previamente indexados como \textit{embeddings}) antes de avaliar a resposta do aluno. Essa estratégia pode ajudar a fundamentar a correção no contexto específico da disciplina e nos critérios do professor, tendendo a aumentar a consistência e a explicabilidade da avaliação gerada pelo LLM.
-
-%\section{APLICAÇÕES DE IA NA CORREÇÃO DE PROVAS DISCURSIVAS}
-%\subsection{Sistemas Existentes de Correção Automática}
-%\subsection{Uso de LLMs na Avaliação de Respostas Abertas}
-%\subsection{Desafios e Limitações dos Sistemas Atuais}
-%\subsection{Perspectivas Futuras para Correção Automática}
