@@ -1,24 +1,44 @@
 \chapter{Conclusão}
 \label{cap:conclusão}
-%%%%%%%%%%%ALTERADO%%%%%%%
-Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean nec pulvinar libero, et pellentesque elit. Sed a congue sapien. Etiam pretium ligula sit amet blandit porttitor. Cras accumsan pretium eros ut imperdiet. Donec vel lacus ante. Quisque consectetur ligula sit amet leo accumsan lobortis gravida sit amet lacus. Integer a leo nisl. Mauris pretium fringilla lobortis. Ut condimentum, lorem vitae viverra tincidunt, est mauris ornare augue, ac semper mi lorem et enim. Vestibulum venenatis id sapien vel volutpat. Pellentesque ut porta nisi. Pellentesque mattis metus a quam congue, sit amet viverra ex auctor.
 
-Além disso, com a informação do tipo de material depositado pelo separador, o catador otimiza seu tempo, podendo ter um maior número de materiais recolhidos, e com a facilidade de escolher onde descartar o material separado, mais pessoas podem realizar a separação de materiais em suas rotinas. 
+Este trabalho apresentou o desenvolvimento e a avaliação de um sistema de correção automatizada de provas discursivas baseado em múltiplos agentes de Inteligência Artificial, com suporte à Recuperação Aumentada por Geração (RAG) e mecanismo de arbitragem por divergência. O objetivo principal foi implementar um protótipo funcional capaz de executar o fluxo completo --- da configuração da prova à disponibilização dos resultados para revisão docente --- produzindo artefatos estruturados e revisáveis (nota final, notas por critério e justificativas textuais).
 
-Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi pretium posuere augue nec varius. Sed ac sem in magna dapibus iaculis. Nam elementum neque eget tellus viverra scelerisque. Aenean ut posuere elit. Morbi eget erat non ante congue tempor eget id erat. Nulla quis luctus nulla. Mauris auctor vel magna sed ultrices. Integer in massa molestie, ornare urna id, viverra sem. Vivamus interdum, ligula eget convallis tempor, dui tellus tristique nibh, in interdum arcu sem a tellus. 
+Os resultados obtidos no estudo de caso controlado indicam que:
+
+\begin{enumerate}
+    \item \textbf{QA1 --- Execução \textit{end-to-end}:} o sistema completou todas as 13 etapas do fluxo sem falhas, processando e persistindo 100\% das respostas previstas (12/12), com completude estrutural de 100\%. Todas as correções produziram nota final, notas por critério e justificativa textual, atendendo ao critério de sucesso definido na metodologia.
+
+    \item \textbf{QA2 --- Utilidade do RAG:} a infraestrutura para comparação entre Condição A (com RAG) e Condição B (sem RAG) foi implementada e validada operacionalmente, incluindo \textit{toggle} de ativação/desativação, reutilização de dados entre condições e exportação automatizada dos resultados.
+
+    \item \textbf{QA3 --- Arbitragem por divergência:} o mecanismo de divergência funcionou conforme projetado: nenhuma das 12 respostas avaliadas apresentou diferença superior ao limiar de 2,0 pontos entre os corretores, resultando em taxa de arbitragem de 0\%. A maior divergência observada foi de 1,0 ponto, indicando alto grau de concordância entre os agentes corretores.
+
+    \item \textbf{QA4 --- Estabilidade operacional:} nas três repetições ($R=3$) do conjunto completo de respostas, a variação absoluta máxima observada foi de 0,21 pontos (nível ``Fraca''), bem abaixo do limiar de 1,0 ponto definido como critério de sucesso. Os níveis ``Excelente'' e ``Adequada'' apresentaram variação máxima de apenas 0,06 e 0,02 pontos, respectivamente, evidenciando alta reprodutibilidade.
+\end{enumerate}
+
+Quanto à capacidade de discriminação, o sistema demonstrou coerência na atribuição de notas conforme o nível de qualidade das respostas: respostas classificadas como ``Excelente'' receberam média de 9,80 pontos, ``Adequada'' 9,97, ``Fraca'' 2,30 e ``Fora do tema'' 0,28. Essa hierarquia é consistente com os perfis definidos na metodologia e sugere que o pipeline multiagente é capaz de distinguir diferentes níveis de qualidade.
+
+Do ponto de vista arquitetural, a combinação de FastAPI para o \textit{backend}, LangGraph para orquestração do pipeline, LangChain para integração com LLMs e ChromaDB para armazenamento vetorial mostrou-se viável e extensível. A interface Streamlit, desenvolvida como ferramenta de observabilidade, permitiu a execução guiada do experimento completo e a exportação automatizada dos resultados em formato LaTeX.
+
+É importante reconhecer as limitações do estudo: o escopo restrito (uma disciplina, três questões, respostas sintéticas geradas por IA) não permite generalizações amplas sobre eficácia educacional ou desempenho comparativo com correção humana. Os resultados devem ser interpretados como evidência de viabilidade técnica e operacional do protótipo.
 
 \section{Trabalhos Futuros}
 
-Maecenas id nisi vel neque tincidunt faucibus quis at nibh. Aenean consequat eleifend ultrices. Cras dui nibh, luctus a nibh ultrices, condimentum gravida diam. Cras dapibus sit amet mauris at pharetra. Vestibulum quis malesuada mi. Nunc pretium, neque at placerat maximus, urna nunc hendrerit urna, eget efficitur sem ipsum vel mauris. Donec eget efficitur eros, at cursus dolor.
+Com base nos resultados e limitações identificados, sugere-se as seguintes direções para trabalhos futuros:
 
 \begin{itemize}
-	\item Acrescentar todos os pontos de descarte no mapa;
-	\item Otimizar a rota através de algoritmos;
-	\item Aplicar filtros ao mapa, para que o catador possa visualizar somente os pontos pelo tipo de material selecionado;
-	\item Enviar notificações quando forem inseridos novos pontos de descarte e quando for sinalizado o recolhimento de um material;
-\setlength{\parskip}{9.96pt}
-	\item Adicionar outros métodos de \textit{login}, como por exemplo: o \textit{Facebook, }o \textit{Gmail }e o número de telefone;
-	\item Inserir uma rota dinâmica no programa, em função da localização instantânea do usuário.
+    \item \textbf{Validação com respostas humanas reais:} aplicar o sistema em turmas reais para avaliar a concordância entre notas atribuídas pela IA e notas atribuídas por docentes, utilizando métricas como coeficiente Kappa e correlação de Pearson.
+
+    \item \textbf{Estudo comparativo multi-modelo:} avaliar o desempenho do pipeline com diferentes provedores de LLM (OpenAI, Anthropic, modelos locais via Ollama), comparando qualidade das correções, tempo de resposta e custo operacional.
+
+    \item \textbf{Análise aprofundada do impacto do RAG:} executar o experimento A vs.\ B com um conjunto maior de questões e materiais didáticos, avaliando sistematicamente a ancoragem das justificativas ao conteúdo recuperado.
+
+    \item \textbf{Interface de revisão docente completa:} expandir a interface para incluir funcionalidades de ajuste de nota por critério, anotações do professor e relatórios pedagógicos (identificação de lacunas de aprendizado e tendências da turma).
+
+    \item \textbf{Paralelização do pipeline:} implementar execução paralela dos corretores (C1 e C2 simultâneos) e processamento em lote de múltiplas respostas, reduzindo o tempo total de correção para turmas grandes.
+
+    \item \textbf{Escalabilidade e implantação:} avaliar o sistema em cenários com dezenas de alunos e múltiplas provas simultâneas, otimizando gerenciamento de \textit{rate limits} e custos de API.
+
+    \item \textbf{Detecção de plágio e integridade acadêmica:} integrar mecanismos de detecção de similaridade entre respostas e de conteúdo gerado por IA, contribuindo para a integridade dos processos avaliativos.
 \end{itemize}
 
- \glsaddall
+\glsaddall
