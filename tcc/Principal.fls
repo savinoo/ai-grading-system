@@ -650,12 +650,25 @@ INPUT .\pre\03-assinaturas.tex
 INPUT .\pre\03-assinaturas.tex
 INPUT pre\03-assinaturas.tex
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmbx12.tfm
+INPUT .\pre\05-resumo.tex
+INPUT .\pre\05-resumo.tex
+INPUT .\pre\05-resumo.tex
+INPUT .\pre\05-resumo.tex
+INPUT pre\05-resumo.tex
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmss17.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmri12.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-rm.enc
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-mathit.enc
+INPUT .\pre\06-abstract.tex
+INPUT .\pre\06-abstract.tex
+INPUT .\pre\06-abstract.tex
+INPUT .\pre\06-abstract.tex
+INPUT pre\06-abstract.tex
 INPUT .\pre\07-figuras.tex
 INPUT .\pre\07-figuras.tex
 INPUT .\pre\07-figuras.tex
 INPUT .\pre\07-figuras.tex
 INPUT pre\07-figuras.tex
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmss17.tfm
 INPUT .\Principal.lof
 INPUT .\Principal.lof
 INPUT Principal.lof
@@ -675,7 +688,6 @@ INPUT pre\09-tabelas.tex
 INPUT .\Principal.lot
 INPUT .\Principal.lot
 INPUT Principal.lot
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmri12.tfm
 INPUT .\pre\11-siglas.tex
 INPUT .\pre\11-siglas.tex
 INPUT .\pre\11-siglas.tex
@@ -725,6 +737,7 @@ INPUT textual\t1-introducao.tex
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmr10.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmss17.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmri10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmr8.tfm
 INPUT .\textual\t2-fundamentacao.tex
 INPUT .\textual\t2-fundamentacao.tex
 INPUT .\textual\t2-fundamentacao.tex
@@ -784,8 +797,6 @@ INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.f
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt12.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmsso12.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt10.tfm
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-mathit.enc
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-rm.enc
 INPUT .\textual\t5-desenvolvimento.tex
 INPUT .\textual\t5-desenvolvimento.tex
 INPUT .\textual\t5-desenvolvimento.tex
@@ -812,6 +823,10 @@ INPUT .\media\pipeline.png
 INPUT .\media\pipeline.png
 INPUT .\media\pipeline.png
 INPUT .\media\pipeline.png
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\listings\lstlang1.sty
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\listings\lstlang1.sty
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\listings\lstlang1.sty
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt10.tfm
 INPUT .\media\er.png
 INPUT .\media\er.png
 INPUT .\media\er.png
@@ -825,6 +840,7 @@ INPUT .\textual\t6-resultados.tex
 INPUT .\textual\t6-resultados.tex
 INPUT textual\t6-resultados.tex
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmsso17.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ts1-lmri12.tfm
 INPUT .\Principal.bbl
 INPUT .\Principal.bbl
 INPUT Principal.bbl

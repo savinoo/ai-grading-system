@@ -105,30 +105,30 @@
 \contentsline {subsection}{\numberline {6.3.1}Comparação de notas}{73}{subsection.6.3.1}%
 \contentsline {subsection}{\numberline {6.3.2}Efeito do RAG sobre a precisão avaliativa}{75}{subsection.6.3.2}%
 \contentsline {subsection}{\numberline {6.3.3}Ancoragem das justificativas}{75}{subsection.6.3.3}%
-\contentsline {subsection}{\numberline {6.3.4}Exemplo comparativo de justificativas}{76}{subsection.6.3.4}%
+\contentsline {subsection}{\numberline {6.3.4}Estudo de caso: RAG como proteção contra erros de avaliação}{76}{subsection.6.3.4}%
 \contentsline {subsection}{\numberline {6.3.5}Análise}{76}{subsection.6.3.5}%
 \contentsline {section}{\numberline {6.4}QA3 --- Arbitragem por divergência}{77}{section.6.4}%
 \contentsline {subsection}{\numberline {6.4.1}Resultados}{77}{subsection.6.4.1}%
 \contentsline {subsection}{\numberline {6.4.2}Padrões de divergência}{78}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Efeito da arbitragem sobre a nota final}{78}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.3}Efeito da arbitragem sobre a nota final}{79}{subsection.6.4.3}%
 \contentsline {subsection}{\numberline {6.4.4}Análise}{79}{subsection.6.4.4}%
 \contentsline {section}{\numberline {6.5}QA4 --- Estabilidade operacional}{79}{section.6.5}%
-\contentsline {subsection}{\numberline {6.5.1}Resultados}{79}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.1}Resultados}{80}{subsection.6.5.1}%
 \contentsline {subsection}{\numberline {6.5.2}Análise}{80}{subsection.6.5.2}%
 \contentsline {section}{\numberline {6.6}Desempenho temporal}{80}{section.6.6}%
 \contentsline {subsection}{\numberline {6.6.1}Análise}{81}{subsection.6.6.1}%
-\contentsline {section}{\numberline {6.7}Discussão integrada}{81}{section.6.7}%
-\contentsline {subsection}{\numberline {6.7.1}Síntese dos critérios de sucesso}{81}{subsection.6.7.1}%
+\contentsline {section}{\numberline {6.7}Discussão integrada}{82}{section.6.7}%
+\contentsline {subsection}{\numberline {6.7.1}Síntese dos critérios de sucesso}{82}{subsection.6.7.1}%
 \contentsline {subsection}{\numberline {6.7.2}Viabilidade técnica}{82}{subsection.6.7.2}%
 \contentsline {subsection}{\numberline {6.7.3}Viabilidade operacional}{82}{subsection.6.7.3}%
 \contentsline {subsection}{\numberline {6.7.4}Contribuição do RAG}{83}{subsection.6.7.4}%
 \contentsline {subsection}{\numberline {6.7.5}Limitações observadas}{83}{subsection.6.7.5}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{85}{section*.35}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{85}{section*.39}%
 \setlength {\cftpartindent }{\cftlastnumwidth } \setlength {\cftpartnumwidth }{2em}
 \cftinsert {A}
-\contentsline {part}{Appendices}{91}{section*.36}%
+\contentsline {part}{Appendices}{91}{section*.40}%
 \renewcommand *{\cftappendixname }{AP\^ENDICE \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
