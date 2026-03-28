@@ -15,8 +15,7 @@
 	12pt,				% tamanho da fonte
 	openany,			% capítulos começam em pág ímpar openright (insere página vazia caso preciso)
 	oneside,			% para impressão em verso e anverso (twoside). Oposto a oneside 
-	a4paper,			% tamanho do papel. 
-	normalfigtabnum,
+	a4paper,			% tamanho do papel.
 	pnumromarab,
 	% -- opções da classe abntex2 --
 	chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
@@ -139,12 +138,12 @@
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{caption}
-\usepackage{ltablex}       % tabularx + longtable
+\usepackage{tabularx}      % tabelas com colunas X
+%\usepackage{ltablex}       % tabularx + longtable (desativado: causa dupla numeração)
 \usepackage{ragged2e}      % \RaggedRight
 \usepackage{pdflscape}     % landscape, se quiser girar a página
 \usepackage{changepage}
 \usepackage{tabu}
-\keepXColumns
 % ---
 
 

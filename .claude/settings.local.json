@@ -9,7 +9,8 @@
       "WebSearch",
       "WebFetch(domain:www.semanticscholar.org)",
       "WebFetch(domain:eric.ed.gov)",
-      "WebFetch(domain:www.aacu.org)"
+      "WebFetch(domain:www.aacu.org)",
+      "Bash(grep -n \"\\\\\\\\caption\\\\b\\\\|\\\\\\\\captionof\\\\b\\\\|hypcap\" \"c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/textual/t5-desenvolvimento.tex\")"
     ]
   }
 }

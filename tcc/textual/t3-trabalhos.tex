@@ -139,44 +139,51 @@ O processo de revisão sistemática da literatura adotado neste trabalho seguiu 
 Realizou-se uma busca por trabalhos publicados a partir de 2020, em inglês ou português, relacionados ao uso de IA para correção ou avaliação de textos discursivos em contextos educacionais. Foram considerados estudos revisados por pares (artigos de periódicos, anais de conferências) e literatura acadêmica (dissertações e teses). Aplicando os critérios de inclusão e exclusão, identificaram-se 12 publicações iniciais. Após seleção por título e resumo, 7 estudos foram mantidos para análise completa.
 
 A \autoref{tab:estudos} apresenta os 7 estudos analisados, com objetivos, metodologia, tecnologias de IA, tipo de avaliação, principais resultados e desafios.
-\begin{adjustwidth*}{0cm}{0cm}
-\captionsetup[table]{hypcap=false}
-\keepXColumns
 \small
 \setlength\LTcapwidth{\textwidth}
-
-\begin{tabularx}{\textwidth}{
+\begin{longtable}{
     >{\RaggedRight\arraybackslash}p{0.8cm}
     >{\RaggedRight\arraybackslash}p{2.5cm}
-    *{5}{>{\RaggedRight\arraybackslash}X}
+    >{\RaggedRight\arraybackslash}p{2.8cm}
+    >{\RaggedRight\arraybackslash}p{2.4cm}
+    >{\RaggedRight\arraybackslash}p{2.4cm}
+    >{\RaggedRight\arraybackslash}p{2.4cm}
+    >{\RaggedRight\arraybackslash}p{2.6cm}
 }
 \caption{Características dos estudos incluídos}
 \label{tab:estudos} \\
-      \toprule
-      \textbf{E} &\textbf{Autores} &\textbf{Objetivos e Contexto} & \textbf{Metodologia}
-        & \textbf{Tecnologias de IA}
-        & \textbf{Tipo de Avaliação e Métricas}
-        & \textbf{Principais Resultados e Desafios} \\
-      \midrule
-      \endhead
+\toprule
+\textbf{E} & \textbf{Autores} & \textbf{Objetivos e Contexto} & \textbf{Metodologia}
+    & \textbf{Tecnologias de IA}
+    & \textbf{Tipo de Avaliação e Métricas}
+    & \textbf{Principais Resultados e Desafios} \\
+\midrule
+\endfirsthead
+\caption*{\tablename\ \thetable{} -- \textit{(continuação)}} \\
+\toprule
+\textbf{E} & \textbf{Autores} & \textbf{Objetivos e Contexto} & \textbf{Metodologia}
+    & \textbf{Tecnologias de IA}
+    & \textbf{Tipo de Avaliação e Métricas}
+    & \textbf{Principais Resultados e Desafios} \\
+\midrule
+\endhead
 
-      % agora seu conteúdo:
-      E1 & \citeauthor{janumpally_role_2025} & Mapear aplicações de PLN/LLM na formação médica de residentes & Revisão de escopo (PRISMA); 20 estudos (2018–2024) & Técnicas de PLN e LLMs diversas & Avaliação de desempenho; análise de sentimento; métricas de acurácia & Redução de carga, melhora de consistência; riscos de viés e privacidade \\
-      \midrule
-      E2 & \citeauthor{li_applying_2024} & Avaliar LLMs em correção de redações de japonês L2 & Experimento comparativo com 1 400 textos; 5 abordagens & GPT-4, BERT, ferramentas tradicionais & Notas e proficiência; acurácia de anotação & GPT-4 superior; dependência de engenharia de prompt \\
-      \midrule
-      E3 & \citeauthor{xiao_human-ai_2025} & Sistema colaborativo Humano-IA para pontuação de ensaios em inglês L2 & Experimentos com GPT-4/GPT-3.5 afinado; co-avaliação com professores & GPT-4, GPT-3.5 \textit{fine-tuned} & Notas e \textit{feedback}; consistência e interpretabilidade & Melhora de avaliadores; necessidade de ampliar amostra \\
-    \midrule
-    E4  & \citeauthor{hutt_feedback_2024} & IA para avaliar qualidade de \textit{feedback} entre pares & Comparativo: modelo clássico versus LLM generativo & Modelo ML clássico; LLM generativo & Classificação da qualidade do \textit{feedback}; acurácia & ML tradicional um pouco melhor; LLM gera explicações ricas \\
-    \midrule
-    E5 & \citeauthor{avcu_employing_2025} & Revisão de modelos hierárquicos de avaliadores (HRMs) em  \textit{Automated Essay Scoring} (AES) & Revisão de escopo sobre HRMs e PLN & HRMs integrados com PLN/IA & Consistência interavaliador; viés de correção & Mitigação de vieses; alta complexidade computacional \\
-    \midrule
-    E6 & \citeauthor{fiki_setiawan_exploring_2025} & Ferramentas de IA no \textit{feedback} de escrita em inglês EFL & Estudo descritivo: Grammarly, QuillBot, Ginger & Ferramentas de PLN (Grammarly, QuillBot, Ginger) & Detecção de erros; qualidade das sugestões & Eficácia e dependência; uso como complemento \\
-    \midrule
-    E7 & \citeauthor{kitzie_ai-empowered_2024} & Painel sobre IA para apoiar doutorandos & Relato de painel com experientes e novatos & ChatGPT, Otter.ai, tradutores, etc. & Assistência em pesquisa e redação; produtividade & Maior eficiência; desafios de integridade acadêmica \\
-    \bottomrule
-\end{tabularx}
-\end{adjustwidth*}
+E1 & \citeauthor{janumpally_role_2025} & Mapear aplicações de PLN/LLM na formação médica de residentes & Revisão de escopo (PRISMA); 20 estudos (2018–2024) & Técnicas de PLN e LLMs diversas & Avaliação de desempenho; análise de sentimento; métricas de acurácia & Redução de carga, melhora de consistência; riscos de viés e privacidade \\
+\midrule
+E2 & \citeauthor{li_applying_2024} & Avaliar LLMs em correção de redações de japonês L2 & Experimento comparativo com 1 400 textos; 5 abordagens & GPT-4, BERT, ferramentas tradicionais & Notas e proficiência; acurácia de anotação & GPT-4 superior; dependência de engenharia de prompt \\
+\midrule
+E3 & \citeauthor{xiao_human-ai_2025} & Sistema colaborativo Humano-IA para pontuação de ensaios em inglês L2 & Experimentos com GPT-4/GPT-3.5 afinado; co-avaliação com professores & GPT-4, GPT-3.5 \textit{fine-tuned} & Notas e \textit{feedback}; consistência e interpretabilidade & Melhora de avaliadores; necessidade de ampliar amostra \\
+\midrule
+E4 & \citeauthor{hutt_feedback_2024} & IA para avaliar qualidade de \textit{feedback} entre pares & Comparativo: modelo clássico versus LLM generativo & Modelo ML clássico; LLM generativo & Classificação da qualidade do \textit{feedback}; acurácia & ML tradicional um pouco melhor; LLM gera explicações ricas \\
+\midrule
+E5 & \citeauthor{avcu_employing_2025} & Revisão de modelos hierárquicos de avaliadores (HRMs) em \textit{Automated Essay Scoring} (AES) & Revisão de escopo sobre HRMs e PLN & HRMs integrados com PLN/IA & Consistência interavaliador; viés de correção & Mitigação de vieses; alta complexidade computacional \\
+\midrule
+E6 & \citeauthor{fiki_setiawan_exploring_2025} & Ferramentas de IA no \textit{feedback} de escrita em inglês EFL & Estudo descritivo: Grammarly, QuillBot, Ginger & Ferramentas de PLN (Grammarly, QuillBot, Ginger) & Detecção de erros; qualidade das sugestões & Eficácia e dependência; uso como complemento \\
+\midrule
+E7 & \citeauthor{kitzie_ai-empowered_2024} & Painel sobre IA para apoiar doutorandos & Relato de painel com experientes e novatos & ChatGPT, Otter.ai, tradutores, etc. & Assistência em pesquisa e redação; produtividade & Maior eficiência; desafios de integridade acadêmica \\
+\bottomrule
+\end{longtable}
+\normalsize
 
 \section{Resultados e Discussões}
 A análise dos estudos selecionados revela tendências convergentes, que agrupamos em três eixos principais:

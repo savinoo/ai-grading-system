@@ -6,7 +6,6 @@
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase []{Introdução}}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Objetivos}{2}{section.1.1}%
@@ -44,98 +43,98 @@
 \contentsline {subsection}{\numberline {3.1.3}Procedimentos da Revisão Sistemática da Literatura}{28}{subsection.3.1.3}%
 \contentsline {section}{\numberline {3.2}Caracterização da Pesquisa}{29}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Resultados e Discussões}{31}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}LLMs e Avaliação Automatizada de Redações}{32}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.1}LLMs e Avaliação Automatizada de Redações}{31}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}IA na Geração e Avaliação de Feedback Educacional}{33}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Desafios e Considerações Éticas}{35}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.3}Desafios e Considerações Éticas}{34}{subsection.3.3.3}%
 \contentsline {section}{\numberline {3.4}Respostas às Questões de Pesquisa}{36}{section.3.4}%
 \contentsline {section}{\numberline {3.5}Considerações}{38}{section.3.5}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase []{Metodologia}}{41}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Tipo de Pesquisa}{41}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Processo de Correção de Prova}{41}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Subprocesso de Configuração da Prova}{45}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Subprocesso de Correção da Prova}{45}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Subprocesso de Correção da Resposta}{46}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Ferramentas e Tecnologias Utilizadas}{46}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Python}{46}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}FastAPI}{46}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Orquestração do fluxo com LangGraph}{47}{subsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.3.4}Agentes corretores com LangChain}{47}{subsection.4.3.4}%
-\contentsline {subsection}{\numberline {4.3.5}Integração com LLMs e provedores de \textit {embeddings}}{47}{subsection.4.3.5}%
-\contentsline {subsection}{\numberline {4.3.6}Recuperação de contexto e armazenamento vetorial}{47}{subsection.4.3.6}%
-\contentsline {subsection}{\numberline {4.3.7}Persistência relacional e migrações}{48}{subsection.4.3.7}%
-\contentsline {subsection}{\numberline {4.3.8}Conteinerização}{48}{subsection.4.3.8}%
-\contentsline {subsection}{\numberline {4.3.9}Ollama e Streamlit}{48}{subsection.4.3.9}%
-\contentsline {subsection}{\numberline {4.3.10}JSON (\textit {JavaScript Object Notation})}{48}{subsection.4.3.10}%
-\contentsline {section}{\numberline {4.4}Métodos de Avaliação}{48}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Objetivo da avaliação}{49}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}Questões avaliativas}{49}{subsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.4.3}Desenho do estudo}{49}{subsection.4.4.3}%
-\contentsline {subsection}{\numberline {4.4.4}Parâmetros experimentais}{50}{subsection.4.4.4}%
-\contentsline {subsection}{\numberline {4.4.5}Procedimento experimental}{51}{subsection.4.4.5}%
-\contentsline {subsection}{\numberline {4.4.6}Evidências coletadas}{51}{subsection.4.4.6}%
-\contentsline {subsection}{\numberline {4.4.7}Métricas simples}{52}{subsection.4.4.7}%
-\contentsline {subsection}{\numberline {4.4.8}Critérios de sucesso}{52}{subsection.4.4.8}%
-\contentsline {subsection}{\numberline {4.4.9}Ameaças à validade}{53}{subsection.4.4.9}%
-\contentsline {subsection}{\numberline {4.4.10}Reprodutibilidade}{53}{subsection.4.4.10}%
+\contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase []{Metodologia}}{40}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Tipo de Pesquisa}{40}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Processo de Correção de Prova}{40}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Subprocesso de Configuração da Prova}{44}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Subprocesso de Correção da Prova}{44}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Subprocesso de Correção da Resposta}{45}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Ferramentas e Tecnologias Utilizadas}{45}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Python}{45}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}FastAPI}{45}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Orquestração do fluxo com LangGraph}{46}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Agentes corretores com LangChain}{46}{subsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.3.5}Integração com LLMs e provedores de \textit {embeddings}}{46}{subsection.4.3.5}%
+\contentsline {subsection}{\numberline {4.3.6}Recuperação de contexto e armazenamento vetorial}{46}{subsection.4.3.6}%
+\contentsline {subsection}{\numberline {4.3.7}Persistência relacional e migrações}{47}{subsection.4.3.7}%
+\contentsline {subsection}{\numberline {4.3.8}Conteinerização}{47}{subsection.4.3.8}%
+\contentsline {subsection}{\numberline {4.3.9}Ollama e Streamlit}{47}{subsection.4.3.9}%
+\contentsline {subsection}{\numberline {4.3.10}JSON (\textit {JavaScript Object Notation})}{47}{subsection.4.3.10}%
+\contentsline {section}{\numberline {4.4}Métodos de Avaliação}{47}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Objetivo da avaliação}{48}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Questões avaliativas}{48}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Desenho do estudo}{48}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Parâmetros experimentais}{49}{subsection.4.4.4}%
+\contentsline {subsection}{\numberline {4.4.5}Procedimento experimental}{50}{subsection.4.4.5}%
+\contentsline {subsection}{\numberline {4.4.6}Evidências coletadas}{50}{subsection.4.4.6}%
+\contentsline {subsection}{\numberline {4.4.7}Métricas simples}{51}{subsection.4.4.7}%
+\contentsline {subsection}{\numberline {4.4.8}Critérios de sucesso}{51}{subsection.4.4.8}%
+\contentsline {subsection}{\numberline {4.4.9}Ameaças à validade}{52}{subsection.4.4.9}%
+\contentsline {subsection}{\numberline {4.4.10}Reprodutibilidade}{52}{subsection.4.4.10}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{Desenvolvimento}}{55}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Arquitetura do sistema}{55}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Backend}{56}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Processamento assíncrono e \textit {status} de rastreabilidade}{58}{subsection.5.2.1}%
-\contentsline {section}{\numberline {5.3}Pipeline de IA (RAG, correção e arbitragem)}{58}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Recuperação de contexto}{61}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Vantagens do desenho multiagente frente a uma correção monolítica}{62}{subsection.5.3.2}%
-\contentsline {subsection}{\numberline {5.3.3}Correção por agentes e saídas estruturadas}{63}{subsection.5.3.3}%
-\contentsline {subsection}{\numberline {5.3.4}Engenharia de \textit {prompts} dos agentes corretores}{63}{subsection.5.3.4}%
-\contentsline {section}{\numberline {5.4}Modelagem do banco de dados}{65}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}Justificativa das entidades e relações}{67}{subsection.5.4.1}%
-\contentsline {section}{\numberline {5.5}Integrações e decisões técnicas}{68}{section.5.5}%
-\contentsline {subsection}{\numberline {5.5.1}Integrações principais}{68}{subsection.5.5.1}%
-\contentsline {subsection}{\numberline {5.5.2}Infraestrutura de experimentação}{69}{subsection.5.5.2}%
-\contentsline {subsection}{\numberline {5.5.3}Disponibilização do código-fonte}{69}{subsection.5.5.3}%
-\contentsline {subsection}{\numberline {5.5.4}Decisões e \textit {trade-offs}}{69}{subsection.5.5.4}%
+\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{Desenvolvimento}}{54}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Arquitetura do sistema}{54}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Backend}{55}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Processamento assíncrono e \textit {status} de rastreabilidade}{57}{subsection.5.2.1}%
+\contentsline {section}{\numberline {5.3}Pipeline de IA (RAG, correção e arbitragem)}{57}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Recuperação de contexto}{60}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Vantagens do desenho multiagente frente a uma correção monolítica}{61}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Correção por agentes e saídas estruturadas}{62}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Engenharia de \textit {prompts} dos agentes corretores}{62}{subsection.5.3.4}%
+\contentsline {section}{\numberline {5.4}Modelagem do banco de dados}{64}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Justificativa das entidades e relações}{66}{subsection.5.4.1}%
+\contentsline {section}{\numberline {5.5}Integrações e decisões técnicas}{67}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Integrações principais}{67}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Infraestrutura de experimentação}{68}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}Disponibilização do código-fonte}{68}{subsection.5.5.3}%
+\contentsline {subsection}{\numberline {5.5.4}Decisões e \textit {trade-offs}}{68}{subsection.5.5.4}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados e Discussões}}{71}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Configuração do experimento}{71}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Respostas sintéticas}{72}{subsection.6.1.1}%
-\contentsline {section}{\numberline {6.2}QA1 --- Execução \textit {end-to-end}}{72}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Resultados}{73}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Análise}{74}{subsection.6.2.2}%
-\contentsline {section}{\numberline {6.3}QA2 --- Utilidade do RAG}{74}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Comparação de notas}{75}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Efeito do RAG sobre a precisão avaliativa}{76}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {6.3.3}Análise}{76}{subsection.6.3.3}%
-\contentsline {section}{\numberline {6.4}QA3 --- Arbitragem por divergência}{77}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Resultados}{77}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Padrões de divergência}{78}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Análise}{78}{subsection.6.4.3}%
-\contentsline {section}{\numberline {6.5}QA4 --- Estabilidade operacional}{79}{section.6.5}%
-\contentsline {subsection}{\numberline {6.5.1}Resultados}{79}{subsection.6.5.1}%
-\contentsline {subsection}{\numberline {6.5.2}Análise}{79}{subsection.6.5.2}%
-\contentsline {section}{\numberline {6.6}Desempenho temporal}{80}{section.6.6}%
-\contentsline {subsection}{\numberline {6.6.1}Análise}{80}{subsection.6.6.1}%
-\contentsline {section}{\numberline {6.7}Discussão integrada}{81}{section.6.7}%
-\contentsline {subsection}{\numberline {6.7.1}Síntese dos critérios de sucesso}{81}{subsection.6.7.1}%
-\contentsline {subsection}{\numberline {6.7.2}Viabilidade técnica}{81}{subsection.6.7.2}%
-\contentsline {subsection}{\numberline {6.7.3}Viabilidade operacional}{82}{subsection.6.7.3}%
-\contentsline {subsection}{\numberline {6.7.4}Contribuição do RAG}{82}{subsection.6.7.4}%
-\contentsline {subsection}{\numberline {6.7.5}Limitações observadas}{83}{subsection.6.7.5}%
+\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados e Discussões}}{70}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Configuração do experimento}{70}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Respostas sintéticas}{71}{subsection.6.1.1}%
+\contentsline {section}{\numberline {6.2}QA1 --- Execução \textit {end-to-end}}{71}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Resultados}{72}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Análise}{73}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}QA2 --- Utilidade do RAG}{73}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Comparação de notas}{74}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Efeito do RAG sobre a precisão avaliativa}{74}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Análise}{75}{subsection.6.3.3}%
+\contentsline {section}{\numberline {6.4}QA3 --- Arbitragem por divergência}{76}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Resultados}{76}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Padrões de divergência}{77}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Análise}{77}{subsection.6.4.3}%
+\contentsline {section}{\numberline {6.5}QA4 --- Estabilidade operacional}{78}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Resultados}{78}{subsection.6.5.1}%
+\contentsline {subsection}{\numberline {6.5.2}Análise}{78}{subsection.6.5.2}%
+\contentsline {section}{\numberline {6.6}Desempenho temporal}{79}{section.6.6}%
+\contentsline {subsection}{\numberline {6.6.1}Análise}{79}{subsection.6.6.1}%
+\contentsline {section}{\numberline {6.7}Discussão integrada}{80}{section.6.7}%
+\contentsline {subsection}{\numberline {6.7.1}Síntese dos critérios de sucesso}{80}{subsection.6.7.1}%
+\contentsline {subsection}{\numberline {6.7.2}Viabilidade técnica}{80}{subsection.6.7.2}%
+\contentsline {subsection}{\numberline {6.7.3}Viabilidade operacional}{81}{subsection.6.7.3}%
+\contentsline {subsection}{\numberline {6.7.4}Contribuição do RAG}{81}{subsection.6.7.4}%
+\contentsline {subsection}{\numberline {6.7.5}Limitações observadas}{82}{subsection.6.7.5}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Conclusão}}{84}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Trabalhos Futuros}{85}{section.7.1}%
+\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Conclusão}}{83}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Trabalhos Futuros}{84}{section.7.1}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{87}{section*.44}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{86}{section*.41}%
 \setlength {\cftpartindent }{\cftlastnumwidth } \setlength {\cftpartnumwidth }{2em}
 \cftinsert {A}
-\contentsline {part}{Appendices}{93}{section*.45}%
+\contentsline {part}{Appendices}{92}{section*.42}%
 \renewcommand *{\cftappendixname }{AP\^ENDICE \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{94}{appendix.A}%
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{93}{appendix.A}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{Prompts completos}}{95}{appendix.B}%
+\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{Prompts completos}}{94}{appendix.B}%
