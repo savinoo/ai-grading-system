@@ -322,10 +322,22 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                 raw_weighted_sum, total_max_weighted, question_points, corrected_final_score, final_score
             )
 
-            # === 5. Extrair notas individuais dos corretores ===
-            c1_total = correction_1.total_score if correction_1 else None
-            c2_total = correction_2.total_score if correction_2 else None
-            arb_total = correction_arbiter.total_score if correction_arbiter else None
+            # === 5. Calcular notas individuais dos corretores com a mesma normalização ===
+            # Usa os criteria_scores de cada corretor individual ponderados e normalizados,
+            # garantindo consistência com o campo `score` (corrected_final_score).
+            def _normalized_score(correction: AgentCorrection) -> Optional[float]:
+                if correction is None:
+                    return None
+                raw_sum = sum(
+                    cs.score * weight_map.get(cs.criterion, 1.0)
+                    for cs in correction.criteria_scores
+                    if criteria_map.get(cs.criterion)
+                )
+                return raw_sum * scale_factor
+
+            c1_total = _normalized_score(correction_1)
+            c2_total = _normalized_score(correction_2)
+            arb_total = _normalized_score(correction_arbiter)
 
             # Determinar método de consenso
             if correction_arbiter:
