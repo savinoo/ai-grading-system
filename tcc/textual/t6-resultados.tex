@@ -1,7 +1,7 @@
 \chapter{Resultados e Discussões}
 \label{cap:resultados}
 
-Este capítulo apresenta os resultados obtidos a partir da execução do procedimento experimental descrito no \autoref{cap:metodologia}. A avaliação seguiu o desenho de estudo de caso controlado, com duas condições --- Condição A (com RAG) e Condição B (sem RAG) --- aplicadas sobre o \textbf{mesmo conjunto pareado} de respostas: uma prova com $Q=3$ questões discursivas e $A=4$ respostas sintéticas por questão, totalizando 12 respostas avaliadas em ambas as condições. Os corretores C1 e C2 foram executados em \textbf{paralelo} via LangGraph, e os \textit{prompts} de correção foram otimizados (v3) para tratamento de casos-limite, especificidade graduada e arbitragem independente. Os resultados são organizados de acordo com as questões avaliativas (QA1 a QA4), seguidos de uma análise de desempenho temporal e de uma discussão integrada.
+Este capítulo apresenta os resultados obtidos a partir da execução do procedimento experimental descrito no \autoref{cap:metodologia}. A avaliação seguiu o desenho de estudo de caso controlado, com duas condições --- Condição A (com RAG) e Condição B (sem RAG) --- aplicadas sobre o \textbf{mesmo conjunto pareado} de respostas: uma prova com $Q=3$ questões discursivas e $A=4$ respostas sintéticas por questão, totalizando 12 respostas avaliadas em ambas as condições. Os corretores C1 e C2 foram executados em \textbf{paralelo} via LangGraph, especificidade graduada e arbitragem independente. Os resultados são organizados de acordo com as questões avaliativas (QA1 a QA4), seguidos de uma análise de desempenho temporal e de uma discussão integrada.
 
 \section{Configuração do experimento}
 
@@ -281,7 +281,7 @@ A \autoref{tab:qa3-divergencia-completa} apresenta a verificação de divergênc
     \caption{Verificação de divergência --- Condição A (com RAG)}
     \label{tab:qa3-divergencia-completa}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.08\textwidth}@{\hspace{3pt}}p{0.12\textwidth}@{\hspace{3pt}}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{}}
+    \begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{6pt}}p{0.08\textwidth}@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{}}
         \hline
         \textbf{Q} & \textbf{Nível} & \textbf{C1} & \textbf{C2} & \textbf{$|$C1$-$C2$|$} & \textbf{Árbitro?} & \textbf{Final} \\
         \hline
@@ -309,7 +309,7 @@ A \autoref{tab:qa3-divergencia-casos} apresenta os cinco casos em que a divergê
     \caption{Casos de divergência e acionamento do árbitro}
     \label{tab:qa3-divergencia-casos}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{3pt}}p{0.06\textwidth}@{\hspace{3pt}}p{0.12\textwidth}@{\hspace{3pt}}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{\hspace{3pt}}c@{}}
+    \begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{6pt}}p{0.08\textwidth}@{\hspace{6pt}}p{0.12\textwidth}@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{}}
         \hline
         \textbf{Condição} & \textbf{Q} & \textbf{Nível} & \textbf{C1} & \textbf{C2} & \textbf{$|$C1$-$C2$|$} & \textbf{Final} \\
         \hline

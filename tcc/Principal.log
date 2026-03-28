@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  27 MAR 2026 19:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  27 MAR 2026 23:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1899,7 +1899,7 @@ Overfull \hbox (2.35287pt too wide) in paragraph at lines 178--178
 [29]
 ignored: Infinite glue shrinkage found in box being split [30] [31] [32] [33] [34] [35] [36] [37] [38] [39]) (textual/t4-material.tex [40]
 Cap\'{\i }tulo 4.
-<media/fluxo-configuracao.jpg, id=1019, 755.82375pt x 1059.96pt>
+<media/fluxo-configuracao.jpg, id=1021, 755.82375pt x 1059.96pt>
 File: media/fluxo-configuracao.jpg Graphic file (type jpg)
 <use media/fluxo-configuracao.jpg>
 Package pdftex.def Info: media/fluxo-configuracao.jpg  used on input line 21.
@@ -1907,13 +1907,13 @@ Package pdftex.def Info: media/fluxo-configuracao.jpg  used on input line 21.
 [41
 
 ]
-<media/fluxo-correcao-prova.jpg, id=1025, 824.07875pt x 1295.84125pt>
+<media/fluxo-correcao-prova.jpg, id=1027, 824.07875pt x 1295.84125pt>
 File: media/fluxo-correcao-prova.jpg Graphic file (type jpg)
 <use media/fluxo-correcao-prova.jpg>
 Package pdftex.def Info: media/fluxo-correcao-prova.jpg  used on input line 29.
 (pdftex.def)             Requested size: 405.22302pt x 637.20212pt.
  [42 <./media/fluxo-configuracao.jpg>]
-<media/fluxo-correcao-pergunta.jpg, id=1031, 487.8225pt x 934.49126pt>
+<media/fluxo-correcao-pergunta.jpg, id=1033, 487.8225pt x 934.49126pt>
 File: media/fluxo-correcao-pergunta.jpg Graphic file (type jpg)
 <use media/fluxo-correcao-pergunta.jpg>
 Package pdftex.def Info: media/fluxo-correcao-pergunta.jpg  used on input line 37.
@@ -1934,72 +1934,102 @@ Underfull \hbox (badness 2799) in paragraph at lines 159--159
 []|$\OT1/lmr/m/n/10.95 (+20) 2[]0$ \T1/lmr/m/n/10.95 (+20) pon-tos na es-cala da ques-tão (\T1/lmtt/m/n/10.95 DIVERGENCE_
  []
 
-[50] [51] [52]) (textual/t5-desenvolvimento.tex [53]
+[50] [51] [52]) (textual/t5-desenvolvimento.tex [53] [54]
 Cap\'{\i }tulo 5.
-<media/arquitetura_sistema.png, id=1146, 1276.77pt x 523.9575pt>
+<media/arquitetura_sistema.png, id=1152, 1276.77pt x 523.9575pt>
 File: media/arquitetura_sistema.png Graphic file (type png)
 <use media/arquitetura_sistema.png>
 Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 15.
 (pdftex.def)             Requested size: 455.0pt x 186.72176pt.
-[54
+[55
 
- <./media/arquitetura_sistema.png>] [55]
-<media/fluxo_requisicao.png, id=1158, 1102.1175pt x 519.9425pt>
+ <./media/arquitetura_sistema.png>] [56]
+<media/fluxo_requisicao.png, id=1164, 1102.1175pt x 519.9425pt>
 File: media/fluxo_requisicao.png Graphic file (type png)
 <use media/fluxo_requisicao.png>
 Package pdftex.def Info: media/fluxo_requisicao.png  used on input line 84.
 (pdftex.def)             Requested size: 454.99905pt x 214.65347pt.
- [56 <./media/fluxo_requisicao.png>] [57]
-<media/pipeline.png, id=1171, 362.35374pt x 512.91624pt>
+ [57 <./media/fluxo_requisicao.png>] [58]
+<media/pipeline.png, id=1177, 362.35374pt x 512.91624pt>
 File: media/pipeline.png Graphic file (type png)
 <use media/pipeline.png>
 Package pdftex.def Info: media/pipeline.png  used on input line 122.
 (pdftex.def)             Requested size: 250.08517pt x 353.99869pt.
- [58] (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+ [59] (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
-) [59 <./media/pipeline.png>] [60] [61] [62] [63]
-<media/er.png, id=1231, 1439.3775pt x 1887.05pt>
+) [60 <./media/pipeline.png>] [61] [62] [63] [64]
+<media/er.png, id=1238, 1439.3775pt x 1887.05pt>
 File: media/er.png Graphic file (type png)
 <use media/er.png>
-Package pdftex.def Info: media/er.png  used on input line 219.
+Package pdftex.def Info: media/er.png  used on input line 220.
 (pdftex.def)             Requested size: 455.0pt x 596.49707pt.
- [64] [65 <./media/er.png>] [66] [67]
-Overfull \hbox (33.05478pt too wide) in paragraph at lines 275--276
+ [65] [66 <./media/er.png>] [67] [68]
+Overfull \hbox (33.05478pt too wide) in paragraph at lines 276--277
 []\T1/lmr/m/n/12 (-20) Esses mó-du-los ope-ram de forma in-de-pen-dente do \T1/lmr/m/it/12 (-20) bac-kend \T1/lmr/m/n/12 (-20) prin-ci-pal (Fas-tAPI/PostgreSQL),
  []
 
-[68]) (textual/t6-resultados.tex [69]
+[69]) (textual/t6-resultados.tex [70]
 Cap\'{\i }tulo 6.
-[70
+[71
 
 ]
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <17.28> not available
 (Font)              Font shape `T1/lmss/m/sl' tried instead on input line 71.
- [71]
+ [72]
 Overfull \hbox (16.95021pt too wide) in alignment at lines 133--133
  [] [] [] [] [] [] [] 
  []
 
-[72] [73] [74]
+[73] [74] [75]
 
-LaTeX Warning: Citation `jonsson2007' on page 75 undefined on input line 213.
+LaTeX Warning: Citation `jonsson2007' on page 76 undefined on input line 213.
 
-[75] [76]
-Overfull \hbox (8.6489pt too wide) in paragraph at lines 301--301
+[76] [77]
+Overfull \hbox (8.45503pt too wide) in paragraph at lines 301--301
+[]|\T1/lmr/m/n/10.95 (-20) Excelente| 
+ []
+
+
+Overfull \hbox (26.84584pt too wide) in paragraph at lines 301--301
 []|\T1/lmr/m/n/10.95 (-20) Intermediária| 
  []
 
 
-Overfull \hbox (8.6489pt too wide) in paragraph at lines 301--301
+Underfull \hbox (badness 10000) in paragraph at lines 301--301
+[]|\T1/lmr/m/n/10.95 (+20) Fora
+ []
+
+
+Overfull \hbox (8.45503pt too wide) in paragraph at lines 301--301
+[]|\T1/lmr/m/n/10.95 (-20) Excelente| 
+ []
+
+
+Overfull \hbox (26.84584pt too wide) in paragraph at lines 301--301
 []|\T1/lmr/m/n/10.95 (-20) Intermediária| 
  []
 
 
-Overfull \hbox (8.6489pt too wide) in paragraph at lines 301--301
+Underfull \hbox (badness 10000) in paragraph at lines 301--301
+[]|\T1/lmr/m/n/10.95 (+20) Fora
+ []
+
+
+Overfull \hbox (8.45503pt too wide) in paragraph at lines 301--301
+[]|\T1/lmr/m/n/10.95 (-20) Excelente| 
+ []
+
+
+Overfull \hbox (26.84584pt too wide) in paragraph at lines 301--301
 []|\T1/lmr/m/n/10.95 (-20) Intermediária| 
  []
 
-[77]
+
+Underfull \hbox (badness 10000) in paragraph at lines 301--301
+[]|\T1/lmr/m/n/10.95 (+20) Fora
+ []
+
+[78]
 Overfull \hbox (8.6489pt too wide) in paragraph at lines 322--322
 []|\T1/lmr/m/n/10.95 (-20) Intermediária| 
  []
@@ -2029,40 +2059,261 @@ Overfull \hbox (8.6489pt too wide) in paragraph at lines 322--322
 []|\T1/lmr/m/n/10.95 (-20) Intermediária| 
  []
 
-[78] [79] [80]
+[79] [80] [81]
 
-LaTeX Warning: Citation `brown2015' on page 81 undefined on input line 426.
+LaTeX Warning: Citation `brown2015' on page 82 undefined on input line 426.
 
-[81] [82] [83]
+[82] [83] [84]
 Overfull \hbox (27.81593pt too wide) in paragraph at lines 492--493
 []\T1/lmr/bx/n/12 (-20) Modelo único: \T1/lmr/m/n/12 (-20) To-dos os ex-pe-ri-men-tos fo-ram re-a-li-za-dos com o mo-delo \T1/lmtt/m/n/12 gemini-2.5-flash\T1/lmr/m/n/12 (-20) .
  []
 
-) (textual/t7-conclusoes.tex [84]
+) (textual/t7-conclusoes.tex [85]
 Cap\'{\i }tulo 7.
-[85
+[86
 
-] [86]) (Principal.bbl (Principal.brf)
+] [87]) (Principal.bbl (Principal.brf)
 \tf@brf=\write6
 \openout6 = `Principal.brf'.
 
- [87]
+ [88]
 bibitemlist
-[88
+[89
 
-] [89] [90] [91] [92]) [93] [94
+] [90] [91] [92] [93]) [94] [95
 
 
 ] (pos/apendice-schema-completo.tex
 AP\^ENDICE A.
-<media/sql_schemas.png, id=1615, 1330.9725pt x 1216.545pt>
+<media/sql_schemas.png, id=1622, 1330.9725pt x 1216.545pt>
 File: media/sql_schemas.png Graphic file (type png)
 <use media/sql_schemas.png>
 Package pdftex.def Info: media/sql_schemas.png  used on input line 8.
 (pdftex.def)             Requested size: 454.98206pt x 415.86595pt.
-) [95
+) (pos/apendice-prompts.tex [96
 
  <./media/sql_schemas.png (PNG copy)>]
+AP\^ENDICE B.
+
+Overfull \hbox (32.82524pt too wide) in paragraph at lines 24--24
+[]\T1/lmtt/m/n/12 # -----------------------------------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (32.82524pt too wide) in paragraph at lines 26--26
+[]\T1/lmtt/m/n/12 # -----------------------------------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (193.37532pt too wide) in paragraph at lines 29--29
+[]\T1/lmtt/m/n/12 Você é um Especialista em Avaliação Educacional com foco em correção de provas discursivas de Engenharia.[] 
+ []
+
+
+Overfull \hbox (588.57552pt too wide) in paragraph at lines 30--30
+[]\T1/lmtt/m/n/12 Sua tarefa é avaliar a resposta de um aluno para uma questão técnica, baseando-se no contexto fornecido e na rubrica de avaliação, mas mantendo flexibilidade pedagógica.[] 
+ []
+
+
+Overfull \hbox (755.3006pt too wide) in paragraph at lines 33--33
+[]\T1/lmtt/m/n/12 1. **Uso do Contexto (RAG):** O material didático fornecido abaixo é sua REFERÊNCIA PRINCIPAL para validar a terminologia e o escopo esperado. NO ENTANTO, você NÃO deve se restringir apenas a ele.[] 
+ []
+
+
+Overfull \hbox (588.57552pt too wide) in paragraph at lines 34--34
+[]   \T1/lmtt/m/n/12 - Se a resposta do aluno estiver **tecnicamente correta** e atender ao enunciado, considere-a válida mesmo que use outros exemplos ou palavras diferentes do material.[] 
+ []
+
+
+Overfull \hbox (113.10028pt too wide) in paragraph at lines 35--35
+[]   \T1/lmtt/m/n/12 - Sua prioridade é verificar se o aluno **compreendeu o conceito** solicitado na questão.[] 
+ []
+
+
+Overfull \hbox (316.87538pt too wide) in paragraph at lines 36--36
+[]   \T1/lmtt/m/n/12 - Apenas rejeite informações externas válidas se elas **contradisserem** o material base ou forem factualmente incorretas.[] 
+ []
+
+
+Overfull \hbox (45.17525pt too wide) in paragraph at lines 37--37
+[]\T1/lmtt/m/n/12 2. **Avaliação de Especificidade:** Avalie o nível de especificidade da resposta:[] 
+ []
+
+[97
+
+]
+LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 38.
+ (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmtt.fd
+File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `lmtt' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+Package microtype Info: Character `texttrademark ' is missing
+(microtype)             in font `TS1/lmtt/m/n/12'.
+(microtype)             Ignoring protrusion settings for this character.
+
+Overfull \hbox (131.62529pt too wide) in paragraph at lines 39--39
+[]   \T1/lmtt/m/n/12 (b) Resposta correta mas genérica (usa conceitos certos sem detalhe) \TS1/lmtt/m/n/12 ^^Y \T1/lmtt/m/n/12 nota parcial (50-75%)[] 
+ []
+
+
+Overfull \hbox (69.87526pt too wide) in paragraph at lines 40--40
+[]   \T1/lmtt/m/n/12 (c) Resposta vaga que poderia se aplicar a qualquer contexto \TS1/lmtt/m/n/12 ^^Y \T1/lmtt/m/n/12 nota mínima (0-25%)[] 
+ []
+
+
+Overfull \hbox (143.9753pt too wide) in paragraph at lines 41--41
+[]   \T1/lmtt/m/n/12 (d) Embromação deliberada (frases vazias, clichês, nenhum conceito técnico) \TS1/lmtt/m/n/12 ^^Y \T1/lmtt/m/n/12 zero no critério[] 
+ []
+
+
+Overfull \hbox (557.7005pt too wide) in paragraph at lines 42--42
+[]\T1/lmtt/m/n/12 3. **Chain-of-Thought (CoT):** Antes de atribuir qualquer nota, você deve desenvolver um raciocínio passo-a-passo. Analise cada critério da rubrica individualmente.[] 
+ []
+
+
+Overfull \hbox (1101.10077pt too wide) in paragraph at lines 43--43
+[]\T1/lmtt/m/n/12 4. **Feedback Pedagógico:** Seu feedback deve ser PROFISSIONAL e OBJETIVO. Aponte erros com precisão técnica, indique o que faltou, e sugira o caminho correto em no máximo 3 frases. Evite elogios vazios, mas reconheça acertos parciais quando existirem.[] 
+ []
+
+
+Overfull \hbox (255.12535pt too wide) in paragraph at lines 44--44
+[]\T1/lmtt/m/n/12 5. **Formato de Saída:** Sua resposta deve ser estritamente um objeto JSON válido que respeite o schema solicitado.[] 
+ []
+
+
+Overfull \hbox (619.45053pt too wide) in paragraph at lines 47--47
+[]\T1/lmtt/m/n/12 - **Resposta em branco ou trivial** (ex: "não sei", ".", frases sem conteúdo técnico): Atribua 0 em todos os critérios. No feedback, indique que a questão não foi respondida.[] 
+ []
+
+
+Overfull \hbox (712.07558pt too wide) in paragraph at lines 48--48
+[]\T1/lmtt/m/n/12 - **Resposta completamente fora do tema** (responde sobre assunto diferente do enunciado): Atribua 0 em todos os critérios. No feedback, indique que a resposta não aborda o tema solicitado.[] 
+ []
+
+
+Overfull \hbox (749.1256pt too wide) in paragraph at lines 49--49
+[]\T1/lmtt/m/n/12 - **Cópia literal do material sem elaboração própria**: Atribua nota parcial (50%). No feedback, indique que copiar não demonstra compreensão; o aluno deveria explicar com suas próprias palavras.[] 
+ []
+
+
+Overfull \hbox (205.72533pt too wide) in paragraph at lines 66--66
+[]\T1/lmtt/m/n/12 Primeiro, verifique se a resposta aborda o tema da questão. Se não abordar, atribua 0 a todos os critérios.[] 
+ []
+
+
+Overfull \hbox (1385.15091pt too wide) in paragraph at lines 70--70
+[]\T1/lmtt/m/n/12 - `criteria_scores`: Um objeto com a NOTA EFETIVA atribuída para cada critério na escala ABSOLUTA de 0 até o peso máximo do critério. IMPORTANTE: Use a escala ABSOLUTA, NÃO normalizada (0-1). Exemplo: Se o critério vale 4.0 pontos e o aluno acertou parcialmente (75%), atribua 3.0 pontos, NÃO 0.75.[] 
+ []
+
+
+Overfull \hbox (786.17561pt too wide) in paragraph at lines 71--71
+[]\T1/lmtt/m/n/12 - `total_score`: A soma simples e EXATA das notas atribuídas em `criteria_scores`. Não arredonde, não ajuste. Se a soma der 7.3, o total_score é 7.3. A nota final DEVE estar na escala de 0 a 10 pontos.[] 
+ []
+
+
+Overfull \hbox (1107.27577pt too wide) in paragraph at lines 72--72
+[]\T1/lmtt/m/n/12 - `reasoning_chain`: Seu processo de pensamento detalhado. Analise CADA critério separadamente. AO FINAL da explicação de cada critério, coloque a nota atribuída entre colchetes (Ex: "...por isso está correto. [Nota: 2.5/3.0]"). NÃO faça somas no texto.[] 
+ []
+
+
+Overfull \hbox (76.05026pt too wide) in paragraph at lines 73--73
+[]\T1/lmtt/m/n/12 - `feedback_text`: Feedback direto e profissional para o aluno, em no máximo 3 frases.[] 
+ []
+
+
+Overfull \hbox (32.82524pt too wide) in paragraph at lines 76--76
+[]\T1/lmtt/m/n/12 # -----------------------------------------------------------------------------[] 
+ []
+
+[98]
+Overfull \hbox (32.82524pt too wide) in paragraph at lines 78--78
+[]\T1/lmtt/m/n/12 # -----------------------------------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (298.35037pt too wide) in paragraph at lines 82--82
+[]\T1/lmtt/m/n/12 Foi detectada uma DIVERGÊNCIA significativa entre dois avaliadores (Corretor 1 e Corretor 2) sobre a resposta de um aluno.[] 
+ []
+
+
+Overfull \hbox (329.22539pt too wide) in paragraph at lines 84--84
+[]\T1/lmtt/m/n/12 Sua tarefa é analisar a resposta do aluno, o contexto, e as avaliações conflitantes para emitir um veredito final de desempate.[] 
+ []
+
+
+Overfull \hbox (922.02568pt too wide) in paragraph at lines 92--92
+[]\T1/lmtt/m/n/12 1. **Avaliação Independente PRIMEIRO:** Antes de considerar as avaliações dos corretores, analise a resposta do aluno usando o contexto e a rubrica. Forme sua própria opinião sobre cada critério e atribua notas provisórias.[] 
+ []
+
+
+Overfull \hbox (335.40039pt too wide) in paragraph at lines 93--93
+[]\T1/lmtt/m/n/12 2. **Reconciliação:** SOMENTE APÓS formar sua avaliação independente, compare com o reasoning_chain dos corretores. Identifique:[] 
+ []
+
+
+Overfull \hbox (1.95023pt too wide) in paragraph at lines 96--96
+[]   \T1/lmtt/m/n/12 - Se algum corretor aluciou regras inexistentes ou ignorou erros graves[] 
+ []
+
+
+Overfull \hbox (458.90045pt too wide) in paragraph at lines 97--97
+[]\T1/lmtt/m/n/12 3. **Veredito Final:** Sua nota final pode coincidir com C1, com C2, ou ser completamente diferente. NÃO busque uma "média" ^^V busque a nota CORRETA.[] 
+ []
+
+[99]
+Overfull \hbox (335.40039pt too wide) in paragraph at lines 120--120
+[]\T1/lmtt/m/n/12 Gere um JSON final (formato `AgentCorrection`) com sua avaliação de desempate. O campo `agent_id` deve ser "corretor_3_arbiter".[] 
+ []
+
+
+Overfull \hbox (563.8755pt too wide) in paragraph at lines 121--121
+[]\T1/lmtt/m/n/12 IMPORTANTE: Atribua notas na escala ABSOLUTA (0 até o peso máximo do critério), NÃO normalizada (0-1). O `total_score` DEVE ser a soma exata das notas dos critérios.[] 
+ []
+
+
+Overfull \hbox (1027.00073pt too wide) in paragraph at lines 122--122
+[]\T1/lmtt/m/n/12 No campo `reasoning_chain`, primeiro apresente sua avaliação independente, depois compare com as avaliações de C1 e C2, e justifique sua decisão final para cada critério com nota entre colchetes (ex: "...melhor explicado. [Nota: 2.5/3.0]").[] 
+ []
+
+
+Overfull \hbox (32.82524pt too wide) in paragraph at lines 125--125
+[]\T1/lmtt/m/n/12 # -----------------------------------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (32.82524pt too wide) in paragraph at lines 127--127
+[]\T1/lmtt/m/n/12 # -----------------------------------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (82.22527pt too wide) in paragraph at lines 131--131
+[]    \T1/lmtt/m/n/12 Transforma a lista de objetos EvaluationCriterion em texto formatado para o prompt.[] 
+ []
+
+
+Overfull \hbox (162.5003pt too wide) in paragraph at lines 140--140
+[]    \T1/lmtt/m/n/12 text = f"[Escala total: {total:.1f} pontos distribuídos entre {len(rubric_list)} critérios]\n\n"[] 
+ []
+
+
+Overfull \hbox (119.27528pt too wide) in paragraph at lines 142--142
+[]        \T1/lmtt/m/n/12 text += f"- Critério: {criterion.name} (Valendo até: {criterion.max_score} pontos)\n"[] 
+ []
+
+[100]
+Overfull \hbox (248.95035pt too wide) in paragraph at lines 158--158
+[]        \T1/lmtt/m/n/12 return "[Nenhum contexto específico foi recuperado. Avalie com base no conhecimento geral da disciplina.]"[] 
+ []
+
+
+Overfull \hbox (100.75027pt too wide) in paragraph at lines 162--162
+[]        \T1/lmtt/m/n/12 text += f"[TRECHO {idx}] (Fonte: {ctx.source_document}, Pág: {ctx.page_number})\n"[] 
+ []
+
+) [101]
 \tf@lof=\write7
 \openout7 = `Principal.lof'.
 
@@ -2090,20 +2341,20 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Principal.brf' has not changed.
-(rerunfilecheck)             Checksum: 21FE78A4FE034A0BDC48C8A9262D5035;9427.
+(rerunfilecheck)             Checksum: 59482536B239BFF22842DA63B3FE6496;9427.
  ) 
 Here is how much of TeX's memory you used:
- 52474 strings out of 467867
- 1029646 string characters out of 5414426
- 1910331 words of memory out of 5000000
- 79398 multiletter control sequences out of 15000+600000
- 754307 words of font info for 332 fonts, out of 8000000 for 9000
+ 52545 strings out of 467867
+ 1030974 string characters out of 5414426
+ 1910370 words of memory out of 5000000
+ 79447 multiletter control sequences out of 15000+600000
+ 755004 words of font info for 337 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,14n,139p,2608b,1509s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbo10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb>
-Output written on Principal.pdf (111 pages, 1403245 bytes).
+Output written on Principal.pdf (117 pages, 1422805 bytes).
 PDF statistics:
- 2170 PDF objects out of 2487 (max. 8388607)
- 507 named destinations out of 1000 (max. 500000)
- 68121 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 2205 PDF objects out of 2487 (max. 8388607)
+ 514 named destinations out of 1000 (max. 500000)
+ 68641 words of extra memory for PDF output out of 74296 (max. 10000000)
 
