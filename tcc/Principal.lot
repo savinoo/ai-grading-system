@@ -7,12 +7,11 @@
 \contentsline {table}{\numberline {8}{\ignorespaces Caracterização dos níveis de qualidade das respostas sintéticas}}{72}{table.caption.30}%
 \contentsline {table}{\numberline {10}{\ignorespaces Verificação de execução \textit {end-to-end} do sistema}}{73}{table.caption.31}%
 \contentsline {table}{\numberline {12}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição A (com RAG)}}{73}{table.caption.32}%
-\contentsline {table}{\numberline {14}{\ignorespaces Comparação de notas finais --- Condição A (com RAG) vs. Condição B (sem RAG)}}{75}{table.caption.33}%
-\contentsline {table}{\numberline {16}{\ignorespaces Comparação de notas médias por nível de qualidade}}{75}{table.caption.34}%
-\contentsline {table}{\numberline {18}{\ignorespaces Ancoragem das justificativas ao material didático}}{76}{table.caption.35}%
-\contentsline {table}{\numberline {20}{\ignorespaces Verificação de divergência --- Condição A (com RAG)}}{79}{table.caption.36}%
-\contentsline {table}{\numberline {22}{\ignorespaces Casos de divergência e acionamento do árbitro}}{79}{table.caption.37}%
-\contentsline {table}{\numberline {24}{\ignorespaces Estabilidade das notas em execuções repetidas ($R=3$)}}{81}{table.caption.38}%
-\contentsline {table}{\numberline {26}{\ignorespaces Tempos de execução do \textit {pipeline} de correção}}{82}{table.caption.39}%
-\contentsline {table}{\numberline {28}{\ignorespaces Tempo médio de correção por questão (4 alunos em paralelo)}}{82}{table.caption.40}%
-\contentsline {table}{\numberline {30}{\ignorespaces Síntese do atendimento aos critérios de sucesso}}{83}{table.caption.41}%
+\contentsline {table}{\numberline {14}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição B (sem RAG)}}{74}{table.caption.33}%
+\contentsline {table}{\numberline {16}{\ignorespaces Comparação de notas finais --- Condição A (com RAG) vs.\ Condição B (sem RAG)}}{75}{table.caption.34}%
+\contentsline {table}{\numberline {18}{\ignorespaces Comparação de notas médias por nível de qualidade}}{75}{table.caption.35}%
+\contentsline {table}{\numberline {20}{\ignorespaces Verificação de divergência --- Condição A (com RAG)}}{77}{table.caption.36}%
+\contentsline {table}{\numberline {22}{\ignorespaces Verificação de divergência --- Condição B (sem RAG)}}{78}{table.caption.37}%
+\contentsline {table}{\numberline {24}{\ignorespaces Estabilidade das notas em execuções repetidas ($R=3$) --- Questão Q2}}{79}{table.caption.38}%
+\contentsline {table}{\numberline {26}{\ignorespaces Tempos de execução do \textit {pipeline} de correção}}{80}{table.caption.39}%
+\contentsline {table}{\numberline {28}{\ignorespaces Síntese do atendimento aos critérios de sucesso}}{81}{table.caption.40}%

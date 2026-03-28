@@ -4,7 +4,12 @@
       "Bash(python3 -c \"import json; nb = json.load\\(open\\(''/mnt/c/Users/Maycon\\\\ Mendes/OneDrive/Área\\\\ de\\\\ Trabalho/IFF/TCC/ai-grading-system/notebooks/experimento_tcc.ipynb''\\)\\); cells = [c for c in nb[''cells''] if ''source'' in c and ''CRITERIAS'' in ''''.join\\(c[''source'']\\)]; print\\(''\\\\n''.join\\(cells[0][''source''][:2000]\\) if cells else ''Not found''\\)\")",
       "Bash(docker exec:*)",
       "Bash(python -c \":*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "WebSearch",
+      "WebFetch(domain:www.semanticscholar.org)",
+      "WebFetch(domain:eric.ed.gov)",
+      "WebFetch(domain:www.aacu.org)"
     ]
   }
 }

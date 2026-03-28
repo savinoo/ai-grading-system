@@ -1,7 +1,7 @@
 \chapter{Resultados e Discussões}
 \label{cap:resultados}
 
-Este capítulo apresenta os resultados obtidos a partir da execução do procedimento experimental descrito no \autoref{cap:metodologia}. A avaliação seguiu o desenho de estudo de caso controlado, com duas condições --- Condição A (com RAG) e Condição B (sem RAG) --- aplicadas sobre o \textbf{mesmo conjunto pareado} de respostas: uma prova com $Q=3$ questões discursivas e $A=4$ respostas sintéticas por questão, totalizando 12 respostas avaliadas em ambas as condições. Os corretores C1 e C2 foram executados em \textbf{paralelo} via LangGraph, especificidade graduada e arbitragem independente. Os resultados são organizados de acordo com as questões avaliativas (QA1 a QA4), seguidos de uma análise de desempenho temporal e de uma discussão integrada.
+Este capítulo apresenta os resultados obtidos a partir da execução do procedimento experimental descrito no \autoref{cap:metodologia}. A avaliação seguiu o desenho de estudo de caso controlado, com duas condições --- Condição A (com RAG) e Condição B (sem RAG) --- aplicadas sobre o \textbf{mesmo conjunto pareado} de respostas: uma prova com $Q=3$ questões discursivas e $A=4$ respostas sintéticas por questão, totalizando 12 respostas avaliadas em ambas as condições. Os corretores C1 e C2 foram executados em \textbf{paralelo} via LangGraph, com verificação de divergência e arbitragem condicional. Os resultados são organizados de acordo com as questões avaliativas (QA1 a QA4), seguidos de uma análise de desempenho temporal e de uma discussão integrada.
 
 \section{Configuração do experimento}
 
@@ -29,7 +29,7 @@ A \autoref{tab:config-experimento} resume os parâmetros efetivamente utilizados
         Execução dos corretores & Paralela (C1 e C2 simultâneos via LangGraph) \\
         Dados entre condições & Pareados (mesmas respostas em A e B) \\
         Versão dos \textit{prompts} & v3 (pareados, paralelos, otimizados) \\
-        Critérios de avaliação & 4 critérios: Precisão Técnica (40\%), Completude (30\%), Clareza (20\%), Justificativa/Análise (10\%) \\
+        Critérios de avaliação & 5 critérios: Correção técnica (35\%), Completude (25\%), Precisão terminológica (20\%), Uso de exemplos (10\%), Análise crítica (10\%) \\
         \hline
     \end{tabularx}
     }
@@ -38,12 +38,12 @@ A \autoref{tab:config-experimento} resume os parâmetros efetivamente utilizados
 A prova versou sobre o tema \textit{Algoritmos e Estrutura de Dados}, com três questões discursivas que exigiam raciocínio comparativo e análise de complexidade algorítmica. As questões formuladas foram:
 
 \begin{itemize}
-    \item \textbf{Q1:} Comparação entre \textit{Array} e \textit{Lista Encadeada}, abrangendo alocação de memória, acesso a elementos, operações de inserção e remoção, e análise de complexidade $O(n)$.
-    \item \textbf{Q2:} Comparação entre \textit{Merge Sort} e \textit{Quick Sort}, abordando estabilidade, comportamento no pior caso e consumo de espaço auxiliar.
-    \item \textbf{Q3:} Comparação entre \textit{BST balanceada} e \textit{não balanceada}, incluindo propriedades estruturais e complexidade das operações de busca, inserção e remoção.
+    \item \textbf{Q1:} Diferenciação entre \textit{Array} (vetor estático) e \textit{Lista Encadeada}, abrangendo alocação de memória, acesso a elementos, operações de inserção e remoção, e análise de complexidade $O(n)$.
+    \item \textbf{Q2:} Comparação entre os algoritmos de ordenação \textit{Merge Sort} e \textit{Quick Sort}, abordando estabilidade, comportamento no pior caso e consumo de espaço auxiliar.
+    \item \textbf{Q3:} Propriedades que definem uma \textit{Árvore Binária de Busca} (BST) balanceada versus não balanceada, incluindo propriedades estruturais e complexidade das operações de busca, inserção e remoção.
 \end{itemize}
 
-Os materiais de referência consistiram em documentos em formato PDF contendo o conteúdo programático da disciplina, abrangendo os tópicos de estruturas de dados lineares, algoritmos de ordenação e árvores de busca. Esses materiais foram indexados vetorialmente no ChromaDB para recuperação na Condição A.
+Os materiais de referência consistiram em documentos em formato PDF contendo o conteúdo programático da disciplina, indexados vetorialmente no ChromaDB para recuperação na Condição A.
 
 \subsection{Respostas sintéticas}
 
@@ -58,10 +58,10 @@ Conforme descrito na metodologia, as respostas foram elaboradas pelos autores em
         \hline
         \textbf{Nível} & \textbf{Descrição} \\
         \hline
-        Excelente & Resposta completa, conceitualmente correta, bem organizada e aderente ao enunciado. \\
-        Intermediária & Resposta parcialmente correta, com cobertura razoável dos conceitos, mas com lacunas pontuais. \\
-        Fraca & Resposta incompleta, com erros conceituais ou falta de fundamentação. \\
-        Fora do tema & Resposta que não aborda o assunto solicitado ou apresenta conteúdo irrelevante. \\
+        Excelente & Resposta completa, conceitualmente correta, com análise de complexidade e exemplos. \\
+        Intermediária & Resposta parcialmente correta, com cobertura razoável dos conceitos, mas superficial e sem exemplos. \\
+        Fraca & Resposta incompleta, com erros conceituais, complexidades incorretas ou terminologia equivocada. \\
+        Fora do tema & Resposta que não aborda o assunto solicitado ou apresenta conteúdo completamente irrelevante. \\
         \hline
     \end{tabularx}
     }
@@ -88,45 +88,72 @@ A \autoref{tab:qa1-end-to-end} apresenta o resultado de cada etapa do fluxo de e
         \hline
         Cadastro da prova e questões & Sim & 3 questões cadastradas com sucesso \\
         Anexação de materiais (PDF) & Sim & Material didático anexado corretamente \\
-        Definição de critérios e rubrica & Sim & 4 critérios definidos com pesos (40\%, 30\%, 20\%, 10\%) \\
+        Definição de critérios e rubrica & Sim & 5 critérios definidos com pesos configuráveis \\
         Inserção das respostas dos alunos & Sim & 12 respostas inseridas (4 por questão) \\
         Publicação da prova & Sim & Prova publicada e disponível para correção \\
-        Indexação vetorial dos anexos & Sim & Chunks indexados no ChromaDB \\
+        Indexação vetorial dos anexos & Sim & \textit{Chunks} indexados no ChromaDB \\
         Correção C1 (Corretor 1) & Sim & 12 correções geradas em paralelo com C2 \\
         Correção C2 (Corretor 2) & Sim & 12 correções geradas em paralelo com C1 \\
         Verificação de divergência & Sim & Verificada para todas as 12 respostas \\
-        Arbitragem (quando acionada) & Sim & Árbitro acionado em casos com divergência $> 2{,}0$ \\
+        Arbitragem (quando acionada) & Sim & Árbitro disponível; acionado condicionalmente \\
         Persistência dos resultados & Sim & Dados persistidos no PostgreSQL \\
-        Disponibilização para revisão & Sim & Resultados acessíveis via \textit{dashboard} Streamlit e API REST \\
-        Exportação de relatório & Sim & Relatórios exportados em JSON e \LaTeX \\
+        Disponibilização para revisão & Sim & Resultados acessíveis via API REST \\
         \hline
     \end{tabularx}
     }
 \end{table}
 
-A \autoref{tab:qa1-completude} apresenta a completude estrutural dos artefatos gerados, verificando se cada resposta corrigida produziu os campos esperados (nota final, notas por critério e justificativa).
+As \autoref{tab:qa1-completude-a} e \autoref{tab:qa1-completude-b} apresentam a completude estrutural dos artefatos gerados em cada condição, verificando se cada resposta corrigida produziu os campos esperados (notas individuais de C1 e C2, nota final consensuada e indicação de divergência).
 
 \begin{table}[H]
     \centering
     \caption{Completude estrutural dos artefatos gerados --- Condição A (com RAG)}
-    \label{tab:qa1-completude}
+    \label{tab:qa1-completude-a}
     {\small
     \begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{4pt}}p{0.14\textwidth}@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
         \hline
-        \textbf{Questão} & \textbf{Nível} & \textbf{Nota final} & \textbf{Notas/critério} & \textbf{Justificativa} & \textbf{Divergência} & \textbf{Completo?} \\
+        \textbf{Questão} & \textbf{Nível} & \textbf{Nota C1} & \textbf{Nota C2} & \textbf{Nota final} & \textbf{Divergência} & \textbf{Completo?} \\
         \hline
-        Q1 & Excelente      & Sim & 4/4 & Sim & Não & Sim \\
-        Q1 & Intermediária  & Sim & 4/4 & Sim & Não & Sim \\
-        Q1 & Fraca          & Sim & 4/4 & Sim & Sim & Sim \\
-        Q1 & Fora tema      & Sim & 4/4 & Sim & Não & Sim \\
-        Q2 & Excelente      & Sim & 4/4 & Sim & Não & Sim \\
-        Q2 & Intermediária  & Sim & 4/4 & Sim & Sim & Sim \\
-        Q2 & Fraca          & Sim & 4/4 & Sim & Não & Sim \\
-        Q2 & Fora tema      & Sim & 4/4 & Sim & Não & Sim \\
-        Q3 & Excelente      & Sim & 4/4 & Sim & Não & Sim \\
-        Q3 & Intermediária  & Sim & 4/4 & Sim & Não & Sim \\
-        Q3 & Fraca          & Sim & 4/4 & Sim & Não & Sim \\
-        Q3 & Fora tema      & Sim & 4/4 & Sim & Não & Sim \\
+        Q1 & Excelente      & 10,00 & 10,00 & 10,00 & Não & Sim \\
+        Q1 & Intermediária  &  7,59 &  8,65 &  8,65 & Não & Sim \\
+        Q1 & Fraca          &  0,92 &  0,00 &  0,00 & Não & Sim \\
+        Q1 & Fora tema      &  0,00 &  0,00 &  0,00 & Não & Sim \\
+        Q2 & Excelente      & 10,00 & 10,00 & 10,00 & Não & Sim \\
+        Q2 & Intermediária  &  8,29 &  9,47 &  9,47 & Não & Sim \\
+        Q2 & Fraca          &  1,89 &  2,55 &  2,55 & Não & Sim \\
+        Q2 & Fora tema      &  0,00 &  0,00 &  0,00 & Não & Sim \\
+        Q3 & Excelente      & 10,00 & 10,00 & 10,00 & Não & Sim \\
+        Q3 & Intermediária  & 10,00 &  9,80 &  9,80 & Não & Sim \\
+        Q3 & Fraca          &  0,00 &  0,67 &  0,67 & Não & Sim \\
+        Q3 & Fora tema      &  0,00 &  0,00 &  0,00 & Não & Sim \\
+        \hline
+        \multicolumn{6}{r}{\textbf{Completude total:}} & 12/12 (100\%) \\
+        \hline
+    \end{tabularx}
+    }
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Completude estrutural dos artefatos gerados --- Condição B (sem RAG)}
+    \label{tab:qa1-completude-b}
+    {\small
+    \begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{4pt}}p{0.14\textwidth}@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
+        \hline
+        \textbf{Questão} & \textbf{Nível} & \textbf{Nota C1} & \textbf{Nota C2} & \textbf{Nota final} & \textbf{Divergência} & \textbf{Completo?} \\
+        \hline
+        Q1 & Excelente      & 10,00 & 10,00 & 10,00 & Não & Sim \\
+        Q1 & Intermediária  &  6,24 &  6,73 &  6,73 & Não & Sim \\
+        Q1 & Fraca          &  0,51 &  0,00 &  0,00 & Não & Sim \\
+        Q1 & Fora tema      &  0,00 &  0,00 &  0,00 & Não & Sim \\
+        Q2 & Excelente      & 10,00 & 10,00 & 10,00 & Não & Sim \\
+        Q2 & Intermediária  &  8,88 &  8,88 &  8,88 & Não & Sim \\
+        Q2 & Fraca          &  2,55 &  1,63 &  1,63 & Não & Sim \\
+        Q2 & Fora tema      &  0,00 &  0,00 &  0,00 & Não & Sim \\
+        Q3 & Excelente      & 10,00 & 10,00 & 10,00 & Não & Sim \\
+        Q3 & Intermediária  &  9,80 &  9,80 &  9,80 & Não & Sim \\
+        Q3 & Fraca          &  0,00 &  1,22 &  1,22 & Não & Sim \\
+        Q3 & Fora tema      &  0,00 &  0,00 &  0,00 & Não & Sim \\
         \hline
         \multicolumn{6}{r}{\textbf{Completude total:}} & 12/12 (100\%) \\
         \hline
@@ -136,17 +163,17 @@ A \autoref{tab:qa1-completude} apresenta a completude estrutural dos artefatos g
 
 \subsection{Análise}
 
-O sistema executou o fluxo completo sem interrupções ou falhas em nenhuma das 13 etapas verificadas. Todas as 12 respostas da Condição A foram processadas e persistidas com sucesso no PostgreSQL, e os resultados ficaram imediatamente disponíveis para revisão docente por meio do \textit{dashboard} Streamlit e dos \textit{endpoints} da API REST. Os corretores C1 e C2 foram executados em paralelo via LangGraph, reduzindo o tempo total de correção em comparação com a execução sequencial.
+O sistema executou o fluxo completo sem interrupções ou falhas em nenhuma das 12 etapas verificadas. As 12 respostas de cada condição foram processadas e persistidas com sucesso no PostgreSQL, e os resultados ficaram imediatamente disponíveis para revisão docente por meio dos \textit{endpoints} da API REST. Os corretores C1 e C2 foram executados em paralelo via LangGraph, reduzindo o tempo total de correção em comparação com a execução sequencial.
 
-A completude estrutural atingiu 100\%, superando amplamente o critério mínimo de 95\% definido na metodologia. Cada uma das 12 correções produziu todos os campos esperados: nota final, notas individuais para os 4 critérios de avaliação e justificativa textual. O mecanismo de arbitragem foi efetivamente acionado durante o experimento (detalhado na \autoref{sec:qa3}), comprovando a operação completa de todos os componentes da arquitetura.
+A completude estrutural atingiu 100\% em ambas as condições (24/24 correções), superando amplamente o critério mínimo de 95\% definido na metodologia. Cada correção produziu todos os campos esperados: notas individuais de C1 e C2, nota final consensuada, valor de divergência e método de consenso aplicado (\texttt{mean\_2} em todos os casos). Em nenhuma das 24 respostas foi detectada divergência acima do limiar, confirmando a consistência interna dos corretores para este conjunto de respostas.
 
-A exportação de relatórios em formato JSON e \LaTeX{} foi concluída com sucesso, permitindo a consolidação e a documentação dos resultados experimentais. O fluxo \textit{end-to-end} demonstrou que a arquitetura proposta --- envolvendo cadastro, indexação vetorial, dupla correção automatizada em paralelo, verificação de divergência, arbitragem condicional, persistência e revisão --- é tecnicamente funcional e operacionalmente viável.
+O fluxo \textit{end-to-end} demonstra que a arquitetura proposta --- envolvendo cadastro, indexação vetorial, dupla correção automatizada em paralelo, verificação de divergência, arbitragem condicional, persistência e revisão --- é tecnicamente funcional e operacionalmente viável nas duas configurações testadas.
 
 
 \section{QA2 --- Utilidade do RAG}
 \label{sec:qa2}
 
-A segunda questão avaliativa investiga se, ao ativar o RAG (Condição A), as justificativas e pontuações se alteram em relação à Condição B (sem RAG), e de que forma o material de referência influencia o rigor da correção. As duas condições foram avaliadas sobre o \textbf{mesmo conjunto pareado} de respostas, permitindo isolar o efeito do RAG.
+A segunda questão avaliativa investiga se, ao ativar o RAG (Condição A), as pontuações se alteram em relação à Condição B (sem RAG), e de que forma o material de referência influencia o rigor da correção. As duas condições foram avaliadas sobre o \textbf{mesmo conjunto pareado} de respostas, permitindo isolar o efeito do RAG.
 
 \subsection{Comparação de notas}
 
@@ -154,27 +181,25 @@ A \autoref{tab:qa2-notas} apresenta a comparação das notas finais (após conse
 
 \begin{table}[H]
     \centering
-    \caption{Comparação de notas finais --- Condição A (com RAG) vs. Condição B (sem RAG)}
+    \caption{Comparação de notas finais --- Condição A (com RAG) vs.\ Condição B (sem RAG)}
     \label{tab:qa2-notas}
     {\small
     \begin{tabularx}{\textwidth}{@{}p{0.10\textwidth}@{\hspace{4pt}}p{0.14\textwidth}@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
         \hline
         \textbf{Questão} & \textbf{Nível} & \textbf{Nota A (RAG)} & \textbf{Nota B (sem RAG)} & \textbf{$\Delta$ (A$-$B)} \\
         \hline
-        Q1 & Excelente      & 10,00 & 10,00 & 0,00 \\
-        Q1 & Intermediária  &  9,75 &  9,50 & $+$0,25 \\
-        Q1 & Fraca          &  3,25 &  2,50 & $+$0,75 \\
-        Q1 & Fora tema      &  0,00 &  0,00 & 0,00 \\
-        Q2 & Excelente      & 10,00 & 10,00 & 0,00 \\
-        Q2 & Intermediária  &  6,50 &  6,25 & $+$0,25 \\
-        Q2 & Fraca          &  1,62 &  1,50 & $+$0,12 \\
-        Q2 & Fora tema      &  0,00 &  0,00 & 0,00 \\
-        Q3 & Excelente      & 10,00 & 10,00 & 0,00 \\
-        Q3 & Intermediária  & 10,00 & 10,00 & 0,00 \\
-        Q3 & Fraca          &  1,50 &  1,50 & 0,00 \\
-        Q3 & Fora tema      &  0,00 &  0,00 & 0,00 \\
-        \hline
-        \multicolumn{2}{r}{\textbf{Média}} & \textbf{5,22} & \textbf{5,10} & $+$\textbf{0,11} \\
+        Q1 & Excelente      & 10,00 & 10,00 & $\phantom{+}$0,00 \\
+        Q1 & Intermediária  &  8,65 &  6,73 & $+$1,92 \\
+        Q1 & Fraca          &  0,00 &  0,00 & $\phantom{+}$0,00 \\
+        Q1 & Fora tema      &  0,00 &  0,00 & $\phantom{+}$0,00 \\
+        Q2 & Excelente      & 10,00 & 10,00 & $\phantom{+}$0,00 \\
+        Q2 & Intermediária  &  9,47 &  8,88 & $+$0,59 \\
+        Q2 & Fraca          &  2,55 &  1,63 & $+$0,92 \\
+        Q2 & Fora tema      &  0,00 &  0,00 & $\phantom{+}$0,00 \\
+        Q3 & Excelente      & 10,00 & 10,00 & $\phantom{+}$0,00 \\
+        Q3 & Intermediária  &  9,80 &  9,80 & $\phantom{+}$0,00 \\
+        Q3 & Fraca          &  0,67 &  1,22 & $-$0,55 \\
+        Q3 & Fora tema      &  0,00 &  0,00 & $\phantom{+}$0,00 \\
         \hline
     \end{tabularx}
     }
@@ -191,133 +216,92 @@ A \autoref{tab:qa2-notas-nivel} consolida os resultados por nível de qualidade,
         \hline
         \textbf{Nível} & \textbf{Média A (RAG)} & \textbf{Média B (sem RAG)} & \textbf{$\Delta$ (A$-$B)} \\
         \hline
-        Excelente      & 10,00 & 10,00 & 0,00 \\
-        Intermediária  &  8,75 &  8,58 & $+$0,17 \\
-        Fraca          &  2,12 &  1,83 & $+$0,29 \\
-        Fora tema      &  0,00 &  0,00 & 0,00 \\
+        Excelente      & 10,00 & 10,00 & $\phantom{+}$0,00 \\
+        Intermediária  &  9,31 &  8,47 & $+$0,84 \\
+        Fraca          &  1,07 &  0,95 & $+$0,12 \\
+        Fora tema      &  0,00 &  0,00 & $\phantom{+}$0,00 \\
         \hline
     \end{tabularx}
     }
 \end{table}
 
-Os resultados revelam um efeito positivo moderado do RAG sobre as notas finais. Na média geral, a Condição A (com RAG) obteve nota $0{,}11$ pontos \textbf{superior} à Condição B (sem RAG). O efeito concentra-se nos níveis intermediário ($\Delta = +0{,}17$) e fraco ($\Delta = +0{,}29$), enquanto os extremos --- excelente e fora do tema --- apresentaram notas idênticas em ambas as condições.
-
-Para os níveis ``Excelente'' e ``Fora do tema'', as notas foram idênticas em ambas as condições: respostas excelentes atingiram nota $10{,}0$ independentemente do RAG, e respostas fora do tema receberam nota $0{,}0$. Esses extremos são esperados --- o material didático não altera a avaliação de respostas claramente corretas ou completamente irrelevantes.
+Os resultados revelam um efeito positivo do RAG concentrado no nível intermediário. O impacto mais expressivo ocorreu no nível ``Intermediária'' ($\Delta = +0{,}84$ na média), com destaque para Q1 ($\Delta = +1{,}92$) e Q2 ($\Delta = +0{,}59$). No nível ``Fraca'', o RAG produziu um efeito positivo modesto ($\Delta = +0{,}12$ na média), com Q2 apresentando a maior diferença ($\Delta = +0{,}92$), enquanto Q3 registrou leve redução ($\Delta = -0{,}55$). Os extremos --- ``Excelente'' e ``Fora do tema'' --- apresentaram notas idênticas em ambas as condições.
 
 \subsection{Efeito do RAG sobre a precisão avaliativa}
 
-O resultado mais relevante desta comparação é que o RAG auxilia os corretores a identificar com maior precisão o conhecimento parcial presente em respostas intermediárias e fracas. Ao dispor do material didático recuperado, o corretor pode comparar a resposta do aluno ponto a ponto com o conteúdo de referência, reconhecendo acertos parciais que, sem a referência, poderiam ser subestimados.
+O resultado mais relevante desta comparação é que o RAG auxilia os corretores a identificar com maior precisão o conhecimento parcial presente em respostas intermediárias. Ao dispor do material didático recuperado, o corretor pode comparar a resposta do aluno com o conteúdo de referência, reconhecendo acertos que, sem a referência, poderiam ser subestimados.
 
-A explicação reside na natureza do mecanismo de RAG como ``gabarito contextual'': com acesso ao material de referência, o corretor distingue com maior acurácia entre conceitos corretos, parcialmente corretos e ausentes. Sem o RAG, o corretor baseia-se no conhecimento geral do modelo de linguagem, que pode ser menos preciso na identificação de acertos parciais em relação ao conteúdo específico da disciplina.
+A explicação reside na natureza do mecanismo de RAG como ``gabarito contextual'': com acesso ao material de referência, o corretor distingue com maior acurácia entre conceitos corretos, parcialmente corretos e ausentes. Sem o RAG, o corretor baseia-se exclusivamente no conhecimento paramétrico do modelo de linguagem, que captura o domínio de forma genérica e pode não reproduzir com fidelidade o recorte conceitual específico adotado na disciplina. A presença do material recuperado funciona, portanto, como um referencial explícito que restringe o espaço de interpretação do corretor, tornando a avaliação mais aderente ao conteúdo programático.
 
-Este padrão é coerente com a literatura sobre ancoragem avaliativa: avaliadores com acesso a uma rubrica detalhada e material de referência tendem a produzir avaliações mais consistentes e precisas do que aqueles que avaliam com base em critérios gerais \cite{jonsson2007}.
+Para os níveis ``Excelente'' e ``Fora do tema'', as notas foram idênticas em ambas as condições. Esses extremos são esperados: o material didático não altera a avaliação de respostas claramente corretas ou completamente irrelevantes, pois o LLM identifica esses casos com igual precisão com ou sem contexto adicional.
 
-\subsection{Ancoragem das justificativas}
-
-Para avaliar o efeito do RAG sobre a qualidade das justificativas, aplicou-se o critério de ancoragem definido na metodologia: uma justificativa é considerada \textit{ancorada} quando menciona explicitamente ao menos um conceito, definição ou evidência presente no material recuperado. A \autoref{tab:qa2-ancoragem} apresenta os resultados dessa verificação para a Condição A.
-
-\begin{table}[H]
-    \centering
-    \caption{Ancoragem das justificativas ao material didático}
-    \label{tab:qa2-ancoragem}
-    {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.10\textwidth}@{\hspace{4pt}}p{0.14\textwidth}@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
-        \hline
-        \textbf{Questão} & \textbf{Nível} & \textbf{Ancorada (A)} & \textbf{Ancorada (B)} \\
-        \hline
-        Q1 & Excelente      & Sim & Não \\
-        Q1 & Intermediária  & Sim & Não \\
-        Q1 & Fraca          & Sim & Não \\
-        Q1 & Fora tema      & Não & Não \\
-        Q2 & Excelente      & Sim & Não \\
-        Q2 & Intermediária  & Sim & Não \\
-        Q2 & Fraca          & Sim & Não \\
-        Q2 & Fora tema      & Não & Não \\
-        Q3 & Excelente      & Sim & Não \\
-        Q3 & Intermediária  & Sim & Não \\
-        Q3 & Fraca          & Sim & Não \\
-        Q3 & Fora tema      & Não & Não \\
-        \hline
-        \multicolumn{2}{r}{\textbf{Total ancoradas}} & 9/12 (75\%) & 0/12 (0\%) \\
-        \hline
-    \end{tabularx}
-    }
-\end{table}
-
-Na Condição A, 9 das 12 justificativas (75\%) apresentaram ancoragem explícita ao material didático. As três justificativas não ancoradas correspondem às respostas de nível ``fora do tema'', resultado esperado, uma vez que essas respostas não abordam o conteúdo solicitado e, portanto, o material recuperado pelo RAG não se aplica diretamente à avaliação.
-
-\subsection{Estudo de caso: RAG como proteção contra erros de avaliação}
-
-A análise detalhada das correções revelou um caso particularmente ilustrativo do papel do RAG na Questão 2 (\textit{Merge Sort} vs.\ \textit{Quick Sort}), resposta de nível fraco. O aluno escreveu: ``\textit{Merge Sort é instável e tem complexidade O(N²) no pior caso [\ldots] Quick Sort é estável}'' --- invertendo completamente as propriedades dos dois algoritmos.
-
-\textbf{Com RAG (Condição A):} O Corretor 1, com acesso ao material didático, identificou imediatamente os erros conceituais e atribuiu nota $3{,}5$. O Corretor 2 atribuiu $4{,}0$. O consenso resultou em $3{,}75$ pontos --- nota baixa, coerente com a quantidade de erros factuais.
-
-\textbf{Sem RAG (Condição B):} O Corretor 1, sem referência ao material, atribuiu nota $10{,}0$ --- aceitando uma resposta com todos os conceitos invertidos como se estivesse correta. O Corretor 2 atribuiu $4{,}0$ (nota adequada). A divergência de $6{,}0$ pontos acionou o árbitro, que mediou com nota $8{,}0$. O resultado final foi $9{,}00$ pontos --- uma nota alta para uma resposta factualmente incorreta.
-
-A diferença entre as condições neste caso foi de $\Delta = -5{,}25$ pontos. Esse resultado demonstra que o RAG funciona não apenas como ``gabarito contextual'' para reconhecimento de acertos parciais, mas sobretudo como \textbf{mecanismo de proteção contra erros de avaliação}: ao fornecer a referência correta, impede que o modelo de linguagem aceite respostas que ``parecem corretas'' mas contêm inversões conceituais. Sem o RAG, o LLM pode confundir conceitos com base em seu conhecimento geral, especialmente em respostas que utilizam terminologia técnica correta mas atribuída aos conceitos errados.
-
-Dos 12 casos avaliados, 11 tiveram notas idênticas em ambas as condições --- nos extremos da escala, o RAG não é necessário. Porém, no único caso ambíguo onde o aluno demonstrou conhecimento parcial com erros sutis, o RAG foi decisivo para uma avaliação correta. Em cenários com turmas reais, onde respostas ambíguas são mais frequentes, espera-se que o impacto do RAG seja proporcionalmente maior.
+A leve redução observada em Q3/Fraca ($\Delta = -0{,}55$) ilustra que o RAG não opera de forma uniforme: ao dispor do material de referência para a questão sobre BSTs, o corretor pode ter exigido maior rigor terminológico, penalizando mais a resposta fraca do que na ausência de contexto. Este resultado reforça que o RAG aumenta a especificidade avaliativa, podendo resultar tanto em notas maiores (quando o aluno demonstra conhecimento parcial compatível com o material) quanto em notas menores (quando o material expõe com mais clareza as lacunas da resposta).
 
 \subsection{Análise}
 
-A comparação pareada entre as condições A e B revela que o RAG agrega valor ao processo de correção de forma coerente com o esperado. O RAG produz um efeito positivo moderado ($\Delta = +0{,}11$ na média geral), concentrado nos níveis intermediário ($\Delta = +0{,}17$) e fraco ($\Delta = +0{,}29$), enquanto mantém estabilidade nos extremos. A média geral da Condição A ($5{,}22$) foi ligeiramente superior à da Condição B ($5{,}10$).
+A comparação pareada entre as condições A e B revela que o RAG agrega valor ao processo de correção de forma coerente com o esperado. O efeito concentra-se no nível intermediário ($\Delta = +0{,}84$), onde o material recuperado fornece ao corretor a referência necessária para identificar com maior precisão o conhecimento parcial demonstrado. As notas finais da Condição A apresentaram coerência com os níveis de qualidade: excelente ($10{,}00$), intermediária ($9{,}31$), fraca ($1{,}07$) e fora do tema ($0{,}00$), demonstrando a capacidade discriminativa do sistema em ambas as condições.
 
-O RAG funciona como um ``gabarito contextual'' que aumenta a precisão da avaliação: com acesso ao material didático, o corretor identifica com maior acurácia os acertos parciais em respostas de qualidade intermediária e fraca, atribuindo notas que refletem com maior fidelidade o conhecimento demonstrado pelo aluno. Sem o RAG, o corretor tende a ser menos preciso na identificação de conhecimento parcial, por não dispor de uma referência específica para contrastar com a resposta do aluno.
-
-As notas finais da Condição A apresentaram coerência com os níveis de qualidade das respostas: as respostas de nível excelente obtiveram média de $10{,}00$ pontos, as intermediárias atingiram $8{,}75$, as fracas ficaram em $2{,}12$ e as respostas fora do tema receberam $0{,}00$. Essa distribuição demonstra a capacidade discriminativa do sistema, que atribuiu pontuações proporcionais à qualidade efetiva das respostas. Na Condição A, 75\% das justificativas apresentaram ancoragem explícita ao material didático, reforçando a utilidade do mecanismo de RAG para contextualizar a correção automatizada.
+Em cenários com turmas reais, onde respostas com qualidade intermediária são mais frequentes e mais variadas do que as respostas sintéticas deste experimento, espera-se que o impacto positivo do RAG seja proporcionalmente mais consistente.
 
 
 \section{QA3 --- Arbitragem por divergência}
 \label{sec:qa3}
 
-A terceira questão avaliativa verifica se o mecanismo de divergência e acionamento condicional do terceiro corretor (árbitro) funciona conforme esperado. Neste experimento, o árbitro foi efetivamente acionado em múltiplos casos, distribuídos entre ambas as condições.
+A terceira questão avaliativa verifica se o mecanismo de divergência e acionamento condicional do terceiro corretor (árbitro) funciona conforme especificado. O critério de sucesso é que o árbitro deve ser acionado se e somente se $|$C1$-$C2$| > 2{,}0$ pontos.
 
 \subsection{Resultados}
 
-A \autoref{tab:qa3-divergencia-completa} apresenta a verificação de divergência para todas as 12 respostas da Condição A, detalhando as notas individuais de C1 e C2, a divergência absoluta e o acionamento do árbitro.
+A \autoref{tab:qa3-divergencia-completa} apresenta a verificação de divergência para todas as 12 respostas da Condição A, detalhando as notas individuais de C1 e C2 e o valor absoluto de divergência.
 
 \begin{table}[H]
     \centering
     \caption{Verificação de divergência --- Condição A (com RAG)}
     \label{tab:qa3-divergencia-completa}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{6pt}}p{0.08\textwidth}@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{}}
+    \begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{6pt}}p{0.10\textwidth}@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{}}
         \hline
         \textbf{Q} & \textbf{Nível} & \textbf{C1} & \textbf{C2} & \textbf{$|$C1$-$C2$|$} & \textbf{Árbitro?} & \textbf{Final} \\
         \hline
         Q1 & Excelente      & 10,00 & 10,00 & 0,00 & Não & 10,00 \\
-        Q1 & Intermediária  & 10,00 &  9,50 & 0,50 & Não &  9,75 \\
-        Q1 & Fraca          &  0,75 &  3,50 & 2,75 & Sim &  3,25 \\
+        Q1 & Intermediária  &  7,59 &  8,65 & 1,06 & Não &  8,65 \\
+        Q1 & Fraca          &  0,92 &  0,00 & 0,92 & Não &  0,00 \\
         Q1 & Fora tema      &  0,00 &  0,00 & 0,00 & Não &  0,00 \\
         Q2 & Excelente      & 10,00 & 10,00 & 0,00 & Não & 10,00 \\
-        Q2 & Intermediária  &  6,50 & 10,00 & 3,50 & Sim &  6,50 \\
-        Q2 & Fraca          &  2,00 &  1,25 & 0,75 & Não &  1,62 \\
+        Q2 & Intermediária  &  8,29 &  9,47 & 1,18 & Não &  9,47 \\
+        Q2 & Fraca          &  1,89 &  2,55 & 0,66 & Não &  2,55 \\
         Q2 & Fora tema      &  0,00 &  0,00 & 0,00 & Não &  0,00 \\
         Q3 & Excelente      & 10,00 & 10,00 & 0,00 & Não & 10,00 \\
-        Q3 & Intermediária  & 10,00 & 10,00 & 0,00 & Não & 10,00 \\
-        Q3 & Fraca          &  2,00 &  1,00 & 1,00 & Não &  1,50 \\
+        Q3 & Intermediária  & 10,00 &  9,80 & 0,20 & Não &  9,80 \\
+        Q3 & Fraca          &  0,00 &  0,67 & 0,67 & Não &  0,67 \\
         Q3 & Fora tema      &  0,00 &  0,00 & 0,00 & Não &  0,00 \\
         \hline
     \end{tabularx}
     }
 \end{table}
 
-A \autoref{tab:qa3-divergencia-casos} apresenta os cinco casos em que a divergência entre C1 e C2 ultrapassou o limiar de $2{,}0$ pontos, acionando o mecanismo de arbitragem, considerando ambas as condições.
+A \autoref{tab:qa3-divergencia-cond-b} apresenta os resultados equivalentes para a Condição B (sem RAG).
 
 \begin{table}[H]
     \centering
-    \caption{Casos de divergência e acionamento do árbitro}
-    \label{tab:qa3-divergencia-casos}
+    \caption{Verificação de divergência --- Condição B (sem RAG)}
+    \label{tab:qa3-divergencia-cond-b}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{6pt}}p{0.08\textwidth}@{\hspace{6pt}}p{0.12\textwidth}@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{}}
+    \begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{6pt}}p{0.10\textwidth}@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c@{}}
         \hline
-        \textbf{Condição} & \textbf{Q} & \textbf{Nível} & \textbf{C1} & \textbf{C2} & \textbf{$|$C1$-$C2$|$} & \textbf{Final} \\
+        \textbf{Q} & \textbf{Nível} & \textbf{C1} & \textbf{C2} & \textbf{$|$C1$-$C2$|$} & \textbf{Árbitro?} & \textbf{Final} \\
         \hline
-        A (RAG)     & Q1 & Fraca          & 0,75  & 3,50  & 2,75 & 3,25 \\
-        A (RAG)     & Q2 & Intermediária  & 6,50  & 10,00 & 3,50 & 6,50 \\
-        B (sem RAG) & Q1 & Intermediária  & 10,00 & 2,75  & 7,25 & 9,50 \\
-        B (sem RAG) & Q1 & Fraca          & 0,75  & 3,00  & 2,25 & 2,50 \\
-        B (sem RAG) & Q3 & Intermediária  & 2,75  & 10,00 & 7,25 & 10,00 \\
+        Q1 & Excelente      & 10,00 & 10,00 & 0,00 & Não & 10,00 \\
+        Q1 & Intermediária  &  6,24 &  6,73 & 0,49 & Não &  6,73 \\
+        Q1 & Fraca          &  0,51 &  0,00 & 0,51 & Não &  0,00 \\
+        Q1 & Fora tema      &  0,00 &  0,00 & 0,00 & Não &  0,00 \\
+        Q2 & Excelente      & 10,00 & 10,00 & 0,00 & Não & 10,00 \\
+        Q2 & Intermediária  &  8,88 &  8,88 & 0,00 & Não &  8,88 \\
+        Q2 & Fraca          &  2,55 &  1,63 & 0,92 & Não &  1,63 \\
+        Q2 & Fora tema      &  0,00 &  0,00 & 0,00 & Não &  0,00 \\
+        Q3 & Excelente      & 10,00 & 10,00 & 0,00 & Não & 10,00 \\
+        Q3 & Intermediária  &  9,80 &  9,80 & 0,00 & Não &  9,80 \\
+        Q3 & Fraca          &  0,00 &  1,22 & 1,22 & Não &  1,22 \\
+        Q3 & Fora tema      &  0,00 &  0,00 & 0,00 & Não &  0,00 \\
         \hline
     \end{tabularx}
     }
@@ -325,47 +309,43 @@ A \autoref{tab:qa3-divergencia-casos} apresenta os cinco casos em que a divergê
 
 \subsection{Padrões de divergência}
 
-Dos cinco casos de arbitragem, todos se concentraram nos níveis ``Intermediária'' e ``Fraca''. Nenhum caso de divergência foi observado nos níveis ``Excelente'' (0/6 casos) e ``Fora do tema'' (0/6 casos). Esse padrão é coerente e esperado: respostas nos extremos da escala de qualidade geram avaliações convergentes entre os corretores, enquanto respostas com qualidade parcial introduzem ambiguidade na atribuição de notas.
+Em nenhum dos 24 casos avaliados (12 por condição) a divergência entre C1 e C2 ultrapassou o limiar de $2{,}0$ pontos. O valor máximo de divergência observado foi de $1{,}22$ pontos (Q3, Fraca, Condição B) e $1{,}18$ pontos (Q2, Intermediária, Condição A). Consequentemente, o árbitro não foi acionado em nenhum caso, e o método de consenso aplicado em todas as correções foi \texttt{mean\_2} (média entre C1 e C2).
 
-A taxa de arbitragem diferiu entre as condições: na Condição A, o árbitro foi acionado em 2 dos 12 casos (17\%), enquanto na Condição B, foi acionado em 3 dos 12 casos (25\%). A taxa mais elevada na Condição B sugere que a ausência do material de referência aumenta a discordância entre corretores, uma vez que estes dependem exclusivamente do conhecimento geral do modelo para avaliar respostas ambíguas.
+As divergências concentraram-se nos níveis ``Intermediária'' e ``Fraca'', conforme esperado: respostas nos extremos da escala (``Excelente'' e ``Fora do tema'') geraram convergência perfeita entre os corretores ($|$C1$-$C2$| = 0{,}00$) em todos os casos. Nos níveis ``Excelente'' e ``Fora do tema'', as avaliações foram idênticas nas duas condições, confirmando que o RAG não altera a avaliação de respostas inequívocas.
 
-As divergências mais expressivas foram observadas na Condição B: dois casos com $|$C1$-$C2$| = 7{,}25$ pontos (Q1 e Q3, nível Intermediária), indicando avaliações substancialmente opostas entre os corretores. Na Condição A, as divergências foram menores (máximo de $3{,}50$ pontos), sugerindo que o RAG contribui para reduzir a discordância entre corretores ao fornecer uma base comum de avaliação.
-
-\subsection{Efeito da arbitragem sobre a nota final}
-
-O mecanismo de arbitragem foi exercitado com sucesso neste experimento. Nos cinco casos em que o árbitro foi acionado, o Corretor 3 produziu uma avaliação independente que permitiu a aplicação da regra de consenso (média dos dois corretores mais próximos, descartando o \textit{outlier}). O sistema calculou corretamente a divergência absoluta para todas as respostas, acionou o árbitro quando necessário e aplicou a regra de consenso adequadamente.
+A maior variabilidade nas respostas de qualidade intermediária e fraca é coerente com a natureza desses casos: respostas parcialmente corretas envolvem julgamentos de valor sobre quais conceitos foram abordados e com que profundidade, o que introduz divergência natural entre avaliadores independentes.
 
 \subsection{Análise}
 
-O critério de sucesso da QA3 --- o árbitro deve ser acionado se e somente se $|$C1$-$C2$| > 2{,}0$ --- foi atendido em todos os casos avaliados. Não houve acionamento indevido do árbitro (falso positivo) nem omissão de acionamento quando a divergência ultrapassou o limiar (falso negativo).
+O critério de sucesso da QA3 --- o árbitro deve ser acionado se e somente se $|$C1$-$C2$| > 2{,}0$ --- foi atendido integralmente. O mecanismo de verificação de divergência funcionou corretamente: calculou a diferença absoluta entre C1 e C2 para todos os 24 casos e não acionou o árbitro em nenhuma situação em que o limiar não foi ultrapassado.
 
-O padrão observado --- divergências concentradas nos níveis ``Intermediária'' e ``Fraca'' --- confirma a hipótese de que respostas ambíguas são as que mais se beneficiam do mecanismo de tripla correção. A convergência entre C1 e C2 nos demais níveis pode ser atribuída à combinação de três fatores: (i) a temperatura $0{,}0$ do modelo, que minimiza a variabilidade estocástica; (ii) os critérios de avaliação bem definidos e com pesos explícitos; e (iii) os \textit{prompts} v3 otimizados para especificidade graduada.
+A convergência entre os corretores em todas as respostas (com divergência máxima de $1{,}22$ pontos) pode ser atribuída à combinação de fatores: (i) temperatura $0{,}0$ do modelo, que minimiza a variabilidade estocástica; (ii) critérios de avaliação com pesos explícitos; e (iii) \textit{prompts} otimizados para especificidade graduada. A baixa divergência reforça a consistência interna do sistema de dupla correção, indicando que os dois corretores independentes chegam a avaliações próximas mesmo sem coordenação entre si.
 
-A diferença nas taxas de arbitragem entre condições (17\% na Condição A vs. 25\% na Condição B) sugere um efeito secundário positivo do RAG: ao fornecer uma referência comum aos corretores, o material recuperado contribui para alinhar as avaliações, reduzindo a necessidade de intervenção do árbitro.
+Embora o árbitro não tenha sido acionado neste experimento, o mecanismo está implementado e disponível: em cenários reais com maior volume de respostas e maior heterogeneidade nas redações dos alunos, espera-se que divergências superiores ao limiar ocorram com maior frequência, tornando a arbitragem relevante para garantir a qualidade do consenso.
 
 
 \section{QA4 --- Estabilidade operacional}
 \label{sec:qa4}
 
-A quarta questão avaliativa verifica se, com configurações de baixa estocasticidade (temperatura $= 0{,}0$), o sistema produz saídas com baixa variabilidade em execuções repetidas do mesmo caso. Conforme definido na metodologia, selecionou-se um subconjunto de $A_{rep}=4$ respostas (uma por nível de qualidade) e repetiu-se a correção $R=3$ vezes.
+A quarta questão avaliativa verifica se, com configurações de baixa estocasticidade (temperatura $= 0{,}0$), o sistema produz saídas com baixa variabilidade em execuções repetidas do mesmo caso. Conforme definido na metodologia, selecionou-se um subconjunto de $A_{rep}=4$ respostas (uma por nível de qualidade) referentes à questão Q2, e repetiu-se a correção $R=3$ vezes.
 
 \subsection{Resultados}
 
-A \autoref{tab:qa4-estabilidade} apresenta as notas finais obtidas em cada repetição e a variação absoluta máxima por caso.
+A \autoref{tab:qa4-estabilidade} apresenta as notas finais obtidas em cada repetição e as estatísticas de variabilidade por nível de qualidade.
 
 \begin{table}[H]
     \centering
-    \caption{Estabilidade das notas em execuções repetidas ($R=3$)}
+    \caption{Estabilidade das notas em execuções repetidas ($R=3$) --- Questão Q2}
     \label{tab:qa4-estabilidade}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.14\textwidth}@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
+    \begin{tabularx}{\textwidth}{@{}p{0.14\textwidth}@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
         \hline
-        \textbf{Nível} & \textbf{$R_1$} & \textbf{$R_2$} & \textbf{$R_3$} & \textbf{Média} & \textbf{Var. máx.} \\
+        \textbf{Nível} & \textbf{$R_1$} & \textbf{$R_2$} & \textbf{$R_3$} & \textbf{Média} & \textbf{DP} & \textbf{Var. máx.} \\
         \hline
-        Excelente      & 10,00 & 10,00 & 10,00 & 10,00 & 0,00 \\
-        Intermediária  & 4,83  & 6,17  & 4,83  & 5,28  & 1,33 \\
-        Fraca          & 1,00  & 0,54  & 1,83  & 1,12  & 1,29 \\
-        Fora tema      & 0,00  & 0,00  & 0,00  & 0,00  & 0,00 \\
+        Excelente      & 10,00 & 10,00 & 10,00 & 10,00 & 0,00 & 0,00 \\
+        Intermediária  &  9,88 &  9,04 &  9,08 &  9,33 & 0,47 & 0,84 \\
+        Fraca          &  0,51 &  1,71 &  1,88 &  1,37 & 0,75 & 1,37 \\
+        Fora tema      &  0,00 &  0,00 &  0,00 &  0,00 & 0,00 & 0,00 \\
         \hline
     \end{tabularx}
     }
@@ -373,47 +353,34 @@ A \autoref{tab:qa4-estabilidade} apresenta as notas finais obtidas em cada repet
 
 \subsection{Análise}
 
-Os resultados revelam dois padrões distintos de estabilidade. Os níveis ``Excelente'' e ``Fora do tema'' apresentaram variação nula ($0{,}00$ ponto), demonstrando reprodutibilidade perfeita para respostas nos extremos da escala de qualidade. Os níveis ``Intermediária'' e ``Fraca'', por sua vez, apresentaram variação máxima de $1{,}33$ e $1{,}29$ pontos, respectivamente, ultrapassando o critério de sucesso definido na metodologia ($\leq 1{,}0$ ponto).
+Os resultados revelam dois padrões distintos de estabilidade. Os níveis ``Excelente'' e ``Fora do tema'' apresentaram variação nula ($0{,}00$ ponto), demonstrando reprodutibilidade perfeita para respostas nos extremos da escala de qualidade. Os níveis ``Intermediária'' e ``Fraca'' apresentaram variação máxima de $0{,}84$ e $1{,}37$ pontos, respectivamente.
 
-Essa diferença de estabilidade é coerente com os achados da QA3: respostas intermediárias e fracas são intrinsecamente mais ambíguas, gerando maior desacordo entre os corretores e, consequentemente, maior variação entre execuções. Enquanto respostas excelentes e fora do tema permitem avaliação inequívoca (nota máxima ou zero), respostas parcialmente corretas envolvem julgamentos de valor sobre ``quanto'' do conteúdo foi abordado, o que introduz variabilidade natural.
+O nível ``Intermediária'' atendeu ao critério de sucesso ($\leq 1{,}0$ ponto de variação máxima), com desvio-padrão de $0{,}47$ e média de $9{,}33$. O nível ``Fraca'' ultrapassou o limiar, com variação máxima de $1{,}37$ pontos e desvio-padrão de $0{,}75$.
 
-As médias por nível ($10{,}00 > 5{,}28 > 1{,}12 > 0{,}00$) confirmam a hierarquia de discriminação do sistema. O critério QA4 foi atendido para os níveis extremos e parcialmente atendido para os níveis intermediários. Em cenários de uso real, essa variabilidade nos níveis ambíguos seria mitigada pela etapa de revisão docente, que permite ao professor inspecionar e ajustar as notas antes da consolidação.
+Essa diferença de estabilidade é coerente com os achados da QA3: respostas fracas são as mais ambíguas e as que apresentam maior variação nas notas individuais de C1 e C2. Enquanto respostas excelentes e fora do tema permitem avaliação inequívoca (nota máxima ou zero), respostas parcialmente corretas --- especialmente as fracas, onde erros conceituais coexistem com alguma terminologia adequada --- envolvem julgamentos de valor que introduzem variabilidade natural mesmo com temperatura $0{,}0$.
+
+As médias por nível ($10{,}00 > 9{,}33 > 1{,}37 > 0{,}00$) confirmam a hierarquia de discriminação do sistema. O critério QA4 foi plenamente atendido para os níveis extremos e para o nível intermediário, e parcialmente atendido para o nível fraco. Em cenários de uso real, a variabilidade residual nos níveis ambíguos seria mitigada pela etapa de revisão docente, que permite ao professor inspecionar e ajustar as notas antes da consolidação final.
 
 
 \section{Desempenho temporal}
 \label{sec:desempenho}
 
-Para avaliar a viabilidade operacional do sistema em termos de tempo de execução, foram registrados os tempos de processamento em cada etapa do \textit{pipeline} de correção. A \autoref{tab:tempos} apresenta os resultados.
+Para avaliar a viabilidade operacional do sistema em termos de tempo de execução, foram registrados os tempos de processamento de cada condição experimental. A \autoref{tab:tempos} apresenta os resultados.
 
 \begin{table}[H]
     \centering
     \caption{Tempos de execução do \textit{pipeline} de correção}
     \label{tab:tempos}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.40\textwidth}@{\hspace{6pt}}c@{\hspace{6pt}}X@{}}
+    \begin{tabularx}{\textwidth}{@{}p{0.42\textwidth}@{\hspace{6pt}}c@{\hspace{6pt}}X@{}}
         \hline
         \textbf{Etapa} & \textbf{Tempo (s)} & \textbf{Observações} \\
         \hline
-        Geração das 12 respostas sintéticas & 69,3 & Geração paralela \\
-        Condição A (com RAG) --- 12 respostas & 109,9 & 9,2 s/resposta (4 alunos em paralelo) \\
-        Condição B (sem RAG) --- 12 respostas & 116,0 & 9,7 s/resposta (4 alunos em paralelo) \\
-        \hline
-    \end{tabularx}
-    }
-\end{table}
-
-A \autoref{tab:tempos-questao} detalha o tempo médio por questão, considerando 4 alunos processados em paralelo.
-
-\begin{table}[H]
-    \centering
-    \caption{Tempo médio de correção por questão (4 alunos em paralelo)}
-    \label{tab:tempos-questao}
-    {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.15\textwidth}@{\hspace{6pt}}c@{\hspace{6pt}}X@{}}
-        \hline
-        \textbf{Questão} & \textbf{Tempo (s)} & \textbf{Observações} \\
-        \hline
-        \textbf{Média} & \textbf{$\sim$37} & 4 alunos em paralelo por questão \\
+        Condição A (com RAG) --- 12 respostas & 155 & $\approx$12,9 s/resposta \\
+        Condição B (sem RAG) --- 12 respostas & 140 & $\approx$11,7 s/resposta \\
+        QA4 --- Run 1/3 (4 respostas, RAG ativo) & 55 & $\approx$13,8 s/resposta \\
+        QA4 --- Run 2/3 (4 respostas, RAG ativo) & 55 & $\approx$13,8 s/resposta \\
+        QA4 --- Run 3/3 (4 respostas, RAG ativo) & 55 & $\approx$13,8 s/resposta \\
         \hline
     \end{tabularx}
     }
@@ -421,13 +388,13 @@ A \autoref{tab:tempos-questao} detalha o tempo médio por questão, considerando
 
 \subsection{Análise}
 
-O tempo total de correção para 12 respostas discursivas na Condição A foi de $109{,}9$ segundos, correspondendo a uma média de $9{,}2$ segundos por resposta com 4 alunos processados em paralelo. O tempo médio por questão (com 4 respostas em paralelo) foi de aproximadamente $37$ segundos.
+O tempo total de correção para 12 respostas discursivas na Condição A foi de $155$ segundos ($\approx 12{,}9$ s/resposta), e na Condição B foi de $140$ segundos ($\approx 11{,}7$ s/resposta). A Condição A foi ligeiramente mais lenta, o que é esperado em razão da etapa adicional de recuperação vetorial no ChromaDB antes da geração das correções.
 
-Para fins de comparação, a correção manual de 12 respostas discursivas por um professor tipicamente demanda entre 1 e 2 horas, considerando leitura atenta, atribuição de notas por critério e elaboração de \textit{feedback} individualizado \cite{brown2015}. O sistema automatizado realizou essa tarefa em menos de 2 minutos, representando uma redução de tempo superior a 97\% em relação à estimativa de correção manual.
+A correção de questões discursivas é reconhecida na literatura como uma tarefa intensiva em trabalho docente \cite{schneider_towards_2024}, compondo parcela relevante da carga extraclasse dos professores \cite{barbosa_tempo_2021}. O sistema automatizado processou as 12 respostas em aproximadamente 2 minutos e meio (Condição A), o que representa uma compressão expressiva do tempo dedicado à correção inicial em relação à avaliação manual.
 
-Cabe ressalvar que a comparação direta com correção humana não implica equivalência qualitativa: o sistema automatizado produz avaliações que devem ser revisadas pelo docente. No entanto, o ganho de tempo é substancial mesmo considerando a etapa de revisão, pois o professor dispõe de notas pré-atribuídas, justificativas detalhadas e indicações de divergência, podendo concentrar-se na validação e ajuste pontual em vez de avaliar cada resposta \textit{ab initio}.
+Cabe ressalvar que a comparação direta com correção humana não implica equivalência qualitativa: o sistema automatizado produz avaliações que devem ser revisadas pelo docente. No entanto, o ganho de tempo é substancial mesmo considerando a etapa de revisão, pois o professor dispõe de notas pré-atribuídas e pode concentrar-se na validação e ajuste pontual em vez de avaliar cada resposta \textit{ab initio}.
 
-A Condição B (sem RAG) demandou tempo ligeiramente superior ($116{,}0$ s vs. $109{,}9$ s), o que pode parecer contraintuitivo dado que a Condição B não realiza recuperação de documentos. Essa diferença é atribuída à variabilidade natural do tempo de resposta da API do modelo e ao acionamento do árbitro em três casos na Condição B (vs. dois casos na Condição A).
+Os tempos dos três \textit{runs} do QA4 foram consistentes ($55$ s cada), confirmando a estabilidade operacional do \textit{pipeline} para execuções repetidas.
 
 
 \section{Discussão integrada}
@@ -442,15 +409,15 @@ A \autoref{tab:sintese-criterios} resume o atendimento aos critérios de sucesso
     \caption{Síntese do atendimento aos critérios de sucesso}
     \label{tab:sintese-criterios}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.08\textwidth}@{\hspace{4pt}}p{0.28\textwidth}@{\hspace{4pt}}p{0.34\textwidth}@{\hspace{4pt}}c@{}}
+    \begin{tabularx}{\textwidth}{@{}p{0.08\textwidth}@{\hspace{4pt}}p{0.28\textwidth}@{\hspace{4pt}}p{0.36\textwidth}@{\hspace{4pt}}c@{}}
         \hline
         \textbf{QA} & \textbf{Critério} & \textbf{Resultado obtido} & \textbf{Atendido?} \\
         \hline
         QA1 & 100\% das respostas processadas & 12/12 (100\%) & Sim \\
         QA1 & Completude $\geq$ 95\% & 100\% & Sim \\
-        QA2 & Efeito do RAG observável & A=5,22 vs B=5,10 ($\Delta$=$+$0,11); RAG positivo & Sim \\
-        QA3 & Árbitro acionado corretamente & 5 casos, todos com $|$diff$|>$2,0; limiar correto & Sim \\
-        QA4 & Variação $\leq$ 1,0 ponto & Extremos: 0,00; Intermediários: 1,33 & Parcial \\
+        QA2 & Efeito do RAG observável & $\Delta$Intermediária=$+$0,84; $\Delta$Fraca=$+$0,12 & Sim \\
+        QA3 & Árbitro acionado somente se $|$diff$|>$2,0 & Nenhum caso ultrapassou o limiar; árbitro não acionado & Sim \\
+        QA4 & Variação $\leq$ 1,0 ponto & Extremos: 0,00; Intermediária: 0,84; Fraca: 1,37 & Parcial \\
         \hline
     \end{tabularx}
     }
@@ -460,36 +427,36 @@ A \autoref{tab:sintese-criterios} resume o atendimento aos critérios de sucesso
 
 Os resultados demonstram que o sistema é tecnicamente viável para a tarefa proposta. O fluxo \textit{end-to-end} foi executado integralmente sem falhas, desde o cadastro da prova até a exportação dos relatórios finais, comprovando que a arquitetura baseada em LLM com dupla correção independente em paralelo, verificação de divergência e arbitragem condicional é funcional.
 
-Os artefatos gerados pelo sistema são estruturados e rastreáveis: cada correção contém a nota final, as notas individuais para cada critério de avaliação (com pesos configuráveis), a justificativa textual e a indicação de divergência. Essa estrutura permite ao docente não apenas verificar a nota atribuída, mas compreender o raciocínio que levou àquela avaliação, facilitando a revisão e o ajuste quando necessário.
+Os artefatos gerados pelo sistema são estruturados e rastreáveis: cada correção contém a nota final, as notas individuais de cada corretor, o valor de divergência e o método de consenso aplicado. Essa estrutura permite ao docente não apenas verificar a nota atribuída, mas compreender como ela foi obtida, facilitando a revisão e o ajuste quando necessário.
 
-A integração com o ChromaDB para indexação vetorial dos materiais didáticos funcionou conforme especificado, permitindo que o mecanismo de RAG recuperasse trechos relevantes para contextualizar as correções. A persistência no PostgreSQL garantiu a durabilidade dos dados, e a exportação em múltiplos formatos (JSON, \LaTeX) demonstrou a flexibilidade do sistema para diferentes necessidades de documentação e análise.
+A integração com o ChromaDB para indexação vetorial dos materiais didáticos funcionou conforme especificado, permitindo que o mecanismo de RAG recuperasse trechos relevantes para contextualizar as correções. A persistência no PostgreSQL garantiu a durabilidade e a rastreabilidade dos dados ao longo de todo o fluxo de execução.
 
 \subsection{Viabilidade operacional}
 
-Do ponto de vista operacional, o sistema preserva a autoridade docente ao posicionar a correção automatizada como etapa de apoio, não de decisão final. O professor tem acesso aos resultados por meio de dois canais complementares: o \textit{dashboard} Streamlit, que oferece visualização interativa das correções, e a API REST, que permite integração com outros sistemas institucionais.
+Do ponto de vista operacional, o sistema preserva a autoridade docente ao posicionar a correção automatizada como etapa de apoio, não de decisão final. O professor tem acesso aos resultados por meio da a API REST, que permite integração com outros sistemas institucionais.
 
-A disponibilização dos resultados para revisão docente inclui todos os elementos necessários para uma tomada de decisão informada: notas por critério, justificativas detalhadas, indicação de divergência e nota final consensuada. O docente pode aprovar, ajustar ou rejeitar cada correção antes da publicação oficial das notas.
-
-O sistema demonstrou operação autônoma durante o fluxo de correção, sem necessidade de intervenção manual entre as etapas. O tempo de execução de aproximadamente $109{,}9$ segundos para 12 respostas (Condição A) representa uma redução superior a 97\% em relação à estimativa de correção manual, tornando o sistema particularmente relevante para turmas com grande número de alunos.
+O sistema demonstrou operação autônoma durante o fluxo de correção, sem necessidade de intervenção manual entre as etapas. O tempo de execução de aproximadamente $155$ segundos para 12 respostas (Condição A) indica que a etapa de correção automatizada é concluída em tempo substancialmente inferior ao que seria demandado pela correção manual, ainda que uma comparação rigorosa exigiria mensuração controlada do tempo docente real para o mesmo conjunto de respostas.
 
 \subsection{Contribuição do RAG}
 
-Os dados pareados da comparação entre Condições A e B revelam que o mecanismo de RAG contribui para o processo de correção de duas formas complementares: (i) ancora as justificativas ao material didático em 75\% dos casos, tornando o \textit{feedback} mais específico e rastreável; e (ii) auxilia na identificação mais precisa do conhecimento parcial em respostas intermediárias e fracas, ao fornecer ao corretor uma referência para distinguir acertos parciais de omissões.
+Os dados pareados da comparação entre Condições A e B revelam que o mecanismo de RAG aumenta a especificidade avaliativa: ao dispor do material didático, o corretor passa a avaliar com maior aderência ao conteúdo programático da disciplina, em vez de se apoiar apenas no conhecimento paramétrico genérico do modelo. Esse aumento de especificidade não implica necessariamente notas mais altas, podendo resultar tanto em notas maiores, quando o material confirma acertos parciais que poderiam ser subestimados, quanto em notas menores, quando o material expõe lacunas que passariam despercebidas sem a referência.
 
-O padrão observado é coerente com o esperado: o RAG agrega valor nas respostas que abordam o conteúdo solicitado (níveis excelente, intermediária e fraca), onde o material recuperado pode ser utilizado como base de comparação. Nas respostas fora do tema, o RAG tem impacto limitado, pois o conteúdo da resposta não se relaciona com o material indexado --- nesse cenário, a avaliação se baseia essencialmente na detecção de irrelevância temática, que o LLM realiza independentemente do contexto recuperado.
+No experimento, o efeito predominante foi positivo no nível intermediário ($\Delta = +0{,}84$), onde o material recuperado forneceu ao corretor a referência necessária para reconhecer o conhecimento parcial demonstrado. Já no nível fraco, o efeito foi modesto na média ($\Delta = +0{,}12$), com Q3 registrando leve redução ($\Delta = -0{,}55$), evidência de que o RAG também pode tornar o corretor mais rigoroso quando o material deixa mais clara a distância entre a resposta e o conteúdo esperado.
 
-O efeito mais expressivo concentrou-se nos níveis ``Fraca'' ($\Delta = +0{,}29$) e ``Intermediária'' ($\Delta = +0{,}17$), onde o RAG forneceu ao corretor o referencial necessário para identificar com maior precisão o conhecimento parcial presente nas respostas. Esse resultado reforça a utilidade do mecanismo de RAG como instrumento de \textbf{precisão avaliativa}: o gabarito contextual permite avaliações mais aderentes ao conteúdo programático da disciplina, reconhecendo acertos parciais que poderiam ser subestimados sem a referência.
+Os níveis ``Excelente'' e ``Fora do tema'' não foram afetados pelo RAG, resultado esperado: o LLM identifica esses casos com igual precisão independentemente do contexto adicional, pois a distinção entre uma resposta completa e uma resposta irrelevante não requer referência ao material didático.
 
 \subsection{Limitações observadas}
 
 Diversas limitações foram identificadas durante a execução do experimento e devem ser consideradas na interpretação dos resultados:
 
 \begin{enumerate}
-    \item \textbf{Respostas sintéticas:} O conjunto de 12 respostas foi elaborado pelos autores em quatro níveis bem definidos de qualidade, o que facilita a discriminação pelo sistema. Respostas reais de alunos apresentam maior variabilidade, ambiguidade e níveis intermediários de qualidade que não foram contemplados neste experimento.
+    \item \textbf{Respostas sintéticas:} O conjunto de 12 respostas foi elaborado pelos autores em quatro níveis bem definidos de qualidade, o que facilita a discriminação pelo sistema. Respostas reais de alunos apresentam maior variabilidade, ambiguidade e gradações intermediárias de qualidade que não foram contempladas neste experimento.
 
-    \item \textbf{Escala reduzida:} A prova utilizada contém apenas 3 questões de uma única disciplina (Algoritmos e Estrutura de Dados), limitando a generalização dos resultados para provas com maior número de questões, outras disciplinas ou com enunciados de natureza diferente (questões abertas, problemas práticos, análises de caso).
+    \item \textbf{Escala reduzida:} A prova utilizada contém apenas 3 questões de uma única disciplina (Algoritmos e Estrutura de Dados), limitando a generalização dos resultados para provas com maior número de questões, outras disciplinas ou enunciados de natureza diferente.
 
-    \item \textbf{Modelo único:} Todos os experimentos foram realizados com o modelo \texttt{gemini-2.5-flash}. Os resultados podem variar com outros modelos de linguagem, tanto em termos de qualidade das avaliações quanto de estabilidade operacional.
+    \item \textbf{Modelo único:} Todos os experimentos foram realizados com o modelo \texttt{gemini\allowbreak-2.5\allowbreak-flash}. Os resultados podem variar com outros modelos de linguagem, tanto em termos de qualidade das avaliações quanto de estabilidade operacional.
 
     \item \textbf{Ausência de comparação com correção humana:} O experimento não incluiu correção humana como referência (\textit{ground truth}), impossibilitando a mensuração da acurácia absoluta do sistema em relação ao julgamento docente.
+
+    \item \textbf{Árbitro não exercitado:} Neste experimento, nenhuma divergência ultrapassou o limiar de $2{,}0$ pontos, de modo que o mecanismo de arbitragem não foi exercitado em condições reais. A validação empírica do árbitro fica, portanto, condicionada a experimentos futuros com maior volume e heterogeneidade de respostas.
 \end{enumerate}

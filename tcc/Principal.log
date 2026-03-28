@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  28 MAR 2026 16:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  28 MAR 2026 18:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1811,11 +1811,11 @@ LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <12> not available
 (Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 102.
  [15]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 135.
+(Font)              <14.4> on input line 132.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 135.
+(Font)              <10> on input line 132.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 135.
+(Font)              <7> on input line 132.
 ) [16]) (textual/t1-introducao.tex
 Cap\'{\i }tulo 1.
 
@@ -1899,7 +1899,7 @@ Overfull \hbox (2.35287pt too wide) in paragraph at lines 178--178
 [29]
 ignored: Infinite glue shrinkage found in box being split [30] [31] [32] [33] [34] [35] [36] [37] [38] [39]) (textual/t4-material.tex [40]
 Cap\'{\i }tulo 4.
-<media/fluxo-configuracao.jpg, id=1023, 755.82375pt x 1059.96pt>
+<media/fluxo-configuracao.jpg, id=1015, 755.82375pt x 1059.96pt>
 File: media/fluxo-configuracao.jpg Graphic file (type jpg)
 <use media/fluxo-configuracao.jpg>
 Package pdftex.def Info: media/fluxo-configuracao.jpg  used on input line 21.
@@ -1907,13 +1907,13 @@ Package pdftex.def Info: media/fluxo-configuracao.jpg  used on input line 21.
 [41
 
 ]
-<media/fluxo-correcao-prova.jpg, id=1029, 824.07875pt x 1295.84125pt>
+<media/fluxo-correcao-prova.jpg, id=1021, 824.07875pt x 1295.84125pt>
 File: media/fluxo-correcao-prova.jpg Graphic file (type jpg)
 <use media/fluxo-correcao-prova.jpg>
 Package pdftex.def Info: media/fluxo-correcao-prova.jpg  used on input line 29.
 (pdftex.def)             Requested size: 405.22302pt x 637.20212pt.
  [42 <./media/fluxo-configuracao.jpg>]
-<media/fluxo-correcao-pergunta.jpg, id=1035, 487.8225pt x 934.49126pt>
+<media/fluxo-correcao-pergunta.jpg, id=1027, 487.8225pt x 934.49126pt>
 File: media/fluxo-correcao-pergunta.jpg Graphic file (type jpg)
 <use media/fluxo-correcao-pergunta.jpg>
 Package pdftex.def Info: media/fluxo-correcao-pergunta.jpg  used on input line 37.
@@ -1936,7 +1936,7 @@ Underfull \hbox (badness 2799) in paragraph at lines 159--159
 
 [50] [51] [52]) (textual/t5-desenvolvimento.tex [53] [54]
 Cap\'{\i }tulo 5.
-<media/arquitetura_sistema.png, id=1154, 1276.77pt x 523.9575pt>
+<media/arquitetura_sistema.png, id=1146, 1276.77pt x 523.9575pt>
 File: media/arquitetura_sistema.png Graphic file (type png)
 <use media/arquitetura_sistema.png>
 Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 15.
@@ -1944,13 +1944,13 @@ Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 15.
 [55
 
  <./media/arquitetura_sistema.png>] [56]
-<media/fluxo_requisicao.png, id=1167, 1102.1175pt x 519.9425pt>
+<media/fluxo_requisicao.png, id=1159, 1102.1175pt x 519.9425pt>
 File: media/fluxo_requisicao.png Graphic file (type png)
 <use media/fluxo_requisicao.png>
 Package pdftex.def Info: media/fluxo_requisicao.png  used on input line 84.
 (pdftex.def)             Requested size: 454.99905pt x 214.65347pt.
  [57 <./media/fluxo_requisicao.png>] [58]
-<media/pipeline.png, id=1179, 362.35374pt x 512.91624pt>
+<media/pipeline.png, id=1171, 362.35374pt x 512.91624pt>
 File: media/pipeline.png Graphic file (type png)
 <use media/pipeline.png>
 Package pdftex.def Info: media/pipeline.png  used on input line 122.
@@ -1958,7 +1958,7 @@ Package pdftex.def Info: media/pipeline.png  used on input line 122.
  [59] (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 ) [60 <./media/pipeline.png>] [61] [62] [63] [64]
-<media/er.png, id=1240, 1439.3775pt x 1887.05pt>
+<media/er.png, id=1232, 1439.3775pt x 1887.05pt>
 File: media/er.png Graphic file (type png)
 <use media/er.png>
 Package pdftex.def Info: media/er.png  used on input line 220.
@@ -1975,122 +1975,99 @@ Cap\'{\i }tulo 6.
 ]
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <17.28> not available
 (Font)              Font shape `T1/lmss/m/sl' tried instead on input line 71.
- [72]
-Overfull \hbox (16.95021pt too wide) in alignment at lines 133--133
- [] [] [] [] [] [] [] 
- []
-
-[73] [74] [75]
-
-LaTeX Warning: Citation `jonsson2007' on page 76 undefined on input line 213.
-
-[76] [77]
-Overfull \hbox (8.45503pt too wide) in paragraph at lines 301--301
-[]|\T1/lmr/m/n/10.95 (-20) Excelente| 
- []
-
-
-Overfull \hbox (26.84584pt too wide) in paragraph at lines 301--301
+ [72] [73] [74] [75] [76]
+Overfull \hbox (17.7439pt too wide) in paragraph at lines 278--278
 []|\T1/lmr/m/n/10.95 (-20) Intermediária| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 301--301
+Underfull \hbox (badness 10000) in paragraph at lines 278--278
 []|\T1/lmr/m/n/10.95 (+20) Fora
  []
 
 
-Overfull \hbox (8.45503pt too wide) in paragraph at lines 301--301
-[]|\T1/lmr/m/n/10.95 (-20) Excelente| 
- []
-
-
-Overfull \hbox (26.84584pt too wide) in paragraph at lines 301--301
+Overfull \hbox (17.7439pt too wide) in paragraph at lines 278--278
 []|\T1/lmr/m/n/10.95 (-20) Intermediária| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 301--301
+Underfull \hbox (badness 10000) in paragraph at lines 278--278
 []|\T1/lmr/m/n/10.95 (+20) Fora
  []
 
 
-Overfull \hbox (8.45503pt too wide) in paragraph at lines 301--301
-[]|\T1/lmr/m/n/10.95 (-20) Excelente| 
- []
-
-
-Overfull \hbox (26.84584pt too wide) in paragraph at lines 301--301
+Overfull \hbox (17.7439pt too wide) in paragraph at lines 278--278
 []|\T1/lmr/m/n/10.95 (-20) Intermediária| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 301--301
+Underfull \hbox (badness 10000) in paragraph at lines 278--278
 []|\T1/lmr/m/n/10.95 (+20) Fora
  []
 
-[78]
-Overfull \hbox (8.6489pt too wide) in paragraph at lines 322--322
+
+Overfull \hbox (17.7439pt too wide) in paragraph at lines 306--306
 []|\T1/lmr/m/n/10.95 (-20) Intermediária| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 322--322
-[]|\T1/lmr/m/n/10.95 (+20) B (sem
+Underfull \hbox (badness 10000) in paragraph at lines 306--306
+[]|\T1/lmr/m/n/10.95 (+20) Fora
  []
 
 
-Overfull \hbox (8.6489pt too wide) in paragraph at lines 322--322
+Overfull \hbox (17.7439pt too wide) in paragraph at lines 306--306
 []|\T1/lmr/m/n/10.95 (-20) Intermediária| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 322--322
-[]|\T1/lmr/m/n/10.95 (+20) B (sem
+Underfull \hbox (badness 10000) in paragraph at lines 306--306
+[]|\T1/lmr/m/n/10.95 (+20) Fora
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 322--322
-[]|\T1/lmr/m/n/10.95 (+20) B (sem
- []
-
-
-Overfull \hbox (8.6489pt too wide) in paragraph at lines 322--322
+Overfull \hbox (17.7439pt too wide) in paragraph at lines 306--306
 []|\T1/lmr/m/n/10.95 (-20) Intermediária| 
  []
 
-[79] [80] [81]
 
-LaTeX Warning: Citation `brown2015' on page 82 undefined on input line 426.
-
-[82] [83] [84]
-Overfull \hbox (27.81593pt too wide) in paragraph at lines 492--493
-[]\T1/lmr/bx/n/12 (-20) Modelo único: \T1/lmr/m/n/12 (-20) To-dos os ex-pe-ri-men-tos fo-ram re-a-li-za-dos com o mo-delo \T1/lmtt/m/n/12 gemini-2.5-flash\T1/lmr/m/n/12 (-20) .
+Underfull \hbox (badness 10000) in paragraph at lines 306--306
+[]|\T1/lmr/m/n/10.95 (+20) Fora
  []
 
-) (textual/t7-conclusoes.tex [85]
+[77] [78] [79] [80]
+Underfull \hbox (badness 10000) in paragraph at lines 422--422
+[]|$\OT1/lmr/m/n/10.95 (+20) ^^A$\T1/lmr/m/n/10.95 (+20) Intermediária=$\OT1/lmr/m/n/10.95 (+20) +$\T1/lmr/m/n/10.95 (+20) 0,84;
+ []
+
+
+Underfull \hbox (badness 1377) in paragraph at lines 422--422
+[]|\T1/lmr/m/n/10.95 (+20) Extremos: 0,00; In-ter-me-di-á-ria:
+ []
+
+[81] [82]) (textual/t7-conclusoes.tex [83]
 Cap\'{\i }tulo 7.
-[86
+[84
 
-] [87]) (Principal.bbl (Principal.brf)
+] [85]) (Principal.bbl (Principal.brf)
 \tf@brf=\write6
 \openout6 = `Principal.brf'.
 
- [88]
+ [86]
 bibitemlist
-[89
+[87
 
-] [90] [91] [92] [93]) [94] [95
+] [88] [89] [90] [91]) [92] [93
 
 
 ] (pos/apendice-schema-completo.tex
 AP\^ENDICE A.
-<media/sql_schemas.png, id=1625, 1330.9725pt x 1216.545pt>
+<media/sql_schemas.png, id=1614, 1330.9725pt x 1216.545pt>
 File: media/sql_schemas.png Graphic file (type png)
 <use media/sql_schemas.png>
 Package pdftex.def Info: media/sql_schemas.png  used on input line 8.
 (pdftex.def)             Requested size: 454.98206pt x 415.86595pt.
-) (pos/apendice-prompts.tex [96
+) (pos/apendice-prompts.tex [94
 
  <./media/sql_schemas.png (PNG copy)>]
 AP\^ENDICE B.
@@ -2139,7 +2116,7 @@ Overfull \hbox (45.17525pt too wide) in paragraph at lines 37--37
 []\T1/lmtt/m/n/12 2. **Avaliação de Especificidade:** Avalie o nível de especificidade da resposta:[] 
  []
 
-[97
+[95
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 38.
@@ -2228,7 +2205,7 @@ Overfull \hbox (32.82524pt too wide) in paragraph at lines 76--76
 []\T1/lmtt/m/n/12 # -----------------------------------------------------------------------------[] 
  []
 
-[98]
+[96]
 Overfull \hbox (32.82524pt too wide) in paragraph at lines 78--78
 []\T1/lmtt/m/n/12 # -----------------------------------------------------------------------------[] 
  []
@@ -2263,7 +2240,7 @@ Overfull \hbox (458.90045pt too wide) in paragraph at lines 97--97
 []\T1/lmtt/m/n/12 3. **Veredito Final:** Sua nota final pode coincidir com C1, com C2, ou ser completamente diferente. NÃO busque uma "média" ^^V busque a nota CORRETA.[] 
  []
 
-[99]
+[97]
 Overfull \hbox (335.40039pt too wide) in paragraph at lines 120--120
 []\T1/lmtt/m/n/12 Gere um JSON final (formato `AgentCorrection`) com sua avaliação de desempate. O campo `agent_id` deve ser "corretor_3_arbiter".[] 
  []
@@ -2303,7 +2280,7 @@ Overfull \hbox (119.27528pt too wide) in paragraph at lines 142--142
 []        \T1/lmtt/m/n/12 text += f"- Critério: {criterion.name} (Valendo até: {criterion.max_score} pontos)\n"[] 
  []
 
-[100]
+[98]
 Overfull \hbox (248.95035pt too wide) in paragraph at lines 158--158
 []        \T1/lmtt/m/n/12 return "[Nenhum contexto específico foi recuperado. Avalie com base no conhecimento geral da disciplina.]"[] 
  []
@@ -2313,7 +2290,7 @@ Overfull \hbox (100.75027pt too wide) in paragraph at lines 162--162
 []        \T1/lmtt/m/n/12 text += f"[TRECHO {idx}] (Fonte: {ctx.source_document}, Pág: {ctx.page_number})\n"[] 
  []
 
-) [101]
+) [99]
 \tf@lof=\write7
 \openout7 = `Principal.lof'.
 
@@ -2335,26 +2312,23 @@ L3 programming layer <2020/03/25>
  ***********
 
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Principal.brf' has not changed.
-(rerunfilecheck)             Checksum: 7EA8AC4AC3139313753E8DB82C219706;9427.
+(rerunfilecheck)             Checksum: 286F0DB5B37BFC653EF0FB14A053B53D;9447.
  ) 
 Here is how much of TeX's memory you used:
- 52547 strings out of 467867
- 1031038 string characters out of 5414426
- 1910351 words of memory out of 5000000
- 79449 multiletter control sequences out of 15000+600000
- 755004 words of font info for 337 fonts, out of 8000000 for 9000
+ 52516 strings out of 467867
+ 1030735 string characters out of 5414426
+ 1910572 words of memory out of 5000000
+ 79434 multiletter control sequences out of 15000+600000
+ 754004 words of font info for 331 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,14n,139p,2608b,1509s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbo10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb>
-Output written on Principal.pdf (118 pages, 1425964 bytes).
+Output written on Principal.pdf (116 pages, 1416283 bytes).
 PDF statistics:
- 2208 PDF objects out of 2487 (max. 8388607)
- 514 named destinations out of 1000 (max. 500000)
- 68641 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 2185 PDF objects out of 2487 (max. 8388607)
+ 509 named destinations out of 1000 (max. 500000)
+ 66569 words of extra memory for PDF output out of 74296 (max. 10000000)
 

@@ -398,6 +398,13 @@ Dispon{\'\i}vel em:
   protótipo de correção automática de provas discursivas}. 2026.
 Dispon{\'\i}vel em: \url{https://github.com/savinoo/ai-grading-system}.}
 
+\bibitem[Schneider, Schenk e Niklaus 2024]{schneider_towards_2024}
+\abntrefinfo{Schneider, Schenk e Niklaus}{SCHNEIDER; SCHENK; NIKLAUS}{2024}
+{SCHNEIDER, J.; SCHENK, B.; NIKLAUS, C. \emph{Towards {LLM}-based {Autograding}
+  for {Short} {Textual} {Answers}}. arXiv, 2024.
+ArXiv:2309.11508.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2309.11508}.}
+
 \bibitem[Seo et al. 2025]{seo_large_2025}
 \abntrefinfo{Seo et al.}{SEO et al.}{2025}
 {SEO, H. et al. Large {Language} {Models} as {Evaluators} in {Education}:
