@@ -361,12 +361,23 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                     criterion_weight = weight_map.get(criterion_score.criterion, 1.0)
                     raw_weighted = criterion_score.score * criterion_weight
 
+                    # Extrair agent_id de AgentCorrection (objeto) ou dict;
+                    # se for Enum, usar .value — garantir string armazenada.
+                    if isinstance(correction, dict):
+                        agent_id_value = correction.get('agent_id')
+                    else:
+                        agent_id_value = getattr(correction, 'agent_id', None)
+
+                    # Se for Enum, extrair .value
+                    if hasattr(agent_id_value, 'value'):
+                        agent_id_value = agent_id_value.value
+
                     db.add(
                         StudentAnswerCriteriaScore(
                             uuid=uuid4(),
                             student_answer_uuid=student_answer_uuid,
                             criteria_uuid=criteria_uuid,
-                            agent_id=correction.agent_id,
+                            agent_id=agent_id_value,
                             raw_score=criterion_score.score,
                             weighted_score=raw_weighted * scale_factor,
                             feedback=criterion_score.feedback,
