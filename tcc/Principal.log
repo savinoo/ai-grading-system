@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  28 MAR 2026 18:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  28 MAR 2026 18:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2057,11 +2057,11 @@ bibitemlist
 
 ] (pos/apendice-schema-completo.tex
 AP\^ENDICE A.
-<media/sql_schemas.png, id=1619, 1330.9725pt x 1216.545pt>
+<media/sql_schemas.png, id=1619, 1378.14874pt x 966.61125pt>
 File: media/sql_schemas.png Graphic file (type png)
 <use media/sql_schemas.png>
 Package pdftex.def Info: media/sql_schemas.png  used on input line 8.
-(pdftex.def)             Requested size: 454.98206pt x 415.86595pt.
+(pdftex.def)             Requested size: 455.00078pt x 319.13019pt.
 ) (pos/apendice-prompts.tex [94
 
  <./media/sql_schemas.png (PNG copy)>]
@@ -2176,13 +2176,13 @@ Overfull \hbox (205.72533pt too wide) in paragraph at lines 66--66
  []
 
 
-Overfull \hbox (1385.15091pt too wide) in paragraph at lines 70--70
-[]\T1/lmtt/m/n/12 - `criteria_scores`: Um objeto com a NOTA EFETIVA atribuída para cada critério na escala ABSOLUTA de 0 até o peso máximo do critério. IMPORTANTE: Use a escala ABSOLUTA, NÃO normalizada (0-1). Exemplo: Se o critério vale 4.0 pontos e o aluno acertou parcialmente (75%), atribua 3.0 pontos, NÃO 0.75.[] 
+Overfull \hbox (2391.6764pt too wide) in paragraph at lines 70--70
+[]\T1/lmtt/m/n/12 - `criteria_scores`: Lista com a nota de CADA critério, **na mesma ordem em que aparecem na rubrica acima**. Cada elemento deve ter `criterion` com o nome EXATO do critério (copie da rubrica, sem alterações) e `score` com a nota. A nota deve estar na escala de 0 até o seu "Valendo até". Exemplos: critério que vale até 4.0 \TS1/lmtt/m/n/12 ^^Y \T1/lmtt/m/n/12 atribua entre 0.0 e 4.0; critério que vale até 3.0 \TS1/lmtt/m/n/12 ^^Y \T1/lmtt/m/n/12 atribua entre 0.0 e 3.0. NUNCA use escala 0-1 nem ultrapasse o máximo do critério.[] 
  []
 
 
-Overfull \hbox (786.17561pt too wide) in paragraph at lines 71--71
-[]\T1/lmtt/m/n/12 - `total_score`: A soma simples e EXATA das notas atribuídas em `criteria_scores`. Não arredonde, não ajuste. Se a soma der 7.3, o total_score é 7.3. A nota final DEVE estar na escala de 0 a 10 pontos.[] 
+Overfull \hbox (675.01855pt too wide) in paragraph at lines 71--71
+[]\T1/lmtt/m/n/12 - `total_score`: A soma simples e EXATA de todos os valores em `criteria_scores`. Se os critérios valeram 3.0, 2.0, 1.0 e 4.0 e o aluno tirou 3.0, 1.5, 0.5 e 4.0, o total_score é 9.0.[] 
  []
 
 
@@ -2241,8 +2241,8 @@ Overfull \hbox (335.40039pt too wide) in paragraph at lines 120--120
  []
 
 
-Overfull \hbox (563.8755pt too wide) in paragraph at lines 121--121
-[]\T1/lmtt/m/n/12 IMPORTANTE: Atribua notas na escala ABSOLUTA (0 até o peso máximo do critério), NÃO normalizada (0-1). O `total_score` DEVE ser a soma exata das notas dos critérios.[] 
+Overfull \hbox (1218.42583pt too wide) in paragraph at lines 121--121
+[]\T1/lmtt/m/n/12 IMPORTANTE: O `criteria_scores` deve seguir a mesma ordem da rubrica, com o campo `criterion` copiado EXATAMENTE do nome do critério. A nota de cada critério deve estar entre 0 e o seu "Valendo até". O `total_score` DEVE ser a soma exata dos valores em `criteria_scores`.[] 
  []
 
 
@@ -2313,15 +2313,15 @@ Package rerunfilecheck Info: File `Principal.brf' has not changed.
 (rerunfilecheck)             Checksum: 286F0DB5B37BFC653EF0FB14A053B53D;9447.
  ) 
 Here is how much of TeX's memory you used:
- 52518 strings out of 467867
- 1030737 string characters out of 5414426
+ 52520 strings out of 467867
+ 1030765 string characters out of 5414426
  1910572 words of memory out of 5000000
  79432 multiletter control sequences out of 15000+600000
- 751086 words of font info for 330 fonts, out of 8000000 for 9000
+ 751183 words of font info for 331 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,14n,139p,2608b,1509s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbo10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb>
-Output written on Principal.pdf (116 pages, 1416505 bytes).
+Output written on Principal.pdf (116 pages, 1414523 bytes).
 PDF statistics:
  2190 PDF objects out of 2487 (max. 8388607)
  515 named destinations out of 1000 (max. 500000)

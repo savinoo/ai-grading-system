@@ -67,8 +67,8 @@ Primeiro, verifique se a resposta aborda o tema da questão. Se não abordar, at
 
 Se abordar, gere um JSON com os seguintes campos:
 - `agent_id`: "{agent_id}"
-- `criteria_scores`: Um objeto com a NOTA EFETIVA atribuída para cada critério na escala ABSOLUTA de 0 até o peso máximo do critério. IMPORTANTE: Use a escala ABSOLUTA, NÃO normalizada (0-1). Exemplo: Se o critério vale 4.0 pontos e o aluno acertou parcialmente (75%), atribua 3.0 pontos, NÃO 0.75.
-- `total_score`: A soma simples e EXATA das notas atribuídas em `criteria_scores`. Não arredonde, não ajuste. Se a soma der 7.3, o total_score é 7.3. A nota final DEVE estar na escala de 0 a 10 pontos.
+- `criteria_scores`: Lista com a nota de CADA critério, **na mesma ordem em que aparecem na rubrica acima**. Cada elemento deve ter `criterion` com o nome EXATO do critério (copie da rubrica, sem alterações) e `score` com a nota. A nota deve estar na escala de 0 até o seu "Valendo até". Exemplos: critério que vale até 4.0 → atribua entre 0.0 e 4.0; critério que vale até 3.0 → atribua entre 0.0 e 3.0. NUNCA use escala 0-1 nem ultrapasse o máximo do critério.
+- `total_score`: A soma simples e EXATA de todos os valores em `criteria_scores`. Se os critérios valeram 3.0, 2.0, 1.0 e 4.0 e o aluno tirou 3.0, 1.5, 0.5 e 4.0, o total_score é 9.0.
 - `reasoning_chain`: Seu processo de pensamento detalhado. Analise CADA critério separadamente. AO FINAL da explicação de cada critério, coloque a nota atribuída entre colchetes (Ex: "...por isso está correto. [Nota: 2.5/3.0]"). NÃO faça somas no texto.
 - `feedback_text`: Feedback direto e profissional para o aluno, em no máximo 3 frases.
 """
@@ -118,7 +118,7 @@ Nota: {score_c2}
 
 ### SEU OBJETIVO:
 Gere um JSON final (formato `AgentCorrection`) com sua avaliação de desempate. O campo `agent_id` deve ser "corretor_3_arbiter".
-IMPORTANTE: Atribua notas na escala ABSOLUTA (0 até o peso máximo do critério), NÃO normalizada (0-1). O `total_score` DEVE ser a soma exata das notas dos critérios.
+IMPORTANTE: O `criteria_scores` deve seguir a mesma ordem da rubrica, com o campo `criterion` copiado EXATAMENTE do nome do critério. A nota de cada critério deve estar entre 0 e o seu "Valendo até". O `total_score` DEVE ser a soma exata dos valores em `criteria_scores`.
 No campo `reasoning_chain`, primeiro apresente sua avaliação independente, depois compare com as avaliações de C1 e C2, e justifique sua decisão final para cada critério com nota entre colchetes (ex: "...melhor explicado. [Nota: 2.5/3.0]").
 """
 
