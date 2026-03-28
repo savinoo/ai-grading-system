@@ -201,7 +201,7 @@ Os \textit{prompts} que instruem os agentes corretores constituem um elemento ce
 
     \item \textbf{\textit{Chain-of-Thought} (CoT):} os agentes são instruídos a desenvolver um raciocínio passo a passo antes de atribuir qualquer nota. O \textit{prompt} exige que cada critério da rubrica seja analisado individualmente, com a nota parcial registrada entre colchetes ao final de cada análise (por exemplo, ``\textit{[Nota: 2.5/3.0]}''). Esse raciocínio é armazenado no campo \textit{reasoning\_chain} da saída estruturada, permitindo rastreabilidade completa da decisão avaliativa.
 
-    \item \textbf{\textit{Groundedness} (fidelidade ao contexto RAG):} o \textit{prompt} instrui o corretor a utilizar o material didático recuperado como referência principal para validar terminologia e escopo, mas com flexibilidade pedagógica --- respostas tecnicamente corretas que utilizem exemplos ou terminologia diferentes do material são consideradas válidas. Essa diretriz equilibra fidelidade ao conteúdo da disciplina com reconhecimento de compreensão conceitual genuína.
+    \item \textbf{\textit{Groundedness} (fidelidade ao contexto RAG):} o \textit{prompt} instrui o corretor a utilizar o material didático recuperado como referência principal para validar terminologia e escopo, mas com flexibilidade pedagógica: respostas tecnicamente corretas que utilizem exemplos ou terminologia diferentes do material são consideradas válidas. Essa diretriz equilibra fidelidade ao conteúdo da disciplina com reconhecimento de compreensão conceitual genuína.
 \end{enumerate}
 
 Adicionalmente, o \textit{prompt} dos corretores inclui uma diretriz destinada à identificação de estratégias discursivas evasivas. Os agentes são orientados a reconhecer e penalizar, de forma criteriosa e baseada em sinais linguísticos objetivos, ocorrências de linguagem vaga, uso reiterado de clichês, afirmações não fundamentadas ou generalizações excessivas que aparentem mascarar a ausência de conhecimento específico. Esta diretriz é operacionalizada por meio de exemplos anotados e regras heurísticas no \textit{prompt}, com o objetivo de aumentar a sensibilidade do sistema a indícios de baixa substância conceitual sem comprometer a avaliação de respostas concisas e legítimas.
@@ -265,15 +265,18 @@ Além dessas integrações, a execução do protótipo foi desenhada para ser pa
 
 \subsection{Infraestrutura de experimentação}
 
-Para viabilizar a execução e a documentação dos experimentos descritos no \autoref{cap:resultados}, foi desenvolvida uma camada de experimentação composta por dois módulos:
+Para viabilizar a execução e a documentação dos experimentos descritos no \autoref{cap:resultados}, foi desenvolvido um \textit{notebook} Jupyter (\texttt{experimento\_tcc.ipynb}) que orquestra o experimento completo via API REST do \textit{backend}. O \textit{notebook} está organizado nas seguintes etapas:
 
-\begin{itemize}
-    \item \textbf{Interface Streamlit}: aplicação web de observabilidade que permite executar o fluxo completo do experimento de forma guiada --- geração de questões, simulação de respostas, correção com e sem RAG, teste de estabilidade e exportação de resultados. A interface exibe \textit{feedback} em tempo real de cada etapa do pipeline (RAG, Corretor 1, Corretor 2, divergência, árbitro, nota final), utilizando o mecanismo de \textit{streaming} do LangGraph.
+\begin{enumerate}
+    \item \textbf{Setup}: registro do professor, autenticação, criação de turma e cadastro dos alunos sintéticos via API.
+    \item \textbf{Condição A (com RAG)}: criação da prova, \textit{upload} do PDF de referência, cadastro de questões, critérios e respostas, publicação e \textit{polling} até o status \texttt{GRADED}.
+    \item \textbf{Condição B (sem RAG)}: mesmo fluxo da Condição A, mas sem \textit{upload} de PDF.
+    \item \textbf{Comparação A vs.\ B}: geração de tabelas pareadas com notas de C1, C2 e nota final por questão e por nível de qualidade.
+    \item \textbf{QA4 --- Estabilidade}: execução de $R=3$ repetições com $A_{rep}=4$ respostas (uma por nível), mantendo RAG ativo.
+    \item \textbf{Exportação}: salvamento dos resultados em CSV e JSON na pasta \texttt{notebooks/\allowbreak results/}.
+\end{enumerate}
 
-    \item \textbf{ExperimentStore}: módulo de persistência em SQLite dedicado ao armazenamento estruturado dos dados experimentais. Registra, para cada execução: metadados do experimento (provedor, modelo, temperatura, condição A/B), questões geradas, respostas dos alunos, correções de cada agente (nota total, notas por critério, \textit{reasoning chain}, \textit{feedback}), contextos RAG recuperados e resultados finais (notas C1, C2, árbitro, divergência, nota final, método de consenso). Os dados são exportáveis em formato JSON e \LaTeX{} para preenchimento automatizado das tabelas do capítulo de resultados.
-\end{itemize}
-
-Esses módulos operam de forma independente do \textit{backend} principal (FastAPI/PostgreSQL), permitindo experimentação local sem dependência de infraestrutura externa. O pipeline de correção pode ser executado tanto via API REST do \textit{backend} quanto diretamente via LangGraph no processo do Streamlit.
+Toda a comunicação ocorre via \textit{endpoints} da API REST, de modo que o \textit{notebook} não acessa diretamente o banco de dados nem o pipeline de IA, garantindo que o experimento reflita o comportamento real do sistema em produção.
 
 \subsection{Disponibilização do código-fonte}
 
