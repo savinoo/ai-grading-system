@@ -6,6 +6,7 @@
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase []{Introdução}}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Objetivos}{2}{section.1.1}%
@@ -117,18 +118,18 @@
 \contentsline {section}{\numberline {6.7}Discussão integrada}{80}{section.6.7}%
 \contentsline {subsection}{\numberline {6.7.1}Síntese dos critérios de sucesso}{80}{subsection.6.7.1}%
 \contentsline {subsection}{\numberline {6.7.2}Viabilidade técnica}{80}{subsection.6.7.2}%
-\contentsline {subsection}{\numberline {6.7.3}Viabilidade operacional}{81}{subsection.6.7.3}%
+\contentsline {subsection}{\numberline {6.7.3}Viabilidade operacional}{80}{subsection.6.7.3}%
 \contentsline {subsection}{\numberline {6.7.4}Contribuição do RAG}{81}{subsection.6.7.4}%
-\contentsline {subsection}{\numberline {6.7.5}Limitações observadas}{82}{subsection.6.7.5}%
+\contentsline {subsection}{\numberline {6.7.5}Limitações observadas}{81}{subsection.6.7.5}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Conclusão}}{83}{chapter.7}%
 \contentsline {section}{\numberline {7.1}Trabalhos Futuros}{84}{section.7.1}%
 \vspace {\cftbeforechapterskip }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{86}{section*.41}%
+\contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{86}{section*.42}%
 \setlength {\cftpartindent }{\cftlastnumwidth } \setlength {\cftpartnumwidth }{2em}
 \cftinsert {A}
-\contentsline {part}{Appendices}{92}{section*.42}%
+\contentsline {part}{Ap\^endices}{92}{section*.43}%
 \renewcommand *{\cftappendixname }{AP\^ENDICE \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}

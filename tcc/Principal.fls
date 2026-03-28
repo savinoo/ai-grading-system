@@ -692,6 +692,14 @@ INPUT pre\09-tabelas.tex
 INPUT .\Principal.lot
 INPUT .\Principal.lot
 INPUT Principal.lot
+INPUT .\pre\10-codigos.tex
+INPUT .\pre\10-codigos.tex
+INPUT .\pre\10-codigos.tex
+INPUT .\pre\10-codigos.tex
+INPUT pre\10-codigos.tex
+INPUT .\Principal.loc
+INPUT .\Principal.loc
+INPUT Principal.loc
 INPUT .\pre\11-siglas.tex
 INPUT .\pre\11-siglas.tex
 INPUT .\pre\11-siglas.tex
@@ -875,6 +883,7 @@ INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\t
 OUTPUT Principal.lof
 OUTPUT Principal.loq
 OUTPUT Principal.lot
+OUTPUT Principal.loc
 OUTPUT Principal.toc
 INPUT Principal.aux
 INPUT .\Principal.brf
