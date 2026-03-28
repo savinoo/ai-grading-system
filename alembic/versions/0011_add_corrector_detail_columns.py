@@ -9,8 +9,8 @@ Create Date: 2026-03-28 12:00:00.000000
 from alembic import op
 import sqlalchemy as sa
 
-revision = "0010_corrector_details"
-down_revision = "0009_add_warning_status_back"
+revision = "0011_corrector_details"
+down_revision = "0010_add_divergence_student_kg"
 branch_labels = None
 depends_on = None
 
@@ -36,21 +36,6 @@ def upgrade():
     op.add_column(
         "student_answers",
         sa.Column("arbiter_score", sa.Numeric(8, 2), nullable=True),
-        schema="public",
-    )
-    op.add_column(
-        "student_answers",
-        sa.Column(
-            "divergence_detected",
-            sa.Boolean(),
-            nullable=False,
-            server_default=sa.text("FALSE"),
-        ),
-        schema="public",
-    )
-    op.add_column(
-        "student_answers",
-        sa.Column("divergence_value", sa.Numeric(8, 2), nullable=True),
         schema="public",
     )
     op.add_column(
