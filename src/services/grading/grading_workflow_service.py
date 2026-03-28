@@ -138,7 +138,12 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                     student_answer_uuid=student_answer.id,
                     final_score=final_state['final_score'],
                     corrections=final_state['all_corrections'],
-                    question=question
+                    question=question,
+                    correction_1=final_state.get('correction_1'),
+                    correction_2=final_state.get('correction_2'),
+                    correction_arbiter=final_state.get('correction_arbiter'),
+                    divergence_detected=final_state.get('divergence_detected', False),
+                    divergence_value=final_state.get('divergence_value'),
                 )
             else:
                 self.__logger.warning(
@@ -155,6 +160,10 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                 "final_score": final_state['final_score'],
                 "all_corrections": final_state['all_corrections'],
                 "divergence_detected": final_state['divergence_detected'],
+                "divergence_value": final_state.get('divergence_value'),
+                "correction_1": final_state.get('correction_1'),
+                "correction_2": final_state.get('correction_2'),
+                "correction_arbiter": final_state.get('correction_arbiter'),
                 "processing_metadata": final_state.get('processing_metadata') or {}
             }
             
@@ -180,14 +189,19 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
         student_answer_uuid: UUID,
         final_score: float,
         corrections: List[AgentCorrection],
-        question: ExamQuestion
+        question: ExamQuestion,
+        correction_1: AgentCorrection = None,
+        correction_2: AgentCorrection = None,
+        correction_arbiter: AgentCorrection = None,
+        divergence_detected: bool = False,
+        divergence_value: float = None,
     ):
         """
         Persiste resultado no DB (student_answers + criteria_scores).
-        
+
         Transação atômica:
-        - UPDATE student_answers SET score, is_graded, graded_at
-        - INSERT INTO student_answer_criteria_scores (uma linha por critério)
+        - UPDATE student_answers SET score, c1/c2/arbiter scores, divergence, is_graded, graded_at
+        - INSERT INTO student_answer_criteria_scores (uma linha por critério POR agente)
         - COMMIT ou ROLLBACK em caso de erro
         
         Args:
@@ -288,6 +302,7 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                         uuid=uuid4(),
                         student_answer_uuid=student_answer_uuid,
                         criteria_uuid=criteria_uuid,
+                        agent_id="consensus",
                         raw_score=criterion_score.score,
                         weighted_score=raw_weighted,  # será atualizado abaixo após normalização
                         feedback=criterion_score.feedback
@@ -307,26 +322,81 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                 raw_weighted_sum, total_max_weighted, question_points, corrected_final_score, final_score
             )
 
-            # === 5. Atualizar student_answers com a nota corretamente ponderada ===
-            self.__student_answer_repository.update(
-                db,
-                answer_entity.id,
-                score=corrected_final_score,
-                is_graded=True,
-                graded_at=datetime.utcnow(),
-                status="GRADED"
-            )
+            # === 5. Extrair notas individuais dos corretores ===
+            c1_total = correction_1.total_score if correction_1 else None
+            c2_total = correction_2.total_score if correction_2 else None
+            arb_total = correction_arbiter.total_score if correction_arbiter else None
+
+            # Determinar método de consenso
+            if correction_arbiter:
+                consensus_method = "closest_pair_3"
+            else:
+                consensus_method = "mean_2"
+
+            # === 6. Atualizar student_answers com nota + dados individuais ===
+            answer_entity.score = corrected_final_score
+            answer_entity.c1_score = c1_total
+            answer_entity.c2_score = c2_total
+            answer_entity.arbiter_score = arb_total
+            answer_entity.divergence_detected = divergence_detected
+            answer_entity.divergence_value = divergence_value
+            answer_entity.consensus_method = consensus_method
+            answer_entity.is_graded = True
+            answer_entity.graded_at = datetime.utcnow()
+            answer_entity.status = "GRADED"
 
             self.__logger.info(
-                "Resposta atualizada: UUID=%s, nota=%.2f",
-                student_answer_uuid, corrected_final_score
+                "Resposta atualizada: UUID=%s, nota=%.2f (C1=%.2f, C2=%.2f, Arb=%s)",
+                student_answer_uuid, corrected_final_score,
+                c1_total or 0, c2_total or 0,
+                f"{arb_total:.2f}" if arb_total is not None else "N/A"
             )
 
-            # === 6. Inserir criteria_scores ===
+            # === 7. Inserir criteria_scores do consenso ===
             for score_entity in criteria_score_entities:
                 db.add(score_entity)
 
-            # === 7. Commit da transação ===
+            # === 8. Inserir criteria_scores individuais de cada corretor ===
+            individual_corrections = []
+            if correction_1:
+                individual_corrections.append(correction_1)
+            if correction_2:
+                individual_corrections.append(correction_2)
+            if correction_arbiter:
+                individual_corrections.append(correction_arbiter)
+
+            for correction in individual_corrections:
+                for criterion_score in correction.criteria_scores:
+                    criteria_uuid = criteria_map.get(criterion_score.criterion)
+                    if not criteria_uuid:
+                        continue
+                    criterion_weight = weight_map.get(criterion_score.criterion, 1.0)
+                    raw_weighted = criterion_score.score * criterion_weight
+
+                    # Extrair agent_id de AgentCorrection (objeto) ou dict;
+                    # se for Enum, usar .value — garantir string armazenada.
+                    if isinstance(correction, dict):
+                        agent_id_value = correction.get('agent_id')
+                    else:
+                        agent_id_value = getattr(correction, 'agent_id', None)
+
+                    # Se for Enum, extrair .value
+                    if hasattr(agent_id_value, 'value'):
+                        agent_id_value = agent_id_value.value
+
+                    db.add(
+                        StudentAnswerCriteriaScore(
+                            uuid=uuid4(),
+                            student_answer_uuid=student_answer_uuid,
+                            criteria_uuid=criteria_uuid,
+                            agent_id=agent_id_value,
+                            raw_score=criterion_score.score,
+                            weighted_score=raw_weighted * scale_factor,
+                            feedback=criterion_score.feedback,
+                        )
+                    )
+
+            # === 9. Commit da transação ===
             db.commit()
 
             self.__logger.info(
