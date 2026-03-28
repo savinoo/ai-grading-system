@@ -128,12 +128,12 @@ Adota-se um \textbf{estudo de caso controlado}, com uma prova pequena (de 2 a 4 
 
 No contexto deste estudo, o conjunto de respostas pode ser composto por \textbf{respostas sintéticas} elaboradas pelos autores, cobrindo níveis de qualidade (excelente, intermediária, fraca e fora do tema). O objetivo não é representar toda a diversidade de respostas humanas, mas viabilizar a verificação objetiva do funcionamento do sistema em casos típicos e casos-limite.
 
-Esse delineamento, por ser deliberadamente restrito (prova pequena, rubrica simplificada e, quando aplicável, respostas sintéticas), \textbf{limita o alcance das inferências}. Assim, os resultados obtidos devem ser interpretados como evidência de \textbf{viabilidade técnica e operacional} e de consistência interna do fluxo proposto, não como base suficiente para conclusões amplas sobre eficácia educacional, impacto pedagógico ou desempenho comparativo geral em contextos reais e diversos. Para sustentar generalizações mais robustas, seriam necessários estudos com maior variedade de provas, materiais, perfis de estudantes e validação sistemática com docentes em cenários de uso.
+Esse delineamento, por ser deliberadamente restrito (prova pequena, rubrica simplificada e respostas sintéticas), \textbf{limita o alcance das inferências}. Assim, os resultados obtidos devem ser interpretados como evidência de \textbf{viabilidade técnica e operacional} e de consistência interna do fluxo proposto, não como base suficiente para conclusões amplas sobre eficácia educacional, impacto pedagógico ou desempenho comparativo geral em contextos reais e diversos. Para sustentar generalizações mais robustas, seriam necessários estudos com maior variedade de provas, materiais, perfis de estudantes e validação sistemática com docentes em cenários de uso.
 
 \subsection{Parâmetros experimentais}
 Para fortalecer a reprodutibilidade e reduzir ambiguidades de interpretação, define-se explicitamente um conjunto de \textbf{parâmetros experimentais} e \textbf{controles} aplicados às duas condições (com RAG e sem RAG).
 
-Em termos de \textbf{quantidade de casos}, recomenda-se fixar uma configuração mínima que permita observar variação de qualidade e casos-limite, sem inviabilizar o prazo do trabalho. Assim, utiliza-se uma prova com \(Q=3\) questões (dentro do intervalo de 2 a 4), e para cada questão um conjunto de \(A=4\) respostas sintéticas (excelente, intermediária, fraca e fora do tema), totalizando \(Q \times A = 12\) respostas a serem corrigidas em cada condição.
+Em termos de \textbf{quantidade de casos}, recomenda-se adotar uma configuração mínima que permita observar variação de qualidade e casos-limite. Assim, utiliza-se uma prova com \(Q=3\) questões (dentro do intervalo de 2 a 4), e para cada questão um conjunto de \(A=4\) respostas sintéticas (excelente, intermediária, fraca e fora do tema), totalizando \(Q \times A = 12\) respostas a serem corrigidas em cada condição.
 
 Para avaliar estabilidade (QA4), seleciona-se um subconjunto de \(A_{rep}=4\) respostas (uma por nível de qualidade) e repete-se sua correção \(R=3\) vezes em cada condição, mantendo constantes os demais parâmetros.
 
@@ -186,7 +186,7 @@ As evidências são baseadas em artefatos do próprio sistema:
 \end{itemize}
 
 \subsection{Métricas simples}
-As métricas são propositalmente simples, visando viabilidade no prazo do trabalho:
+As métricas são propositalmente simples, priorizando reprodutibilidade e evidência operacional dentro do escopo e dos recursos do trabalho  
 
 \begin{itemize}
     \item \textbf{Completude estrutural:} porcentagem de respostas com todos os campos esperados (nota total, notas por critério e justificativa).
@@ -209,14 +209,14 @@ Considera-se que a avaliação cumpre seu papel quando os resultados satisfazem 
 
 \subsection{Ameaças à validade}
 \begin{itemize}
-    \item \textbf{Respostas sintéticas:} não representam toda a diversidade de respostas humanas; mitigação: cobrir níveis de qualidade e casos-limite.
-    \item \textbf{Validade externa (generalização):} o estudo utiliza uma prova pequena e um conjunto limitado de casos, o que restringe a extrapolação dos resultados para outras disciplinas, turmas, níveis de ensino e estilos de rubrica.
-    \item \textbf{Validade ecológica (uso em contexto real):} a avaliação ocorre em ambiente controlado e não captura integralmente fatores presentes na rotina docente (tempo, volume de respostas, variações de enunciado, ajustes de rubrica, pressão institucional), o que pode afetar a aplicabilidade prática em larga escala.
-    \item \textbf{Não-determinismo de LLMs:} mitigação por configuração de baixa estocasticidade (temperatura $= 0{,}0$) e repetição de casos.
-    \item \textbf{Dependência do material:} resultados podem variar com PDFs e temas; mitigação: descrever claramente o conjunto utilizado.
+    \item \textbf{Respostas sintéticas:} as respostas utilizadas não representam toda a diversidade de respostas humanas. Para mitigar essa limitação, o estudo inclui níveis de qualidade distintos e casos-limite que permitem verificar comportamentos esperados do sistema.
+    \item \textbf{Validade externa (generalização):} o desenho com número reduzido de questões e casos limita a extrapolação dos resultados para outras disciplinas, turmas, níveis de ensino e estilos de rubrica; estudos adicionais com amostras maiores são necessários para ampliar a validade externa.
+    \item \textbf{Validade ecológica (uso em contexto real):} a avaliação foi conduzida em ambiente controlado e pode não reproduzir integralmente condicionantes da rotina docente (volume de respostas, variações de enunciado, ajustes de rubrica, pressão institucional). Testes em cenários reais são recomendados como trabalho futuro.
+    \item \textbf{Não-determinismo de LLMs:} modelos de linguagem apresentam variabilidade nas saídas. Neste estudo, a estocasticidade foi reduzida por configuração de temperatura igual a $0{,}0$ e por meio da repetição de casos selecionados para avaliar consistência.
+    \item \textbf{Dependência do material:} os resultados dependem do conteúdo e da qualidade dos materiais anexados (PDFs). Por este motivo, o conjunto de materiais foi descrito explicitamente e recomenda-se avaliar robustez com diferentes fontes em estudos subsequentes.
 \end{itemize}
 
-\subsection{Reprodutibilidade (checklist)}
+\subsection{Reprodutibilidade}
 Para permitir repetição do estudo:
 
 \begin{itemize}
@@ -229,5 +229,3 @@ Para permitir repetição do estudo:
     \item explicitar \(Q\), \(A\), \(A_{rep}\) e \(R\) utilizados (quantidade de questões, respostas, subconjunto repetido e número de repetições);
     \item documentar o procedimento de extração dos resultados (relatório/consulta).
 \end{itemize}
-
-Com a metodologia de avaliação definida, o próximo capítulo detalha as decisões de arquitetura e implementação do sistema.
