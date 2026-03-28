@@ -228,45 +228,39 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                 student_answer_uuid
             )
 
-            # === 3. Preparar mapeamento de critérios (nome → UUID + peso) ===
+            # === 3. Preparar lista ordenada de critérios da rubrica com UUIDs ===
             # Usamos a última correção (árbitro se existir, senão C2)
             final_correction = corrections[-1]
 
-            # Mapear critérios: nome → (uuid, weight_decimal)
-            # weight na rubrica já está em decimal (ex: 0.40 para 40%),
-            # convertido em __convert_question_to_schema via weight/100.
-            criteria_map = {}
-            weight_map = {}
-
+            # Lista ordenada: [(uuid, weight, max_score), ...] — mesma ordem da rubrica enviada ao LLM.
+            # O match com os criteria_scores do LLM é feito por POSIÇÃO (zip), não pelo nome
+            # retornado pelo LLM, evitando erros de digitação/variações na resposta da IA.
+            rubric_entries = []
             for rubric_criterion in question.rubric:
-                # Buscar UUID do critério no banco pelo nome/code
                 try:
                     criteria_entity = self.__grading_criteria_repository.get_by_code(
                         db,
-                        rubric_criterion.name  # Assumindo que name é o code
+                        rubric_criterion.name  # name armazena o code (ex: "ANALISE_CRITICA")
                     )
-                    criteria_map[rubric_criterion.name] = criteria_entity.uuid
-                    weight_map[rubric_criterion.name] = rubric_criterion.weight
+                    rubric_entries.append((
+                        criteria_entity.uuid,
+                        rubric_criterion.weight,
+                        rubric_criterion.max_score,
+                    ))
                 except Exception as e:
                     self.__logger.warning(
                         "Critério '%s' não encontrado no banco: %s — será ignorado",
                         rubric_criterion.name, e
                     )
-                    # Não adicionar ao mapa; linha 271 fará skip via 'if not criteria_uuid'
+                    rubric_entries.append(None)  # placeholder para manter alinhamento de posição
 
             # === 4. Calcular weighted_score por critério e acumular nota final normalizada ===
             #
-            # Fórmula correta:
-            #   raw_weighted_sum   = Σ (raw_score_i × weight_decimal_i)
-            #   total_max_weighted = Σ (max_score_i  × weight_decimal_i)  ← máximo possível da IA
-            #   question_points    = pontuação máxima real da questão
-            #
+            # Fórmula:
+            #   raw_weighted_sum   = Σ (raw_score_i × weight_i)
+            #   total_max_weighted = Σ (max_score_i  × weight_i)
             #   nota_final = raw_weighted_sum / total_max_weighted × question_points
-            #
-            # Isso garante que a nota final nunca ultrapasse question_points,
-            # independentemente da escala definida em max_points por critério.
 
-            # Calcular total_max_weighted a partir da rubrica da questão
             total_max_weighted = sum(
                 c.max_score * c.weight
                 for c in question.rubric
@@ -283,16 +277,30 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             raw_weighted_sum = 0.0
             criteria_score_entities = []
 
-            for criterion_score in final_correction.criteria_scores:
-                criteria_uuid = criteria_map.get(criterion_score.criterion)
-                criterion_weight = weight_map.get(criterion_score.criterion, 1.0)
+            # Mapa nome → índice na rubrica para match por nome
+            rubric_name_to_idx = {
+                question.rubric[i].name: i
+                for i in range(len(question.rubric))
+            }
 
-                if not criteria_uuid:
+            # Match: tenta por nome exato primeiro; se não achar, usa posição
+            def _resolve_entry(idx: int, criterion_name: str):
+                named_idx = rubric_name_to_idx.get(criterion_name)
+                if named_idx is not None and rubric_entries[named_idx] is not None:
+                    return rubric_entries[named_idx]
+                if idx < len(rubric_entries) and rubric_entries[idx] is not None:
                     self.__logger.warning(
-                        "UUID não encontrado para critério '%s' - pulando",
-                        criterion_score.criterion
+                        "Critério '%s' não encontrado pelo nome — usando posição %d como fallback",
+                        criterion_name, idx
                     )
+                    return rubric_entries[idx]
+                return None
+
+            for idx, criterion_score in enumerate(final_correction.criteria_scores):
+                rubric_entry = _resolve_entry(idx, criterion_score.criterion)
+                if rubric_entry is None:
                     continue
+                criteria_uuid, criterion_weight, _ = rubric_entry
 
                 raw_weighted = criterion_score.score * criterion_weight
                 raw_weighted_sum += raw_weighted
@@ -323,16 +331,14 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             )
 
             # === 5. Calcular notas individuais dos corretores com a mesma normalização ===
-            # Usa os criteria_scores de cada corretor individual ponderados e normalizados,
-            # garantindo consistência com o campo `score` (corrected_final_score).
             def _normalized_score(correction: AgentCorrection) -> Optional[float]:
                 if correction is None:
                     return None
-                raw_sum = sum(
-                    cs.score * weight_map.get(cs.criterion, 1.0)
-                    for cs in correction.criteria_scores
-                    if criteria_map.get(cs.criterion)
-                )
+                raw_sum = 0.0
+                for i, cs in enumerate(correction.criteria_scores):
+                    entry = _resolve_entry(i, cs.criterion)
+                    if entry is not None:
+                        raw_sum += cs.score * entry[1]
                 return raw_sum * scale_factor
 
             c1_total = _normalized_score(correction_1)
@@ -378,11 +384,11 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                 individual_corrections.append(correction_arbiter)
 
             for correction in individual_corrections:
-                for criterion_score in correction.criteria_scores:
-                    criteria_uuid = criteria_map.get(criterion_score.criterion)
-                    if not criteria_uuid:
+                for i, criterion_score in enumerate(correction.criteria_scores):
+                    rubric_entry = _resolve_entry(i, criterion_score.criterion)
+                    if rubric_entry is None:
                         continue
-                    criterion_weight = weight_map.get(criterion_score.criterion, 1.0)
+                    criteria_uuid, criterion_weight, _ = rubric_entry
                     raw_weighted = criterion_score.score * criterion_weight
 
                     # Extrair agent_id de AgentCorrection (objeto) ou dict;
@@ -530,6 +536,32 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
                         str(e),
                     )
 
+                # Persistir contexto RAG na questão (uma vez, compartilhado por todas as respostas)
+                if question_rag_contexts is not None:
+                    try:
+                        import json as _json
+                        question_entity.rag_contexts_json = _json.dumps(
+                            [
+                                {
+                                    "content": ctx.content,
+                                    "source_document": ctx.source_document,
+                                    "page_number": ctx.page_number,
+                                    "relevance_score": ctx.relevance_score,
+                                    "chunk_index": ctx.chunk_index,
+                                }
+                                for ctx in question_rag_contexts
+                            ],
+                            ensure_ascii=False,
+                        )
+                        db.add(question_entity)
+                        db.commit()
+                    except Exception as e:
+                        self.__logger.warning(
+                            "Falha ao persistir rag_contexts_json para questão %s: %s",
+                            question_entity.uuid, str(e),
+                        )
+                        db.rollback()
+
                 for answer_entity in answers:
                     total_answers += 1
 
@@ -651,16 +683,22 @@ class GradingWorkflowService(GradingWorkflowServiceInterface):
             # exam_criterion.grading_criteria já vem carregado (lazy="joined")
             grading_criterion = exam_criterion.grading_criteria
             
-            # Calcular max_score: usar max_points se definido, senão (weight/100) * points da questão
+            # Normalizar weight para decimal (0–1):
+            # Se o valor armazenado for > 1 assume-se escala percentual (ex: 30 → 0.30),
+            # caso contrário já está em decimal (ex: 0.30) e é usado diretamente.
+            raw_weight = float(exam_criterion.weight)
+            weight_decimal = raw_weight / 100.0 if raw_weight > 1.0 else raw_weight
+
+            # Calcular max_score: usar max_points se definido, senão weight * points da questão
             max_score = exam_criterion.max_points if exam_criterion.max_points else (
-                (float(exam_criterion.weight) / 100.0) * float(question_entity.points)
+                weight_decimal * float(question_entity.points)
             )
-            
+
             rubric.append(
                 EvaluationCriterion(
-                    name=grading_criterion.code,  # Usar code como identificador
+                    name=grading_criterion.code,
                     description=grading_criterion.description or grading_criterion.name,
-                    weight=float(exam_criterion.weight) / 100.0,  # Converter porcentagem para decimal
+                    weight=weight_decimal,
                     max_score=float(max_score)
                 )
             )

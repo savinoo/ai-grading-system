@@ -66,15 +66,27 @@ class StudentAnswerReview(BaseModel):
     graded_at: Optional[datetime] = Field(None, description="Data/hora da correção")
 
 
+class RagContextItem(BaseModel):
+    """Um chunk de contexto recuperado via RAG."""
+    content: str = Field(..., description="Conteúdo do chunk")
+    source_document: Optional[str] = Field(None, description="Documento de origem")
+    page_number: Optional[int] = Field(None, description="Número da página")
+    relevance_score: Optional[float] = Field(None, description="Score de relevância (0-1)")
+    chunk_index: Optional[int] = Field(None, description="Índice do chunk no documento")
+
+
 class QuestionReview(BaseModel):
     """Questão com todas as respostas dos alunos."""
-    
+
     question_uuid: UUID = Field(..., description="UUID da questão")
     question_number: int = Field(..., description="Número da questão", examples=[1])
     statement: str = Field(..., description="Enunciado da questão")
     expected_answer: Optional[str] = Field(None, description="Resposta esperada/gabarito")
     max_score: float = Field(..., description="Pontuação máxima", examples=[10.0])
-    
+    rag_contexts: List[RagContextItem] = Field(
+        default_factory=list,
+        description="Contexto RAG recuperado para esta questão (compartilhado por todas as respostas)"
+    )
     student_answers: List[StudentAnswerReview] = Field(
         default_factory=list,
         description="Respostas dos alunos"

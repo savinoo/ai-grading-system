@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  27 MAR 2026 23:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  28 MAR 2026 16:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1770,28 +1770,28 @@ File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
 ]) (pre/04-agradecimentos.tex [3
 
 
-]) (pre/05-resumo.tex [4
+] [4]) (pre/05-resumo.tex [5
 
-{C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}]) (pre/06-abstract.tex [5
+{C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}]) (pre/06-abstract.tex [6
 
-]) (pre/07-figuras.tex (Principal.lof) [6
+]) (pre/07-figuras.tex (Principal.lof) [7
 
-]) (pre/08-quadros.tex (Principal.loq) [7
+]) (pre/08-quadros.tex (Principal.loq) [8
 
-]) (pre/09-tabelas.tex (Principal.lot) [8
+]) (pre/09-tabelas.tex (Principal.lot) [9
 
 ]) (pre/11-siglas.tex
 No file Principal.siglas.
-[9
+[10
 
-] [10
+] [11
 
 ]) (pre/11-simbolos.tex
 
 Package glossaries Info: Preparing to sort glossary `symbols' (total number of
 (glossaries)             referenced entries: 8)
 
-[11
+[12
 
 
 
@@ -1801,22 +1801,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 6--6
  [] 
  []
 
-(Principal.toc [12
+(Principal.toc [13
 
 ]
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <12> not available
 (Font)              Font shape `T1/lmss/m/sl' tried instead on input line 64.
- [13]
+ [14]
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <12> not available
 (Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 102.
- [14]
+ [15]
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <14.4> on input line 135.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 135.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 135.
-) [15]) (textual/t1-introducao.tex
+) [16]) (textual/t1-introducao.tex
 Cap\'{\i }tulo 1.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
@@ -1899,7 +1899,7 @@ Overfull \hbox (2.35287pt too wide) in paragraph at lines 178--178
 [29]
 ignored: Infinite glue shrinkage found in box being split [30] [31] [32] [33] [34] [35] [36] [37] [38] [39]) (textual/t4-material.tex [40]
 Cap\'{\i }tulo 4.
-<media/fluxo-configuracao.jpg, id=1021, 755.82375pt x 1059.96pt>
+<media/fluxo-configuracao.jpg, id=1023, 755.82375pt x 1059.96pt>
 File: media/fluxo-configuracao.jpg Graphic file (type jpg)
 <use media/fluxo-configuracao.jpg>
 Package pdftex.def Info: media/fluxo-configuracao.jpg  used on input line 21.
@@ -1907,13 +1907,13 @@ Package pdftex.def Info: media/fluxo-configuracao.jpg  used on input line 21.
 [41
 
 ]
-<media/fluxo-correcao-prova.jpg, id=1027, 824.07875pt x 1295.84125pt>
+<media/fluxo-correcao-prova.jpg, id=1029, 824.07875pt x 1295.84125pt>
 File: media/fluxo-correcao-prova.jpg Graphic file (type jpg)
 <use media/fluxo-correcao-prova.jpg>
 Package pdftex.def Info: media/fluxo-correcao-prova.jpg  used on input line 29.
 (pdftex.def)             Requested size: 405.22302pt x 637.20212pt.
  [42 <./media/fluxo-configuracao.jpg>]
-<media/fluxo-correcao-pergunta.jpg, id=1033, 487.8225pt x 934.49126pt>
+<media/fluxo-correcao-pergunta.jpg, id=1035, 487.8225pt x 934.49126pt>
 File: media/fluxo-correcao-pergunta.jpg Graphic file (type jpg)
 <use media/fluxo-correcao-pergunta.jpg>
 Package pdftex.def Info: media/fluxo-correcao-pergunta.jpg  used on input line 37.
@@ -1936,7 +1936,7 @@ Underfull \hbox (badness 2799) in paragraph at lines 159--159
 
 [50] [51] [52]) (textual/t5-desenvolvimento.tex [53] [54]
 Cap\'{\i }tulo 5.
-<media/arquitetura_sistema.png, id=1152, 1276.77pt x 523.9575pt>
+<media/arquitetura_sistema.png, id=1154, 1276.77pt x 523.9575pt>
 File: media/arquitetura_sistema.png Graphic file (type png)
 <use media/arquitetura_sistema.png>
 Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 15.
@@ -1944,13 +1944,13 @@ Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 15.
 [55
 
  <./media/arquitetura_sistema.png>] [56]
-<media/fluxo_requisicao.png, id=1164, 1102.1175pt x 519.9425pt>
+<media/fluxo_requisicao.png, id=1167, 1102.1175pt x 519.9425pt>
 File: media/fluxo_requisicao.png Graphic file (type png)
 <use media/fluxo_requisicao.png>
 Package pdftex.def Info: media/fluxo_requisicao.png  used on input line 84.
 (pdftex.def)             Requested size: 454.99905pt x 214.65347pt.
  [57 <./media/fluxo_requisicao.png>] [58]
-<media/pipeline.png, id=1177, 362.35374pt x 512.91624pt>
+<media/pipeline.png, id=1179, 362.35374pt x 512.91624pt>
 File: media/pipeline.png Graphic file (type png)
 <use media/pipeline.png>
 Package pdftex.def Info: media/pipeline.png  used on input line 122.
@@ -1958,7 +1958,7 @@ Package pdftex.def Info: media/pipeline.png  used on input line 122.
  [59] (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 ) [60 <./media/pipeline.png>] [61] [62] [63] [64]
-<media/er.png, id=1238, 1439.3775pt x 1887.05pt>
+<media/er.png, id=1240, 1439.3775pt x 1887.05pt>
 File: media/er.png Graphic file (type png)
 <use media/er.png>
 Package pdftex.def Info: media/er.png  used on input line 220.
@@ -2085,7 +2085,7 @@ bibitemlist
 
 ] (pos/apendice-schema-completo.tex
 AP\^ENDICE A.
-<media/sql_schemas.png, id=1622, 1330.9725pt x 1216.545pt>
+<media/sql_schemas.png, id=1625, 1330.9725pt x 1216.545pt>
 File: media/sql_schemas.png Graphic file (type png)
 <use media/sql_schemas.png>
 Package pdftex.def Info: media/sql_schemas.png  used on input line 8.
@@ -2341,20 +2341,20 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Principal.brf' has not changed.
-(rerunfilecheck)             Checksum: 59482536B239BFF22842DA63B3FE6496;9427.
+(rerunfilecheck)             Checksum: 7EA8AC4AC3139313753E8DB82C219706;9427.
  ) 
 Here is how much of TeX's memory you used:
- 52545 strings out of 467867
- 1030974 string characters out of 5414426
- 1910370 words of memory out of 5000000
- 79447 multiletter control sequences out of 15000+600000
+ 52547 strings out of 467867
+ 1031038 string characters out of 5414426
+ 1910351 words of memory out of 5000000
+ 79449 multiletter control sequences out of 15000+600000
  755004 words of font info for 337 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,14n,139p,2608b,1509s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbo10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb>
-Output written on Principal.pdf (117 pages, 1422805 bytes).
+Output written on Principal.pdf (118 pages, 1425964 bytes).
 PDF statistics:
- 2205 PDF objects out of 2487 (max. 8388607)
+ 2208 PDF objects out of 2487 (max. 8388607)
  514 named destinations out of 1000 (max. 500000)
  68641 words of extra memory for PDF output out of 74296 (max. 10000000)
 

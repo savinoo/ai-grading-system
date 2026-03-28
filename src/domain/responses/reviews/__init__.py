@@ -7,7 +7,8 @@ from .exam_review_response import (
     QuestionReview,
     StudentAnswerReview,
     CriterionScore,
-    AgentCriteriaScores
+    AgentCriteriaScores,
+    RagContextItem,
 )
 
 __all__ = [
@@ -15,5 +16,6 @@ __all__ = [
     "QuestionReview",
     "StudentAnswerReview",
     "CriterionScore",
-    "AgentCriteriaScores"
+    "AgentCriteriaScores",
+    "RagContextItem",
 ]

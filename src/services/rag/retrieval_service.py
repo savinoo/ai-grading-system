@@ -134,17 +134,15 @@ class RetrievalService(RetrievalServiceInterface):
                 filter=metadata_filter
             )
             
-            # Fallback global: se nenhum chunk foi indexado para este exam_uuid,
-            # busca sem filtro para não deixar o fluxo sem contexto algum
+            # Se nenhum chunk foi indexado para este exam_uuid, retorna lista vazia.
+            # NÃO fazemos fallback global para evitar vazar contexto de outras provas
+            # (ex: Condição B sem RAG recebendo material da Condição A).
             if not results_with_score:
                 self.__logger.warning(
-                    "RAG: sem resultados para exam_uuid=%s. Buscando globalmente (sem filtro).",
+                    "RAG: nenhum chunk indexado para exam_uuid=%s. Retornando contexto vazio.",
                     exam_uuid
                 )
-                results_with_score = self.__vector_store.similarity_search_with_score(
-                    query=query,
-                    k=k
-                )
+                return []
             
             self.__logger.debug(
                 "ChromaDB retornou %d resultados antes de filtro de score",

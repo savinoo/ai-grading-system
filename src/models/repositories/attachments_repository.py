@@ -138,8 +138,8 @@ class AttachmentsRepository(AttachmentsRepositoryInterface):
         """
         try:
             stmt = select(Attachments).where(Attachments.sha256_hash == sha256_hash)
-            result = db.execute(stmt).scalar_one_or_none()
-            
+            result = db.execute(stmt).scalars().first()
+
             if result:
                 self.__logger.debug("Anexo encontrado por hash: %s", sha256_hash)
             else:

@@ -1,0 +1,5 @@
+﻿profile,mean_score,std_score,var_score,mean_c1,mean_c2,n_divergencias
+Excelente,10.0,0.0,0.0,10.0,10.0,0
+Fora tema,0.0,0.0,0.0,0.0,0.0,0
+Fraca,1.37,0.75,0.56,2.03,1.37,0
+Intermediário,9.33,0.47,0.22,9.48,9.33,0

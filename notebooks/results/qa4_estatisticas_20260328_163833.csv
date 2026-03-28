@@ -1,0 +1,5 @@
+﻿question_id,profile,mean_score,std_score,min_score,max_score,var_score,var_abs,mean_c1,mean_c2,n_divergencias
+Q2,Excelente,10.0,0.0,10.0,10.0,0.0,0.0,10.0,10.0,0
+Q2,Fora tema,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0
+Q2,Fraca,1.37,0.75,0.51,1.88,0.56,1.37,2.03,1.37,0
+Q2,Intermediário,9.33,0.47,9.04,9.88,0.22,0.84,9.48,9.33,0

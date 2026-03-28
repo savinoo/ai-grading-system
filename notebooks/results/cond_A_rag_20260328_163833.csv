@@ -1,0 +1,377 @@
+﻿exam_uuid,label,rag,question_id,question_uuid,source_document,page_number,relevance_score,chunk_index,content
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q1,29f89cb3-3aba-4aeb-91f1-9698066d29e9,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,200,0.6155293144584203,197,"190 CAPÍTULO 9. VETORES
+9.6 Manipulando vetores ordenados
+Quando operações de inserção e remoção são feitas em vetores ordenados é impor-
+tante que estas alterações em seus elementos preservem a propriedade do vetor estar
+ordenado, por exemplo, para que se possa usar uma busca binária.
+A seguir apresentamos soluções para se remover ou inserir um elemento de um
+vetor, iniciando pela remoção. O procedimento da ﬁgura 9.22 garante a remoção do
+elemento que está na posiçãopos do vetorv que tem tamanhon.
+procedureremove_vetor_ordenado (pos: integer; var v: vetor_r; var n: integer);
+var i: integer;
+begin
+for i:= pos to n− 1 do
+v[i]:= v[i+1];
+n:= n− 1;
+end;
+Figura 9.22: Removendo de um vetor ordenado.
+Remover elementos não é trivial, pois não podemos deixar “buracos” no vetor. Este
+algoritmo então copia todos os elementos que estão à frente daquele que foi removido
+uma posição para trás. Tomemos como exemplo o seguinte vetor ordenado:
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 . . . 197 198 199 200
+0 2 7 12 15 18 19 21 23 27 ? ? ? ? ? . . . ? ? ? ?
+Para remover o elemento 12, que está na posição 4, todos os outros são copiados,
+um por um. Para não perdermos elementos, este processo tem que iniciar da posição
+onde houve a remoção até a penúltima posição. O vetor resultante é o seguinte:
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 . . . 197 198 199 200
+0 2 7 15 18 19 21 23 27 27 ? ? ? ? ? . . . ? ? ? ?
+O elemento 27 que estava na posição 10 continua lá, mas, como o vetor agora tem
+tamanho 9 (pois um elemento foi removido) este último 27 agora é lixo de memória.
+Com relação ao algoritmo de inserção de um elemento em um vetor ordenado,
+deve-se primeiro determinar a posição correta de inserção, logo, um processo de busca
+deve ser feito, iniciando do começo do vetor (posição 1) até que seja encontrado um
+elemento maior que aquele que está se inserindo. Para facilitar esta busca, usamos
+uma sentinela. Tomemos novamente como exemplo o vetor abaixo e consideremos que
+vamos inserir o elemento 17.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 . . . 197 198 199 200
+0 2 7 12 15 18 19 21 23 27 ? ? ? ? ? . . . ? ? ? ?"
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q1,29f89cb3-3aba-4aeb-91f1-9698066d29e9,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,179,0.6147713092631802,176,"Capítulo 9
+Vetores
+Para motivar, vamos considerar o problema seguinte: ler uma certa quantidade de
+valores inteiros e os imprimirna ordem inversa da leitura. Isto é, se os dados de
+entrada forem: 2, 5, 3, 4, 9, queremos imprimir na saída: 9, 4, 3, 5, 2.
+Estetipodeproblemaéimpossíveldeserresolvidocomousodeumaúnicavariável
+pois, quando se lê o segundo número, já se perdeu o primeiro da memória. Exigiria
+o uso de tantas variáveis quantos fossem os dados de entrada, mas notem que isto
+deve ser conhecidoem tempo de compilação! Isso faz com que simplesmente não seja
+possível resolver este problema para uma quantidade indeﬁnida de valores.
+De fato, quando se aloca, por exemplo, um número inteiro em uma variável de
+nome a, o que ocorre é que o computador reserva uma posição de memória em algum
+endereço da RAM (conforme sabemos pelo modelo Von Neumann). Um inteiro exige
+(dependendo da implementação) 2 bytes.
+Mas, digamos que é preciso alocar espaço para 100 números inteiros. Sabendo
+que cada um deles ocupa 2 bytes, precisaríamos encontrar uma maneira de reservar
+100 ×2 = 200bytes e fazer com que este espaço de memória pudesse ser acessado
+também por um único endereço, ou em outras palavras, por uma única variável.
+Osvetoressãoestruturasdedadosquepermitemoacessoaumagrandequantidade
+de dados em memóriausando-se somente um nome de variável. Esta variável especial
+é declarada de tal maneira que o programador passa a ter acesso à muitas posições
+de memória, de maneira controlada.
+9.1 Como funciona isto em memória?
+A seguinte declaração emPascal aloca 200 espaços em memória para números inteiros:
+var v: array[1..200] of integer;
+Em Pascal isto resulta na alocação de 200 vezes 2 bytes, supondo que o espaço
+que o compilador usa para uminteger é de 2 bytes. Pela variávelv temos o controle
+deste espaço.
+169"
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q1,29f89cb3-3aba-4aeb-91f1-9698066d29e9,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,209,0.6144430380145524,206,"9.8. ORDENAÇÃO EM VETORES 199
+A situação para o 2 é similar, deve ser inserido antes do 7, isto é, no início:
+2, 7, 12, 15, 23, 27, 0, 18, 19, 21.
+Idem para o zero:
+0, 2, 7, 12, 15, 23, 27, 18, 19, 21.
+Agora é a vez de inserirmos o 18, entre o 15 e o 27:
+0, 2, 7, 12, 15, 18, 23, 27, 19, 21.
+Na penúltima etapa inserimos o 19 entre o 18 e o 23:
+0, 2, 7, 12, 15, 18, 19, 23, 27, 21.
+E por último o 21 entre o 19 e o 23:
+0, 2, 7, 12, 15, 18, 19, 21, 23, 27.
+Se fôssemos executar com um conjunto de cartas na mão, por exemplo, com cartas
+de baralho, imaginando um maço de cartas virado na mesa, basta pegar as cartas uma
+a uma e encaixar no lugar certo. As cartas de baralho são facilmente manipuladas
+para permitir uma inserção em qualquer posição.
+Infelizmente esta operação executada em um vetor não é tão simples. Vamos consi-
+derar como exemplo a etapa 8 acima, isto é, inserção do 18 no lugar certo. Retomemos
+este caso agora considerando um vetor para melhor ilustração, com destaque para o
+elemento 18 que deve nesta etapa ser inserido no lugar certo:
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 . . . 197 198 199 200
+0 2 7 12 15 23 27 18 19 21 ? ? ? ? ? . . . ? ? ? ?
+A posição correta do 18, como vimos, é entre o 15 e o 23, isto é, na sexta posição
+do vetor. Signiﬁca que os elementos das posições 6 e 7 devem ser movidos um para
+frente para abrir espaço no vetor para inserção do 18. Os elementos das posições 9
+em diante não vão mudar de lugar. Executando esta operação, e salvando o 18 em
+alguma variável temporária, obteremos o seguinte vetor:
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 . . . 197 198 199 200
+0 2 7 12 15 23 23 27 19 21 ? ? ? ? ? . . . ? ? ? ?
+Isto é, o 27 foi copiado da posição 7 para a posição 8 e o 23 foi copiado da posição
+6 para a posição 7. Na ﬁgura acima destacamos os elementos que foram movidos de
+lugar. Observando que o 23 ﬁcou repetido na posição 6, o que na prática resultou na
+posição 6 livre. Agora basta inserir o 18 aí:
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 . . . 197 198 199 200
+0 2 7 12 15 18 23 27 19 21 ? ? ? ? ? . . . ? ? ? ?"
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q1,29f89cb3-3aba-4aeb-91f1-9698066d29e9,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,208,0.6142689579552096,205,"198 CAPÍTULO 9. VETORES
+Em análise de algoritmos o importante é observar a função cujo comportamento
+predomina. Neste caso é o termo N2. Por razões que só serão detalhadas em dis-
+ciplinas mais avançadas e que envolvem ocomportamento assintóticode funções, o
+termo linearN e fator 1
+2 não são normalmente considerados neste tipo de análise. O
+fato é que uma função quadrática tem predominância sobre funções lineares ou sobre
+constantes quando se considera umN muito grande. Por isso se diz que este algoritmo
+tem comportamento quadrático.
+9.8.2 Ordenação por inserção
+A ordenação por inserção é na prática mais eﬁciente que a ordenação por seleção.
+Porém, embora o algoritmo em si seja simples, sua implementação é repleta de deta-
+lhes. Vamos inicialmente entender o processo. O princípio do algoritmo é percorrer o
+vetor e a cada etapai, o elemento da posiçãoié inserido (daí o nome do método) na
+sua posição corretarelativamente quando comparado aos primeirosi−1 elementos.
+Muitas pessoas ordenam suas cartas em jogos de baralho usando este método.
+Para melhor compreensão, faremos a apresentação de um exemplo sem mostrarmos
+o vetor, usaremos sequências de números. Consideremos que a entrada é a mesma do
+exemplo anterior, isto é:
+15, 12, 27, 23, 7, 2, 0, 18, 19, 21.
+Na primeira etapa o algoritmo considera que o primeiro elemento, o 15, está na
+sua posição relativa correta, pois se considera apenas a primeira posição do vetor.
+Usaremos os negritos para mostrar quais as etapas já foram feitas pelo algoritmo.
+Na segunda etapa deve-se inserir o segundo elemento em sua posição relativa cor-
+reta considerando-se somente o vetor de tamanho 2. Como o 12 é menor que que o
+15, deve-se trocar estes elementos de posição, nos resultando na sequência:
+12, 15, 27, 23, 7, 2, 0, 18, 19, 21.
+Nesteponto, oselementos12e15estãoemsuasposiçõesrelativascorretasconsiderando-
+se um vetor de 2 posições. Agora, deve-se colocar o 27 no vetor de 3 elementos. Mas
+o 27 já está em seu lugar relativo, então o algoritmo não faz nada:
+12, 15, 27, 23, 7, 2, 0, 18, 19, 21.
+Na quarta etapa deve-se inserir o 23 na sua posição relativa correta considerando-se
+um vetor de 4 elementos. O 23 tem que estar entre o 15 e o 27:
+12, 15, 23, 27, 7, 2, 0, 18, 19, 21.
+Na quinta etapa deve-se inserir o 7 na sua posição relativa a um vetor de 5 ele-
+mentos. Ele deve ser inserido antes do 12, isto é, na primeira posição:
+7, 12, 15, 23, 27, 2, 0, 18, 19, 21."
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q2,2ded6f4e-c9c5-49d5-8c91-2cb34427f947,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,208,0.5884174065776202,205,"198 CAPÍTULO 9. VETORES
+Em análise de algoritmos o importante é observar a função cujo comportamento
+predomina. Neste caso é o termo N2. Por razões que só serão detalhadas em dis-
+ciplinas mais avançadas e que envolvem ocomportamento assintóticode funções, o
+termo linearN e fator 1
+2 não são normalmente considerados neste tipo de análise. O
+fato é que uma função quadrática tem predominância sobre funções lineares ou sobre
+constantes quando se considera umN muito grande. Por isso se diz que este algoritmo
+tem comportamento quadrático.
+9.8.2 Ordenação por inserção
+A ordenação por inserção é na prática mais eﬁciente que a ordenação por seleção.
+Porém, embora o algoritmo em si seja simples, sua implementação é repleta de deta-
+lhes. Vamos inicialmente entender o processo. O princípio do algoritmo é percorrer o
+vetor e a cada etapai, o elemento da posiçãoié inserido (daí o nome do método) na
+sua posição corretarelativamente quando comparado aos primeirosi−1 elementos.
+Muitas pessoas ordenam suas cartas em jogos de baralho usando este método.
+Para melhor compreensão, faremos a apresentação de um exemplo sem mostrarmos
+o vetor, usaremos sequências de números. Consideremos que a entrada é a mesma do
+exemplo anterior, isto é:
+15, 12, 27, 23, 7, 2, 0, 18, 19, 21.
+Na primeira etapa o algoritmo considera que o primeiro elemento, o 15, está na
+sua posição relativa correta, pois se considera apenas a primeira posição do vetor.
+Usaremos os negritos para mostrar quais as etapas já foram feitas pelo algoritmo.
+Na segunda etapa deve-se inserir o segundo elemento em sua posição relativa cor-
+reta considerando-se somente o vetor de tamanho 2. Como o 12 é menor que que o
+15, deve-se trocar estes elementos de posição, nos resultando na sequência:
+12, 15, 27, 23, 7, 2, 0, 18, 19, 21.
+Nesteponto, oselementos12e15estãoemsuasposiçõesrelativascorretasconsiderando-
+se um vetor de 2 posições. Agora, deve-se colocar o 27 no vetor de 3 elementos. Mas
+o 27 já está em seu lugar relativo, então o algoritmo não faz nada:
+12, 15, 27, 23, 7, 2, 0, 18, 19, 21.
+Na quarta etapa deve-se inserir o 23 na sua posição relativa correta considerando-se
+um vetor de 4 elementos. O 23 tem que estar entre o 15 e o 27:
+12, 15, 23, 27, 7, 2, 0, 18, 19, 21.
+Na quinta etapa deve-se inserir o 7 na sua posição relativa a um vetor de 5 ele-
+mentos. Ele deve ser inserido antes do 12, isto é, na primeira posição:
+7, 12, 15, 23, 27, 2, 0, 18, 19, 21."
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q2,2ded6f4e-c9c5-49d5-8c91-2cb34427f947,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,204,0.5821939368285549,201,"194 CAPÍTULO 9. VETORES
+9.7 Vetores como estruturas de dados
+O conceito de vetores, por si só, é tecnicamente umtipo estruturado válido na lin-
+guagem Pascal. Uma estrutura de dados é algo um pouco mais soﬁsticado, tem a ver
+com a maneira como o vetor é utilizado e quais são, ou não são, as propriedades de
+seus elementos.
+Por exemplo, para bem utilizar um vetor, é preciso saber se seus elementos úteis,
+com relação ao espaço total do vetor, se são alocados do início ao ﬁm, ou do ﬁm ao
+início. É importante saber se seus elementos (conteúdos) estão ordenados ou não, o
+se, quem sabe, respeitam alguma outra propriedade qualquer.
+Estas informações adicionais orientam como são escritos os algoritmos que mani-
+pulam o vetor. Se os elementos úteis estão do início ao ﬁm, os comandos de repetição
+devem trabalhar no intervalo1..tam. Se os elementos estão ordenados, pode-se usar
+a busca binária. Observe que o comportamento logaritmico da busca binária só é
+conseguido pois o vetor é considerado ordenado.
+Desta maneira, os algoritmos podem (na verdade, devem) explorar estas proprie-
+dades subjacentes para que os algoritmos sejam mais eﬁcientes.
+Algoritmos e Estruturas de Dados são dois conceitos intimamente relacionados.
+As estruturas de Dados permitem algoritmos melhores, ou as vezes, nem tanto.
+Porexemplo: vimosqueemumvetornãoordenadoinserireremoverésimples, têm
+custo constante. Mas por outro lado buscar tem custo linear. De maneira contrária,
+se o vetor está ordenado, então buscar tem custo logaritmico, mas inserir e remover
+tem custo linear.
+Por isso não podemos dizer que uma estrutura de dados é melhor do que outra
+para o caso geral dos problemas vistos até agora. Qual estrutura escolher: vetores
+ordenados ou não? A resposta depende da aplicação, se o usuário vai realizar mais
+inserções do que buscas, ou vice e versa.
+A disciplina de Algoritmos e Estrutura de Dados III vai permitir explorar esta diﬁ-
+culdade ao longo de praticamente um semestre todo. Existe material, provavelmente,
+para mais do que este tempo. Nesta disciplina, esta trinca de problemas buscar, in-
+serir e remover é investigada ao máximo e na verdade constitui pesquisa até os dias
+de hoje.
+9.8 Ordenação em vetores
+Ordenar vetores é extremamente importante em computação, pois é muito comum
+que uma saída de um programa seja dada com algum tipo de ordem sobre os dados.
+Nesta seção vamos apresentar dois algoritmos para este problema: os métodos da
+ordenação por seleção e por inserção.
+9.8.1 Ordenação por seleção
+A ordenação por seleção é um método bastante simples de se compreender e também
+de se implementar."
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q2,2ded6f4e-c9c5-49d5-8c91-2cb34427f947,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,239,0.5804907919505852,236,"9.10. EXERCÍCIOS 229
+Exemplo de entrada Saída esperada
+10 50 99 73 4
+73
+82 8
+73 82
+54 1
+54 73 82
+65 8
+54 73 82 65
+97 8
+54 73 82 65 97
+81 8
+54 81 73 82 65 97
+59 6
+54 81 73 59 82 65 97
+62 1
+54 81 62 73 59 82 65 97
+70 7
+54 81 62 73 59 70 82 65 97
+96 7
+54 81 62 73 96 59 70 82 65 97
+3. Faça um programa emPascal que leia um número inteiro positivo e depois leia
+uma sequência den valores reais não nulos (n≤100) e os insira em um vetor.
+Considere o elementop = V[1] como opivô na operação de rearranjar o vetor
+de tal maneira que, ao ﬁnal do processo, todos os elementos à esquerda dep
+sejam menores que ele e todos os da direta sejam maiores ou iguais a ele. No
+ﬁnal, o elementop pode não estar mais na posição 1.
+Exemplo de entrada Saída esperada
+6
+13 32 99 2 26 12 2 12 13 32 99 26
+O programa gerou como resultado um vetor onde todos os elementos que estão
+à esquerda do valor13 no vetor são menores que ele, enquanto que os da direita
+são maiores do que ele.
+9.10.7 Exercícios de maratona de programação
+Os exercícios de maratona são feitos de maneira que, em geral, um algoritmo qualquer
+que resolve o problema não serve, mas tem que ser um algoritmo eﬁciente. Por
+exemplo, se existe a chance de você usar um algoritmo de complexidade proporcial
+log(n) e você usou um de complexidade proporcional an, então você ganha do sistema
+de competição a respostatime limit exceeded.
+Logo, nos próximos exercícios, cuide para que seu algoritmo seja eﬁciente!"
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q2,2ded6f4e-c9c5-49d5-8c91-2cb34427f947,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,15,0.5793593466946744,14,"Parte I
+Algoritmos
+5"
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q3,6bba5264-a2a9-4613-8828-3f96213bb389,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,313,0.5848859699700114,310,"12.1. TIPO ABSTRATO DE DADOS CONJUNTO 303
+As procedures para inserção e remoção, ilustradas nas ﬁguras 12.26 e 12.27 conti-
+nuam com custos lineares, no primeiro caso por conta do teste de pertinência. Como
+os conjuntos não podem ter elementos repetidos é necessário testar antes. No código
+anterior a busca era binária, portanto logarítmica, mas desta vez ela é linear.
+O algoritmo da inserção explora a não ordenação e insere no ﬁnal do vetor, en-
+quanto que a procedure de remoção ainda temos que encontrar a posição do elemento
+a ser removido, que tem custo linear. Uma vez encontrada, basta copiar o último
+neste lugar.
+procedureinserir_no_conjunto (x: longint; var c: conjunto);
+(∗ Insere o elemento x no conjunto c, na ultima posicao do vetor. ∗)
+(∗ Custo: linear por causa do teste de pertinencia. ∗)
+var i: longint;
+begin
+if not pertence (x,c) then
+begin
+c.card:= c.card + 1;
+c.v[c.card]:= x;
+end;
+end;
+Figura 12.26: Procedure para inserir elemento em conjunto não ordenado.
+procedureremover_conjunto (x: longint; var c: conjunto);
+(∗ Remove o elemento x do conjunto c. ∗)
+(∗ Custo: linear, tanto por causa ∗)
+var i , indice: longint;
+begin
+indice:= 1; (∗ primeiro acha a posicao do elemento ∗)
+c.v[c.card+1]:= x; (∗ sentinela ∗)
+while x <> c.v[indice] do
+indice:= indice + 1;
+if indice < c.card + 1 then (∗ achou o elemento ∗)
+begin
+c.v[indice]:= c.v[c.card]; (∗ sobrecreve o ultimo neste lugar. ∗)
+c.card:= c.card − 1;
+end;
+end;
+Figura 12.27: Procedure para remover elemento em conjunto não ordenado.
+O algoritmo que testa igualdade de conjunto no caso não ordenado é bem mais
+caro do que o anterior. Ele tem que testar se o primeiro está contido no segundo e se
+o segundo está contido no primeiro, conforme a ﬁgura 12.28.
+Conclusão: esta segunda implementação é bastante pior do que a primeira. Ela
+serviu apenas para mostrarmos que um TAD pode ser implementado de mais de uma
+maneira. Quando os estudantes aprenderem alocação dinâmica, poderão exercitar
+outras implementações, quem sabe mais eﬁcientes do que as nossas."
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q3,6bba5264-a2a9-4613-8828-3f96213bb389,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,175,0.5828871173391172,173,"Parte II
+Estruturas de Dados
+165"
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q3,6bba5264-a2a9-4613-8828-3f96213bb389,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,303,0.5825772982303865,300,"12.1. TIPO ABSTRATO DE DADOS CONJUNTO 293
+function pertence (x: longint; c: conjunto): boolean;
+(∗ Retorna true se x pertence ao conjunto c e false caso contrario. ∗)
+begin
+pertence:= busca_binaria (x,c) <> 0;
+end;
+Figura 12.9: Tenta encontrar um elemento no conjunto usando busca binária.
+As procedures para inserção e remoção, ilustradas nas ﬁguras 12.10 e 12.11 têm
+custo linear. Em ambos é preciso deslocar todo os elementos do vetor no pior caso.
+Para inserir, é preciso encontrar o ponto de inserção, para garantir a ordenação, ao
+mesmo tempo deslocando todos para frente criando o espaço para o novo elemento.
+Para remover, antes é necessário encontrar o elemento a ser removido no vetor para
+em seguida deslocar para trás todos os elementos subsequentes.
+procedureinserir_no_conjunto (x: longint; var c: conjunto);
+(∗ Insere o elemento x no conjunto c, mantem os elementos ordenados. ∗)
+(∗ Custo: para garantir o conjunto ordenado, linear. ∗)
+var i: longint;
+begin
+if not pertence (x,c) then
+begin
+c.v[0]:= x; (∗ sentinela ∗)
+i:= c.card;
+while x < c.v[i] do (∗ procura ponto de insercao abrindo espaco ∗)
+begin
+c.v[i+1]:= c.v[i ];
+i:= i − 1;
+end;
+c.v[i+1]:= x;
+c.card:= c.card + 1;
+end;
+end;
+Figura 12.10: Procedure para inserir elemento em conjunto ordenado."
+7b49f0e2-fcb1-43e4-8d20-7891e9e62071,Condição A (com RAG),True,Q3,6bba5264-a2a9-4613-8828-3f96213bb389,data/uploads/7b49f0e2-fcb1-43e4-8d20-7891e9e62071/1a8c03f0-1e1a-43da-994d-efa736a8387c.pdf,199,0.5816643533755618,196,"9.5. BUSCA EM VETORES 189
+procura-se na metade do que sobrou e assim por diante, até que se encontre o elemento
+ou até que se determine que não é mais possível encontrá-lo (ﬁm antes do início).
+Vamos agora comparar estas últimas quatro versões para o algoritmo de busca. A
+tabela9.20resumeonúmerodecomparaçõesfeitasparadiversostamanhosdeentrada,
+sempre analisando o pior caso. O caso médio exige um pouco mais de cuidado para
+se calcular e não será estudado aqui. O caso ótimo é sempre uma única comparação:
+o algoritmo acha o elemento na primeira tentativa.
+Versão n= 10 n= 102 n= 104 n= 108
+Busca simples (ﬁg. 9.17) 20 200 20000 200000000
+Busca com sentinela (ﬁg. 9.18) 10 100 10000 100000000
+Busca em vetor ordenado (ﬁg. 9.19) 10 100 10000 100000000
+Busca binária (ﬁg. 9.21) 3 5 10 19
+Figura 9.20: Tabela resumindo número de comparações para algoritmos de busca.
+function busca_binaria (x: real ; var v: vetor_r; n: integer): integer;
+var inicio , fim, meio: integer;
+begin
+inicio:=1; (∗ aponta para o inicio ∗)
+fim:= n; (∗ aponta para o fim ∗)
+meio:= (inicio + fim) div 2; (∗ aponta para o meio ∗)
+while (fim >= inicio) and (v[meio] <> x) do
+begin
+if v[meio] > x then (∗ vai jogar uma das duas metades fora ∗)
+fim:= meio − 1 (∗ metade superior foi jogada fora ∗)
+else
+inicio:= meio + 1; (∗ metade inferior foi jogada fora ∗)
+meio:= (inicio + fim) div 2; (∗ recalcula apontador para meio ∗)
+end;
+(∗ o laco termina quando achou ou quando o fim precede o inicio ∗)
+if inicio <= fim then
+busca_binaria:= meio
+else
+busca_binaria:= 0;
+end;
+Figura 9.21: Busca binária.
+O importante do método da busca binária é que ela apresenta um caráterlo-
+garítmico para o pior caso com relação ao tamanho da entrada, o que é bastante
+signiﬁcativo. Contudo, é absolutamente relevante destacar que este método só pode
+ser aplicado em vetores ordenados, senão não funciona. A questão é saber qual o custo
+de se ordenar, ou de se manter ordenado, um vetor. Isto será estudado à frente."

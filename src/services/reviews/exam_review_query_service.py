@@ -1,12 +1,15 @@
 from uuid import UUID
 from sqlalchemy.orm import Session
 
+import json as _json
+
 from src.domain.responses.reviews import (
     ExamReviewResponse,
     QuestionReview,
     StudentAnswerReview,
     CriterionScore,
     AgentCriteriaScores,
+    RagContextItem,
 )
 
 from src.interfaces.repositories.exams_repository_interfaces import ExamsRepositoryInterface
@@ -192,9 +195,25 @@ class ExamReviewQueryService(ExamReviewQueryServiceInterface):
                     )
                 )
             
+            # Desserializar contexto RAG armazenado na questão
+            rag_contexts = []
+            raw_rag = getattr(question, 'rag_contexts_json', None)
+            if raw_rag:
+                try:
+                    for item in _json.loads(raw_rag):
+                        rag_contexts.append(RagContextItem(
+                            content=item.get("content", ""),
+                            source_document=item.get("source_document"),
+                            page_number=item.get("page_number"),
+                            relevance_score=item.get("relevance_score"),
+                            chunk_index=item.get("chunk_index"),
+                        ))
+                except Exception:
+                    self.__logger.warning("Falha ao desserializar rag_contexts_json da questão %s", question.uuid)
+
             # Usar pontuação da questão
             question_max_score = float(question.points) if question.points else 10.0
-            
+
             questions_review.append(
                 QuestionReview(
                     question_uuid=question.uuid,
@@ -202,6 +221,7 @@ class ExamReviewQueryService(ExamReviewQueryServiceInterface):
                     statement=question.statement,
                     expected_answer=None,
                     max_score=question_max_score,
+                    rag_contexts=rag_contexts,
                     student_answers=student_answers_review
                 )
             )

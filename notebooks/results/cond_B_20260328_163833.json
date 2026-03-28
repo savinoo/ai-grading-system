@@ -1,0 +1,2272 @@
+{
+  "label": "Condição B (sem RAG)",
+  "exam_uuid": "48304f9b-1754-4cbd-b973-4a39a51a20a2",
+  "rag": false,
+  "timestamp": "20260328_163833",
+  "raw_review": {
+    "exam_uuid": "48304f9b-1754-4cbd-b973-4a39a51a20a2",
+    "exam_title": "Condição B (sem RAG) — 20260328_164146",
+    "exam_description": "Experimento TCC: Condição B (sem RAG)",
+    "class_name": "Algoritmos e Estrutura de Dados — TCC Experimento",
+    "status": "GRADED",
+    "total_students": 4,
+    "total_questions": 3,
+    "graded_at": "2026-03-28T19:44:05.431442Z",
+    "questions": [
+      {
+        "question_uuid": "85273a6e-19dd-436d-bc35-813fad28effa",
+        "question_number": 1,
+        "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+        "expected_answer": null,
+        "max_score": 10.0,
+        "rag_contexts": [],
+        "student_answers": [
+          {
+            "answer_uuid": "b0c0ad7b-132f-4d18-97c1-8bb812b671dc",
+            "student_uuid": "9b6aabce-8b4d-49f4-908a-b0777cacb7c8",
+            "student_name": "Aluno 2 (Intermediário)",
+            "student_email": "aluno2.adequado@example.com",
+            "answer_text": "Arrays guardam os dados de forma organizada na memória, um do lado do outro, o que permite acessar qualquer elemento diretamente pelo índice. Listas Encadeadas funcionam de forma diferente: cada elemento aponta para o próximo, então para acessar o elemento k é preciso percorrer desde o início. Quando se insere ou remove no meio de uma Array, os outros elementos precisam se mover para abrir ou fechar espaço. Na Lista, basta mudar os ponteiros, sem mover dados. No geral, Arrays são boas para acesso rápido e Listas para quando se modifica muito a estrutura.",
+            "score": 6.73,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 6.24,
+            "c2_score": 6.73,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 0.5,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 3.0,
+                "weighted_score": 4.29,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 1.0,
+                "weighted_score": 1.02,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 1.5,
+                "weighted_score": 1.22,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.5,
+                "weighted_score": 0.2,
+                "feedback": null
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.0,
+                    "weighted_score": 4.29,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 1.0,
+                    "weighted_score": 1.02,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.8,
+                    "weighted_score": 0.65,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.7,
+                    "weighted_score": 0.29,
+                    "feedback": null
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.0,
+                    "weighted_score": 4.29,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 1.0,
+                    "weighted_score": 1.02,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 1.5,
+                    "weighted_score": 1.22,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.2,
+                    "feedback": null
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:42:15.247470Z"
+          },
+          {
+            "answer_uuid": "9876e9ff-ae1f-4f3c-8d0d-4d2947ea92b2",
+            "student_uuid": "1577ae18-04c1-415c-ba1f-c1deda50b60a",
+            "student_name": "Aluno 3 (Fraco)",
+            "student_email": "aluno3.fraco@example.com",
+            "answer_text": "Arrays são estruturas onde os dados ficam armazenados em ordem sequencial. O acesso é feito de forma sequencial, então para chegar ao elemento k é preciso percorrer todos os anteriores, custando O(n). Listas Encadeadas alocam toda a memória necessária de uma vez no início do programa, e os nós ficam conectados. O acesso a qualquer elemento é direto pelo índice, sendo O(1). Para inserir ou remover no meio de uma Array, o custo é O(1) porque os elementos não precisam ser movidos. Já na Lista, o custo é O(n²) porque é necessário reorganizar todos os ponteiros da estrutura inteira.",
+            "score": 0.0,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 0.51,
+            "c2_score": 0.0,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 0.5,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.51,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:42:28.644818Z"
+          },
+          {
+            "answer_uuid": "3231c539-5203-48d2-9187-baaa09609ca5",
+            "student_uuid": "9e493d13-3a78-4d28-ab35-254bd144dd5d",
+            "student_name": "Aluno 4 (Fora do Tema)",
+            "student_email": "aluno4.foratema@example.com",
+            "answer_text": "A fotossíntese é o processo pelo qual as plantas convertem luz solar em energia química. Ocorre nos cloroplastos, onde a clorofila absorve luz e usa CO2 e água para produzir glicose e oxigênio. É fundamental para a cadeia alimentar e para a manutenção do oxigênio na atmosfera terrestre.",
+            "score": 0.0,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 0.0,
+            "c2_score": 0.0,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 0.0,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:42:38.220481Z"
+          },
+          {
+            "answer_uuid": "f1db7183-3692-4cfd-88a6-211a6819656a",
+            "student_uuid": "d83c77f6-37a2-46c9-8723-ba76bb44b5ac",
+            "student_name": "Aluno 1 (Excelente)",
+            "student_email": "aluno1.excelente@example.com",
+            "answer_text": "Arrays utilizam alocação contígua de memória: os elementos ocupam posições consecutivas, permitindo acesso direto via aritmética de ponteiros com complexidade O(1) para qualquer índice k. Listas Encadeadas Simples alocam nós dinamicamente em posições não contíguas; cada nó armazena o dado e um ponteiro para o próximo. O acesso ao índice k exige travessia sequencial a partir da cabeça, resultando em O(n) no pior caso. Na inserção/remoção no meio: em Arrays, todos os elementos após a posição precisam ser deslocados, custo O(n). Em Listas, uma vez localizado o nó predecessor (O(n) de busca), a operação em si é O(1) — apenas ponteiros são redirecionados. O trade-off é claro: Arrays são superiores para leitura aleatória intensiva; Listas são mais eficientes para inserções/remoções frequentes em posições intermediárias, especialmente quando o ponteiro de inserção já é conhecido.",
+            "score": 10.0,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 10.0,
+            "c2_score": 10.0,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 0.0,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 3.5,
+                "weighted_score": 5.0,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 2.5,
+                "weighted_score": 2.55,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 2.0,
+                "weighted_score": 1.63,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 1.0,
+                "weighted_score": 0.41,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 1.0,
+                "weighted_score": 0.41,
+                "feedback": null
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.5,
+                    "weighted_score": 5.0,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 2.5,
+                    "weighted_score": 2.55,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 2.0,
+                    "weighted_score": 1.63,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.5,
+                    "weighted_score": 5.0,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 2.5,
+                    "weighted_score": 2.55,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 2.0,
+                    "weighted_score": 1.63,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:41:59.349840Z"
+          }
+        ]
+      },
+      {
+        "question_uuid": "94ee1fed-afe7-4c27-b350-c606bf83ea22",
+        "question_number": 2,
+        "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+        "expected_answer": null,
+        "max_score": 10.0,
+        "rag_contexts": [],
+        "student_answers": [
+          {
+            "answer_uuid": "6434a8d4-4a58-46ff-9ba8-ea5906d44c6d",
+            "student_uuid": "d83c77f6-37a2-46c9-8723-ba76bb44b5ac",
+            "student_name": "Aluno 1 (Excelente)",
+            "student_email": "aluno1.excelente@example.com",
+            "answer_text": "Merge Sort é estável: elementos com chaves iguais preservam sua ordem relativa original após a ordenação. Sua complexidade de tempo é O(n log n) no melhor, médio e pior caso, garantindo desempenho consistente independente da entrada. O custo de espaço é O(n) auxiliar, pois requer um array temporário na mesclagem. Quick Sort é instável: a posição relativa de elementos iguais pode mudar após a partição. Sua complexidade média é O(n log n), mas degenera para O(n²) no pior caso (pivô sempre extremo, ex.: array já ordenado sem aleatorização do pivô). O espaço auxiliar é O(log n) em média (pilha de recursão). Implicações práticas: Merge Sort é preferível quando estabilidade é requisito (ex.: ordenar registros por múltiplos campos mantendo sub-ordenação prévia) ou quando desempenho garantido é crítico. Quick Sort é preferível com memória limitada e dados sem padrões degenerativos, sendo geralmente mais rápido na prática por menor constante multiplicativa e melhor localidade de cache.",
+            "score": 10.0,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 10.0,
+            "c2_score": 10.0,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 0.0,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 3.5,
+                "weighted_score": 5.0,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 2.5,
+                "weighted_score": 2.55,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 2.0,
+                "weighted_score": 1.63,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 1.0,
+                "weighted_score": 0.41,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 1.0,
+                "weighted_score": 0.41,
+                "feedback": null
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.5,
+                    "weighted_score": 5.0,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 2.5,
+                    "weighted_score": 2.55,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 2.0,
+                    "weighted_score": 1.63,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.5,
+                    "weighted_score": 5.0,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 2.5,
+                    "weighted_score": 2.55,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 2.0,
+                    "weighted_score": 1.63,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:42:48.489281Z"
+          },
+          {
+            "answer_uuid": "c150bfb5-bf31-467d-8ade-2a9fb1185270",
+            "student_uuid": "9b6aabce-8b4d-49f4-908a-b0777cacb7c8",
+            "student_name": "Aluno 2 (Intermediário)",
+            "student_email": "aluno2.adequado@example.com",
+            "answer_text": "Merge Sort é um algoritmo estável, enquanto Quick Sort não é estável. O Merge Sort tem complexidade O(n log n) mesmo no pior caso, o que o torna mais previsível. O Quick Sort pode chegar a O(n²) no pior caso, mas em média é O(n log n). Em relação ao espaço, o Merge Sort precisa de memória extra proporcional ao tamanho do array, enquanto Quick Sort usa menos memória adicional. Para escolher entre eles, deve-se considerar se a estabilidade importa e quanto de memória está disponível no sistema.",
+            "score": 8.88,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 8.88,
+            "c2_score": 8.88,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 0.0,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 3.5,
+                "weighted_score": 5.0,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 2.0,
+                "weighted_score": 2.04,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 2.0,
+                "weighted_score": 1.63,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.5,
+                "weighted_score": 0.2,
+                "feedback": null
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.5,
+                    "weighted_score": 5.0,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 2.0,
+                    "weighted_score": 2.04,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 2.0,
+                    "weighted_score": 1.63,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.2,
+                    "feedback": null
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.5,
+                    "weighted_score": 5.0,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 2.0,
+                    "weighted_score": 2.04,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 2.0,
+                    "weighted_score": 1.63,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.2,
+                    "feedback": null
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:43:03.057297Z"
+          },
+          {
+            "answer_uuid": "107081ba-da70-41df-88ee-113275606ab9",
+            "student_uuid": "1577ae18-04c1-415c-ba1f-c1deda50b60a",
+            "student_name": "Aluno 3 (Fraco)",
+            "student_email": "aluno3.fraco@example.com",
+            "answer_text": "Merge Sort é um algoritmo instável que divide o array ao meio e depois junta as partes. Sua complexidade no pior caso é O(n²) e usa muito espaço de memória. Quick Sort é estável e funciona escolhendo um pivô para separar elementos menores e maiores. Tem complexidade O(n log n) em todos os casos e usa pouco espaço. Por isso o Quick Sort é sempre mais eficiente que o Merge Sort, especialmente em arrays já ordenados onde o Merge Sort fica muito lento.",
+            "score": 1.63,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 2.55,
+            "c2_score": 1.63,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 1.0,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 0.5,
+                "weighted_score": 0.71,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 0.5,
+                "weighted_score": 0.51,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 0.5,
+                "weighted_score": 0.41,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.71,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 1.0,
+                    "weighted_score": 1.02,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.82,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.71,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.51,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:43:15.496152Z"
+          },
+          {
+            "answer_uuid": "d49f0f25-bb44-426f-80f9-706070409aa7",
+            "student_uuid": "9e493d13-3a78-4d28-ab35-254bd144dd5d",
+            "student_name": "Aluno 4 (Fora do Tema)",
+            "student_email": "aluno4.foratema@example.com",
+            "answer_text": "Fritar e cozinhar são técnicas culinárias muito diferentes. Fritar usa gordura quente para criar uma crosta crocante por fora enquanto mantém o interior úmido. Cozinhar em água transmite calor por condução e é indicado para legumes e massas. A escolha depende do ingrediente e do resultado desejado em termos de textura e sabor do prato final.",
+            "score": 0.0,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 0.0,
+            "c2_score": 0.0,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 0.0,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": "A resposta não aborda o tema de algoritmos de ordenação, sendo tecnicamente irrelevante para a questão."
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": "A resposta não aborda nenhum dos pontos solicitados na questão sobre algoritmos de ordenação."
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": "A terminologia utilizada pertence ao domínio da culinária e não ao da ciência da computação ou algoritmos de ordenação."
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": "Não há exemplos relevantes para o tema de algoritmos de ordenação."
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": "Não há análise crítica sobre os algoritmos de ordenação, pois o tema não foi abordado."
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:43:21.812192Z"
+          }
+        ]
+      },
+      {
+        "question_uuid": "ff30acaa-9d64-4849-bc2e-933f4faa43a8",
+        "question_number": 3,
+        "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+        "expected_answer": null,
+        "max_score": 10.0,
+        "rag_contexts": [],
+        "student_answers": [
+          {
+            "answer_uuid": "9b8c17ab-b27a-4b2f-8e21-d5fd62b97dae",
+            "student_uuid": "9b6aabce-8b4d-49f4-908a-b0777cacb7c8",
+            "student_name": "Aluno 2 (Intermediário)",
+            "student_email": "aluno2.adequado@example.com",
+            "answer_text": "Uma BST balanceada mantém a altura da árvore pequena, próxima de O(log n), enquanto uma não balanceada pode crescer de forma descontrolada dependendo da ordem de inserção dos elementos. A vantagem principal da balanceada é que busca, inserção e remoção ficam em O(log n) sempre. Na não balanceada, essas operações podem chegar a O(n) no pior caso, quando a árvore vira praticamente uma lista encadeada. No melhor caso, ambas conseguem O(log n) se os elementos forem inseridos de forma bem distribuída.",
+            "score": 9.8,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 9.8,
+            "c2_score": 9.8,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 0.0,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 3.5,
+                "weighted_score": 5.0,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 2.5,
+                "weighted_score": 2.55,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 2.0,
+                "weighted_score": 1.63,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.5,
+                "weighted_score": 0.2,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 1.0,
+                "weighted_score": 0.41,
+                "feedback": null
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.5,
+                    "weighted_score": 5.0,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 2.5,
+                    "weighted_score": 2.55,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 2.0,
+                    "weighted_score": 1.63,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.2,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.5,
+                    "weighted_score": 5.0,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 2.5,
+                    "weighted_score": 2.55,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 2.0,
+                    "weighted_score": 1.63,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.2,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:43:42.912045Z"
+          },
+          {
+            "answer_uuid": "36e8498f-8546-466a-bff4-782a0abd179a",
+            "student_uuid": "1577ae18-04c1-415c-ba1f-c1deda50b60a",
+            "student_name": "Aluno 3 (Fraco)",
+            "student_email": "aluno3.fraco@example.com",
+            "answer_text": "Uma BST balanceada tem os nós organizados de forma que cada filho seja sempre maior que o pai, tornando a estrutura simétrica e eficiente. A BST não balanceada pode ter os nós em qualquer posição, o que a torna desorganizada e difícil de percorrer. A vantagem da balanceada é que o acesso é sempre muito rápido. A complexidade de busca na balanceada é O(1) no melhor e pior caso. Na não balanceada, o melhor caso é O(log n) e o pior caso é O(n²), pois é necessário percorrer toda a estrutura reorganizando os nós durante a busca.",
+            "score": 1.22,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 0.0,
+            "c2_score": 1.22,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 1.0,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 0.5,
+                "weighted_score": 0.71,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 0.5,
+                "weighted_score": 0.51,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": null
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.71,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 0.5,
+                    "weighted_score": 0.51,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:43:59.625976Z"
+          },
+          {
+            "answer_uuid": "0e6a48c9-035a-4096-8d75-561665135bf5",
+            "student_uuid": "9e493d13-3a78-4d28-ab35-254bd144dd5d",
+            "student_name": "Aluno 4 (Fora do Tema)",
+            "student_email": "aluno4.foratema@example.com",
+            "answer_text": "Redes neurais artificiais são modelos computacionais inspirados no cérebro humano. São compostas por camadas de neurônios artificiais que processam informações de entrada. As redes profundas (deep learning) possuem múltiplas camadas ocultas e são utilizadas em reconhecimento de imagens, processamento de linguagem natural e outros problemas de aprendizado de máquina supervisionado.",
+            "score": 0.0,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 0.0,
+            "c2_score": 0.0,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 0.0,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": "A resposta não aborda o tema de Árvores Binárias de Busca."
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": "Nenhum dos pontos solicitados sobre BSTs foi abordado."
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": "A terminologia utilizada não se refere ao tópico da questão."
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": "Não foram apresentados exemplos relevantes para o tema da questão."
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 0.0,
+                "weighted_score": null,
+                "feedback": "Não há análise crítica sobre o tema solicitado."
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": null
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": "A resposta não aborda o tema de Árvores Binárias de Busca."
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": "Nenhum dos pontos solicitados sobre BSTs foi abordado."
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": "A terminologia utilizada não se refere ao tópico da questão."
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": "Não foram apresentados exemplos relevantes para o tema da questão."
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 0.0,
+                    "weighted_score": null,
+                    "feedback": "Não há análise crítica sobre o tema solicitado."
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:44:05.431442Z"
+          },
+          {
+            "answer_uuid": "f7ed983d-7237-4ddc-96f8-9d6a192c364a",
+            "student_uuid": "d83c77f6-37a2-46c9-8723-ba76bb44b5ac",
+            "student_name": "Aluno 1 (Excelente)",
+            "student_email": "aluno1.excelente@example.com",
+            "answer_text": "Uma BST é definida pela propriedade de ordenação: todo nó à esquerda tem chave menor e à direita maior que o nó pai. Em uma BST balanceada (ex.: AVL, Red-Black), a diferença de altura entre as subárvores esquerda e direita de qualquer nó é limitada (fator de balanceamento ≤ 1 em AVL), garantindo altura O(log n). Em uma BST não balanceada, inserções em ordem crescente ou decrescente degeram a estrutura em uma lista linear, com altura O(n). A principal vantagem da BST balanceada é garantir complexidade O(log n) para busca, inserção e remoção em todos os cenários (melhor e pior caso). Na não balanceada: melhor caso O(log n) (árvore naturalmente equilibrada pela ordem aleatória das inserções) e pior caso O(n) (árvore degenerada). Esse comportamento imprevisível é crítico em aplicações com requisitos de latência garantida, justificando o overhead de rebalanceamento das árvores autobalanceadas.",
+            "score": 10.0,
+            "status": "GRADED",
+            "feedback": null,
+            "c1_score": 10.0,
+            "c2_score": 10.0,
+            "arbiter_score": null,
+            "divergence_detected": false,
+            "divergence_value": 0.0,
+            "consensus_method": "mean_2",
+            "criteria_scores": [
+              {
+                "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                "criterion_name": "Correção técnica",
+                "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                "max_score": 3.5,
+                "weight": 0.35,
+                "raw_score": 3.5,
+                "weighted_score": 5.0,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                "criterion_name": "Completude da resposta",
+                "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                "max_score": 2.5,
+                "weight": 0.25,
+                "raw_score": 2.5,
+                "weighted_score": 2.55,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                "criterion_name": "Precisão terminológica",
+                "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                "max_score": 2.0,
+                "weight": 0.2,
+                "raw_score": 2.0,
+                "weighted_score": 1.63,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                "criterion_name": "Uso de exemplos",
+                "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 1.0,
+                "weighted_score": 0.41,
+                "feedback": null
+              },
+              {
+                "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                "criterion_name": "Análise crítica e profundidade",
+                "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                "max_score": 1.0,
+                "weight": 0.1,
+                "raw_score": 1.0,
+                "weighted_score": 0.41,
+                "feedback": null
+              }
+            ],
+            "agent_criteria_scores": [
+              {
+                "agent_id": "corretor_1",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.5,
+                    "weighted_score": 5.0,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 2.5,
+                    "weighted_score": 2.55,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 2.0,
+                    "weighted_score": 1.63,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  }
+                ]
+              },
+              {
+                "agent_id": "corretor_2",
+                "criteria_scores": [
+                  {
+                    "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+                    "criterion_name": "Correção técnica",
+                    "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+                    "max_score": 3.5,
+                    "weight": 0.35,
+                    "raw_score": 3.5,
+                    "weighted_score": 5.0,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+                    "criterion_name": "Completude da resposta",
+                    "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+                    "max_score": 2.5,
+                    "weight": 0.25,
+                    "raw_score": 2.5,
+                    "weighted_score": 2.55,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+                    "criterion_name": "Precisão terminológica",
+                    "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+                    "max_score": 2.0,
+                    "weight": 0.2,
+                    "raw_score": 2.0,
+                    "weighted_score": 1.63,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+                    "criterion_name": "Uso de exemplos",
+                    "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  },
+                  {
+                    "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+                    "criterion_name": "Análise crítica e profundidade",
+                    "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+                    "max_score": 1.0,
+                    "weight": 0.1,
+                    "raw_score": 1.0,
+                    "weighted_score": 0.41,
+                    "feedback": null
+                  }
+                ]
+              }
+            ],
+            "graded_at": "2026-03-28T19:43:32.192633Z"
+          }
+        ]
+      }
+    ],
+    "grading_criteria": [
+      {
+        "criterion_uuid": "efaba390-003f-4002-926f-ab6b24b155eb",
+        "criterion_name": "Correção técnica",
+        "criterion_description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+        "max_score": 3.5,
+        "weight": 0.35,
+        "raw_score": 0.0,
+        "weighted_score": null,
+        "feedback": null
+      },
+      {
+        "criterion_uuid": "9166f34c-6b3d-4eae-a1ee-bd1816086f71",
+        "criterion_name": "Completude da resposta",
+        "criterion_description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+        "max_score": 2.5,
+        "weight": 0.25,
+        "raw_score": 0.0,
+        "weighted_score": null,
+        "feedback": null
+      },
+      {
+        "criterion_uuid": "5dba0ea3-eb56-494a-8cfc-298aca3402c2",
+        "criterion_name": "Precisão terminológica",
+        "criterion_description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+        "max_score": 2.0,
+        "weight": 0.2,
+        "raw_score": 0.0,
+        "weighted_score": null,
+        "feedback": null
+      },
+      {
+        "criterion_uuid": "854d0645-fa8a-4384-93d4-32bef236f13a",
+        "criterion_name": "Uso de exemplos",
+        "criterion_description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+        "max_score": 1.0,
+        "weight": 0.1,
+        "raw_score": 0.0,
+        "weighted_score": null,
+        "feedback": null
+      },
+      {
+        "criterion_uuid": "2e892085-9a73-4312-9413-a87ad08fb41f",
+        "criterion_name": "Análise crítica e profundidade",
+        "criterion_description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+        "max_score": 1.0,
+        "weight": 0.1,
+        "raw_score": 0.0,
+        "weighted_score": null,
+        "feedback": null
+      }
+    ]
+  }
+}
