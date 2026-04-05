@@ -57,7 +57,7 @@ coverage/
 # Cache & Temp files
 .vite/
 .cache/
-# *.log
+*.log
 *.tsbuildinfo
 
 # Logs
