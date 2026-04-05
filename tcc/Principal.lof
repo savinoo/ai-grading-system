@@ -1,9 +1,0 @@
-\babel@toc {brazil}{}\relax 
-\contentsline {figure}{\numberline {1}{\ignorespaces Fluxograma do subprocesso de configuração da prova}}{41}{figure.caption.17}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Fluxograma do subprocesso de correção da prova, incluindo revisão docente antes da consolidação das notas finais}}{42}{figure.caption.18}%
-\contentsline {figure}{\numberline {3}{\ignorespaces Fluxograma do subprocesso de correção da resposta, com acionamento condicional do Corretor 3 por limiar de divergência}}{43}{figure.caption.19}%
-\contentsline {figure}{\numberline {4}{\ignorespaces Visão geral da arquitetura do sistema}}{54}{figure.caption.21}%
-\contentsline {figure}{\numberline {5}{\ignorespaces Fluxo de requisição e resposta entre camadas do backend}}{56}{figure.caption.23}%
-\contentsline {figure}{\numberline {6}{\ignorespaces Pipeline de correção com RAG e arbitragem por divergência}}{59}{figure.caption.24}%
-\contentsline {figure}{\numberline {7}{\ignorespaces Modelo entidade-relacionamento (ER) simplificado do domínio}}{65}{figure.caption.26}%
-\contentsline {figure}{\numberline {8}{\ignorespaces Esquema completo do banco de dados relacional}}{93}{figure.caption.44}%
