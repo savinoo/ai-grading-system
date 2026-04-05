@@ -1,11 +1,15 @@
 from uuid import UUID
 from sqlalchemy.orm import Session
 
+import json as _json
+
 from src.domain.responses.reviews import (
     ExamReviewResponse,
     QuestionReview,
     StudentAnswerReview,
-    CriterionScore
+    CriterionScore,
+    AgentCriteriaScores,
+    RagContextItem,
 )
 
 from src.interfaces.repositories.exams_repository_interfaces import ExamsRepositoryInterface
@@ -44,7 +48,7 @@ class ExamReviewQueryService(ExamReviewQueryServiceInterface):
         self.__grading_criteria_repository = grading_criteria_repository
         self.__exam_criteria_repository = exam_criteria_repository
         self.__class_repository = class_repository
-        self.__logger = get_logger("services")
+        self.__logger = get_logger(__name__)
     
     def get_exam_review(self, db: Session, exam_uuid: UUID, user_uuid: UUID) -> ExamReviewResponse:
         """Retorna dados completos para revisão de uma prova."""
@@ -124,8 +128,11 @@ class ExamReviewQueryService(ExamReviewQueryServiceInterface):
                 criteria_scores_entities = db.query(StudentAnswerCriteriaScore).filter(
                     StudentAnswerCriteriaScore.student_answer_uuid == answer.uuid
                 ).all()
-                
-                criteria_scores = []
+
+                # Separar scores por agent_id
+                consensus_scores = []
+                agent_scores_map = {}  # agent_id -> list of CriterionScore
+
                 for score_entity in criteria_scores_entities:
                     try:
                         criteria = self.__grading_criteria_repository.get_by_uuid(db, score_entity.criteria_uuid)
@@ -135,28 +142,37 @@ class ExamReviewQueryService(ExamReviewQueryServiceInterface):
                         criterion_name = "Critério"
                         criterion_description = None
                         self.__logger.warning("Não foi possível buscar critério: %s", score_entity.criteria_uuid)
-                    
-                    # Buscar configuração do critério na prova
+
                     criterion_config = next(
                         (ec for ec in exam_criteria_list if ec.criteria_uuid == score_entity.criteria_uuid),
                         None
                     )
                     max_score = float(criterion_config.max_points) if criterion_config and criterion_config.max_points else 10.0
                     weight = float(criterion_config.weight) if criterion_config and criterion_config.weight else 1.0
-                    
-                    criteria_scores.append(
-                        CriterionScore(
-                            criterion_uuid=score_entity.criteria_uuid,
-                            criterion_name=criterion_name,
-                            criterion_description=criterion_description,
-                            max_score=max_score,
-                            weight=weight,
-                            raw_score=float(score_entity.raw_score),
-                            weighted_score=float(score_entity.weighted_score) if score_entity.weighted_score else None,
-                            feedback=score_entity.feedback
-                        )
+
+                    cs = CriterionScore(
+                        criterion_uuid=score_entity.criteria_uuid,
+                        criterion_name=criterion_name,
+                        criterion_description=criterion_description,
+                        max_score=max_score,
+                        weight=weight,
+                        raw_score=float(score_entity.raw_score),
+                        weighted_score=float(score_entity.weighted_score) if score_entity.weighted_score else None,
+                        feedback=score_entity.feedback
                     )
-                
+
+                    agent_id = getattr(score_entity, 'agent_id', None)
+                    if agent_id is None or agent_id == "consensus":
+                        consensus_scores.append(cs)
+                    else:
+                        agent_scores_map.setdefault(agent_id, []).append(cs)
+
+                # Montar lista de AgentCriteriaScores
+                agent_criteria_scores = [
+                    AgentCriteriaScores(agent_id=aid, criteria_scores=scores)
+                    for aid, scores in sorted(agent_scores_map.items())
+                ]
+
                 student_answers_review.append(
                     StudentAnswerReview(
                         answer_uuid=answer.uuid,
@@ -167,14 +183,37 @@ class ExamReviewQueryService(ExamReviewQueryServiceInterface):
                         score=float(answer.score) if answer.score is not None else None,
                         status=answer.status,
                         feedback=answer.feedback,
-                        criteria_scores=criteria_scores,
+                        c1_score=float(answer.c1_score) if getattr(answer, 'c1_score', None) is not None else None,
+                        c2_score=float(answer.c2_score) if getattr(answer, 'c2_score', None) is not None else None,
+                        arbiter_score=float(answer.arbiter_score) if getattr(answer, 'arbiter_score', None) is not None else None,
+                        divergence_detected=getattr(answer, 'divergence_detected', False) or False,
+                        divergence_value=float(answer.divergence_value) if getattr(answer, 'divergence_value', None) is not None else None,
+                        consensus_method=getattr(answer, 'consensus_method', None),
+                        criteria_scores=consensus_scores,
+                        agent_criteria_scores=agent_criteria_scores,
                         graded_at=answer.graded_at
                     )
                 )
             
+            # Desserializar contexto RAG armazenado na questão
+            rag_contexts = []
+            raw_rag = getattr(question, 'rag_contexts_json', None)
+            if raw_rag:
+                try:
+                    for item in _json.loads(raw_rag):
+                        rag_contexts.append(RagContextItem(
+                            content=item.get("content", ""),
+                            source_document=item.get("source_document"),
+                            page_number=item.get("page_number"),
+                            relevance_score=item.get("relevance_score"),
+                            chunk_index=item.get("chunk_index"),
+                        ))
+                except Exception:
+                    self.__logger.warning("Falha ao desserializar rag_contexts_json da questão %s", question.uuid)
+
             # Usar pontuação da questão
             question_max_score = float(question.points) if question.points else 10.0
-            
+
             questions_review.append(
                 QuestionReview(
                     question_uuid=question.uuid,
@@ -182,6 +221,7 @@ class ExamReviewQueryService(ExamReviewQueryServiceInterface):
                     statement=question.statement,
                     expected_answer=None,
                     max_score=question_max_score,
+                    rag_contexts=rag_contexts,
                     student_answers=student_answers_review
                 )
             )

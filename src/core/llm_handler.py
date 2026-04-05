@@ -1,6 +1,6 @@
 """
 Factory para criação de instâncias LLM.
-Suporta múltiplos provedores (OpenAI, Gemini).
+Suporta múltiplos provedores (OpenAI, Gemini, Anthropic, Groq, Ollama).
 """
 
 import logging
@@ -108,5 +108,5 @@ def get_chat_model(
     else:
         raise ValueError(
             f"Provider '{provider}' não suportado. "
-            f"Use 'openai', 'gemini' ou 'ollama'."
+            f"Use 'openai', 'gemini', 'anthropic', 'groq' ou 'ollama'."
         )

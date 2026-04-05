@@ -92,6 +92,18 @@ class StudentAnswer(Base):
 
     score: Mapped[Optional[float]] = mapped_column(Numeric(8, 2), nullable=True)
 
+    # Notas individuais dos corretores
+    c1_score: Mapped[Optional[float]] = mapped_column(Numeric(8, 2), nullable=True)
+    c2_score: Mapped[Optional[float]] = mapped_column(Numeric(8, 2), nullable=True)
+    arbiter_score: Mapped[Optional[float]] = mapped_column(Numeric(8, 2), nullable=True)
+
+    # Metadados de divergência e consenso
+    divergence_detected: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, server_default=text("FALSE"),
+    )
+    divergence_value: Mapped[Optional[float]] = mapped_column(Numeric(8, 2), nullable=True)
+    consensus_method: Mapped[Optional[str]] = mapped_column(String(30), nullable=True)
+
     feedback: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
     graded_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
@@ -101,7 +113,7 @@ class StudentAnswer(Base):
         ForeignKey("public.users.uuid", onupdate="CASCADE", ondelete="SET NULL"),
         nullable=True,
     )
-    
+
     is_graded: Mapped[bool] = mapped_column(
         Boolean,
         nullable=False,

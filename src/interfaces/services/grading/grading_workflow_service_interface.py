@@ -1,12 +1,13 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Dict
+from typing import Dict, List, Optional
 from uuid import UUID
 
 from sqlalchemy.orm import Session
 
 from src.domain.ai.schemas import ExamQuestion, StudentAnswer
+from src.domain.ai.rag_schemas import RetrievedContext
 
 class GradingWorkflowServiceInterface(ABC):
     """
@@ -19,7 +20,9 @@ class GradingWorkflowServiceInterface(ABC):
         db: Session,
         exam_uuid: UUID,
         question: ExamQuestion,
-        student_answer: StudentAnswer
+        student_answer: StudentAnswer,
+        *,
+        rag_contexts: Optional[List[RetrievedContext]] = None
     ) -> Dict:
         """
         Executa workflow completo de correção usando LangGraph.

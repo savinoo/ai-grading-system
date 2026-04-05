@@ -24,6 +24,13 @@ async def retrieve_context_node(state: GradingState) -> dict:
     
     Output: state['rag_contexts'] preenchido
     """
+    if state.get('rag_contexts') is not None:
+        logger.info(
+            "[RAG Node] Contexto já fornecido para questão %s — pulando retrieval",
+            state['question'].id
+        )
+        return {}
+
     logger.info(
         "[RAG Node] Buscando contexto para questão %s",
         state['question'].id

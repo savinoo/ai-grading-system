@@ -9,6 +9,7 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
     Index,
+    String,
     Numeric,
     Text,
     text,
@@ -31,13 +32,15 @@ class StudentAnswerCriteriaScore(Base):
 
         Index("uq_sacs_uuid", "uuid", unique=True),
         Index(
-            "uq_sacs_answer_criteria",
+            "uq_sacs_answer_criteria_agent",
             "student_answer_uuid",
             "criteria_uuid",
+            "agent_id",
             unique=True,
         ),
         Index("idx_sacs_answer", "student_answer_uuid"),
         Index("idx_sacs_criteria", "criteria_uuid"),
+        Index("idx_sacs_agent", "agent_id"),
 
         {"schema": "public"},
     )
@@ -69,6 +72,12 @@ class StudentAnswerCriteriaScore(Base):
             ondelete="RESTRICT",
         ),
         nullable=False,
+    )
+
+    agent_id: Mapped[Optional[str]] = mapped_column(
+        String(30),
+        nullable=True,
+        comment="corretor_1, corretor_2, corretor_3_arbiter, ou consensus",
     )
 
     raw_score: Mapped[float] = mapped_column(

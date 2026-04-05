@@ -78,10 +78,11 @@ def create_grading_graph() -> StateGraph:
     # === Definir Entry Point ===
     workflow.set_entry_point("retrieve_context")
     
-    # === Edges (Fluxo Sequencial) ===
-    # RAG → Corretor 1 → Corretor 2 → Divergência (serializado para respeitar TPM)
+    # === Edges (Corretores em PARALELO) ===
+    # RAG → [C1 + C2] paralelo → Divergência
     workflow.add_edge("retrieve_context", "examiner_1")
-    workflow.add_edge("examiner_1", "examiner_2")
+    workflow.add_edge("retrieve_context", "examiner_2")
+    workflow.add_edge("examiner_1", "divergence_check")
     workflow.add_edge("examiner_2", "divergence_check")
     
     # === Conditional Edge (Divergência) ===

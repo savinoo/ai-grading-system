@@ -24,8 +24,7 @@ venv.bak/
 # Mac
 .DS_Store
 
-# Logs
-*.log
+
 
 # Project specific
 data/processed/
@@ -62,12 +61,12 @@ coverage/
 *.tsbuildinfo
 
 # Logs
-logs/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# logs/
+# npm-debug.log*
+# yarn-debug.log*
+# yarn-error.log*
+# pnpm-debug.log*
+# lerna-debug.log*
 
 # Environment variables
 .env
@@ -144,3 +143,4 @@ out/
 *.bak
 *.tmp
 *.temp
+.claude/

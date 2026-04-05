@@ -14,6 +14,7 @@ from sqlalchemy import (
     Text,
     text,
 )
+from typing import Optional
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -88,6 +89,11 @@ class ExamQuestion(Base):
         Boolean,
         nullable=False,
         server_default=text("FALSE"),
+    )
+
+    rag_contexts_json: Mapped[Optional[str]] = mapped_column(
+        Text,
+        nullable=True,
     )
 
     created_at: Mapped[datetime] = mapped_column(

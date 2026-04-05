@@ -49,6 +49,7 @@ COPY --chown=appuser:appuser . .
 USER appuser
 
 EXPOSE 8000
+EXPOSE 8501
 
 # Healthcheck
 HEALTHCHECK --interval=120s --timeout=30s --start-period=40s --retries=3 \
