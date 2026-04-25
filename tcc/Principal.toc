@@ -44,7 +44,7 @@
 \contentsline {subsection}{\numberline {3.1.3}Procedimentos da Revisão Sistemática da Literatura}{28}{subsection.3.1.3}%
 \contentsline {section}{\numberline {3.2}Caracterização da Pesquisa}{29}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Resultados e Discussões}{31}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}LLMs e Avaliação Automatizada de Redações}{31}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.1}LLMs e Avaliação Automatizada de Redações}{32}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}IA na Geração e Avaliação de Feedback Educacional}{33}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}Desafios e Considerações Éticas}{34}{subsection.3.3.3}%
 \contentsline {section}{\numberline {3.4}Respostas às Questões de Pesquisa}{36}{section.3.4}%
@@ -104,7 +104,7 @@
 \contentsline {subsection}{\numberline {6.2.2}Análise}{73}{subsection.6.2.2}%
 \contentsline {section}{\numberline {6.3}QA2 --- Utilidade do RAG}{73}{section.6.3}%
 \contentsline {subsection}{\numberline {6.3.1}Comparação de notas}{74}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Efeito do RAG sobre a precisão avaliativa}{74}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.2}Efeito do RAG sobre a precisão avaliativa}{75}{subsection.6.3.2}%
 \contentsline {subsection}{\numberline {6.3.3}Análise}{75}{subsection.6.3.3}%
 \contentsline {section}{\numberline {6.4}QA3 --- Arbitragem por divergência}{76}{section.6.4}%
 \contentsline {subsection}{\numberline {6.4.1}Resultados}{76}{subsection.6.4.1}%
@@ -118,9 +118,9 @@
 \contentsline {section}{\numberline {6.7}Discussão integrada}{80}{section.6.7}%
 \contentsline {subsection}{\numberline {6.7.1}Síntese dos critérios de sucesso}{80}{subsection.6.7.1}%
 \contentsline {subsection}{\numberline {6.7.2}Viabilidade técnica}{80}{subsection.6.7.2}%
-\contentsline {subsection}{\numberline {6.7.3}Viabilidade operacional}{80}{subsection.6.7.3}%
+\contentsline {subsection}{\numberline {6.7.3}Viabilidade operacional}{81}{subsection.6.7.3}%
 \contentsline {subsection}{\numberline {6.7.4}Contribuição do RAG}{81}{subsection.6.7.4}%
-\contentsline {subsection}{\numberline {6.7.5}Limitações observadas}{81}{subsection.6.7.5}%
+\contentsline {subsection}{\numberline {6.7.5}Limitações observadas}{82}{subsection.6.7.5}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Conclusão}}{83}{chapter.7}%
 \contentsline {section}{\numberline {7.1}Trabalhos Futuros}{84}{section.7.1}%

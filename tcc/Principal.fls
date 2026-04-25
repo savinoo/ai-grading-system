@@ -1,6 +1,6 @@
-PWD c:\Users\Maycon Mendes\OneDrive\Área de Trabalho\IFF\TCC\ai-grading-system\tcc
+PWD c:\Users\Maycon Mendes\OneDrive\Área de Trabalho\TCC\ai-grading-system\tcc
 INPUT C:\Users\Maycon Mendes\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\Maycon Mendes\OneDrive\Área de Trabalho\IFF\TCC\ai-grading-system\tcc\Principal.tex
+INPUT c:\Users\Maycon Mendes\OneDrive\Área de Trabalho\TCC\ai-grading-system\tcc\Principal.tex
 OUTPUT Principal.log
 INPUT .\configuracao.tex
 INPUT .\configuracao.tex

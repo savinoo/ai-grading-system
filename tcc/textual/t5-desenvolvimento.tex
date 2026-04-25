@@ -12,9 +12,9 @@ De forma resumida, a arquitetura organiza-se em: (i) camada de apresentação/co
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{media/arquitetura_sistema.png}
     \caption{Visão geral da arquitetura do sistema}
     \label{fig:arquitetura-sistema}
+    \includegraphics[width=\textwidth]{media/arquitetura_sistema.png}
     \source{Elaborado pelos autores.}
 \end{figure}
 
@@ -75,15 +75,16 @@ Para tornar essa organização mais concreta, a Tabela~\ref{tab:endpoints-chave}
         \hline
     \end{tabular}
     }
+    \source{Elaborado pelos autores.}
 \end{table}
 
 A \autoref{fig:fluxo-requisicao} representa esse encadeamento de camadas, evidenciando o caminho de ida (requisição) e volta (resposta) no \textit{backend}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{media/fluxo_requisicao.png}
     \caption{Fluxo de requisição e resposta entre camadas do backend}
     \label{fig:fluxo-requisicao}
+    \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{media/fluxo_requisicao.png}
     \source{Elaborado pelos autores.}
 \end{figure}
 
@@ -119,15 +120,17 @@ A \autoref{fig:pipeline-correcao} apresenta um diagrama simplificado desse \text
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth,height=0.5\textheight,keepaspectratio]{media/pipeline.png}
     \caption{Pipeline de correção com RAG e arbitragem por divergência}
     \label{fig:pipeline-correcao}
+    \includegraphics[width=\textwidth,height=0.5\textheight,keepaspectratio]{media/pipeline.png}
     \source{Elaborado pelos autores.}
 \end{figure}
 
 O \autoref{cod:graph-definition} apresenta uma versão simplificada da definição do grafo, ilustrando a composição dos nós e as regras de encaminhamento.
 
 \begin{codigo}[H]
+\caption{Definição do grafo de correção com LangGraph}
+\label{cod:graph-definition}
 \begin{lstlisting}[language=Python, basicstyle=\ttfamily\footnotesize]
 # Definicao do grafo de correcao (LangGraph)
 workflow = StateGraph(GradingState)
@@ -154,8 +157,7 @@ workflow.add_conditional_edges("divergence_check",
 workflow.add_edge("arbiter", "finalize")
 workflow.add_edge("finalize", END)
 \end{lstlisting}
-\caption{Definição do grafo de correção com LangGraph}
-\label{cod:graph-definition}
+\source{Elaborado pelos autores.}
 \end{codigo}
 
 \subsection{Recuperação de contexto}
@@ -217,9 +219,9 @@ O banco de dados relacional foi modelado para suportar as etapas de configuraç�
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{media/er.png}
     \caption{Modelo entidade-relacionamento (ER) simplificado do domínio}
     \label{fig:er-simplificado}
+    \includegraphics[width=\textwidth]{media/er.png}
     \source{Elaborado pelos autores.}
 \end{figure}
 
