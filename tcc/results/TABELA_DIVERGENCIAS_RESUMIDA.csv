@@ -1,0 +1,19 @@
+ID,Questao_UUID,Questao_Nome,Aluno,Nota_COM_RAG,Nota_SEM_RAG,Diferenca_Pontos,Arquivo_COM_RAG,Arquivo_SEM_RAG
+1,b5d3b240-86a2-49cb-8667-fa2361da9971,Q1: Array vs Lista Encadeada,Aluno 3 (Fraco),1.5,10.0,8.5,experiment_QA4_10.json,experiment_B_final_7.json
+2,b5d3b240-86a2-49cb-8667-fa2361da9971,Q1: Array vs Lista Encadeada,Aluno 3 (Fraco),1.5,10.0,8.5,experiment_QA4_11.json,experiment_B_final_7.json
+3,b5d3b240-86a2-49cb-8667-fa2361da9971,Q1: Array vs Lista Encadeada,Aluno 3 (Fraco),1.5,10.0,8.5,experiment_QA4_9.json,experiment_B_final_7.json
+4,b5d3b240-86a2-49cb-8667-fa2361da9971,Q1: Array vs Lista Encadeada,Aluno 3 (Fraco),2.5,10.0,7.5,experiment_A_pareado_3.json,experiment_B_final_7.json
+5,b5d3b240-86a2-49cb-8667-fa2361da9971,Q1: Array vs Lista Encadeada,Aluno 3 (Fraco),3.0,10.0,7.0,experiment_A_v3_13.json,experiment_B_final_7.json
+6,b5d3b240-86a2-49cb-8667-fa2361da9971,Q1: Array vs Lista Encadeada,Aluno 4 (Fora do Tema),1.0,0.0,1.0,experiment_QA4_11.json,experiment_B_final_7.json
+7,b5d3b240-86a2-49cb-8667-fa2361da9971,Q1: Array vs Lista Encadeada,Aluno 4 (Fora do Tema),1.0,0.0,1.0,experiment_QA4_9.json,experiment_B_final_7.json
+8,708e41c2-bff8-4f96-80f2-625d51cf370d,Q2: Merge Sort vs Quick Sort,Aluno 3 (Fraco),2.0,9.0,7.0,experiment_A_v3_13.json,experiment_B_final_7.json
+9,708e41c2-bff8-4f96-80f2-625d51cf370d,Q2: Merge Sort vs Quick Sort,Aluno 3 (Fraco),2.9,9.0,6.1,experiment_QA4_10.json,experiment_B_final_7.json
+10,708e41c2-bff8-4f96-80f2-625d51cf370d,Q2: Merge Sort vs Quick Sort,Aluno 3 (Fraco),3.4,9.0,5.6,experiment_QA4_9.json,experiment_B_final_7.json
+11,708e41c2-bff8-4f96-80f2-625d51cf370d,Q2: Merge Sort vs Quick Sort,Aluno 3 (Fraco),3.5,9.0,5.5,experiment_QA4_11.json,experiment_B_final_7.json
+12,708e41c2-bff8-4f96-80f2-625d51cf370d,Q2: Merge Sort vs Quick Sort,Aluno 3 (Fraco),3.8,9.0,5.2,experiment_A_final_6.json,experiment_B_final_7.json
+13,708e41c2-bff8-4f96-80f2-625d51cf370d,Q2: Merge Sort vs Quick Sort,Aluno 3 (Fraco),4.5,9.0,4.5,experiment_A_pareado_3.json,experiment_B_final_7.json
+14,0c9d7938-7e05-4a5c-8c3a-f120556698d9,Q3: BST Balanceada,Aluno 3 (Fraco),0.5,7.0,6.5,experiment_A_v3_13.json,experiment_B_final_7.json
+15,0c9d7938-7e05-4a5c-8c3a-f120556698d9,Q3: BST Balanceada,Aluno 3 (Fraco),1.8,7.0,5.2,experiment_QA4_9.json,experiment_B_final_7.json
+16,0c9d7938-7e05-4a5c-8c3a-f120556698d9,Q3: BST Balanceada,Aluno 3 (Fraco),2.3,7.0,4.7,experiment_QA4_10.json,experiment_B_final_7.json
+17,0c9d7938-7e05-4a5c-8c3a-f120556698d9,Q3: BST Balanceada,Aluno 3 (Fraco),2.3,7.0,4.7,experiment_QA4_11.json,experiment_B_final_7.json
+18,0c9d7938-7e05-4a5c-8c3a-f120556698d9,Q3: BST Balanceada,Aluno 3 (Fraco),10.0,7.0,3.0,experiment_A_pareado_3.json,experiment_B_final_7.json

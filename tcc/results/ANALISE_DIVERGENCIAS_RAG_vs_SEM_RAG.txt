@@ -1,0 +1,173 @@
+================================================================================================================================================
+RESUMO EXECUTIVO: DIVERGENCIAS COM RAG vs SEM RAG
+================================================================================================================================================
+
+ANALISE: Experimentos de Correcao Automatica com LLM
+DISCIPLINA: Algoritmos e Estrutura de Dados
+DATA: Abril 2026
+
+================================================================================================================================================
+DESCOBERTAS PRINCIPAIS
+================================================================================================================================================
+
+TOTAL: 18 divergencias significativas (>=1.0 ponto) identificadas
+
+1. DISTRIBUICAO POR QUESTAO:
+   - Q1 (Array vs Lista Encageada): 7 divergencias, max 8.5 pontos
+   - Q2 (Merge Sort vs Quick Sort): 6 divergencias, max 7.0 pontos  
+   - Q3 (BST Balanceada): 5 divergencias, max 6.5 pontos
+
+2. DISTRIBUICAO POR ALUNO:
+   - Aluno 1 (Excelente): 0 divergencias (100% PROTEGIDO)
+   - Aluno 2 (Intermediario): 0 divergencias (100% PROTEGIDO)
+   - Aluno 3 (Fraco): 16 divergencias (CRITICO - 89% das divergencias)
+   - Aluno 4 (Off-topic): 2 divergencias (borderline)
+
+3. PADRAO UNIVERSAL:
+   Em TODAS as 18 comparacoes: Nota COM RAG < Nota SEM RAG
+   Padrão DETERMINISTICO, não aleatorio
+
+================================================================================================================================================
+TABELA: TOP DIVERGENCIAS POR QUESTAO
+================================================================================================================================================
+
+QUESTAO 1: Array vs Lista Encageada Simples
+UUID: b5d3b240-86a2-49cb-8667-fa2361da9971
+
+| Aluno | COM RAG | SEM RAG | DIFERENCA | Arquivos |
+|-------|:---:|:---:|:---:|---|
+| Aluno 3 | 1.5 | 10.0 | **8.5** | QA4_10 <-> B_final_7 |
+| Aluno 3 | 1.5 | 10.0 | **8.5** | QA4_11 <-> B_final_7 |
+| Aluno 3 | 1.5 | 10.0 | **8.5** | QA4_9 <-> B_final_7 |
+| Aluno 3 | 2.5 | 10.0 | **7.5** | A_pareado_3 <-> B_final_7 |
+| Aluno 3 | 3.0 | 10.0 | **7.0** | A_v3_13 <-> B_final_7 |
+| Aluno 4 | 1.0 | 0.0 | 1.0 | QA4_11,9 <-> B_final_7 |
+
+---
+
+QUESTAO 2: Merge Sort vs Quick Sort
+UUID: 708e41c2-bff8-4f96-80f2-625d51cf370d
+
+| Aluno | COM RAG | SEM RAG | DIFERENCA | Arquivos |
+|-------|:---:|:---:|:---:|---|
+| Aluno 3 | 2.0 | 9.0 | **7.0** | A_v3_13 <-> B_final_7 |
+| Aluno 3 | 2.9 | 9.0 | **6.1** | QA4_10 <-> B_final_7 |
+| Aluno 3 | 3.4 | 9.0 | **5.6** | QA4_9 <-> B_final_7 |
+| Aluno 3 | 3.5 | 9.0 | **5.5** | QA4_11 <-> B_final_7 |
+| Aluno 3 | 3.8 | 9.0 | **5.2** | A_final_6 <-> B_final_7 |
+| Aluno 3 | 4.5 | 9.0 | **4.5** | A_pareado_3 <-> B_final_7 |
+
+---
+
+QUESTAO 3: BST Balanceada
+UUID: 0c9d7938-7e05-4a5c-8c3a-f120556698d9
+
+| Aluno | COM RAG | SEM RAG | DIFERENCA | Arquivos |
+|-------|:---:|:---:|:---:|---|
+| Aluno 3 | 0.5 | 7.0 | **6.5** | A_v3_13 <-> B_final_7 |
+| Aluno 3 | 1.8 | 7.0 | **5.2** | QA4_9 <-> B_final_7 |
+| Aluno 3 | 2.3 | 7.0 | **4.7** | QA4_10 <-> B_final_7 |
+| Aluno 3 | 2.3 | 7.0 | **4.7** | QA4_11 <-> B_final_7 |
+| Aluno 3 | 10.0 | 7.0 | 3.0 | A_pareado_3 <-> B_final_7 |
+
+================================================================================================================================================
+ACHADO CRITICO: INVERSAO DE CONCEITOS
+================================================================================================================================================
+
+QUESTAO 1 - RESPOSTA COM RAG APRESENTA CONCEITOS INVERTIDOS:
+
+Resposta COM RAG (experiment_A_v3_13.json - Nota: 3.0/10):
+"Um vetor estatico (Array) aloca memoria de forma DISPERSA e acessar um elemento eh O(n)..."
+
+✗ Array com DISPERSA (ERRADO - eh contigua)
+✗ Array com O(n) (ERRADO - eh O(1))
+✗ Lista com CONTIGUA (ERRADO - eh nao-contigua)
+✗ Lista com O(1) (ERRADO - eh O(n))
+
+Resposta SEM RAG (experiment_B_final_7.json - Nota: 10.0/10):
+"Arrays alocam memoria de forma estatica em segmentos CONTIGUOS, facilitando acesso O(1)..."
+
+✓ Array com CONTIGUA (CORRETO)
+✓ Array com O(1) (CORRETO)
+✓ Lista com nao-contigua (CORRETO)
+✓ Lista com O(n) (CORRETO)
+
+---
+
+QUESTAO 2 - RESPOSTA COM RAG INVERTE PROPRIEDADES:
+
+Resposta COM RAG (experiment_A_v3_13.json - Nota: 2.0/10):
+"Merge Sort eh INESTAVEL com O(n²) no pior caso. Quick Sort eh ESTAVEL com O(n log n)..."
+
+✗ Merge Sort INESTAVEL (ERRADO - eh estavel)
+✗ Merge Sort O(n²) (ERRADO - eh O(n log n))
+✗ Quick Sort ESTAVEL (ERRADO - nao eh)
+✗ Quick Sort O(n log n) (ERRADO - eh O(n²))
+
+================================================================================================================================================
+PADROES OBSERVADOS
+================================================================================================================================================
+
+1. CONSISTENCIA SISTEMATICA:
+   - Mesma questao aparece em 5-6 replicas diferentes
+   - TODAS comparando experiment_B_final_7.json (SEM RAG) com diferentes COM RAG
+   - Resultado SEMPRE o mesmo: SEM RAG >= COM RAG
+
+2. PADRÃO DE INVERSAO, NÃO VARIACAO ALEATORIA:
+   - Nao sao erros aleatorios ou variacao normal
+   - Sao inversoes SISTEMATICAS de conceitos
+   - Array <-> Lista Encageada, Merge Sort <-> Quick Sort
+
+3. AFETA SELETIVAMENTE ALUNO FRACO:
+   - Alunos com boa qualidade (Excelente, Intermediario) nao afetados
+   - Apenas aluno com qualidade "Fraco" tem divergencias massivas
+   - Sugere que RAG interfere negativamente em respostas fracas
+
+4. MAGNITUDE E TENDENCIA:
+   Maior: 8.5 pontos (crítico)
+   Media: 6.0 pontos
+   Menor: 1.0 ponto
+   100% das divergencias: COM RAG < SEM RAG
+
+================================================================================================================================================
+RECOMENDACOES URGENTES
+================================================================================================================================================
+
+1. AUDITAR BASE RAG IMEDIATAMENTE:
+   [ ] Verificar documentos recuperados para Q1, Q2, Q3
+   [ ] Procurar por informacoes invertidas ou incorretas
+   [ ] Comparar com fonte confiavel (documentacao oficial)
+
+2. ANALISE DO PROMPT:
+   [ ] Comparar prompt COM RAG vs SEM RAG
+   [ ] Verificar se ha instrucao para questionar RAG
+   [ ] Adicionar validacao de coerencia conceitual
+
+3. TESTE IMEDIATO:
+   [ ] Desabilitar RAG para alunos com qualidade "Fraco"
+   [ ] Rodar nova rodada com RAG validado
+   [ ] Comparar resultados
+
+4. NAO USAR RAG EM PRODUCAO:
+   Ate que problema seja identificado e resolvido
+
+================================================================================================================================================
+ARQUIVOS ANALISADOS
+================================================================================================================================================
+
+Arquivos COM RAG (Condicao A):
+- experiment_A_v3_13.json (v3 definitivo)
+- experiment_A_final_6.json (pareado + paralelo)
+- experiment_A_pareado_3.json (pareado)
+- experiment_QA4_9.json (R1/3)
+- experiment_QA4_10.json (R2/3)
+- experiment_QA4_11.json (R3/3)
+
+Arquivos SEM RAG (Condicao B):
+- experiment_B_v3_14.json (v3 definitivo)
+- experiment_B_final_7.json (pareado + paralelo) [PRINCIPAL]
+- experiment_B_pareado_4.json (pareado)
+
+Comparacoes Realizadas: 18 pares de (Questao, Aluno)
+
+================================================================================================================================================

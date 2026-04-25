@@ -1,0 +1,215 @@
+{
+  "resumo": {
+    "total_divergencias": 18,
+    "questoes_afetadas": 3,
+    "alunos_afetados": 2,
+    "maior_divergencia": 8.5,
+    "media_divergencia": 5.559027777777778
+  },
+  "divergencias_por_aluno": {
+    "Aluno 3 (Fraco)": {
+      "total": 16,
+      "questoes": [
+        "b5d3b240-86a2-49cb-8",
+        "708e41c2-bff8-4f96-8",
+        "0c9d7938-7e05-4a5c-8"
+      ],
+      "max_divergencia": 8.5
+    },
+    "Aluno 4 (Fora do Tema)": {
+      "total": 2,
+      "questoes": [
+        "b5d3b240-86a2-49cb-8"
+      ],
+      "max_divergencia": 1.0
+    }
+  },
+  "divergencias_por_questao": {
+    "b5d3b240-86a2-49cb-8": {
+      "total": 7,
+      "alunos": [
+        "Aluno 3 (Fraco)",
+        "Aluno 4 (Fora do Tema)"
+      ],
+      "max_divergencia": 8.5
+    },
+    "708e41c2-bff8-4f96-8": {
+      "total": 6,
+      "alunos": [
+        "Aluno 3 (Fraco)"
+      ],
+      "max_divergencia": 7.0
+    },
+    "0c9d7938-7e05-4a5c-8": {
+      "total": 5,
+      "alunos": [
+        "Aluno 3 (Fraco)"
+      ],
+      "max_divergencia": 6.5
+    }
+  },
+  "todas_divergencias": [
+    {
+      "questao_uuid": "b5d3b240-86a2-49cb-8667-fa2361da9971",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 1.5,
+      "nota_sem_rag": 10.0,
+      "diferenca": 8.5,
+      "com_rag_arquivo": "experiment_QA4_10.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "b5d3b240-86a2-49cb-8667-fa2361da9971",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 1.5,
+      "nota_sem_rag": 10.0,
+      "diferenca": 8.5,
+      "com_rag_arquivo": "experiment_QA4_11.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "b5d3b240-86a2-49cb-8667-fa2361da9971",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 1.5,
+      "nota_sem_rag": 10.0,
+      "diferenca": 8.5,
+      "com_rag_arquivo": "experiment_QA4_9.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "b5d3b240-86a2-49cb-8667-fa2361da9971",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 2.5,
+      "nota_sem_rag": 10.0,
+      "diferenca": 7.5,
+      "com_rag_arquivo": "experiment_A_pareado_3.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "b5d3b240-86a2-49cb-8667-fa2361da9971",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 3.0,
+      "nota_sem_rag": 10.0,
+      "diferenca": 7.0,
+      "com_rag_arquivo": "experiment_A_v3_13.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "708e41c2-bff8-4f96-80f2-625d51cf370d",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 2.0,
+      "nota_sem_rag": 9.0,
+      "diferenca": 7.0,
+      "com_rag_arquivo": "experiment_A_v3_13.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "0c9d7938-7e05-4a5c-8c3a-f120556698d9",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 0.5,
+      "nota_sem_rag": 7.0,
+      "diferenca": 6.5,
+      "com_rag_arquivo": "experiment_A_v3_13.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "708e41c2-bff8-4f96-80f2-625d51cf370d",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 2.875,
+      "nota_sem_rag": 9.0,
+      "diferenca": 6.125,
+      "com_rag_arquivo": "experiment_QA4_10.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "708e41c2-bff8-4f96-80f2-625d51cf370d",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 3.375,
+      "nota_sem_rag": 9.0,
+      "diferenca": 5.625,
+      "com_rag_arquivo": "experiment_QA4_9.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "708e41c2-bff8-4f96-80f2-625d51cf370d",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 3.5,
+      "nota_sem_rag": 9.0,
+      "diferenca": 5.5,
+      "com_rag_arquivo": "experiment_QA4_11.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "708e41c2-bff8-4f96-80f2-625d51cf370d",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 3.75,
+      "nota_sem_rag": 9.0,
+      "diferenca": 5.25,
+      "com_rag_arquivo": "experiment_A_final_6.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "0c9d7938-7e05-4a5c-8c3a-f120556698d9",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 1.8125,
+      "nota_sem_rag": 7.0,
+      "diferenca": 5.1875,
+      "com_rag_arquivo": "experiment_QA4_9.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "0c9d7938-7e05-4a5c-8c3a-f120556698d9",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 2.3125,
+      "nota_sem_rag": 7.0,
+      "diferenca": 4.6875,
+      "com_rag_arquivo": "experiment_QA4_10.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "0c9d7938-7e05-4a5c-8c3a-f120556698d9",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 2.3125,
+      "nota_sem_rag": 7.0,
+      "diferenca": 4.6875,
+      "com_rag_arquivo": "experiment_QA4_11.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "708e41c2-bff8-4f96-80f2-625d51cf370d",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 4.5,
+      "nota_sem_rag": 9.0,
+      "diferenca": 4.5,
+      "com_rag_arquivo": "experiment_A_pareado_3.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "0c9d7938-7e05-4a5c-8c3a-f120556698d9",
+      "aluno": "Aluno 3 (Fraco)",
+      "nota_com_rag": 10.0,
+      "nota_sem_rag": 7.0,
+      "diferenca": 3.0,
+      "com_rag_arquivo": "experiment_A_pareado_3.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "b5d3b240-86a2-49cb-8667-fa2361da9971",
+      "aluno": "Aluno 4 (Fora do Tema)",
+      "nota_com_rag": 1.0,
+      "nota_sem_rag": 0.0,
+      "diferenca": 1.0,
+      "com_rag_arquivo": "experiment_QA4_11.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    },
+    {
+      "questao_uuid": "b5d3b240-86a2-49cb-8667-fa2361da9971",
+      "aluno": "Aluno 4 (Fora do Tema)",
+      "nota_com_rag": 1.0,
+      "nota_sem_rag": 0.0,
+      "diferenca": 1.0,
+      "com_rag_arquivo": "experiment_QA4_9.json",
+      "sem_rag_arquivo": "experiment_B_final_7.json"
+    }
+  ]
+}
