@@ -235,6 +235,12 @@ ArXiv:2004.12832.
 Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2004.12832}. Acesso em: 6 maio
   2025.}
 
+\bibitem[Kitchenham e Charters 2007]{kitchenham_guidelines_2007}
+\abntrefinfo{Kitchenham e Charters}{Kitchenham; Charters}{2007}
+{KITCHENHAM, B.; CHARTERS, S. \emph{Guidelines for performing systematic
+  literature reviews in software engineering}.
+[S.l.], 2007.}
+
 \bibitem[Kitzie et al. 2024]{kitzie_ai-empowered_2024}
 \abntrefinfo{Kitzie et al.}{Kitzie et al.}{2024}
 {KITZIE, V. et al. The {AI}-empowered {Researcher}: {Using} {AI}-based {Tools}

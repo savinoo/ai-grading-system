@@ -30,12 +30,12 @@ As seguintes questões de pesquisa foram formuladas para orientar o mapeamento s
 
 A principal fonte de dados definida para a busca foi a base Scopus, reconhecida por sua ampla cobertura de literatura científica revisada por pares. Reconhece-se como limitação metodológica a utilização de uma base única; o emprego complementar de bases como Web of Science, IEEE Xplore ou ACM Digital Library poderia ampliar a cobertura. A escolha pela Scopus deveu-se à sua abrangência multidisciplinar e à disponibilidade de acesso institucional, e o número reduzido de estudos resultantes (7 de 12 iniciais) reflete a recência do tema --- a aplicação de LLMs à avaliação discursiva é uma área de pesquisa emergente.
 
-O \textit{framework} PICOC é uma metodologia amplamente utilizada em revisões sistemáticas para estruturar e guiar a formulação da questão de pesquisa. O acrônimo representa cinco componentes essenciais: População/Problema, Intervenção, Comparação, \textit{Outcome} (resultado) e Contexto, garantindo que a busca por literatura seja ao mesmo tempo abrangente e focada nos aspectos mais relevantes do estudo.
+O \textit{framework} PICOC é uma metodologia amplamente utilizada em revisões sistemáticas para estruturar e guiar a formulação da questão de pesquisa \cite{kitchenham_guidelines_2007}. O acrônimo representa cinco componentes essenciais: População/Problema, Intervenção, Comparação, \textit{Outcome} (resultado) e Contexto, garantindo que a busca por literatura seja ao mesmo tempo abrangente e focada nos aspectos mais relevantes do estudo.
 
-A string de busca foi construída utilizando o \textit{framework} PICOC (População/\allowbreak Problema, Intervenção, Comparação, \textit{Outcome}, Contexto) para garantir a abrangência e especificidade na recuperação dos artigos. As palavras-chave em inglês foram priorizadas para maximizar o alcance em bases de dados internacionais, apesar de manter as palavras em português. 
+A string de busca foi construída utilizando o \textit{framework} PICOC \cite{kitchenham_guidelines_2007} (População/\allowbreak Problema, Intervenção, Comparação, \textit{Outcome}, Contexto) para garantir a abrangência e especificidade na recuperação dos artigos. As palavras-chave em inglês foram priorizadas para maximizar o alcance em bases de dados internacionais, apesar de manter as palavras em português. 
 
 \noindent
-A \autoref{qua:picoc} abaixo mostra as principais palavras-chave selecionadas para cada um dos elementos do modelo PICOC adotado neste trabalho.
+O \autoref{qua:picoc} abaixo mostra as principais palavras-chave selecionadas para cada um dos elementos do modelo PICOC adotado neste trabalho.
 
 \begingroup
 \setlength{\tabcolsep}{4pt}
@@ -88,7 +88,7 @@ C (\emph{contexto}) & Ensino superior e educação profissional; avaliação de 
 \end{quadro}
 \endgroup
 
-Os artigos retornados pelas máquinas de busca foram filtrados e analisados considerando os seguintes critérios de inclusão (CI) e exclusão (CE).
+Os artigos retornados pelas máquinas de busca foram filtrados e analisados considerando os seguintes critérios de inclusão (CI) e exclusão (CE), definidos com base nas diretrizes de \citeonline{kitchenham_guidelines_2007}.
 
 \begin{itemize}
     \item \textbf{CI1 - Relevância Temática}: Estudos que abordem diretamente a aplicação de IA, Modelos de LLMs, PLN, RAG, bancos de dados vetoriais, agentes de IA ou sistemas multiagentes para a correção automática, avaliação ou feedback de provas discursivas, questões abertas ou textos dissertativos em contextos educacionais.
@@ -121,7 +121,7 @@ O processo de revisão sistemática da literatura adotado neste trabalho seguiu 
 \begin{enumerate}
     \item \textbf{Definição das Questões de Pesquisa}: Conforme detalhado na \autoref{subsec:questoes_pesquisa}, foram estabelecidas questões de pesquisa claras e específicas. Estas questões nortearam toda a estratégia de busca e seleção de estudos, focando em identificar as abordagens de IA, especialmente Modelos de LLMs e RAG, aplicadas à correção automática de provas discursivas, bem como os desafios, métricas e oportunidades na área.
 
-    \item \textbf{Elaboração da Estratégia de Busca}: Utilizando o framework PICOC (População/Problema, Intervenção, Comparação, Resultados e Contexto) como guia, foi desenvolvida uma estratégia de busca detalhada. Foram selecionadas palavras-chave e termos de busca em inglês e português, cobrindo os principais conceitos relacionados à correção automática de provas, IA, LLMs, RAG, avaliação educacional e contextos de aplicação. A string de busca foi refinada iterativamente para otimizar a sensibilidade e especificidade dos resultados.
+    \item \textbf{Elaboração da Estratégia de Busca}: Utilizando o \textit{framework} PICOC \cite{kitchenham_guidelines_2007} (População/Problema, Intervenção, Comparação, Resultados e Contexto) como guia, foi desenvolvida uma estratégia de busca detalhada. Foram selecionadas palavras-chave e termos de busca em inglês e português, cobrindo os principais conceitos relacionados à correção automática de provas, IA, LLMs, RAG, avaliação educacional e contextos de aplicação. A string de busca foi refinada iterativamente para otimizar a sensibilidade e especificidade dos resultados.
 
     \item \textbf{Seleção das Bases de Dados e Execução da Busca}: Busca nas bases de dados selecionadas, aplicando os filtros de idioma e período de publicação.
 
@@ -133,7 +133,8 @@ O processo de revisão sistemática da literatura adotado neste trabalho seguiu 
 \end{enumerate}
 
 \section{Caracterização da Pesquisa}
-Realizou-se uma busca por trabalhos publicados a partir de 2020, em inglês ou português, relacionados ao uso de IA para correção ou avaliação de textos discursivos em contextos educacionais. Foram considerados estudos revisados por pares (artigos de periódicos, anais de conferências) e literatura acadêmica (dissertações e teses). Aplicando os critérios de inclusão e exclusão, identificaram-se 12 publicações iniciais. Após seleção por título e resumo, 7 estudos foram mantidos para análise completa.
+
+Aplicando o protocolo descrito na seção anterior, realizou-se uma busca na base Scopus por trabalhos publicados a partir de 2020, em inglês ou português, relacionados ao uso de IA para correção ou avaliação de textos discursivos em contextos educacionais. Foram considerados estudos revisados por pares (artigos de periódicos, anais de conferências) e literatura acadêmica (dissertações e teses). Da busca inicial, identificaram-se 12 publicações; após triagem por título e resumo com aplicação dos critérios de inclusão e exclusão, 7 estudos foram selecionados para leitura completa e extração de dados.
 
 O \autoref{qua:estudos} apresenta os 7 estudos analisados, com objetivos, metodologia, tecnologias de IA, tipo de avaliação, principais resultados e desafios.
 \refstepcounter{quadro}\label{qua:estudos}
