@@ -5,6 +5,9 @@ Este capítulo apresenta as bases teóricas que sustentam o desenvolvimento de u
 
 \section{Avaliação Educacional}
 \label{sec:avaliacao-educacional}
+
+Esta seção aborda a avaliação educacional como elemento central do processo de ensino-aprendizagem. Parte-se dos conceitos fundamentais e da importância da avaliação no contexto pedagógico, avançando para os desafios específicos da avaliação discursiva e para a discussão sobre a subjetividade inerente à correção de questões abertas.
+
 \subsection{Conceitos e Importância da Avaliação no Processo Educacional}
 
 A avaliação educacional constitui um elemento fundamental no processo de ensino-aprendizagem, representando não apenas um dispositivo de verificação do conhecimento adquirido, mas também um mecanismo essencial para o direcionamento das práticas pedagógicas. Segundo \citeonline{carregari_luckesi_2024}, a avaliação transcende a mera atribuição de notas, configurando-se como um processo contínuo que permite diagnosticar dificuldades, reorientar o ensino e promover a evolução da aprendizagem.
@@ -64,6 +67,9 @@ Neste contexto, o desenvolvimento de sistemas automatizados de correção, basea
 
 \section{Correção Manual de Provas Discursivas}
 \label{sec:correcao-manual}
+
+Esta seção examina o processo de correção manual de provas discursivas em suas diferentes dimensões. Descreve-se o fluxo tradicional de correção e suas etapas constitutivas, analisam-se as principais limitações e desafios operacionais enfrentados pelos docentes e discute-se o impacto da subjetividade sobre a validade e a confiabilidade das avaliações. Por fim, apresenta-se a necessidade de automação como resposta a esses desafios.
+
 \subsection{Processo Tradicional de Correção}
 
 O processo tradicional de correção de provas discursivas caracteriza-se por uma abordagem essencialmente manual, na qual o avaliador analisa individualmente cada resposta, comparando-a com parâmetros predefinidos ou gabaritos de referência. Este método, amplamente utilizado em instituições educacionais de diversos níveis, envolve uma série de etapas que demandam tempo e atenção consideráveis do professor ou avaliador.
@@ -150,7 +156,10 @@ Contudo, é importante ressaltar que a automação da correção de provas discu
 \section{Inteligência Artificial e Processamento de Linguagem Natural}
 \label{sec:ia-pln}
 
+Esta seção apresenta os fundamentos técnicos que sustentam o sistema desenvolvido. Inicialmente, são descritos os conceitos centrais de Inteligência Artificial e seus domínios de aplicação (\autoref{subsec:fund-ia}). Em seguida, aborda-se o Processamento de Linguagem Natural como subcampo aplicado à compreensão de textos (\autoref{subsec:pln}). Por fim, discutem-se a arquitetura Transformer e os Modelos de Linguagem de Grande Porte (LLMs), que constituem a base dos agentes corretores implementados neste trabalho (\autoref{subsec:transformers} e \autoref{subsec:llms}).
+
 \subsection{Fundamentos de Inteligência Artificial}
+\label{subsec:fund-ia}
 
 A Inteligência Artificial (IA) representa um campo multidisciplinar da ciência da computação dedicado ao desenvolvimento de sistemas capazes de realizar tarefas que, tradicionalmente, demandariam inteligência humana. Estas tarefas incluem reconhecimento de padrões, aprendizado, raciocínio, resolução de problemas, compreensão de linguagem natural e percepção visual, entre outras.
 
@@ -171,6 +180,7 @@ Nas últimas décadas, o campo da IA experimentou avanços expressivos, impulsio
 No contexto educacional, a IA tem encontrado aplicações diversas, desde sistemas tutoriais inteligentes até ferramentas de avaliação automatizada. \citeonline{wang_large_2024} destacam que a IA educacional pode ser categorizada com base em seu papel no processo educativo, abrangendo assistência a estudantes e professores, aprendizagem adaptativa e ferramentas comerciais específicas para o ambiente educacional.
 
 \subsection{Processamento de Linguagem Natural (PLN)}
+\label{subsec:pln}
 
 O Processamento de Linguagem Natural (PLN) constitui um subcampo da Inteligência Artificial dedicado ao desenvolvimento de métodos e sistemas capazes de compreender, interpretar e gerar linguagem humana em suas diversas formas. Esta área interdisciplinar combina conhecimentos de linguística, ciência da computação, estatística e aprendizado de máquina para abordar a complexidade inerente à comunicação humana.
 
@@ -191,6 +201,7 @@ Para abordar estes desafios, o PLN desenvolveu diversas técnicas e abordagens, 
 No contexto educacional, e particularmente na avaliação de respostas discursivas, o PLN oferece ferramentas valiosas para análise semântica, identificação de conceitos-chave, verificação de coerência argumentativa e avaliação da qualidade textual. Conforme destacado por \citeonline{lima_avaliacao_2023} em sua revisão sistemática sobre avaliação automática de redação, técnicas avançadas de PLN têm viabilizado sistemas cada vez mais sofisticados de correção automática, capazes de analisar aspectos tanto formais quanto substantivos das produções textuais dos estudantes.
 
 \subsection{Modelos de Linguagem e Transformers}
+\label{subsec:transformers}
 
 Um marco decisivo na evolução do PLN foi a introdução da arquitetura Transformer, proposta por \citeonline{vaswani_attention_2023}. Antes dos Transformers, os modelos de linguagem dependiam de arquiteturas recorrentes para processar sequências de texto, o que limitava a paralelização e dificultava a captura de dependências de longo alcance. O avanço central dos Transformers foi substituir a recorrência por mecanismos de \textit{autoatenção} (\textit{self-attention}), que permitem ao modelo ponderar dinamicamente a relevância de cada token da sequência em relação aos demais, independentemente de sua posição. Esse mecanismo viabilizou o processamento paralelo e tornou a arquitetura escalável para modelos com bilhões de parâmetros.
 
@@ -211,6 +222,7 @@ A partir da arquitetura Transformer, surgiram diversos modelos de linguagem de g
 \citeonline{wang_large_2024}, em sua revisão abrangente sobre modelos de linguagem para educação, observam que os Transformers proporcionaram avanços significativos na capacidade dos sistemas em compreender respostas discursivas dos estudantes, avaliar sua qualidade e fornecer feedback contextualizado. Os autores destacam que estas arquiteturas permitem análises mais nuançadas e sensíveis ao contexto, superando limitações de abordagens anteriores baseadas em correspondência de palavras-chave ou estatísticas superficiais.
 
 \subsection{LLMs e suas Aplicações}
+\label{subsec:llms}
 
 Os Large Language Models (LLMs) representam a culminação dos avanços em arquiteturas Transformer, caracterizando-se por sua escala sem precedentes em termos de parâmetros e dados de treinamento. Modelos como GPT-4o, Claude, Llama 2 e DeepSeek contêm dezenas ou centenas de bilhões de parâmetros e são treinados em vastos conjuntos textuais, abrangendo livros, artigos, websites e outras fontes de conhecimento humano.
 
@@ -249,6 +261,9 @@ Contudo, como observado por \citeonline{heggler_as_2025} os LLMs também apresen
 
 \section{Arquiteturas de Agentes de IA e Estratégias de Coordenação}
 \label{sec:agentes-rag}
+
+Esta seção descreve as arquiteturas e estratégias que organizam o comportamento dos agentes de IA no sistema desenvolvido. Parte-se do conceito de agente baseado em LLM e seus componentes fundamentais, avançando para a coordenação entre múltiplos agentes em sistemas multiagentes. Em seguida, são apresentadas as técnicas de engenharia de prompt aplicadas aos agentes corretores e a estratégia de Recuperação Aumentada por Geração (RAG), que fundamenta o uso de materiais didáticos como contexto para a avaliação.
+
 \subsection{Agentes de IA}
 
 A concepção tradicional de agentes inteligentes, caracterizados por autonomia, reatividade, pró-atividade e sociabilidade em um ambiente \cite{wooldridge_introduction_2012}, ganhou uma nova dimensão com a implantação de LLMs. Os LLMs, como o GPT-4o, DeepSeek e outros, com suas vastas capacidades de compreensão e geração de linguagem natural, raciocínio e até mesmo planejamento rudimentar, tornaram-se a espinha dorsal de uma nova geração de agentes autônomos \cite{wang_survey_2025, xi_rise_2023}.

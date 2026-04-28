@@ -1,9 +1,9 @@
 \babel@toc {brazil}{}\relax 
-\contentsline {table}{\numberline {1}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição A (com RAG)}}{70}{table.caption.30}%
-\contentsline {table}{\numberline {2}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição B (sem RAG)}}{71}{table.caption.31}%
-\contentsline {table}{\numberline {3}{\ignorespaces Comparação de notas finais --- Condição A (com RAG) vs.\ Condição B (sem RAG)}}{72}{table.caption.32}%
-\contentsline {table}{\numberline {4}{\ignorespaces Comparação de notas médias por nível de qualidade}}{72}{table.caption.33}%
-\contentsline {table}{\numberline {5}{\ignorespaces Verificação de divergência --- Condição A (com RAG)}}{74}{table.caption.34}%
-\contentsline {table}{\numberline {6}{\ignorespaces Verificação de divergência --- Condição B (sem RAG)}}{75}{table.caption.35}%
-\contentsline {table}{\numberline {7}{\ignorespaces Estabilidade das notas em execuções repetidas ($R=3$) --- Questão Q2}}{76}{table.caption.36}%
-\contentsline {table}{\numberline {8}{\ignorespaces Tempos de execução do \textit {pipeline} de correção}}{77}{table.caption.37}%
+\contentsline {table}{\numberline {1}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição A (com RAG)}}{71}{table.caption.30}%
+\contentsline {table}{\numberline {2}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição B (sem RAG)}}{72}{table.caption.31}%
+\contentsline {table}{\numberline {3}{\ignorespaces Comparação de notas finais --- Condição A (com RAG) vs.\ Condição B (sem RAG)}}{73}{table.caption.32}%
+\contentsline {table}{\numberline {4}{\ignorespaces Comparação de notas médias por nível de qualidade}}{73}{table.caption.33}%
+\contentsline {table}{\numberline {5}{\ignorespaces Verificação de divergência --- Condição A (com RAG)}}{75}{table.caption.34}%
+\contentsline {table}{\numberline {6}{\ignorespaces Verificação de divergência --- Condição B (sem RAG)}}{76}{table.caption.35}%
+\contentsline {table}{\numberline {7}{\ignorespaces Estabilidade das notas em execuções repetidas ($R=3$) --- Questão Q2}}{77}{table.caption.36}%
+\contentsline {table}{\numberline {8}{\ignorespaces Tempos de execução do \textit {pipeline} de correção}}{78}{table.caption.37}%
