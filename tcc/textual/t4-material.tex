@@ -137,29 +137,35 @@ Em termos de \textbf{quantidade de casos}, recomenda-se adotar uma configuraçã
 
 Para avaliar estabilidade (QA4), seleciona-se um subconjunto de \(A_{rep}=4\) respostas (uma por nível de qualidade) e repete-se sua correção \(R=3\) vezes em cada condição, mantendo constantes os demais parâmetros.
 
-\begin{table}[H]
+\begin{quadro}[H]
     \centering
     \caption{Parâmetros experimentais utilizados no estudo}
-    \label{tab:parametros-experimentais}
+    \label{qua:parametros-experimentais}
     {\small
-    \setlength{\tabcolsep}{0pt}
-    \begin{tabularx}{\textwidth}{@{}p{0.42\textwidth}@{\hspace{6pt}}X@{}}
+    \begin{tabularx}{\textwidth}{|p{0.42\textwidth}|X|}
         \hline
         \textbf{Parâmetro} & \textbf{Valor/controle} \\
         \hline
         Modelo do LLM & Google Gemini / \texttt{gemini-2.5-flash} \\
+        \hline
         Temperatura do LLM & \(0{,}0\) (baixa estocasticidade; \texttt{LLM\_\allowbreak TEMPERATURE=0.0}) \\
+        \hline
         Top-$k$ do RAG (Condição A) & \(k=4\) trechos recuperados por consulta (\texttt{RAG\_TOP\_\allowbreak K=4}) \\
+        \hline
         Top-$k$ do RAG (Condição B) & \(k=0\) (RAG desativado; controle equivalente) \\
+        \hline
         Limiar de divergência & \(2{,}0\) pontos na escala da questão (\texttt{DIVERGENCE\_\allowbreak THRESHOLD=2.0}) \\
+        \hline
         Quantidade de questões & \(Q=3\) (prova pequena, dentro do intervalo 2--4) \\
+        \hline
         Quantidade de respostas & \(Q \times A = 12\) respostas (\(A=4\) níveis de qualidade por questão) \\
+        \hline
         Repetições (estabilidade) & \(R=3\) repetições para \(A_{rep}=4\) respostas selecionadas \\
         \hline
     \end{tabularx}
     }
     \source{Elaborado pelos autores.}
-\end{table}
+\end{quadro}
 
 \subsection{Procedimento experimental}
 O procedimento é dividido em duas condições para observar o efeito do RAG, mantendo as demais variáveis constantes.

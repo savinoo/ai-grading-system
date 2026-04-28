@@ -1,16 +1,9 @@
 \babel@toc {brazil}{}\relax 
-\contentsline {table}{\numberline {1}{\ignorespaces Características dos estudos incluídos}}{30}{table.3.1}%
-\contentsline {table}{\numberline {2}{\ignorespaces Parâmetros experimentais utilizados no estudo}}{50}{table.caption.20}%
-\contentsline {table}{\numberline {3}{\ignorespaces Exemplos de endpoints do fluxo principal do sistema}}{56}{table.caption.22}%
-\contentsline {table}{\numberline {4}{\ignorespaces Parâmetros efetivos do experimento}}{70}{table.caption.27}%
-\contentsline {table}{\numberline {5}{\ignorespaces Caracterização dos níveis de qualidade das respostas sintéticas}}{71}{table.caption.28}%
-\contentsline {table}{\numberline {6}{\ignorespaces Verificação de execução \textit {end-to-end} do sistema}}{72}{table.caption.29}%
-\contentsline {table}{\numberline {7}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição A (com RAG)}}{72}{table.caption.30}%
-\contentsline {table}{\numberline {8}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição B (sem RAG)}}{73}{table.caption.31}%
-\contentsline {table}{\numberline {9}{\ignorespaces Comparação de notas finais --- Condição A (com RAG) vs.\ Condição B (sem RAG)}}{74}{table.caption.32}%
-\contentsline {table}{\numberline {10}{\ignorespaces Comparação de notas médias por nível de qualidade}}{74}{table.caption.33}%
-\contentsline {table}{\numberline {11}{\ignorespaces Verificação de divergência --- Condição A (com RAG)}}{76}{table.caption.34}%
-\contentsline {table}{\numberline {12}{\ignorespaces Verificação de divergência --- Condição B (sem RAG)}}{77}{table.caption.35}%
-\contentsline {table}{\numberline {13}{\ignorespaces Estabilidade das notas em execuções repetidas ($R=3$) --- Questão Q2}}{78}{table.caption.36}%
-\contentsline {table}{\numberline {14}{\ignorespaces Tempos de execução do \textit {pipeline} de correção}}{79}{table.caption.37}%
-\contentsline {table}{\numberline {15}{\ignorespaces Síntese do atendimento aos critérios de sucesso}}{80}{table.caption.38}%
+\contentsline {table}{\numberline {1}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição A (com RAG)}}{72}{table.caption.30}%
+\contentsline {table}{\numberline {2}{\ignorespaces Completude estrutural dos artefatos gerados --- Condição B (sem RAG)}}{73}{table.caption.31}%
+\contentsline {table}{\numberline {3}{\ignorespaces Comparação de notas finais --- Condição A (com RAG) vs.\ Condição B (sem RAG)}}{74}{table.caption.32}%
+\contentsline {table}{\numberline {4}{\ignorespaces Comparação de notas médias por nível de qualidade}}{74}{table.caption.33}%
+\contentsline {table}{\numberline {5}{\ignorespaces Verificação de divergência --- Condição A (com RAG)}}{76}{table.caption.34}%
+\contentsline {table}{\numberline {6}{\ignorespaces Verificação de divergência --- Condição B (sem RAG)}}{77}{table.caption.35}%
+\contentsline {table}{\numberline {7}{\ignorespaces Estabilidade das notas em execuções repetidas ($R=3$) --- Questão Q2}}{78}{table.caption.36}%
+\contentsline {table}{\numberline {8}{\ignorespaces Tempos de execução do \textit {pipeline} de correção}}{79}{table.caption.37}%

@@ -5,36 +5,49 @@ Este capítulo apresenta os resultados obtidos a partir da execução do procedi
 
 \section{Configuração do experimento}
 
-A \autoref{tab:config-experimento} resume os parâmetros efetivamente utilizados na execução do experimento, conforme definido na metodologia.
+O \autoref{qua:config-experimento} resume os parâmetros efetivamente utilizados na execução do experimento, conforme definido na metodologia.
 
-\begin{table}[H]
+\begin{quadro}[H]
     \centering
     \caption{Parâmetros efetivos do experimento}
-    \label{tab:config-experimento}
+    \label{qua:config-experimento}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.40\textwidth}@{\hspace{6pt}}X@{}}
+    \begin{tabularx}{\textwidth}{|p{0.40\textwidth}|X|}
         \hline
         \textbf{Parâmetro} & \textbf{Valor utilizado} \\
         \hline
         Provedor/Modelo do LLM & Google Gemini / \texttt{gemini-2.5-flash} \\
+        \hline
         Temperatura do LLM & $0{,}0$ (baixa estocasticidade) \\
+        \hline
         Top-$k$ do RAG (Condição A) & $k=4$ (\texttt{RAG\_TOP\_K=4}) \\
+        \hline
         Top-$k$ do RAG (Condição B) & $k=0$ (RAG desativado) \\
+        \hline
         Limiar de divergência & $2{,}0$ pontos (\texttt{DIVERGENCE\_THRESHOLD=2.0}) \\
+        \hline
         Questões ($Q$) & 3 \\
+        \hline
         Respostas por questão ($A$) & 4 (excelente, intermediária, fraca, fora do tema) \\
+        \hline
         Total de respostas por condição & 12 \\
+        \hline
         Repetições para estabilidade ($R$) & 3 \\
+        \hline
         Respostas repetidas ($A_{rep}$) & 4 (uma por nível de qualidade) \\
+        \hline
         Execução dos corretores & Paralela (C1 e C2 simultâneos via LangGraph) \\
+        \hline
         Dados entre condições & Pareados (mesmas respostas em A e B) \\
+        \hline
         Versão dos \textit{prompts} & v3 (pareados, paralelos, otimizados) \\
+        \hline
         Critérios de avaliação & 5 critérios: Correção técnica (35\%), Completude (25\%), Precisão terminológica (20\%), Uso de exemplos (10\%), Análise crítica (10\%) \\
         \hline
     \end{tabularx}
     }
     \source{Elaborado pelos autores.}
-\end{table}
+\end{quadro}
 
 A prova versou sobre o tema \textit{Algoritmos e Estrutura de Dados}, com três questões discursivas que exigiam raciocínio comparativo e análise de complexidade algorítmica. As questões formuladas foram:
 
@@ -48,26 +61,29 @@ Os materiais de referência consistiram em documentos em formato PDF contendo o 
 
 \subsection{Respostas sintéticas}
 
-Conforme descrito na metodologia, as respostas foram elaboradas pelos autores em quatro níveis de qualidade, visando cobrir cenários típicos e casos-limite. O \textbf{mesmo conjunto} de 12 respostas foi utilizado em ambas as condições (A e B), garantindo o pareamento dos dados e permitindo isolar o efeito do RAG. A \autoref{tab:niveis-respostas} apresenta a caracterização de cada nível.
+Conforme descrito na metodologia, as respostas foram elaboradas pelos autores em quatro níveis de qualidade, visando cobrir cenários típicos e casos-limite. O \textbf{mesmo conjunto} de 12 respostas foi utilizado em ambas as condições (A e B), garantindo o pareamento dos dados e permitindo isolar o efeito do RAG. O \autoref{qua:niveis-respostas} apresenta a caracterização de cada nível.
 
-\begin{table}[H]
+\begin{quadro}[H]
     \centering
     \caption{Caracterização dos níveis de qualidade das respostas sintéticas}
-    \label{tab:niveis-respostas}
+    \label{qua:niveis-respostas}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}@{\hspace{6pt}}X@{}}
+    \begin{tabularx}{\textwidth}{|p{0.18\textwidth}|X|}
         \hline
         \textbf{Nível} & \textbf{Descrição} \\
         \hline
         Excelente & Resposta completa, conceitualmente correta, com análise de complexidade e exemplos. \\
+        \hline
         Intermediária & Resposta parcialmente correta, com cobertura razoável dos conceitos, mas superficial e sem exemplos. \\
+        \hline
         Fraca & Resposta incompleta, com erros conceituais, complexidades incorretas ou terminologia equivocada. \\
+        \hline
         Fora do tema & Resposta que não aborda o assunto solicitado ou apresenta conteúdo completamente irrelevante. \\
         \hline
     \end{tabularx}
     }
     \source{Elaborado pelos autores.}
-\end{table}
+\end{quadro}
 
 
 \section{QA1 --- Execução \textit{end-to-end}}
@@ -77,34 +93,45 @@ A primeira questão avaliativa verifica se o sistema completa o fluxo de configu
 
 \subsection{Resultados}
 
-A \autoref{tab:qa1-end-to-end} apresenta o resultado de cada etapa do fluxo de execução \textit{end-to-end}. Todas as 13 etapas foram concluídas com sucesso.
+O \autoref{qua:qa1-end-to-end} apresenta o resultado de cada etapa do fluxo de execução \textit{end-to-end}. Todas as 13 etapas foram concluídas com sucesso.
 
-\begin{table}[H]
+\begin{quadro}[H]
     \centering
     \caption{Verificação de execução \textit{end-to-end} do sistema}
-    \label{tab:qa1-end-to-end}
+    \label{qua:qa1-end-to-end}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.35\textwidth}@{\hspace{6pt}}c@{\hspace{6pt}}X@{}}
+    \begin{tabularx}{\textwidth}{|p{0.35\textwidth}|c|X|}
         \hline
         \textbf{Etapa} & \textbf{Status} & \textbf{Observações} \\
         \hline
         Cadastro da prova e questões & Sim & 3 questões cadastradas com sucesso \\
+        \hline
         Anexação de materiais (PDF) & Sim & Material didático anexado corretamente \\
+        \hline
         Definição de critérios e rubrica & Sim & 5 critérios definidos com pesos configuráveis \\
+        \hline
         Inserção das respostas dos alunos & Sim & 12 respostas inseridas (4 por questão) \\
+        \hline
         Publicação da prova & Sim & Prova publicada e disponível para correção \\
+        \hline
         Indexação vetorial dos anexos & Sim & \textit{Chunks} indexados no ChromaDB \\
+        \hline
         Correção C1 (Corretor 1) & Sim & 12 correções geradas em paralelo com C2 \\
+        \hline
         Correção C2 (Corretor 2) & Sim & 12 correções geradas em paralelo com C1 \\
+        \hline
         Verificação de divergência & Sim & Verificada para todas as 12 respostas \\
+        \hline
         Arbitragem (quando acionada) & Sim & Árbitro disponível; acionado condicionalmente \\
+        \hline
         Persistência dos resultados & Sim & Dados persistidos no PostgreSQL \\
+        \hline
         Disponibilização para revisão & Sim & Resultados acessíveis via API REST \\
         \hline
     \end{tabularx}
     }
     \source{Elaborado pelos autores.}
-\end{table}
+\end{quadro}
 
 As \autoref{tab:qa1-completude-a} e \autoref{tab:qa1-completude-b} apresentam a completude estrutural dos artefatos gerados em cada condição, verificando se cada resposta corrigida produziu os campos esperados (notas individuais de C1 e C2, nota final consensuada e indicação de divergência).
 
@@ -113,7 +140,7 @@ As \autoref{tab:qa1-completude-a} e \autoref{tab:qa1-completude-b} apresentam a 
     \caption{Completude estrutural dos artefatos gerados --- Condição A (com RAG)}
     \label{tab:qa1-completude-a}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{4pt}}p{0.14\textwidth}@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
+    \begin{tabularx}{\textwidth}{p{0.12\textwidth}|p{0.14\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}p{0.13\textwidth}|>{\centering\arraybackslash}X}
         \hline
         \textbf{Questão} & \textbf{Nível} & \textbf{Nota C1} & \textbf{Nota C2} & \textbf{Nota final} & \textbf{Divergência} & \textbf{Completo?} \\
         \hline
@@ -142,7 +169,7 @@ As \autoref{tab:qa1-completude-a} e \autoref{tab:qa1-completude-b} apresentam a 
     \caption{Completude estrutural dos artefatos gerados --- Condição B (sem RAG)}
     \label{tab:qa1-completude-b}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}@{\hspace{4pt}}p{0.14\textwidth}@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
+    \begin{tabularx}{\textwidth}{p{0.12\textwidth}|p{0.14\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}p{0.13\textwidth}|>{\centering\arraybackslash}X}
         \hline
         \textbf{Questão} & \textbf{Nível} & \textbf{Nota C1} & \textbf{Nota C2} & \textbf{Nota final} & \textbf{Divergência} & \textbf{Completo?} \\
         \hline
@@ -189,7 +216,7 @@ A \autoref{tab:qa2-notas} apresenta a comparação das notas finais (após conse
     \caption{Comparação de notas finais --- Condição A (com RAG) vs.\ Condição B (sem RAG)}
     \label{tab:qa2-notas}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.10\textwidth}@{\hspace{4pt}}p{0.14\textwidth}@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
+    \begin{tabularx}{\textwidth}{p{0.10\textwidth}|p{0.14\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X}
         \hline
         \textbf{Questão} & \textbf{Nível} & \textbf{Nota A (RAG)} & \textbf{Nota B (sem RAG)} & \textbf{$\Delta$ (A$-$B)} \\
         \hline
@@ -218,7 +245,7 @@ A \autoref{tab:qa2-notas-nivel} consolida os resultados por nível de qualidade,
     \caption{Comparação de notas médias por nível de qualidade}
     \label{tab:qa2-notas-nivel}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
+    \begin{tabularx}{\textwidth}{p{0.18\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X}
         \hline
         \textbf{Nível} & \textbf{Média A (RAG)} & \textbf{Média B (sem RAG)} & \textbf{$\Delta$ (A$-$B)} \\
         \hline
@@ -265,7 +292,7 @@ A \autoref{tab:qa3-divergencia-completa} apresenta a verificação de divergênc
     \caption{Verificação de divergência --- Condição A (com RAG)}
     \label{tab:qa3-divergencia-completa}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.09\textwidth}@{\hspace{4pt}}p{0.18\textwidth}@{\hspace{4pt}}r@{\hspace{6pt}}r@{\hspace{6pt}}r@{\hspace{6pt}}c@{\hspace{6pt}}r@{}}
+    \begin{tabularx}{\textwidth}{p{0.09\textwidth}|p{0.18\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X}
         \hline
         \textbf{Q} & \textbf{Nível} & \textbf{C1} & \textbf{C2} & \textbf{$|$C1$-$C2$|$} & \textbf{Árbitro?} & \textbf{Final} \\
         \hline
@@ -294,7 +321,7 @@ A \autoref{tab:qa3-divergencia-cond-b} apresenta os resultados equivalentes para
     \caption{Verificação de divergência --- Condição B (sem RAG)}
     \label{tab:qa3-divergencia-cond-b}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.09\textwidth}@{\hspace{4pt}}p{0.18\textwidth}@{\hspace{4pt}}r@{\hspace{6pt}}r@{\hspace{6pt}}r@{\hspace{6pt}}c@{\hspace{6pt}}r@{}}
+    \begin{tabularx}{\textwidth}{p{0.09\textwidth}|p{0.18\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X}
         \hline
         \textbf{Q} & \textbf{Nível} & \textbf{C1} & \textbf{C2} & \textbf{$|$C1$-$C2$|$} & \textbf{Árbitro?} & \textbf{Final} \\
         \hline
@@ -347,7 +374,7 @@ A \autoref{tab:qa4-estabilidade} apresenta as notas finais obtidas em cada repet
     \caption{Estabilidade das notas em execuções repetidas ($R=3$) --- Questão Q2}
     \label{tab:qa4-estabilidade}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.14\textwidth}@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{\hspace{4pt}}c@{}}
+    \begin{tabularx}{\textwidth}{p{0.14\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X}
         \hline
         \textbf{Nível} & \textbf{$R_1$} & \textbf{$R_2$} & \textbf{$R_3$} & \textbf{Média} & \textbf{DP} & \textbf{Var. máx.} \\
         \hline
@@ -382,7 +409,7 @@ Para avaliar a viabilidade operacional do sistema em termos de tempo de execuç�
     \caption{Tempos de execução do \textit{pipeline} de correção}
     \label{tab:tempos}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.42\textwidth}@{\hspace{6pt}}c@{\hspace{6pt}}X@{}}
+    \begin{tabularx}{\textwidth}{p{0.42\textwidth}|>{\centering\arraybackslash}X|X}
         \hline
         \textbf{Etapa} & \textbf{Tempo (s)} & \textbf{Observações} \\
         \hline
@@ -413,27 +440,31 @@ Os tempos dos três \textit{runs} do QA4 foram consistentes ($55$ s cada), confi
 
 \subsection{Síntese dos critérios de sucesso}
 
-A \autoref{tab:sintese-criterios} resume o atendimento aos critérios de sucesso definidos na metodologia.
+O \autoref{qua:sintese-criterios} resume o atendimento aos critérios de sucesso definidos na metodologia.
 
-\begin{table}[H]
+\begin{quadro}[H]
     \centering
     \caption{Síntese do atendimento aos critérios de sucesso}
-    \label{tab:sintese-criterios}
+    \label{qua:sintese-criterios}
     {\small
-    \begin{tabularx}{\textwidth}{@{}p{0.08\textwidth}@{\hspace{4pt}}p{0.28\textwidth}@{\hspace{4pt}}p{0.36\textwidth}@{\hspace{4pt}}c@{}}
+    \begin{tabularx}{\textwidth}{|p{0.08\textwidth}|p{0.28\textwidth}|p{0.36\textwidth}|>{\centering\arraybackslash}X|}
         \hline
         \textbf{QA} & \textbf{Critério} & \textbf{Resultado obtido} & \textbf{Atendido?} \\
         \hline
         QA1 & 100\% das respostas processadas & 12/12 (100\%) & Sim \\
+        \hline
         QA1 & Completude $\geq$ 95\% & 100\% & Sim \\
+        \hline
         QA2 & Efeito do RAG observável & $\Delta$Intermediária=$+$0,84; $\Delta$Fraca=$+$0,12 & Sim \\
+        \hline
         QA3 & Árbitro acionado somente se $|$diff$|>$2,0 & Nenhum caso ultrapassou o limiar; árbitro não acionado & Sim \\
+        \hline
         QA4 & Variação $\leq$ 1,0 ponto & Extremos: 0,00; Intermediária: 0,84; Fraca: 1,37 & Parcial \\
         \hline
     \end{tabularx}
     }
     \source{Elaborado pelos autores.}
-\end{table}
+\end{quadro}
 
 \subsection{Viabilidade técnica}
 

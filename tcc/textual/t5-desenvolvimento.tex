@@ -49,25 +49,27 @@ A organização do código segue uma separação em camadas, visando isolar resp
     \item \textbf{Resposta}: devolve ao cliente dados estruturados para inspeção e revisão docente.
 \end{itemize}
 
-Para tornar essa organização mais concreta, a Tabela~\ref{tab:endpoints-chave} resume alguns endpoints diretamente associados ao fluxo principal de configuração, publicação e revisão.
+Para tornar essa organização mais concreta, o \autoref{qua:endpoints-chave} resume alguns endpoints diretamente associados ao fluxo principal de configuração, publicação e revisão.
 
-\begin{table}[H]
+\begin{quadro}[H]
     \centering
     \caption{Exemplos de endpoints do fluxo principal do sistema}
-    \label{tab:endpoints-chave}
+    \label{qua:endpoints-chave}
     {\small
-    \setlength{\tabcolsep}{0pt}
-    \begin{tabular}{@{}p{0.23\textwidth}@{\hspace{6pt}}p{0.73\textwidth}@{}}
+    \begin{tabular}{|p{0.23\textwidth}|p{0.69\textwidth}|}
         \hline
         \textbf{Domínio} & \textbf{Exemplos (rota)} \\
         \hline
         Provas & \texttt{POST /exams},\newline
         \texttt{GET \allowbreak /exams\allowbreak /\{exam\_uuid\}},\newline
         \texttt{POST \allowbreak /exams\allowbreak /\{exam\_uuid\}\allowbreak /publish} \\
+        \hline
         Anexos (PDF) & \texttt{POST \allowbreak /attachments\allowbreak /upload\allowbreak ?exam\_uuid=...} \\
+        \hline
         Questões e respostas & \texttt{POST /exam-questions},\newline
         \texttt{POST /student-answers},\newline
         \texttt{GET \allowbreak /student-answers\allowbreak /question\allowbreak /\{question\_uuid\}} \\
+        \hline
         Revisão docente & \texttt{GET \allowbreak /reviews\allowbreak /exams\allowbreak /\{\allowbreak exam\_\allowbreak uuid\allowbreak \}},\newline
         \texttt{PUT \allowbreak /reviews\allowbreak /grades\allowbreak /adjust},\newline
         \texttt{POST \allowbreak /reviews\allowbreak /approve-\allowbreak answer\allowbreak /\{\allowbreak answer\_\allowbreak uuid\allowbreak \}},\newline
@@ -76,7 +78,7 @@ Para tornar essa organização mais concreta, a Tabela~\ref{tab:endpoints-chave}
     \end{tabular}
     }
     \source{Elaborado pelos autores.}
-\end{table}
+\end{quadro}
 
 A \autoref{fig:fluxo-requisicao} representa esse encadeamento de camadas, evidenciando o caminho de ida (requisição) e volta (resposta) no \textit{backend}.
 
