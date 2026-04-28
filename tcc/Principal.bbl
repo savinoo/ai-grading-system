@@ -44,14 +44,6 @@ Dispon{\'\i}vel em:
   {Revolution}}. 2024.
 Dispon{\'\i}vel em: \url{https://osf.io/7ds4a}. Acesso em: 27 abr. 2025.}
 
-\bibitem[Besta et al. 2024]{besta_graph_2024}
-\abntrefinfo{Besta et al.}{Besta et al.}{2024}
-{BESTA, M. et al. \emph{Graph of {Thoughts}: {Solving} {Elaborate} {Problems}
-  with {Large} {Language} {Models}}. arXiv, 2024.
-ArXiv:2308.09687.
-Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2308.09687}. Acesso em: 6 maio
-  2025.}
-
 \bibitem[Borges e Silva 2017]{borges_avaliacao_2017}
 \abntrefinfo{Borges e Silva}{Borges; Silva}{2017}
 {BORGES, B.~G.; SILVA, S. P.~D. Avaliação, exames e poderes: a
@@ -243,12 +235,6 @@ ArXiv:2004.12832.
 Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2004.12832}. Acesso em: 6 maio
   2025.}
 
-\bibitem[Kim 2014]{kim_convolutional_2014}
-\abntrefinfo{Kim}{Kim}{2014}
-{KIM, Y. Convolutional neural networks for sentence classification. In:
-  \emph{Proceedings of the 2014 Conference on Empirical Methods in Natural
-  Language Processing (EMNLP)}. [S.l.: s.n.], 2014. p. 1746--1751.}
-
 \bibitem[Kitzie et al. 2024]{kitzie_ai-empowered_2024}
 \abntrefinfo{Kitzie et al.}{Kitzie et al.}{2024}
 {KITZIE, V. et al. The {AI}-empowered {Researcher}: {Using} {AI}-based {Tools}
@@ -316,7 +302,8 @@ Dispon{\'\i}vel em:
 \emph{ACM Comput. Surv.}, Association for Computing Machinery, New York, NY,
   USA, v.~55, n.~9, jan. 2023.
 ISSN 0360-0300.
-Dispon{\'\i}vel em: \url{https://doi.org/10.1145/3560815}.}
+Dispon{\'\i}vel em: \url{https://doi.org/10.1145/3560815}. Acesso em: 5 maio
+  2025.}
 
 \bibitem[{Ollama} 2026]{ollama_docs_2026}
 \abntrefinfo{{Ollama}}{{Ollama}}{2026}
@@ -341,14 +328,6 @@ ISSN 0066-782X.
 Dispon{\'\i}vel em:
   \url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8959062/}. Acesso em: 30
   abr. 2025.}
-
-\bibitem[Park et al. 2023]{park_generative_2023}
-\abntrefinfo{Park et al.}{Park et al.}{2023}
-{PARK, J.~S. et al. \emph{Generative {Agents}: {Interactive} {Simulacra} of
-  {Human} {Behavior}}. arXiv, 2023.
-ArXiv:2304.03442.
-Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2304.03442}. Acesso em: 6 maio
-  2025.}
 
 \bibitem[Pessanha, Vieira e Brandão 2024]{pessanha_large_2024}
 \abntrefinfo{Pessanha, Vieira e Brandão}{Pessanha; Vieira; Brandão}{2024}
@@ -488,16 +467,6 @@ Dispon{\'\i}vel em: \url{https://docs.sqlalchemy.org/}. Acesso em: 22 mar.
 {{Streamlit Inc.} \emph{Streamlit Documentation}. 2026.
 Dispon{\'\i}vel em: \url{https://docs.streamlit.io/}. Acesso em: 22 mar. 2026.}
 
-\bibitem[Tavares, Rodrigues e Dermeval 2024]{tavares_clarice_2024}
-\abntrefinfo{Tavares, Rodrigues e Dermeval}{Tavares; Rodrigues; Dermeval}{2024}
-{TAVARES, J.; RODRIGUES, L.; DERMEVAL, D. {CLaRiCe}: {Uma} abordagem neural
-  para a correção automática de redações. In:  \emph{Anais do {XXXV}
-  {Simpósio} {Brasileiro} de {Informática} na {Educação} ({SBIE} 2024)}.
-  Brasil: Sociedade Brasileira de Computação - SBC, 2024. p. 1824--1836.
-  Dispon{\'\i}vel em:
-  \url{https://sol.sbc.org.br/index.php/sbie/article/view/31360}. Acesso em: 27
-  abr. 2025.}
-
 \bibitem[Torfi et al. 2021]{torfi_natural_2021}
 \abntrefinfo{Torfi et al.}{Torfi et al.}{2021}
 {TORFI, A. et al. \emph{Natural {Language} {Processing} {Advancements} {By}
@@ -532,14 +501,6 @@ Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2308.11432}. Acesso em: 6 maio
   and {Outlook}}. arXiv, 2024.
 ArXiv:2403.18105.
 Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2403.18105}. Acesso em: 29 abr.
-  2025.}
-
-\bibitem[Wang et al. 2023]{wang_self-consistency_2023}
-\abntrefinfo{Wang et al.}{Wang et al.}{2023}
-{WANG, X. et al. \emph{Self-{Consistency} {Improves} {Chain} of {Thought}
-  {Reasoning} in {Language} {Models}}. arXiv, 2023.
-ArXiv:2203.11171.
-Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2203.11171}. Acesso em: 6 maio
   2025.}
 
 \bibitem[Wei et al. 2023]{wei_chain--thought_2023}
@@ -580,14 +541,6 @@ ISBN 9798400707018. Dispon{\'\i}vel em:
   {Survey} of {LLM}-{Based} {Multi}-{Agent} {Systems}}. arXiv, 2025.
 ArXiv:2502.14321.
 Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2502.14321}. Acesso em: 6 maio
-  2025.}
-
-\bibitem[Yao et al. 2023]{yao_tree_2023}
-\abntrefinfo{Yao et al.}{Yao et al.}{2023}
-{YAO, S. et al. \emph{Tree of {Thoughts}: {Deliberate} {Problem} {Solving} with
-  {Large} {Language} {Models}}. arXiv, 2023.
-ArXiv:2305.10601.
-Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2305.10601}. Acesso em: 6 maio
   2025.}
 
 \bibitem[Young et al. 2018]{young_recent_2018}

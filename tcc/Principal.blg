@@ -14,7 +14,6 @@ Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'wiz_functions' (item size: 4) to 9000 items.
-Reallocating 'field_info' (item size: 4) to 10037 items.
 Database file #1: abntex2-options.bib
 Database file #2: Referencias.bib
 Reallocating 'singl_function' (item size: 4) to 100 items.
@@ -26,44 +25,44 @@ Reallocating 'global_strs' (item size: 1) to 4000000 items.
 | Em caso de dúvidas ou problemas com este estilo procure |
 | http://www.abntex.net.br/                               |
 +---------------------------------------------------------+
-You've used 73 entries,
+You've used 67 entries,
             6714 wiz_defined-function locations,
-            1636 strings with 28280 characters,
-and the built_in function-call counts, 116988 in all, are:
-= -- 13772
-> -- 2305
-< -- 3056
-+ -- 3899
-- -- 689
-* -- 7481
-:= -- 14375
-add.period$ -- 412
-call.type$ -- 73
-change.case$ -- 671
-chr.to.int$ -- 136
-cite$ -- 72
-duplicate$ -- 11533
-empty$ -- 4514
-format.name$ -- 3369
-if$ -- 23657
+            1602 strings with 26539 characters,
+and the built_in function-call counts, 107831 in all, are:
+= -- 12769
+> -- 2075
+< -- 2869
++ -- 3626
+- -- 621
+* -- 6866
+:= -- 13251
+add.period$ -- 377
+call.type$ -- 67
+change.case$ -- 605
+chr.to.int$ -- 130
+cite$ -- 66
+duplicate$ -- 10752
+empty$ -- 4072
+format.name$ -- 3032
+if$ -- 21707
 int.to.chr$ -- 3
 int.to.str$ -- 0
-missing$ -- 1294
-newline$ -- 433
-num.names$ -- 360
-pop$ -- 1612
+missing$ -- 1182
+newline$ -- 401
+num.names$ -- 330
+pop$ -- 1460
 preamble$ -- 1
-purify$ -- 304
+purify$ -- 276
 quote$ -- 0
-skip$ -- 11925
+skip$ -- 11091
 stack$ -- 1
-substring$ -- 4746
-swap$ -- 4388
-text.length$ -- 123
+substring$ -- 4370
+swap$ -- 4081
+text.length$ -- 116
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 5
+type$ -- 3
 warning$ -- 0
-while$ -- 532
+while$ -- 485
 width$ -- 0
-write$ -- 1247
+write$ -- 1146

@@ -750,6 +750,10 @@ INPUT .\textual\t2-fundamentacao.tex
 INPUT .\textual\t2-fundamentacao.tex
 INPUT textual\t2-fundamentacao.tex
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmbxi10.tfm
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
+INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt12.tfm
 INPUT .\textual\t3-trabalhos.tex
 INPUT .\textual\t3-trabalhos.tex
 INPUT .\textual\t3-trabalhos.tex
@@ -789,10 +793,6 @@ INPUT .\media\fluxo-correcao-pergunta.jpg
 INPUT .\media\fluxo-correcao-pergunta.jpg
 INPUT .\media\fluxo-correcao-pergunta.jpg
 INPUT .\media\fluxo-correcao-pergunta.jpg
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex\latex\lm\t1lmtt.fd
-INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtt12.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmsso12.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmr10.tfm
 INPUT C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmi10.tfm
