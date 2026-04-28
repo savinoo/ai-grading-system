@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  27 APR 2026 21:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  27 APR 2026 21:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1971,17 +1971,17 @@ Cap\'{\i }tulo 7.
 bibitemlist
 [86
 
-] [87] [88] [89] [90]) [91] [92
+] [87] [88] [89] [90] [91]) [92] [93
 
 
 ] (pos/apendice-schema-completo.tex
 AP\^ENDICE A.
-<media/sql_schemas.png, id=1572, 1378.14874pt x 966.61125pt>
+<media/sql_schemas.png, id=1577, 1378.14874pt x 966.61125pt>
 File: media/sql_schemas.png Graphic file (type png)
 <use media/sql_schemas.png>
 Package pdftex.def Info: media/sql_schemas.png  used on input line 10.
 (pdftex.def)             Requested size: 455.00078pt x 319.13019pt.
-) (pos/apendice-prompts.tex [93
+) (pos/apendice-prompts.tex [94
 
  <./media/sql_schemas.png (PNG copy)>]
 AP\^ENDICE B.
@@ -2030,7 +2030,7 @@ Overfull \hbox (45.17525pt too wide) in paragraph at lines 37--37
 []\T1/lmtt/m/n/12 2. **Avaliação de Especificidade:** Avalie o nível de especificidade da resposta:[] 
  []
 
-[94
+[95
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 38.
@@ -2119,7 +2119,7 @@ Overfull \hbox (32.82524pt too wide) in paragraph at lines 76--76
 []\T1/lmtt/m/n/12 # -----------------------------------------------------------------------------[] 
  []
 
-[95]
+[96]
 Overfull \hbox (32.82524pt too wide) in paragraph at lines 78--78
 []\T1/lmtt/m/n/12 # -----------------------------------------------------------------------------[] 
  []
@@ -2154,7 +2154,7 @@ Overfull \hbox (458.90045pt too wide) in paragraph at lines 97--97
 []\T1/lmtt/m/n/12 3. **Veredito Final:** Sua nota final pode coincidir com C1, com C2, ou ser completamente diferente. NÃO busque uma "média" ^^V busque a nota CORRETA.[] 
  []
 
-[96]
+[97]
 Overfull \hbox (335.40039pt too wide) in paragraph at lines 120--120
 []\T1/lmtt/m/n/12 Gere um JSON final (formato `AgentCorrection`) com sua avaliação de desempate. O campo `agent_id` deve ser "corretor_3_arbiter".[] 
  []
@@ -2194,7 +2194,7 @@ Overfull \hbox (119.27528pt too wide) in paragraph at lines 142--142
 []        \T1/lmtt/m/n/12 text += f"- Critério: {criterion.name} (Valendo até: {criterion.max_score} pontos)\n"[] 
  []
 
-[97]
+[98]
 Overfull \hbox (248.95035pt too wide) in paragraph at lines 158--158
 []        \T1/lmtt/m/n/12 return "[Nenhum contexto específico foi recuperado. Avalie com base no conhecimento geral da disciplina.]"[] 
  []
@@ -2210,7 +2210,7 @@ Package glossaries Warning: No \printnoidxglossary or \printnoidxglossaries
  found. (Remove \makenoidxglossaries if you don't want any glossaries.)
 This document will not have a glossary.
 
-[98]
+[99]
 \tf@lof=\write7
 \openout7 = `Principal.lof'.
 
@@ -2237,17 +2237,17 @@ Package rerunfilecheck Info: File `Principal.brf' has not changed.
 (rerunfilecheck)             Checksum: 1481CF628BF596151FE4A964B5355A62;9447.
  ) 
 Here is how much of TeX's memory you used:
- 52430 strings out of 467867
- 1028769 string characters out of 5414426
+ 52431 strings out of 467867
+ 1028776 string characters out of 5414426
  1909882 words of memory out of 5000000
  79363 multiletter control sequences out of 15000+600000
  751148 words of font info for 331 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,16n,139p,2604b,1543s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbo10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb>
-Output written on Principal.pdf (114 pages, 1413093 bytes).
+Output written on Principal.pdf (115 pages, 1415258 bytes).
 PDF statistics:
- 2154 PDF objects out of 2487 (max. 8388607)
- 495 named destinations out of 1000 (max. 500000)
+ 2159 PDF objects out of 2487 (max. 8388607)
+ 496 named destinations out of 1000 (max. 500000)
  64561 words of extra memory for PDF output out of 74296 (max. 10000000)
 

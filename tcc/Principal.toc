@@ -129,13 +129,13 @@
 \contentsline {chapter}{\MakeTextUppercase []{Refer\^encias}}{86}{section*.42}%
 \setlength {\cftpartindent }{\cftlastnumwidth } \setlength {\cftpartnumwidth }{2em}
 \cftinsert {A}
-\contentsline {part}{Ap\^endices}{92}{section*.43}%
+\contentsline {part}{Ap\^endices}{93}{section*.43}%
 \renewcommand *{\cftappendixname }{AP\^ENDICE \space }
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{93}{appendix.A}%
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase []{Esquema completo do banco de dados}}{94}{appendix.A}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \cftinsert {A}
-\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{Prompts completos}}{94}{appendix.B}%
+\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase []{Prompts completos}}{95}{appendix.B}%
