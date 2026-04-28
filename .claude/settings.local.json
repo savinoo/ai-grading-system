@@ -10,7 +10,14 @@
       "WebFetch(domain:www.semanticscholar.org)",
       "WebFetch(domain:eric.ed.gov)",
       "WebFetch(domain:www.aacu.org)",
-      "Bash(grep -n \"\\\\\\\\caption\\\\b\\\\|\\\\\\\\captionof\\\\b\\\\|hypcap\" \"c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/textual/t5-desenvolvimento.tex\")"
+      "Bash(grep -n \"\\\\\\\\caption\\\\b\\\\|\\\\\\\\captionof\\\\b\\\\|hypcap\" \"c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/IFF/TCC/ai-grading-system/tcc/textual/t5-desenvolvimento.tex\")",
+      "Bash(grep -n \"\\\\\\\\\\\\\\\\cite\\\\|\\\\\\\\\\\\\\\\apud\\\\|\\\\\\\\\\\\\\\\citeonline\\\\|\\\\\\\\\\\\\\\\citeauthorandyear\" \"c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/TCC/ai-grading-system/tcc/textual/t1-introducao.tex\")",
+      "Bash(grep -rn \"\\\\\\\\\\\\\\\\cite\\\\b\\\\|\\\\\\\\\\\\\\\\citeonline\\\\|\\\\\\\\\\\\\\\\citeauthorandyear\\\\|\\\\\\\\\\\\\\\\apud\" \"c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/TCC/ai-grading-system/tcc/textual/\")",
+      "Bash(grep -rn \"\\\\\\\\\\\\\\\\begin{citacao}\\\\|\\\\\\\\\\\\\\\\textquote\\\\|abntex2cite\" \"c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/TCC/ai-grading-system/tcc/\")",
+      "Bash(grep -rn \"\\\\\\\\\\\\\\\\begin{citacao}\" \"c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/TCC/ai-grading-system/tcc/\")",
+      "Bash(grep -n \"\\\\\\\\\\\\\\\\def\\\\\\\\\\\\\\\\ABNTcite\\\\|\\\\\\\\\\\\\\\\newcommand.*cite\\\\|\\\\\\\\\\\\\\\\renewcommand.*cite\" \"c:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/abntex2/abntex2cite.sty\")",
+      "Bash(grep -n \"\\\\\\\\\\\\\\\\citeoption\\\\|\\\\\\\\\\\\\\\\addtociteoptionlist\\\\|\\\\\\\\\\\\\\\\citeoptionlist\" \"c:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/abntex2/abntex2cite.sty\")",
+      "Bash(xargs cat *)"
     ]
   }
 }

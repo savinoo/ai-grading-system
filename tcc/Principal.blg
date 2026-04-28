@@ -39,7 +39,7 @@ and the built_in function-call counts, 115998 in all, are:
 := -- 14243
 add.period$ -- 346
 call.type$ -- 73
-change.case$ -- 796
+change.case$ -- 671
 chr.to.int$ -- 136
 cite$ -- 72
 duplicate$ -- 11467
@@ -55,7 +55,7 @@ pop$ -- 1744
 preamble$ -- 1
 purify$ -- 304
 quote$ -- 0
-skip$ -- 11866
+skip$ -- 11991
 stack$ -- 1
 substring$ -- 4746
 swap$ -- 4256
