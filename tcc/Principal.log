@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  27 APR 2026 22:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  28 APR 2026 22:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1601,7 +1601,7 @@ LaTeX Info: Redefining \newblock on input line 591.
 LaTeX Info: Redefining \cite on input line 618.
 \ABCItoken=\toks75
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 326.
+Package hyperref Info: Option `colorlinks' set `true' on input line 327.
 \Principal@idxfile=\write5
 \openout5 = `Principal.idx'.
 
@@ -1616,7 +1616,6 @@ LaTeX Warning: Unused global option(s):
 Package babel Info: 'brazil' activates 'portuges' shorthands.
 (babel)             Reported on input line 27.
 \g__glossaries_gls_ref_acronym_int=\count503
-\g__glossaries_gls_ref_symbols_int=\count504
 )
 \openout1 = `Principal.aux'.
 
@@ -1653,16 +1652,16 @@ Dictionary: glossaries-dictionary, Language: Spanish
 Dictionary: glossaries-dictionary, Language: Brazilian 
 ) (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count505
+\scratchcounter=\count504
 \scratchdimen=\dimen422
 \scratchbox=\box170
-\nofMPsegments=\count506
-\nofMParguments=\count507
+\nofMPsegments=\count505
+\nofMParguments=\count506
 \everyMPshowfont=\toks76
-\MPscratchCnt=\count508
+\MPscratchCnt=\count507
 \MPscratchDim=\dimen423
-\MPnumerator=\count509
-\makeMPintoPDFobject=\count510
+\MPnumerator=\count508
+\makeMPintoPDFobject=\count509
 \everyMPtoPDFconversion=\toks77
 ) (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1700,7 +1699,7 @@ Package microtype Info: No adjustment of character kerning.
  (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
 )
-\c@lstlisting=\count511
+\c@lstlisting=\count510
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 57.
  (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
@@ -1896,7 +1895,7 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
 (Font)              Font shape `T1/lmss/m/sl' tried instead on input line 89.
  [45] [46] [47] [48] [49] [50] [51]) (textual/t5-desenvolvimento.tex [52]
 Cap\'{\i }tulo 5.
-<media/arquitetura_sistema.png, id=1089, 1276.77pt x 523.9575pt>
+<media/arquitetura_sistema.png, id=1090, 1276.77pt x 523.9575pt>
 File: media/arquitetura_sistema.png Graphic file (type png)
 <use media/arquitetura_sistema.png>
 Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 17.
@@ -1904,13 +1903,13 @@ Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 17.
 [53
 
  <./media/arquitetura_sistema.png>] [54]
-<media/fluxo_requisicao.png, id=1101, 1102.1175pt x 519.9425pt>
+<media/fluxo_requisicao.png, id=1102, 1102.1175pt x 519.9425pt>
 File: media/fluxo_requisicao.png Graphic file (type png)
 <use media/fluxo_requisicao.png>
 Package pdftex.def Info: media/fluxo_requisicao.png  used on input line 89.
 (pdftex.def)             Requested size: 454.99905pt x 214.65347pt.
  [55 <./media/fluxo_requisicao.png>] [56]
-<media/pipeline.png, id=1113, 362.35374pt x 512.91624pt>
+<media/pipeline.png, id=1114, 362.35374pt x 512.91624pt>
 File: media/pipeline.png Graphic file (type png)
 <use media/pipeline.png>
 Package pdftex.def Info: media/pipeline.png  used on input line 127.
@@ -2238,15 +2237,15 @@ Package rerunfilecheck Info: File `Principal.brf' has not changed.
 (rerunfilecheck)             Checksum: 2C2630C151E7E1A8112E9A5DD851647A;9228.
  ) 
 Here is how much of TeX's memory you used:
- 52365 strings out of 467867
- 1027470 string characters out of 5414426
- 1910284 words of memory out of 5000000
- 79320 multiletter control sequences out of 15000+600000
- 750713 words of font info for 328 fonts, out of 8000000 for 9000
+ 52518 strings out of 467867
+ 1029604 string characters out of 5414426
+ 1918190 words of memory out of 5000000
+ 79473 multiletter control sequences out of 15000+600000
+ 750697 words of font info for 328 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  104i,16n,139p,2604b,1543s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbo10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb>
-Output written on Principal.pdf (113 pages, 1404325 bytes).
+Output written on Principal.pdf (113 pages, 1402039 bytes).
 PDF statistics:
  2109 PDF objects out of 2487 (max. 8388607)
  479 named destinations out of 1000 (max. 500000)

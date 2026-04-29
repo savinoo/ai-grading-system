@@ -1,7 +1,7 @@
 \chapter{Fundamentação Teórica}
 \label{cap:fundamentacao}
 
-Este capítulo apresenta as bases teóricas que sustentam o desenvolvimento de um sistema de correção automática de provas por meio de agentes de IA. Inicialmente, revisaremos os fundamentos de avaliação educacional, seus desafios e a subjetividade inerente à correção de questões dissertativas (\autoref{sec:avaliacao-educacional}). Em seguida, examinaremos o processo tradicional de correção manual, suas limitações e a necessidade de automação (\autoref{sec:correcao-manual}). Na \autoref{sec:ia-pln}, abordaremos os princípios de Inteligência Artificial e Processamento de Linguagem Natural (PLN), incluindo técnicas de deep learning e modelos transformer aplicáveis à compreensão de respostas escritas. Finalmente, na \autoref{sec:agentes-rag}, discutiremos arquiteturas de agentes de IA, sistemas multi‑agentes e estratégias avançadas como engenharia de prompt e Recuperação Aumentada por Geração (RAG), que permitirão orquestrar componentes especializados para análise, pontuação e feedback automático.  
+Este capítulo apresenta as bases teóricas que sustentam o desenvolvimento de um sistema de correção automática de provas por meio de agentes de \gls{ia}. Inicialmente, revisaremos os fundamentos de avaliação educacional, seus desafios e a subjetividade inerente à correção de questões dissertativas (\autoref{sec:avaliacao-educacional}). Em seguida, examinaremos o processo tradicional de correção manual, suas limitações e a necessidade de automação (\autoref{sec:correcao-manual}). Na \autoref{sec:ia-pln}, abordaremos os princípios de \gls{ia} e \gls{pln}, incluindo técnicas de deep learning e modelos transformer aplicáveis à compreensão de respostas escritas. Finalmente, na \autoref{sec:agentes-rag}, discutiremos arquiteturas de agentes de \gls{ia}, sistemas multi‑agentes e estratégias avançadas como engenharia de prompt e \gls{rag}, que permitirão orquestrar componentes especializados para análise, pontuação e feedback automático.  
 
 \section{Avaliação Educacional}
 \label{sec:avaliacao-educacional}
@@ -33,7 +33,7 @@ Entre os principais desafios da avaliação discursiva, destacam-se:
 
     \item \textbf{Variabilidade entre avaliadores:} Diferentes corretores podem atribuir valores distintos à mesma resposta, dependendo de sua formação, experiência e concepções pedagógicas.
 
-    \item \textbf{Escala de aplicação:} Para instituições como escolas de ensino básico e fundamental, universidades e o Exame Nacional do Ensino Médio (Enem), a atividade de correção demanda tempo e custo significativos para a avaliação dos textos produzidos \cite{pinho_aplicacao_2024}.
+    \item \textbf{Escala de aplicação:} Para instituições como escolas de ensino básico e fundamental, universidades e o \gls{enem}, a atividade de correção demanda tempo e custo significativos para a avaliação dos textos produzidos \cite{pinho_aplicacao_2024}.
 
     \item \textbf{Feedback adequado:} A elaboração de devolutivas qualitativas que orientem o processo de aprendizagem representa outro desafio importante, especialmente em contextos com grande número de estudantes.
 
@@ -102,7 +102,7 @@ Entre as principais limitações e desafios da correção manual, destacam-se:
 
     \item \textbf{Fadiga do avaliador:} O cansaço acumulado durante longas sessões de correção pode afetar o julgamento e a precisão da avaliação, introduzindo variabilidade indesejada nos resultados.
 
-    \item \textbf{Custo operacional:} Para instituições educacionais, especialmente em avaliações de larga escala, o processo de correção manual implica custos significativos com recursos humanos e logística. \citeonline{pinho_aplicacao_2024} destacam que, para instituições como escolas de ensino básico e fundamental, universidades e o Exame Nacional do Ensino Médio (Enem), tal atividade demanda tempo e custo para a avaliação dos textos produzidos.
+    \item \textbf{Custo operacional:} Para instituições educacionais, especialmente em avaliações de larga escala, o processo de correção manual implica custos significativos com recursos humanos e logística. \citeonline{pinho_aplicacao_2024} destacam que, para instituições como escolas de ensino básico e fundamental, universidades e o \gls{enem}, tal atividade demanda tempo e custo para a avaliação dos textos produzidos.
 
     \item \textbf{Demora no feedback:} O tempo necessário para a correção manual frequentemente resulta em atraso no retorno aos estudantes, o que pode comprometer o valor pedagógico da avaliação como instrumento de aprendizagem.
 
@@ -161,7 +161,7 @@ Esta seção apresenta os fundamentos técnicos que sustentam o sistema desenvol
 \subsection{Fundamentos de Inteligência Artificial}
 \label{subsec:fund-ia}
 
-A Inteligência Artificial (IA) representa um campo multidisciplinar da ciência da computação dedicado ao desenvolvimento de sistemas capazes de realizar tarefas que, tradicionalmente, demandariam inteligência humana. Estas tarefas incluem reconhecimento de padrões, aprendizado, raciocínio, resolução de problemas, compreensão de linguagem natural e percepção visual, entre outras.
+A \gls{ia} representa um campo multidisciplinar da ciência da computação dedicado ao desenvolvimento de sistemas capazes de realizar tarefas que, tradicionalmente, demandariam inteligência humana. Estas tarefas incluem reconhecimento de padrões, aprendizado, raciocínio, resolução de problemas, compreensão de linguagem natural e percepção visual, entre outras.
 
 Historicamente, o campo da IA evoluiu através de diferentes paradigmas e abordagens. Desde os primeiros sistemas baseados em regras e lógica simbólica, desenvolvidos nas décadas de 1950 e 1960 \cite{russell_artificial_2021}, até os atuais modelos de aprendizado profundo (\textit{deep learning}), observa-se uma trajetória marcada por avanços significativos, intercalados por períodos de expectativas moderadas, conhecidos como ``invernos da IA'' \cite{torfi_natural_2021}.
 
@@ -175,18 +175,18 @@ Os fundamentos conceituais da IA abrangem diversas áreas do conhecimento, inclu
   \item \textbf{Processamento de linguagem natural:} Técnicas para compreensão, interpretação e geração de linguagem humana.
 \end{enumerate}
 
-Nas últimas décadas, o campo da IA experimentou avanços expressivos, impulsionados principalmente pelo aprendizado profundo e técnicas baseadas em redes neurais artificiais (RNA). Conforme destacado por \citeonline{young_recent_2018, otter_survey_2021}, esses métodos têm superado abordagens tradicionais em diversas aplicações, especialmente em tarefas complexas relacionadas à decisão, classificação e extração de informações.
+Nas últimas décadas, o campo da \gls{ia} experimentou avanços expressivos, impulsionados principalmente pelo aprendizado profundo e técnicas baseadas em \gls{rna}. Conforme destacado por \citeonline{young_recent_2018, otter_survey_2021}, esses métodos têm superado abordagens tradicionais em diversas aplicações, especialmente em tarefas complexas relacionadas à decisão, classificação e extração de informações.
 
-No contexto educacional, a IA tem encontrado aplicações diversas, desde sistemas tutoriais inteligentes até ferramentas de avaliação automatizada. \citeonline{wang_large_2024} destacam que a IA educacional pode ser categorizada com base em seu papel no processo educativo, abrangendo assistência a estudantes e professores, aprendizagem adaptativa e ferramentas comerciais específicas para o ambiente educacional.
+No contexto educacional, a \gls{ia} tem encontrado aplicações diversas, desde sistemas tutoriais inteligentes até ferramentas de avaliação automatizada. \citeonline{wang_large_2024} destacam que a IA educacional pode ser categorizada com base em seu papel no processo educativo, abrangendo assistência a estudantes e professores, aprendizagem adaptativa e ferramentas comerciais específicas para o ambiente educacional.
 
-\subsection{Processamento de Linguagem Natural (PLN)}
+\subsection{\texorpdfstring{\gls{pln}}{PLN}}
 \label{subsec:pln}
 
-O Processamento de Linguagem Natural (PLN) constitui um subcampo da Inteligência Artificial dedicado ao desenvolvimento de métodos e sistemas capazes de compreender, interpretar e gerar linguagem humana em suas diversas formas. Esta área interdisciplinar combina conhecimentos de linguística, ciência da computação, estatística e aprendizado de máquina para abordar a complexidade inerente à comunicação humana.
+O \gls{pln} constitui um subcampo da \gls{ia} dedicado ao desenvolvimento de métodos e sistemas capazes de compreender, interpretar e gerar linguagem humana em suas diversas formas. Esta área interdisciplinar combina conhecimentos de linguística, ciência da computação, estatística e aprendizado de máquina para abordar a complexidade inerente à comunicação humana.
 
-Conforme observado por \citeonline{torfi_natural_2021}, os avanços em PLN transformaram profundamente o cenário tecnológico nas últimas décadas. Tarefas que anteriormente representavam desafios significativos para sistemas computacionais, como tradução automática, análise de sentimentos, reconhecimento de entidades nomeadas e resposta a perguntas, hoje são realizadas com níveis crescentes de precisão e sofisticação.
+Conforme observado por \citeonline{torfi_natural_2021}, os avanços em \gls{pln} transformaram profundamente o cenário tecnológico nas últimas décadas. Tarefas que anteriormente representavam desafios significativos para sistemas computacionais, como tradução automática, análise de sentimentos, reconhecimento de entidades nomeadas e resposta a perguntas, hoje são realizadas com níveis crescentes de precisão e sofisticação.
 
-O PLN enfrenta diversos desafios fundamentais, decorrentes da natureza complexa e ambígua da linguagem humana:
+O \gls{pln} enfrenta diversos desafios fundamentais, decorrentes da natureza complexa e ambígua da linguagem humana:
 
 \begin{enumerate}
   \item \textbf{Ambiguidade lexical e sintática:} Palavras e estruturas frasais podem ter múltiplos significados, dependendo do contexto.
@@ -198,12 +198,12 @@ O PLN enfrenta diversos desafios fundamentais, decorrentes da natureza complexa 
 
 Para abordar estes desafios, o PLN desenvolveu diversas técnicas e abordagens, que evoluíram significativamente ao longo do tempo. Inicialmente baseadas em regras linguísticas explícitas e análise estatística simples, as abordagens contemporâneas de PLN fundamentam-se predominantemente em métodos de aprendizado de máquina, especialmente aprendizado profundo.
 
-No contexto educacional, e particularmente na avaliação de respostas discursivas, o PLN oferece ferramentas valiosas para análise semântica, identificação de conceitos-chave, verificação de coerência argumentativa e avaliação da qualidade textual. Conforme destacado por \citeonline{lima_avaliacao_2023} em sua revisão sistemática sobre avaliação automática de redação, técnicas avançadas de PLN têm viabilizado sistemas cada vez mais sofisticados de correção automática, capazes de analisar aspectos tanto formais quanto substantivos das produções textuais dos estudantes.
+No contexto educacional, e particularmente na avaliação de respostas discursivas, o \gls{pln} oferece ferramentas valiosas para análise semântica, identificação de conceitos-chave, verificação de coerência argumentativa e avaliação da qualidade textual. Conforme destacado por \citeonline{lima_avaliacao_2023} em sua revisão sistemática sobre avaliação automática de redação, técnicas avançadas de PLN têm viabilizado sistemas cada vez mais sofisticados de correção automática, capazes de analisar aspectos tanto formais quanto substantivos das produções textuais dos estudantes.
 
 \subsection{Modelos de Linguagem e Transformers}
 \label{subsec:transformers}
 
-Um marco decisivo na evolução do PLN foi a introdução da arquitetura Transformer, proposta por \citeonline{vaswani_attention_2023}. Antes dos Transformers, os modelos de linguagem dependiam de arquiteturas recorrentes para processar sequências de texto, o que limitava a paralelização e dificultava a captura de dependências de longo alcance. O avanço central dos Transformers foi substituir a recorrência por mecanismos de \textit{autoatenção} (\textit{self-attention}), que permitem ao modelo ponderar dinamicamente a relevância de cada token da sequência em relação aos demais, independentemente de sua posição. Esse mecanismo viabilizou o processamento paralelo e tornou a arquitetura escalável para modelos com bilhões de parâmetros.
+Um marco decisivo na evolução do \gls{pln} foi a introdução da arquitetura Transformer, proposta por \citeonline{vaswani_attention_2023}. Antes dos Transformers, os modelos de linguagem dependiam de arquiteturas recorrentes para processar sequências de texto, o que limitava a paralelização e dificultava a captura de dependências de longo alcance. O avanço central dos Transformers foi substituir a recorrência por mecanismos de \textit{autoatenção} (\textit{self-attention}), que permitem ao modelo ponderar dinamicamente a relevância de cada token da sequência em relação aos demais, independentemente de sua posição. Esse mecanismo viabilizou o processamento paralelo e tornou a arquitetura escalável para modelos com bilhões de parâmetros.
 
 Os Transformers apresentam várias vantagens decorrentes dessa escolha arquitetural:
 
@@ -217,14 +217,14 @@ Os Transformers apresentam várias vantagens decorrentes dessa escolha arquitetu
   \item \textbf{Escalabilidade:} A arquitetura pode ser expandida para modelos com bilhões de parâmetros, aproveitando o poder computacional disponível para melhorar o desempenho.
 \end{enumerate}
 
-A partir da arquitetura Transformer, surgiram diversos modelos de linguagem de grande porte que transformaram o estado da arte em PLN. Esses modelos são pré-treinados em vastos conjuntos textuais e demonstram capacidades impressionantes em diversas tarefas linguísticas, incluindo compreensão de leitura, inferência textual, resposta a perguntas e geração de texto \cite{chen_evaluating_2021}. No contexto educacional, os Transformers têm sido aplicados com sucesso em sistemas de tutoria inteligente, avaliação automatizada e geração de feedback personalizado.
+A partir da arquitetura Transformer, surgiram diversos modelos de linguagem de grande porte que transformaram o estado da arte em \gls{pln}. Esses modelos são pré-treinados em vastos conjuntos textuais e demonstram capacidades impressionantes em diversas tarefas linguísticas, incluindo compreensão de leitura, inferência textual, resposta a perguntas e geração de texto \cite{chen_evaluating_2021}. No contexto educacional, os Transformers têm sido aplicados com sucesso em sistemas de tutoria inteligente, avaliação automatizada e geração de feedback personalizado.
 
 \citeonline{wang_large_2024}, em sua revisão abrangente sobre modelos de linguagem para educação, observam que os Transformers proporcionaram avanços significativos na capacidade dos sistemas em compreender respostas discursivas dos estudantes, avaliar sua qualidade e fornecer feedback contextualizado. Os autores destacam que estas arquiteturas permitem análises mais nuançadas e sensíveis ao contexto, superando limitações de abordagens anteriores baseadas em correspondência de palavras-chave ou estatísticas superficiais.
 
-\subsection{LLMs e suas Aplicações}
+\subsection{\texorpdfstring{\gls{llm}}{LLM}s e suas Aplicações}
 \label{subsec:llms}
 
-Os Large Language Models (LLMs) representam a culminação dos avanços em arquiteturas Transformer, caracterizando-se por sua escala sem precedentes em termos de parâmetros e dados de treinamento. Modelos como GPT-4o, Claude, Llama 2 e DeepSeek contêm dezenas ou centenas de bilhões de parâmetros e são treinados em vastos conjuntos textuais, abrangendo livros, artigos, websites e outras fontes de conhecimento humano.
+Os \gls{llm}s representam a culminação dos avanços em arquiteturas Transformer, caracterizando-se por sua escala sem precedentes em termos de parâmetros e dados de treinamento. Modelos como GPT-4o, Claude, Llama 2 e DeepSeek contêm dezenas ou centenas de bilhões de parâmetros e são treinados em vastos conjuntos textuais, abrangendo livros, artigos, websites e outras fontes de conhecimento humano.
 
 Esta escala confere aos LLMs capacidades emergentes notáveis:
 
@@ -239,13 +239,13 @@ Esta escala confere aos LLMs capacidades emergentes notáveis:
   
 \end{enumerate}
 
-No contexto educacional, os LLMs têm encontrado aplicações diversas e promissoras. \citeonline{wang_large_2024} categorizam estas aplicações em três áreas principais: assistência a estudantes, assistência a professores e ferramentas comerciais específicas para a educação.
+No contexto educacional, os \gls{llm}s têm encontrado aplicações diversas e promissoras. \citeonline{wang_large_2024} categorizam estas aplicações em três áreas principais: assistência a estudantes, assistência a professores e ferramentas comerciais específicas para a educação.
 
-Na assistência a estudantes, os LLMs podem atuar como tutores personalizados, respondendo a dúvidas, explicando conceitos complexos, fornecendo exemplos ilustrativos e adaptando-se ao nível de conhecimento do aprendiz. Conforme destacado por \citeonline{seo_large_2025}, em seu estudo sobre LLMs como avaliadores na educação, estes modelos podem fornecer feedback detalhado e construtivo sobre produções textuais dos estudantes, identificando pontos fortes e áreas para melhoria.
+Na assistência a estudantes, os \gls{llm}s podem atuar como tutores personalizados, respondendo a dúvidas, explicando conceitos complexos, fornecendo exemplos ilustrativos e adaptando-se ao nível de conhecimento do aprendiz. Conforme destacado por \citeonline{seo_large_2025}, em seu estudo sobre \gls{llm}s como avaliadores na educação, estes modelos podem fornecer feedback detalhado e construtivo sobre produções textuais dos estudantes, identificando pontos fortes e áreas para melhoria.
 
-Na assistência a professores, os LLMs podem auxiliar na preparação de materiais didáticos, geração de questões para avaliação, correção automatizada de atividades e análise de padrões de desempenho dos estudantes. \citeonline{beckford_revisit_2024} destaca o potencial destes modelos para reduzir a carga administrativa dos educadores, permitindo que dediquem mais tempo a interações pedagógicas significativas.
+Na assistência a professores, os \gls{llm}s podem auxiliar na preparação de materiais didáticos, geração de questões para avaliação, correção automatizada de atividades e análise de padrões de desempenho dos estudantes. \citeonline{beckford_revisit_2024} destaca o potencial destes modelos para reduzir a carga administrativa dos educadores, permitindo que dediquem mais tempo a interações pedagógicas significativas.
 
-Especificamente na correção automática de provas discursivas, os LLMs oferecem vantagens significativas em relação a abordagens anteriores:
+Especificamente na correção automática de provas discursivas, os \gls{llm}s oferecem vantagens significativas em relação a abordagens anteriores:
 
 \begin{enumerate}
   \item \textbf{Compreensão semântica profunda:} Capacidade de entender o significado das respostas além de correspondências lexicais superficiais.
@@ -257,18 +257,18 @@ Especificamente na correção automática de provas discursivas, os LLMs oferece
   \item \textbf{Adaptabilidade a diferentes disciplinas:} Versatilidade para avaliar respostas em diversos domínios do conhecimento, desde ciências exatas até humanidades.
 \end{enumerate}
 
-Contudo, como observado por \citeonline{heggler_as_2025} os LLMs também apresentam desafios e limitações importantes, incluindo potenciais vieses incorporados durante o treinamento, tendência a "alucinações" (geração de informações incorretas com aparência de confiabilidade) e questões de privacidade e segurança. Estas considerações serão abordadas em seções subsequentes, dedicadas aos desafios e limitações dos sistemas atuais.
+Contudo, como observado por \citeonline{heggler_as_2025} os \gls{llm}s também apresentam desafios e limitações importantes, incluindo potenciais vieses incorporados durante o treinamento, tendência a "alucinações" (geração de informações incorretas com aparência de confiabilidade) e questões de privacidade e segurança. Estas considerações serão abordadas em seções subsequentes, dedicadas aos desafios e limitações dos sistemas atuais.
 
 \section{Arquiteturas de Agentes de IA e Estratégias de Coordenação}
 \label{sec:agentes-rag}
 
-Esta seção descreve as arquiteturas e estratégias que organizam o comportamento dos agentes de IA no sistema desenvolvido. Parte-se do conceito de agente baseado em LLM e seus componentes fundamentais, avançando para a coordenação entre múltiplos agentes em sistemas multiagentes. Em seguida, são apresentadas as técnicas de engenharia de prompt aplicadas aos agentes corretores e a estratégia de Recuperação Aumentada por Geração (RAG), que fundamenta o uso de materiais didáticos como contexto para a avaliação.
+Esta seção descreve as arquiteturas e estratégias que organizam o comportamento dos agentes de \gls{ia} no sistema desenvolvido. Parte-se do conceito de agente baseado em \gls{llm} e seus componentes fundamentais, avançando para a coordenação entre múltiplos agentes em sistemas multiagentes. Em seguida, são apresentadas as técnicas de engenharia de prompt aplicadas aos agentes corretores e a estratégia de \gls{rag}, que fundamenta o uso de materiais didáticos como contexto para a avaliação.
 
 \subsection{Agentes de IA}
 
-A concepção tradicional de agentes inteligentes, caracterizados por autonomia, reatividade, pró-atividade e sociabilidade em um ambiente \cite{wooldridge_introduction_2012}, ganhou uma nova dimensão com a implantação de LLMs. Os LLMs, como o GPT-4o, DeepSeek e outros, com suas vastas capacidades de compreensão e geração de linguagem natural, raciocínio e até mesmo planejamento rudimentar, tornaram-se a espinha dorsal de uma nova geração de agentes autônomos \cite{wang_survey_2025, xi_rise_2023}.
+A concepção tradicional de agentes inteligentes, caracterizados por autonomia, reatividade, pró-atividade e sociabilidade em um ambiente \cite{wooldridge_introduction_2012}, ganhou uma nova dimensão com a implantação de \gls{llm}s. Os \gls{llm}s, como o GPT-4o, DeepSeek e outros, com suas vastas capacidades de compreensão e geração de linguagem natural, raciocínio e até mesmo planejamento rudimentar, tornaram-se a espinha dorsal de uma nova geração de agentes autônomos \cite{wang_survey_2025, xi_rise_2023}.
 
-Agentes baseados em LLMs (\textit{LLM-based agents}) são sistemas que utilizam um LLM como seu componente central de processamento ou "cérebro" para realizar tarefas complexas que exigem planejamento, tomada de decisão e interação com o ambiente, que pode incluir software, ferramentas digitais ou até o mundo físico \cite{wang_survey_2025}. Diferentemente de agentes simbólicos clássicos, cujo comportamento é explicitamente programado, os agentes baseados em LLMs aproveitam o conhecimento implícito e as capacidades de raciocínio do modelo pré-treinado, guiados por prompts cuidadosamente elaborados (engenharia de prompt) para definir seus objetivos, capacidades e restrições.
+Agentes baseados em \gls{llm}s (\textit{LLM-based agents}) são sistemas que utilizam um \gls{llm} como seu componente central de processamento ou "cérebro" para realizar tarefas complexas que exigem planejamento, tomada de decisão e interação com o ambiente, que pode incluir software, ferramentas digitais ou até o mundo físico \cite{wang_survey_2025}. Diferentemente de agentes simbólicos clássicos, cujo comportamento é explicitamente programado, os agentes baseados em \gls{llm}s aproveitam o conhecimento implícito e as capacidades de raciocínio do modelo pré-treinado, guiados por prompts cuidadosamente elaborados (engenharia de prompt) para definir seus objetivos, capacidades e restrições.
 
 \citeonline{wang_survey_2025} propõem um \textit{framework} conceitual para a construção desses agentes, destacando quatro componentes principais:
 
@@ -286,30 +286,30 @@ A interação entre esses componentes permite que o agente perceba seu ambiente 
 
 \subsection{Sistema de Multi Agentes}
 
-A colaboração entre múltiplos agentes para resolver problemas complexos é o foco dos Sistemas Multiagentes (SMA). Tradicionalmente, a coordenação em SMAs dependia de protocolos de comunicação e mecanismos de negociação predefinidos. No entanto, a integração de LLMs como componentes centrais dos agentes abriu novas possibilidades e desafios para a construção e operação de SMAs \cite{chen_survey_2025, yan_beyond_2025}.
+A colaboração entre múltiplos agentes para resolver problemas complexos é o foco dos \gls{sma}. Tradicionalmente, a coordenação em \gls{sma}s dependia de protocolos de comunicação e mecanismos de negociação predefinidos. No entanto, a integração de \gls{llm}s como componentes centrais dos agentes abriu novas possibilidades e desafios para a construção e operação de \gls{sma}s \cite{chen_survey_2025, yan_beyond_2025}.
 
-Sistemas Multiagentes baseados em LLMs (\textit{LLM-based MAS}) utilizam LLMs não apenas para as capacidades individuais de cada agente (raciocínio, planejamento, ação), mas também para facilitar a interação e a colaboração entre eles. A capacidade dos LLMs de compreender e gerar linguagem natural permite formas de comunicação mais flexíveis e sofisticadas entre os agentes, potencialmente superando a rigidez dos protocolos de comunicação tradicionais \cite{chen_survey_2025}.
+\gls{sma}s baseados em \gls{llm}s (\textit{LLM-based MAS}) utilizam \gls{llm}s não apenas para as capacidades individuais de cada agente (raciocínio, planejamento, ação), mas também para facilitar a interação e a colaboração entre eles. A capacidade dos \gls{llm}s de compreender e gerar linguagem natural permite formas de comunicação mais flexíveis e sofisticadas entre os agentes, potencialmente superando a rigidez dos protocolos de comunicação tradicionais \cite{chen_survey_2025}.
 
 As principais abordagens e características dos SMAs baseados em LLMs incluem:
 
 \begin{enumerate}
-    \item \textbf{Comunicação Aprimorada por LLM:} Os agentes podem usar linguagem natural para se comunicar, negociar tarefas, compartilhar informações e coordenar ações. O LLM pode interpretar mensagens recebidas e gerar respostas apropriadas no contexto da interação \cite{yan_beyond_2025}.
+    \item \textbf{Comunicação Aprimorada por \gls{llm}:} Os agentes podem usar linguagem natural para se comunicar, negociar tarefas, compartilhar informações e coordenar ações. O \gls{llm} pode interpretar mensagens recebidas e gerar respostas apropriadas no contexto da interação \cite{yan_beyond_2025}.
 
-    \item \textbf{Atribuição Dinâmica de Papéis e Tarefas:}  Um LLM central ou os próprios agentes podem analisar um problema complexo e atribuir dinamicamente papéis e subtarefas a diferentes agentes com base em seus perfis e capacidades \cite{wang_survey_2025}.
+    \item \textbf{Atribuição Dinâmica de Papéis e Tarefas:}  Um \gls{llm} central ou os próprios agentes podem analisar um problema complexo e atribuir dinamicamente papéis e subtarefas a diferentes agentes com base em seus perfis e capacidades \cite{wang_survey_2025}.
 
     \item \textbf{Colaboração em Resolução de Problemas:} Múltiplos agentes podem trabalhar juntos em tarefas como escrita colaborativa, debate, brainstorming ou desenvolvimento de software. Cada agente contribui com sua perspectiva ou habilidade específica, e o LLM pode ajudar a sintetizar as contribuições ou a mediar discussões \cite{qian_chatdev_2024}.
 
 \end{enumerate}
 
-A arquitetura desses sistemas pode variar. Alguns utilizam um LLM centralizado que orquestra a comunicação e a colaboração, enquanto outros adotam abordagens mais descentralizadas, onde cada agente possui seu próprio LLM ou acessa um modelo compartilhado \cite{chen_survey_2025}. A engenharia de prompt desempenha um papel crucial na definição dos papéis dos agentes, das regras de interação e dos objetivos coletivos.
+A arquitetura desses sistemas pode variar. Alguns utilizam um \gls{llm} centralizado que orquestra a comunicação e a colaboração, enquanto outros adotam abordagens mais descentralizadas, onde cada agente possui seu próprio \gls{llm} ou acessa um modelo compartilhado \cite{chen_survey_2025}. A engenharia de prompt desempenha um papel crucial na definição dos papéis dos agentes, das regras de interação e dos objetivos coletivos.
 
-No contexto da correção automática de provas, um SMA baseado em LLMs pode envolver múltiplos agentes especializados (ex: agente de análise de conteúdo, agente de verificação gramatical, agente de avaliação de argumentação) que se comunicam (possivelmente via linguagem natural interpretada por LLMs) para chegar a uma avaliação consensual e gerar um feedback abrangente, simulando um processo de revisão por pares ou uma banca avaliadora.
+No contexto da correção automática de provas, um \gls{sma} baseado em \gls{llm}s pode envolver múltiplos agentes especializados (ex: agente de análise de conteúdo, agente de verificação gramatical, agente de avaliação de argumentação) que se comunicam (possivelmente via linguagem natural interpretada por \gls{llm}s) para chegar a uma avaliação consensual e gerar um feedback abrangente, simulando um processo de revisão por pares ou uma banca avaliadora.
 
 No protótipo desenvolvido neste trabalho, essa ideia é aplicada por meio de uma estratégia de consenso 2$\rightarrow$1: dois corretores independentes (C1 e C2) avaliam inicialmente a mesma resposta e, apenas quando há divergência acima de um limiar definido, um terceiro corretor (Corretor 3) atua condicionalmente para resolver a discordância. Assim, o sistema combina paralelismo na avaliação inicial com arbitragem condicional, reduzindo custo computacional em casos de convergência e aumentando a robustez quando há discordância.
 
 \subsection{Engenharia de Prompt}
 
-A Engenharia de Prompt emergiu como uma disciplina fundamental para interagir eficazmente com LLMs. Em vez de re-treinar ou ajustar finamente os modelos para cada tarefa específica, a engenharia de prompt foca na formulação cuidadosa das instruções (prompts) fornecidas ao LLM para elicitar o comportamento desejado \cite{sahoo_systematic_2025}.
+A Engenharia de Prompt emergiu como uma disciplina fundamental para interagir eficazmente com \gls{llm}s. Em vez de re-treinar ou ajustar finamente os modelos para cada tarefa específica, a engenharia de prompt foca na formulação cuidadosa das instruções (prompts) fornecidas ao \gls{llm} para elicitar o comportamento desejado \cite{sahoo_systematic_2025}.
 
 Um prompt, no contexto de LLMs, é mais do que uma simples pergunta; é uma instrução que pode incluir contexto, exemplos (few-shot learning), e especificações sobre o formato ou estilo da saída desejada. A qualidade do prompt influencia diretamente a qualidade da resposta gerada pelo LLM (\citeauthor{liu_prompt_2023}, \citeyear{liu_prompt_2023} apud \citeauthor{sahoo_systematic_2025}, \citeyear{sahoo_systematic_2025}).
 
@@ -318,7 +318,7 @@ No contexto do presente trabalho, quatro técnicas de engenharia de prompt foram
 \begin{enumerate}
     \item \textbf{\textit{Prompting Zero-Shot} e \textit{Few-Shot}:} No \textit{zero-shot}, o prompt contém apenas a instrução, sem exemplos; no \textit{few-shot}, demonstrações ilustrativas são incluídas para orientar o comportamento do modelo \cite{sahoo_systematic_2025}. Uma limitação do \textit{few-shot} manual é a sensibilidade à escolha e à ordem dos exemplos, o que pode introduzir variabilidade no desempenho. Para mitigar esse problema, o módulo \texttt{BootstrapFewShot} do DSPy adota uma abordagem de otimização automática: executa o pipeline sobre um conjunto de dados de treinamento, coleta as execuções bem-sucedidas e as incorpora automaticamente ao prompt como demonstrações, refinando iterativamente as instruções para maximizar uma métrica de desempenho definida pelo desenvolvedor \cite{dspy_docs_2026}. No presente trabalho, o DSPy com \texttt{BootstrapFewShot} foi empregado como ferramenta auxiliar de otimização \textit{offline} dos prompts dos agentes corretores, separado do fluxo de inferência em produção.
 
-    \item \textbf{\textit{Chain-of-Thought} (CoT):} Instrui o modelo a desenvolver um raciocínio passo a passo antes de produzir a resposta final, tornando o processo de decisão explícito e auditável \cite{wei_chain--thought_2023}. No sistema desenvolvido, os agentes corretores são orientados a analisar cada critério da rubrica individualmente, registrando a pontuação parcial ao final de cada etapa; esse raciocínio é armazenado no campo \texttt{reasoning\_chain} da saída estruturada, permitindo rastreabilidade completa da avaliação.
+    \item \textbf{\textit{Chain-of-Thought} (\gls{cot}):} Instrui o modelo a desenvolver um raciocínio passo a passo antes de produzir a resposta final, tornando o processo de decisão explícito e auditável \cite{wei_chain--thought_2023}. No sistema desenvolvido, os agentes corretores são orientados a analisar cada critério da rubrica individualmente, registrando a pontuação parcial ao final de cada etapa; esse raciocínio é armazenado no campo \texttt{reasoning\_chain} da saída estruturada, permitindo rastreabilidade completa da avaliação.
 
     \item \textbf{\textit{Role Prompting}:} Consiste em atribuir ao modelo uma identidade ou especialização por meio do prompt de sistema, delimitando o escopo de atuação esperado e direcionando o tom, o vocabulário e os critérios de julgamento da resposta gerada \cite{sahoo_systematic_2025}. No protótipo, os Corretores 1 e 2 recebem o papel de especialista em avaliação educacional, enquanto o Árbitro é instruído como revisor sênior, o que orienta cada agente a adotar postura e critérios condizentes com sua função no pipeline.
 
@@ -328,11 +328,11 @@ No contexto do presente trabalho, quatro técnicas de engenharia de prompt foram
 
 A combinação dessas técnicas visa tornar o processo de correção automatizada mais estruturado, rastreável e alinhado aos critérios pedagógicos definidos pelo professor, sem abrir mão da flexibilidade necessária para reconhecer respostas conceitualmente corretas mesmo quando formuladas de maneira diversa do material de referência.
 
-\subsection{Recuperação Aumentada por Geração (RAG)}
+\subsection{\texorpdfstring{\gls{rag}}{RAG}}
 
-Os LLMs, apesar de suas notáveis capacidades generativas, enfrentam desafios intrínsecos, como a propensão a gerar informações factualmente incorretas ("alucinações") e a limitação de seu conhecimento ao corpus de treinamento, que rapidamente se torna desatualizado \cite{gao_retrieval-augmented_2024}. A Recuperação Aumentada por Geração (RAG) surge como uma arquitetura robusta para mitigar essas limitações, integrando dinamicamente conhecimento de fontes externas e atualizadas ao processo de geração do LLM \cite{lewis_retrieval-augmented_2021, gao_retrieval-augmented_2024}.
+Os \gls{llm}s, apesar de suas notáveis capacidades generativas, enfrentam desafios intrínsecos, como a propensão a gerar informações factualmente incorretas ("alucinações") e a limitação de seu conhecimento ao corpus de treinamento, que rapidamente se torna desatualizado \cite{gao_retrieval-augmented_2024}. A \gls{rag} surge como uma arquitetura robusta para mitigar essas limitações, integrando dinamicamente conhecimento de fontes externas e atualizadas ao processo de geração do \gls{llm} \cite{lewis_retrieval-augmented_2021, gao_retrieval-augmented_2024}.
 
-A RAG aprimora os LLMs ao fundamentar suas respostas em informações relevantes recuperadas de uma base de conhecimento externa (documentos, artigos, bases de dados). O processo central da RAG, conforme descrito por \citeonline{gao_retrieval-augmented_2024}, pode ser dividido em etapas fundamentais, com a fase de recuperação sendo crucial e dependente de representações semânticas conhecidas como \textit{embeddings}.
+A \gls{rag} aprimora os \gls{llm}s ao fundamentar suas respostas em informações relevantes recuperadas de uma base de conhecimento externa (documentos, artigos, bases de dados). O processo central da \gls{rag}, conforme descrito por \citeonline{gao_retrieval-augmented_2024}, pode ser dividido em etapas fundamentais, com a fase de recuperação sendo crucial e dependente de representações semânticas conhecidas como \textit{embeddings}.
 
 \begin{enumerate}
     \item \textbf{Indexação (\textit{Indexing}):} A base de conhecimento externa (ex: material didático, artigos científicos, gabaritos) é primeiramente processada. Os documentos são segmentados em trechos menores (\textit{chunks}). Em seguida, um modelo de \textit{embedding} (como Sentence-BERT, SimCSE, ou modelos via APIs como os da OpenAI) é utilizado para converter cada trecho de texto em um vetor numérico de alta dimensionalidade (\textit{embedding}). Esses \textit{embeddings} capturam a essência semântica do texto, de modo que trechos com significados similares possuam vetores próximos no espaço vetorial. Esses vetores, juntamente com os textos originais, são armazenados e indexados em um banco de dados vetorial (ex: FAISS, Milvus, Pinecone), otimizado para buscas rápidas de similaridade \cite{gao_retrieval-augmented_2024, khattab_colbert_2020}.
@@ -342,6 +342,6 @@ A RAG aprimora os LLMs ao fundamentar suas respostas em informações relevantes
     \item \textbf{Geração (\textit{Generation}):}  Os trechos de texto recuperados, que contêm informações relevantes e potencialmente atualizadas, são então combinados com o prompt original do usuário. Este prompt aumentado é fornecido ao LLM. O LLM utiliza tanto sua conhecimento interno quanto o contexto adicional fornecido pelos trechos recuperados para gerar uma resposta final mais precisa, factual, detalhada e rastreável, pois pode (e idealmente deve) citar as fontes recuperadas \cite{gao_retrieval-augmented_2024, ram_-context_2023}.
 \end{enumerate}
 
-No contexto da correção automática de provas discursivas, a RAG permite que o agente de IA ``consulte'' materiais específicos do curso, critérios de avaliação detalhados ou exemplos de respostas modelo (previamente indexados como \textit{embeddings}) antes de avaliar a resposta do aluno. Essa estratégia pode ajudar a fundamentar a correção no contexto específico da disciplina e nos critérios do professor, tendendo a aumentar a consistência e a explicabilidade da avaliação gerada pelo LLM.
+No contexto da correção automática de provas discursivas, a \gls{rag} permite que o agente de \gls{ia} ``consulte'' materiais específicos do curso, critérios de avaliação detalhados ou exemplos de respostas modelo (previamente indexados como \textit{embeddings}) antes de avaliar a resposta do aluno. Essa estratégia pode ajudar a fundamentar a correção no contexto específico da disciplina e nos critérios do professor, tendendo a aumentar a consistência e a explicabilidade da avaliação gerada pelo LLM.
 
-Com os fundamentos teóricos apresentados neste capítulo --- avaliação educacional, técnicas de PLN, arquitetura Transformer, modelos de linguagem de grande porte, sistemas multiagentes, engenharia de \textit{prompts} e recuperação aumentada por geração --- estabelece-se a base conceitual necessária para compreender as decisões de projeto e implementação detalhadas nos capítulos seguintes.
+Com os fundamentos teóricos apresentados neste capítulo --- avaliação educacional, técnicas de \gls{pln}, arquitetura Transformer, modelos de linguagem de grande porte, sistemas multiagentes, engenharia de \textit{prompts} e \gls{rag} --- estabelece-se a base conceitual necessária para compreender as decisões de projeto e implementação detalhadas nos capítulos seguintes.

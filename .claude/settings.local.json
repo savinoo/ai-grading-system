@@ -17,7 +17,8 @@
       "Bash(grep -rn \"\\\\\\\\\\\\\\\\begin{citacao}\" \"c:/Users/Maycon Mendes/OneDrive/Área de Trabalho/TCC/ai-grading-system/tcc/\")",
       "Bash(grep -n \"\\\\\\\\\\\\\\\\def\\\\\\\\\\\\\\\\ABNTcite\\\\|\\\\\\\\\\\\\\\\newcommand.*cite\\\\|\\\\\\\\\\\\\\\\renewcommand.*cite\" \"c:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/abntex2/abntex2cite.sty\")",
       "Bash(grep -n \"\\\\\\\\\\\\\\\\citeoption\\\\|\\\\\\\\\\\\\\\\addtociteoptionlist\\\\|\\\\\\\\\\\\\\\\citeoptionlist\" \"c:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/tex/latex/abntex2/abntex2cite.sty\")",
-      "Bash(xargs cat *)"
+      "Bash(xargs cat *)",
+      "Bash(grep -Eho '\\\\\\([A-Z]{2,}\\\\\\)|\\\\b[A-Z]{3,}\\\\b\\(?!\\\\s*\\\\\\\\\\)' \"/c/Users/Maycon Mendes/OneDrive/Área de Trabalho/TCC/ai-grading-system/tcc/textual\"/*.tex)"
     ]
   }
 }

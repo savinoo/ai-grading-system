@@ -5,7 +5,7 @@ Este capítulo descreve o desenvolvimento do sistema de correção automática d
 
 \section{Arquitetura do sistema}
 
-O sistema foi concebido como uma aplicação de \textit{backend} exposta por uma API REST, integrada a mecanismos de persistência relacional e vetorial, e a provedores de modelos de linguagem e de \textit{embeddings}. Além do fluxo síncrono de requisições HTTP, há etapas assíncronas executadas em \textit{background}, necessárias para preparar materiais anexados e processar correções.
+O sistema foi concebido como uma aplicação de \textit{backend} exposta por uma \gls{api} REST, integrada a mecanismos de persistência relacional e vetorial, e a provedores de modelos de linguagem e de \textit{embeddings}. Além do fluxo síncrono de requisições HTTP, há etapas assíncronas executadas em \textit{background}, necessárias para preparar materiais anexados e processar correções.
 
 De forma resumida, a arquitetura organiza-se em: (i) camada de apresentação/consumo (clientes e ferramentas de inspeção), (ii) camada de API (rotas e controladores), (iii) camada de serviços (regras de negócio, orquestração e pipeline), e (iv) camada de dados (banco relacional e base vetorial). A \autoref{fig:arquitetura-sistema} apresenta a visão geral.
 
@@ -23,7 +23,7 @@ Na arquitetura adotada, o banco relacional centraliza os dados estruturados do d
 Na prática, essa arquitetura se materializa em um fluxo ponta-a-ponta que pode ser observado por meio da própria API. Um cenário típico de uso (professor configurando e revisando uma prova) pode ser descrito, de forma simplificada, como:
 
 \begin{itemize}
-    \item \textbf{Configuração (síncrona via API):} criação da prova (\texttt{POST /exams}), associação de critérios (\texttt{POST /exam-criteria}), cadastro de questões (\texttt{POST /exam-questions}), cadastro de respostas (\texttt{POST /student-answers}) e upload de materiais PDF (\texttt{POST \allowbreak /attachments\allowbreak /upload\allowbreak ?exam\_uuid=...}).
+    \item \textbf{Configuração (síncrona via \gls{api}):} criação da prova (\texttt{POST /exams}), associação de critérios (\texttt{POST /exam-criteria}), cadastro de questões (\texttt{POST /exam-questions}), cadastro de respostas (\texttt{POST /student-answers}) e upload de materiais \gls{pdf} (\texttt{POST \allowbreak /attachments\allowbreak /upload\allowbreak ?exam\_uuid=...}).
     \item \textbf{Publicação (gatilho do processamento):} publicação da prova (\texttt{POST \allowbreak /exams\allowbreak /\{exam\_uuid\}\allowbreak /publish}), que atualiza o \textit{status} e agenda o processamento em \textit{background}.
     \item \textbf{Revisão docente (inspeção e ajustes):} consulta dos dados consolidados para revisão
     (\texttt{GET \allowbreak /reviews\allowbreak /exams\allowbreak /\{\allowbreak exam\_\allowbreak uuid\allowbreak \}});\\
@@ -44,7 +44,7 @@ A organização do código segue uma separação em camadas, visando isolar resp
 \begin{itemize}
     \item \textbf{Rotas}: definem os endpoints por domínio (por exemplo, provas, questões, anexos, respostas e revisões) e validam aspectos básicos da requisição;
     \item \textbf{Controladores}: traduzem a requisição para uma intenção de caso de uso, organizando entradas e saídas;
-    \item \textbf{Serviços}: concentram regras de negócio e orquestram operações, inclusive chamadas ao pipeline de IA;
+    \item \textbf{Serviços}: concentram regras de negócio e orquestram operações, inclusive chamadas ao pipeline de \gls{ia};
     \item \textbf{Persistência}: executa acesso ao banco relacional e garante consistência transacional;
     \item \textbf{Resposta}: devolve ao cliente dados estruturados para inspeção e revisão docente.
 \end{itemize}
@@ -64,7 +64,7 @@ Para tornar essa organização mais concreta, o \autoref{qua:endpoints-chave} re
         \texttt{GET \allowbreak /exams\allowbreak /\{exam\_uuid\}},\newline
         \texttt{POST \allowbreak /exams\allowbreak /\{exam\_uuid\}\allowbreak /publish} \\
         \hline
-        Anexos (PDF) & \texttt{POST \allowbreak /attachments\allowbreak /upload\allowbreak ?exam\_uuid=...} \\
+        Anexos (\gls{pdf}) & \texttt{POST \allowbreak /attachments\allowbreak /upload\allowbreak ?exam\_uuid=...} \\
         \hline
         Questões e respostas & \texttt{POST /exam-questions},\newline
         \texttt{POST /student-answers},\newline
@@ -94,24 +94,24 @@ Essa estrutura favorece a rastreabilidade das operações e torna mais claras as
 
 \subsection{Processamento assíncrono e \textit{status} de rastreabilidade}
 
-Determinadas etapas do sistema são executadas de forma assíncrona, especialmente as relacionadas à preparação de anexos e à correção de respostas, que podem envolver operações de maior custo computacional (por exemplo, segmentação de PDF, geração de \textit{embeddings} e chamadas a LLMs). Para permitir controle operacional e revisão, o modelo de dados utiliza campos de \textit{status} e sinalizações que indicam se uma etapa foi concluída com sucesso ou se exige atenção.
+Determinadas etapas do sistema são executadas de forma assíncrona, especialmente as relacionadas à preparação de anexos e à correção de respostas, que podem envolver operações de maior custo computacional (por exemplo, segmentação de \gls{pdf}, geração de \textit{embeddings} e chamadas a \gls{llm}s). Para permitir controle operacional e revisão, o modelo de dados utiliza campos de \textit{status} e sinalizações que indicam se uma etapa foi concluída com sucesso ou se exige atenção.
 
 De forma concreta, a publicação de uma prova, via endpoint \texttt{POST \allowbreak /exams\allowbreak /\{\allowbreak exam\_\allowbreak uuid\allowbreak \}\allowbreak /publish}, segue o padrão: (i) valida a existência da prova e que ela está em \texttt{DRAFT}, (ii) atualiza seu \textit{status} para \texttt{PUBLISHED} de forma síncrona, e (iii) agenda uma tarefa em \textit{background} para indexar anexos e executar a correção automática. Ao final do processamento, o \textit{status} da prova é atualizado para um estado final de sucesso (\texttt{GRADED}) ou atenção (\texttt{WARNING}), permitindo distinguir casos que exigem intervenção.
 
-Nos anexos, um campo como \texttt{vector\_status} permite sinalizar se o PDF foi efetivamente preparado para busca vetorial. Isso torna observáveis falhas de indexação que podem comprometer a etapa de RAG, sem impedir a continuidade da revisão docente.
+Nos anexos, um campo como \texttt{vector\_status} permite sinalizar se o PDF foi efetivamente preparado para busca vetorial. Isso torna observáveis falhas de indexação que podem comprometer a etapa de \gls{rag}, sem impedir a continuidade da revisão docente.
 
 Além disso, campos como \textit{is\_graded} limitam alterações em entidades após a execução da correção, preservando consistência entre rubrica, respostas e resultados persistidos.
 
-\section{Pipeline de IA (RAG, correção e arbitragem)}
+\section{Pipeline de \texorpdfstring{\gls{ia}}{IA} (\texorpdfstring{\gls{rag}}{RAG}, correção e arbitragem)}
 
-O pipeline de correção foi estruturado como um \textit{workflow} com estado explícito utilizando o \textit{framework} LangGraph, composto por nós que representam etapas do processo e por regras de encaminhamento condicional. Os agentes corretores utilizam LangChain para integração com o provedor de LLM e para produção de saídas estruturadas via \texttt{with\_structured\_output}. A abordagem permite documentar e reproduzir a sequência de execução, o que é relevante tanto para depuração quanto para a revisão docente.
+O pipeline de correção foi estruturado como um \textit{workflow} com estado explícito utilizando o \textit{framework} LangGraph, composto por nós que representam etapas do processo e por regras de encaminhamento condicional. Os agentes corretores utilizam LangChain para integração com o provedor de \gls{llm} e para produção de saídas estruturadas via \texttt{with\_structured\_output}. A abordagem permite documentar e reproduzir a sequência de execução, o que é relevante tanto para depuração quanto para a revisão docente.
 
-O desenho multiagente adotado --- dois corretores independentes com acionamento condicional de um terceiro (árbitro) --- foi inspirado no processo oficial de correção de redações do Exame Nacional do Ensino Médio (ENEM). No ENEM, cada redação é avaliada por dois corretores de forma independente, e um terceiro avaliador é convocado quando a discrepância entre as notas excede um limiar predefinido (diferença superior a 100 pontos no total ou superior a 80 pontos em qualquer uma das cinco competências individuais). A nota final, quando há três avaliações, é calculada como a média das duas notas totais mais próximas, descartando a mais discrepante \cite{inep_cartilha_redacao_2024}. O sistema desenvolvido neste trabalho adota a mesma lógica estrutural --- dupla correção, limiar de divergência e consenso por proximidade --- adaptada ao contexto de avaliação automatizada com agentes de IA.
+O desenho multiagente adotado --- dois corretores independentes com acionamento condicional de um terceiro (árbitro) --- foi inspirado no processo oficial de correção de redações do \gls{enem}. No \gls{enem}, cada redação é avaliada por dois corretores de forma independente, e um terceiro avaliador é convocado quando a discrepância entre as notas excede um limiar predefinido (diferença superior a 100 pontos no total ou superior a 80 pontos em qualquer uma das cinco competências individuais). A nota final, quando há três avaliações, é calculada como a média das duas notas totais mais próximas, descartando a mais discrepante \cite{inep_cartilha_redacao_2024}. O sistema desenvolvido neste trabalho adota a mesma lógica estrutural --- dupla correção, limiar de divergência e consenso por proximidade --- adaptada ao contexto de avaliação automatizada com agentes de \gls{ia}.
 
 No sistema desenvolvido, o pipeline segue as seguintes macroetapas:
 
 \begin{itemize}
-    \item \textbf{Recuperação de contexto (RAG)}: busca de trechos relevantes dos materiais anexados, a partir do enunciado da questão;
+    \item \textbf{Recuperação de contexto (\gls{rag})}: busca de trechos relevantes dos materiais anexados, a partir do enunciado da questão;
     \item \textbf{Correção independente}: avaliação por dois agentes corretores, sem comunicação entre si;
     \item \textbf{Checagem de divergência}: cálculo de divergência entre as notas e decisão de acionar ou não um \textit{árbitro};
     \item \textbf{Arbitragem condicional}: avaliação adicional quando a divergência supera um limiar;
@@ -122,7 +122,7 @@ A \autoref{fig:pipeline-correcao} apresenta um diagrama simplificado desse \text
 
 \begin{figure}[H]
     \centering
-    \caption{Pipeline de correção com RAG e arbitragem por divergência}
+    \caption{Pipeline de correção com \gls{rag} e arbitragem por divergência}
     \label{fig:pipeline-correcao}
     \includegraphics[width=\textwidth,height=0.5\textheight,keepaspectratio]{media/pipeline.png}
     \source{Elaborado pelos autores.}
@@ -164,13 +164,13 @@ workflow.add_edge("finalize", END)
 
 \subsection{Recuperação de contexto}
 
-Para viabilizar RAG, os materiais didáticos anexados são processados em duas fases: (i) segmentação em trechos e geração de \textit{embeddings} para indexação, e (ii) recuperação por similaridade durante a correção. No protótipo, a segmentação utiliza trechos com sobreposição para preservar contexto local, enquanto a consulta recupera um conjunto pequeno de trechos mais relevantes (\textit{top-k}) para compor o contexto fornecido aos agentes.
+Para viabilizar \gls{rag}, os materiais didáticos anexados são processados em duas fases: (i) segmentação em trechos e geração de \textit{embeddings} para indexação, e (ii) recuperação por similaridade durante a correção. No protótipo, a segmentação utiliza trechos com sobreposição para preservar contexto local, enquanto a consulta recupera um conjunto pequeno de trechos mais relevantes (\textit{top-k}) para compor o contexto fornecido aos agentes.
 
 Um aspecto de projeto relevante é o isolamento por prova: as consultas de recuperação utilizam um filtro primário por \texttt{exam\_uuid}, priorizando trechos associados à prova em questão. Caso nenhum resultado seja encontrado com esse filtro (por exemplo, quando os materiais foram indexados sem associação explícita a uma prova), o sistema realiza uma busca global sem filtro como mecanismo de \textit{fallback}, evitando que a correção prossiga sem contexto quando há material disponível no banco vetorial. Operacionalmente, o sistema utiliza \textit{top-k} pequeno (por padrão, \texttt{RAG\_TOP\_K=4}), de modo a produzir contexto suficiente sem exceder o orçamento de tokens e sem inundar os corretores com material pouco relevante.
 
 \subsection{Vantagens do desenho multiagente frente a uma correção monolítica}
 
-Embora seja possível corrigir uma resposta com uma única chamada a LLM (um \textit{prompt} único e uma nota final), o protótipo adotou um desenho em etapas e com redundância controlada porque esse formato aumenta a robustez e melhora a qualidade operacional do sistema como artefato de apoio à decisão docente.
+Embora seja possível corrigir uma resposta com uma única chamada a \gls{llm} (um \textit{prompt} único e uma nota final), o protótipo adotou um desenho em etapas e com redundância controlada porque esse formato aumenta a robustez e melhora a qualidade operacional do sistema como artefato de apoio à decisão docente.
 
 Em uma correção monolítica, os principais riscos se concentram em um único ponto: uma saída potencialmente instável, pouco diagnosticável e difícil de auditar, na qual erros de entendimento do enunciado, recuperação de contexto inadequada ou interpretações subjetivas do critério se tornam indistinguíveis. Já no \textit{workflow} multiagente, cada etapa produz artefatos verificáveis (contexto recuperado, notas e justificativas por critério, medida de divergência e decisão de arbitragem), permitindo que a revisão docente se apoie em evidências intermediárias e não apenas no resultado final.
 
@@ -179,7 +179,7 @@ De forma mais concreta, os benefícios técnicos desse desenho podem ser sinteti
 \begin{itemize}
     \item \textbf{Robustez por redundância e detecção de inconsistência}: dois corretores independentes reduzem a dependência de uma única amostra de resposta do modelo; a divergência explicita quando há instabilidade entre avaliações, em vez de ocultá-la no resultado final.
     \item \textbf{Arbitragem condicional como controle de custo e de incerteza}: o terceiro agente não é acionado sempre; ele é reservado para casos em que a divergência supera um limiar (por padrão, \texttt{DIVERGENCE\_THRESHOLD=2.0}), equilibrando consistência e custo computacional.
-    \item \textbf{Separação de responsabilidades e depuração}: a recuperação (RAG), a correção e a consolidação são módulos distintos; assim, falhas de indexação ou de recuperação podem ser tratadas e observadas (por exemplo, via \texttt{vector\_status}) sem confundir o diagnóstico com a etapa de correção.
+    \item \textbf{Separação de responsabilidades e depuração}: a recuperação (\gls{rag}), a correção e a consolidação são módulos distintos; assim, falhas de indexação ou de recuperação podem ser tratadas e observadas (por exemplo, via \texttt{vector\_status}) sem confundir o diagnóstico com a etapa de correção.
     \item \textbf{Auditabilidade e revisabilidade}: saídas estruturadas (nota total, pontuação por critério e justificativas) tornam explícito como a nota foi composta, permitindo ao professor localizar rapidamente o ponto de discordância e ajustar o que for necessário.
     \item \textbf{Reprodutibilidade operacional}: a execução como \textit{workflow} com estado explícito facilita repetir o processamento sob o mesmo conjunto de parâmetros (por exemplo, \texttt{LLM\_TEMPERATURE}, \texttt{RAG\_TOP\_K} e \texttt{DIVERGENCE\_THRESHOLD}) e comparar resultados entre rodadas de avaliação.
 \end{itemize}
@@ -203,16 +203,16 @@ Os \textit{prompts} que instruem os agentes corretores constituem um elemento ce
 \begin{enumerate}
     \item \textbf{\textit{Role Prompting}:} cada agente recebe uma identidade especializada. Os Corretores 1 e 2 são instruídos como ``Especialista em Avaliação Educacional com foco em correção de provas discursivas'', enquanto o Árbitro recebe o papel de ``Revisor Sênior e Árbitro Acadêmico''. Essa atribuição de papel direciona o comportamento do modelo para um tom profissional e critérios de avaliação acadêmicos.
 
-    \item \textbf{\textit{Chain-of-Thought} (CoT):} os agentes são instruídos a desenvolver um raciocínio passo a passo antes de atribuir qualquer nota. O \textit{prompt} exige que cada critério da rubrica seja analisado individualmente, com a nota parcial registrada entre colchetes ao final de cada análise (por exemplo, ``\textit{[Nota: 2.5/3.0]}''). Esse raciocínio é armazenado no campo \textit{reasoning\_chain} da saída estruturada, permitindo rastreabilidade completa da decisão avaliativa.
+    \item \textbf{\textit{Chain-of-Thought} (\gls{cot}):} os agentes são instruídos a desenvolver um raciocínio passo a passo antes de atribuir qualquer nota. O \textit{prompt} exige que cada critério da rubrica seja analisado individualmente, com a nota parcial registrada entre colchetes ao final de cada análise (por exemplo, ``\textit{[Nota: 2.5/3.0]}''). Esse raciocínio é armazenado no campo \textit{reasoning\_chain} da saída estruturada, permitindo rastreabilidade completa da decisão avaliativa.
 
-    \item \textbf{\textit{Groundedness} (fidelidade ao contexto RAG):} o \textit{prompt} instrui o corretor a utilizar o material didático recuperado como referência principal para validar terminologia e escopo, mas com flexibilidade pedagógica: respostas tecnicamente corretas que utilizem exemplos ou terminologia diferentes do material são consideradas válidas. Essa diretriz equilibra fidelidade ao conteúdo da disciplina com reconhecimento de compreensão conceitual genuína.
+    \item \textbf{\textit{Groundedness} (fidelidade ao contexto \gls{rag}):} o \textit{prompt} instrui o corretor a utilizar o material didático recuperado como referência principal para validar terminologia e escopo, mas com flexibilidade pedagógica: respostas tecnicamente corretas que utilizem exemplos ou terminologia diferentes do material são consideradas válidas. Essa diretriz equilibra fidelidade ao conteúdo da disciplina com reconhecimento de compreensão conceitual genuína.
 \end{enumerate}
 
 Adicionalmente, o \textit{prompt} dos corretores inclui uma diretriz destinada à identificação de estratégias discursivas evasivas. Os agentes são orientados a reconhecer e penalizar, de forma criteriosa e baseada em sinais linguísticos objetivos, ocorrências de linguagem vaga, uso reiterado de clichês, afirmações não fundamentadas ou generalizações excessivas que aparentem mascarar a ausência de conhecimento específico. Esta diretriz é operacionalizada por meio de exemplos anotados e regras heurísticas no \textit{prompt}, com o objetivo de aumentar a sensibilidade do sistema a indícios de baixa substância conceitual sem comprometer a avaliação de respostas concisas e legítimas.
 
-O \textit{prompt} do Árbitro (C3) é estruturalmente diferente: além de receber os mesmos dados de entrada (enunciado, rubrica, contexto RAG e resposta do aluno), ele também recebe o \texttt{reasoning\_chain} e as notas de ambos os corretores. Suas instruções incluem: (i) identificar se algum corretor foi excessivamente rígido ou cometeu ``alucinação'' de regras inexistentes; (ii) apoiar o corretor que melhor avaliou a precisão conceitual; e (iii) atribuir notas de forma independente, funcionando como mediação técnica do conflito.
+O \textit{prompt} do Árbitro (C3) é estruturalmente diferente: além de receber os mesmos dados de entrada (enunciado, rubrica, contexto \gls{rag} e resposta do aluno), ele também recebe o \texttt{reasoning\_chain} e as notas de ambos os corretores. Suas instruções incluem: (i) identificar se algum corretor foi excessivamente rígido ou cometeu ``alucinação'' de regras inexistentes; (ii) apoiar o corretor que melhor avaliou a precisão conceitual; e (iii) atribuir notas de forma independente, funcionando como mediação técnica do conflito.
 
-Todas as saídas são exigidas em formato JSON estruturado (\textit{AgentCorrection}), incluindo os campos \texttt{total\_score}, \texttt{criteria\_scores}, \texttt{reasoning\_chain} e \texttt{feedback\_text}. As notas são exigidas na escala absoluta (0 até o peso máximo de cada critério), e o \textit{prompt} inclui exemplos explícitos para evitar normalização indevida pelo modelo (por exemplo, atribuir 0,75 em vez de 3,0 em um critério de 4,0 pontos).
+Todas as saídas são exigidas em formato \gls{json} estruturado (\textit{AgentCorrection}), incluindo os campos \texttt{total\_score}, \texttt{criteria\_scores}, \texttt{reasoning\_chain} e \texttt{feedback\_text}. As notas são exigidas na escala absoluta (0 até o peso máximo de cada critério), e o \textit{prompt} inclui exemplos explícitos para evitar normalização indevida pelo modelo (por exemplo, atribuir 0,75 em vez de 3,0 em um critério de 4,0 pontos).
 \newline
 Os prompts completos utilizados na implementação — versões integrais dos prompts dos Corretores, do Árbitro e dos helpers — encontram-se nos Apêndices (ver Apêndice \ref{ap:prompts}).
 \section{Modelagem do banco de dados}
@@ -221,7 +221,7 @@ O banco de dados relacional foi modelado para suportar as etapas de configuraç�
 
 \begin{figure}[H]
     \centering
-    \caption{Modelo entidade-relacionamento (ER) simplificado do domínio}
+    \caption{Modelo entidade-relacionamento simplificado do domínio}
     \label{fig:er-simplificado}
     \includegraphics[width=\textwidth]{media/er.png}
     \source{Elaborado pelos autores.}
@@ -245,7 +245,7 @@ Alguns campos merecem destaque por seu papel na rastreabilidade do processo:
 
 \begin{itemize}
     \item \textbf{\textit{status} de prova e resposta}: permitem distinguir prova em rascunho, publicada, em correção, corrigida e finalizada, assim como respostas submetidas e avaliadas;
-    \item \textbf{\textit{vector\_status} de anexo}: indica se o material anexado foi indexado com sucesso na base vetorial, sinalizando situações de falha que podem afetar o RAG;
+    \item \textbf{\textit{vector\_status} de anexo}: indica se o material anexado foi indexado com sucesso na base vetorial, sinalizando situações de falha que podem afetar o \gls{rag};
     \item \textbf{Indicadores de correção}: campos como \textit{is\_graded} e informações de divergência (por exemplo, detecção e valor) ajudam a controlar reprocessamentos e a direcionar revisão docente.
 \end{itemize}
 
@@ -261,11 +261,11 @@ O desenvolvimento priorizou integrações que mantivessem o sistema reproduzíve
     \item \textbf{PostgreSQL}: adotado para persistência relacional das entidades do domínio, com suporte a transações e integridade;
     \item \textbf{Migrações (Alembic)}: versionamento do esquema do banco via Alembic, permitindo evolução controlada e reprodutibilidade entre ambientes;
     \item \textbf{ChromaDB}: utilizado como \textit{vector store} persistente para a estratégia de recuperação por similaridade;
-    \item \textbf{Provedores de LLM e \textit{embeddings}}: integração por uma camada de compatibilidade para alternar provedores e parâmetros de execução;
+    \item \textbf{Provedores de \gls{llm} e \textit{embeddings}}: integração por uma camada de compatibilidade para alternar provedores e parâmetros de execução;
     \item \textbf{Docker e Docker Compose}: padronização do ambiente de execução, reduzindo divergências de configuração entre máquinas.
 \end{itemize}
 
-Além dessas integrações, a execução do protótipo foi desenhada para ser parametrizável por ambiente. Em particular, a seleção do provedor/modelo de LLM e de \textit{embeddings}, assim como parâmetros operacionais do pipeline (por exemplo, \texttt{LLM\_TEMPERATURE}, \texttt{RAG\_TOP\_K} e \texttt{DIVERGENCE\_THRESHOLD}) pode ser controlada via variáveis de ambiente, favorecendo reprodutibilidade e ajustes sem alteração do código.
+Além dessas integrações, a execução do protótipo foi desenhada para ser parametrizável por ambiente. Em particular, a seleção do provedor/modelo de \gls{llm} e de \textit{embeddings}, assim como parâmetros operacionais do pipeline (por exemplo, \texttt{LLM\_TEMPERATURE}, \texttt{RAG\_TOP\_K} e \texttt{DIVERGENCE\_THRESHOLD}) pode ser controlada via variáveis de ambiente, favorecendo reprodutibilidade e ajustes sem alteração do código.
 
 \subsection{Infraestrutura de experimentação}
 
@@ -273,14 +273,14 @@ Para viabilizar a execução e a documentação dos experimentos descritos no \a
 
 \begin{enumerate}
     \item \textbf{Setup}: registro do professor, autenticação, criação de turma e cadastro dos alunos sintéticos via API.
-    \item \textbf{Condição A (com RAG)}: criação da prova, \textit{upload} do PDF de referência, cadastro de questões, critérios e respostas, publicação e \textit{polling} até o status \texttt{GRADED}.
-    \item \textbf{Condição B (sem RAG)}: mesmo fluxo da Condição A, mas sem \textit{upload} de PDF.
+    \item \textbf{Condição A (com \gls{rag})}: criação da prova, \textit{upload} do \gls{pdf} de referência, cadastro de questões, critérios e respostas, publicação e \textit{polling} até o status \texttt{GRADED}.
+    \item \textbf{Condição B (sem \gls{rag})}: mesmo fluxo da Condição A, mas sem \textit{upload} de \gls{pdf}.
     \item \textbf{Comparação A vs.\ B}: geração de tabelas pareadas com notas de C1, C2 e nota final por questão e por nível de qualidade.
-    \item \textbf{QA4 --- Estabilidade}: execução de $R=3$ repetições com $A_{rep}=4$ respostas (uma por nível), mantendo RAG ativo.
-    \item \textbf{Exportação}: salvamento dos resultados em CSV e JSON na pasta \texttt{notebooks/\allowbreak results/}.
+    \item \textbf{QA4 --- Estabilidade}: execução de $R=3$ repetições com $A_{rep}=4$ respostas (uma por nível), mantendo \gls{rag} ativo.
+    \item \textbf{Exportação}: salvamento dos resultados em CSV e \gls{json} na pasta \texttt{notebooks/\allowbreak results/}.
 \end{enumerate}
 
-Toda a comunicação ocorre via \textit{endpoints} da API REST, de modo que o \textit{notebook} não acessa diretamente o banco de dados nem o pipeline de IA, garantindo que o experimento reflita o comportamento real do sistema em produção.
+Toda a comunicação ocorre via \textit{endpoints} da \gls{api} REST, de modo que o \textit{notebook} não acessa diretamente o banco de dados nem o pipeline de \gls{ia}, garantindo que o experimento reflita o comportamento real do sistema em produção.
 
 \subsection{Disponibilização do código-fonte}
 
@@ -289,10 +289,10 @@ Com o objetivo de apoiar reprodutibilidade, inspeção técnica e evolução inc
 \subsection{Decisões e \textit{trade-offs}}
 
 \begin{itemize}
-    \item \textbf{Dois corretores e \textit{árbitro} condicional}: reduz sensibilidade a uma única saída de LLM e prioriza consistência, ao custo de maior consumo computacional em casos divergentes;
+    \item \textbf{Dois corretores e \textit{árbitro} condicional}: reduz sensibilidade a uma única saída de \gls{llm} e prioriza consistência, ao custo de maior consumo computacional em casos divergentes;
     \item \textbf{Workflow com estado explícito}: favorece rastreabilidade e controle de execução, ao custo de maior complexidade estrutural em comparação a uma sequência linear;
-    \item \textbf{RAG por prova}: melhora a aderência ao material didático e reduz alucinações, mas depende da qualidade e da indexação bem-sucedida dos anexos;
-    \item \textbf{Não-determinismo de LLMs}: mitigado por configuração de baixa estocasticidade (temperatura $= 0{,}0$) e por revisão docente, mas não eliminado completamente.
+    \item \textbf{\gls{rag} por prova}: melhora a aderência ao material didático e reduz alucinações, mas depende da qualidade e da indexação bem-sucedida dos anexos;
+    \item \textbf{Não-determinismo de \gls{llm}s}: mitigado por configuração de baixa estocasticidade (temperatura $= 0{,}0$) e por revisão docente, mas não eliminado completamente.
 \end{itemize}
 
 Em conjunto, as decisões de arquitetura e implementação buscam equilibrar viabilidade técnica, rastreabilidade e utilidade prática no contexto de correção de respostas discursivas com apoio à revisão do professor. O próximo capítulo apresenta os resultados obtidos a partir da execução do procedimento experimental sobre o sistema aqui descrito.

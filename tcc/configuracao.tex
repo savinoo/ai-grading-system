@@ -59,6 +59,7 @@
 \setacronymstyle{long-short}
 
 \makenoidxglossaries
+\glsdisablehyper
 
 
 %Definição das listas de glossários e parâmertos para compilação.
@@ -70,9 +71,9 @@
 
 %Definição dos comandos para exibição das listas individuais.
 %-----------------------------------------------------------
-\newcommand{\listarsiglas}{\printglossary[type=siglas, title=\listadesiglasname, nonumberlist=true]}
-\newcommand{\listarsimbolos}{\printglossary[type=simbolos, title=\listadesimbolosname, nonumberlist=true]}
-\newcommand{\listarverbetes}{\printglossary[type=verbetes]}
+\newcommand{\listarsiglas}{\printnoidxglossary[type=acronym, title=\listadesiglasname, nonumberlist=true]}
+\newcommand{\listarsimbolos}{\printnoidxglossary[type=simbolos, title=\listadesimbolosname, nonumberlist=true]}
+\newcommand{\listarverbetes}{\printnoidxglossary[type=verbetes]}
 
 %Definição dos Comandos para inclusão no texto das siglas.
 
@@ -344,8 +345,6 @@
 
 % Controle do espaçamento entre um parágrafo e outro:
 \setlength{\parskip}{0.2cm}  % tente também \onelineskip
-
-\glsaddall
 
 % ---
 % compila os glossários e listas

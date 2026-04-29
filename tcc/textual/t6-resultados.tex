@@ -1,7 +1,7 @@
 \chapter{Resultados e Discussões}
 \label{cap:resultados}
 
-Este capítulo apresenta os resultados obtidos a partir da execução do procedimento experimental descrito no \autoref{cap:metodologia}. A avaliação seguiu o desenho de estudo de caso controlado, com duas condições --- Condição A (com RAG) e Condição B (sem RAG) --- aplicadas sobre o \textbf{mesmo conjunto pareado} de respostas: uma prova com $Q=3$ questões discursivas e $A=4$ respostas sintéticas por questão, totalizando 12 respostas avaliadas em ambas as condições. Os corretores C1 e C2 foram executados em \textbf{paralelo} via LangGraph, com verificação de divergência e arbitragem condicional. Os resultados são organizados de acordo com as questões avaliativas (QA1 a QA4), seguidos de uma análise de desempenho temporal e de uma discussão integrada.
+Este capítulo apresenta os resultados obtidos a partir da execução do procedimento experimental descrito no \autoref{cap:metodologia}. A avaliação seguiu o desenho de estudo de caso controlado, com duas condições --- Condição A (com \gls{rag}) e Condição B (sem \gls{rag}) --- aplicadas sobre o \textbf{mesmo conjunto pareado} de respostas: uma prova com $Q=3$ questões discursivas e $A=4$ respostas sintéticas por questão, totalizando 12 respostas avaliadas em ambas as condições. Os corretores C1 e C2 foram executados em \textbf{paralelo} via LangGraph, com verificação de divergência e arbitragem condicional. Os resultados são organizados de acordo com as questões avaliativas (QA1 a QA4), seguidos de uma análise de desempenho temporal e de uma discussão integrada.
 
 \section{Configuração do experimento}
 
@@ -16,13 +16,13 @@ O \autoref{qua:config-experimento} resume os parâmetros efetivamente utilizados
         \hline
         \textbf{Parâmetro} & \textbf{Valor utilizado} \\
         \hline
-        Provedor/Modelo do LLM & Google Gemini / \texttt{gemini-2.5-flash} \\
+        Provedor/Modelo do \gls{llm} & Google Gemini / \texttt{gemini-2.5-flash} \\
         \hline
-        Temperatura do LLM & $0{,}0$ (baixa estocasticidade) \\
+        Temperatura do \gls{llm} & $0{,}0$ (baixa estocasticidade) \\
         \hline
-        Top-$k$ do RAG (Condição A) & $k=4$ (\texttt{RAG\_TOP\_K=4}) \\
+        Top-$k$ do \gls{rag} (Condição A) & $k=4$ (\texttt{RAG\_TOP\_K=4}) \\
         \hline
-        Top-$k$ do RAG (Condição B) & $k=0$ (RAG desativado) \\
+        Top-$k$ do \gls{rag} (Condição B) & $k=0$ (\gls{rag} desativado) \\
         \hline
         Limiar de divergência & $2{,}0$ pontos (\texttt{DIVERGENCE\_THRESHOLD=2.0}) \\
         \hline
@@ -57,11 +57,11 @@ A prova versou sobre o tema \textit{Algoritmos e Estrutura de Dados}, com três 
     \item \textbf{Q3:} Propriedades que definem uma \textit{Árvore Binária de Busca} (BST) balanceada versus não balanceada, incluindo propriedades estruturais e complexidade das operações de busca, inserção e remoção.
 \end{itemize}
 
-Os materiais de referência consistiram em documentos em formato PDF contendo o conteúdo programático da disciplina, indexados vetorialmente no ChromaDB para recuperação na Condição A.
+Os materiais de referência consistiram em documentos em formato \gls{pdf} contendo o conteúdo programático da disciplina, indexados vetorialmente no ChromaDB para recuperação na Condição A.
 
 \subsection{Respostas sintéticas}
 
-Conforme descrito na metodologia, as respostas foram elaboradas pelos autores em quatro níveis de qualidade, visando cobrir cenários típicos e casos-limite. O \textbf{mesmo conjunto} de 12 respostas foi utilizado em ambas as condições (A e B), garantindo o pareamento dos dados e permitindo isolar o efeito do RAG. O \autoref{qua:niveis-respostas} apresenta a caracterização de cada nível.
+Conforme descrito na metodologia, as respostas foram elaboradas pelos autores em quatro níveis de qualidade, visando cobrir cenários típicos e casos-limite. O \textbf{mesmo conjunto} de 12 respostas foi utilizado em ambas as condições (A e B), garantindo o pareamento dos dados e permitindo isolar o efeito do \gls{rag}. O \autoref{qua:niveis-respostas} apresenta a caracterização de cada nível.
 
 \begin{quadro}[H]
     \centering
@@ -106,7 +106,7 @@ O \autoref{qua:qa1-end-to-end} apresenta o resultado de cada etapa do fluxo de e
         \hline
         Cadastro da prova e questões & Sim & 3 questões cadastradas com sucesso \\
         \hline
-        Anexação de materiais (PDF) & Sim & Material didático anexado corretamente \\
+        Anexação de materiais (\gls{pdf}) & Sim & Material didático anexado corretamente \\
         \hline
         Definição de critérios e rubrica & Sim & 5 critérios definidos com pesos configuráveis \\
         \hline
@@ -126,7 +126,7 @@ O \autoref{qua:qa1-end-to-end} apresenta o resultado de cada etapa do fluxo de e
         \hline
         Persistência dos resultados & Sim & Dados persistidos no PostgreSQL \\
         \hline
-        Disponibilização para revisão & Sim & Resultados acessíveis via API REST \\
+        Disponibilização para revisão & Sim & Resultados acessíveis via \gls{api} REST \\
         \hline
     \end{tabularx}
     }
@@ -137,7 +137,7 @@ As \autoref{tab:qa1-completude-a} e \autoref{tab:qa1-completude-b} apresentam a 
 
 \begin{table}[H]
     \centering
-    \caption{Completude estrutural dos artefatos gerados --- Condição A (com RAG)}
+    \caption{Completude estrutural dos artefatos gerados --- Condição A (com \gls{rag})}
     \label{tab:qa1-completude-a}
     {\small
     \begin{tabularx}{\textwidth}{p{0.12\textwidth}|p{0.14\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}p{0.13\textwidth}|>{\centering\arraybackslash}X}
@@ -166,7 +166,7 @@ As \autoref{tab:qa1-completude-a} e \autoref{tab:qa1-completude-b} apresentam a 
 
 \begin{table}[H]
     \centering
-    \caption{Completude estrutural dos artefatos gerados --- Condição B (sem RAG)}
+    \caption{Completude estrutural dos artefatos gerados --- Condição B (sem \gls{rag})}
     \label{tab:qa1-completude-b}
     {\small
     \begin{tabularx}{\textwidth}{p{0.12\textwidth}|p{0.14\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}p{0.13\textwidth}|>{\centering\arraybackslash}X}
@@ -195,17 +195,17 @@ As \autoref{tab:qa1-completude-a} e \autoref{tab:qa1-completude-b} apresentam a 
 
 \subsection{Análise}
 
-O sistema executou o fluxo completo sem interrupções ou falhas em nenhuma das 12 etapas verificadas. As 12 respostas de cada condição foram processadas e persistidas com sucesso no PostgreSQL, e os resultados ficaram imediatamente disponíveis para revisão docente por meio dos \textit{endpoints} da API REST. Os corretores C1 e C2 foram executados em paralelo via LangGraph, reduzindo o tempo total de correção em comparação com a execução sequencial.
+O sistema executou o fluxo completo sem interrupções ou falhas em nenhuma das 12 etapas verificadas. As 12 respostas de cada condição foram processadas e persistidas com sucesso no PostgreSQL, e os resultados ficaram imediatamente disponíveis para revisão docente por meio dos \textit{endpoints} da \gls{api} REST. Os corretores C1 e C2 foram executados em paralelo via LangGraph, reduzindo o tempo total de correção em comparação com a execução sequencial.
 
 A completude estrutural atingiu 100\% em ambas as condições (24/24 correções), superando amplamente o critério mínimo de 95\% definido na metodologia. Cada correção produziu todos os campos esperados: notas individuais de C1 e C2, nota final consensuada, valor de divergência e método de consenso aplicado (\texttt{mean\_2} em todos os casos). Em nenhuma das 24 respostas foi detectada divergência acima do limiar, confirmando a consistência interna dos corretores para este conjunto de respostas.
 
 O fluxo \textit{end-to-end} demonstra que a arquitetura proposta --- envolvendo cadastro, indexação vetorial, dupla correção automatizada em paralelo, verificação de divergência, arbitragem condicional, persistência e revisão --- é tecnicamente funcional e operacionalmente viável nas duas configurações testadas.
 
 
-\section{QA2 --- Utilidade do RAG}
+\section{QA2 --- Utilidade do \texorpdfstring{\gls{rag}}{RAG}}
 \label{sec:qa2}
 
-A segunda questão avaliativa investiga se, ao ativar o RAG (Condição A), as pontuações se alteram em relação à Condição B (sem RAG), e de que forma o material de referência influencia o rigor da correção. As duas condições foram avaliadas sobre o \textbf{mesmo conjunto pareado} de respostas, permitindo isolar o efeito do RAG.
+A segunda questão avaliativa investiga se, ao ativar o \gls{rag} (Condição A), as pontuações se alteram em relação à Condição B (sem \gls{rag}), e de que forma o material de referência influencia o rigor da correção. As duas condições foram avaliadas sobre o \textbf{mesmo conjunto pareado} de respostas, permitindo isolar o efeito do \gls{rag}.
 
 \subsection{Comparação de notas}
 
@@ -213,12 +213,12 @@ A \autoref{tab:qa2-notas} apresenta a comparação das notas finais (após conse
 
 \begin{table}[H]
     \centering
-    \caption{Comparação de notas finais --- Condição A (com RAG) vs.\ Condição B (sem RAG)}
+    \caption{Comparação de notas finais --- Condição A (com \gls{rag}) vs.\ Condição B (sem \gls{rag})}
     \label{tab:qa2-notas}
     {\small
     \begin{tabularx}{\textwidth}{p{0.10\textwidth}|p{0.14\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X}
         \hline
-        \textbf{Questão} & \textbf{Nível} & \textbf{Nota A (RAG)} & \textbf{Nota B (sem RAG)} & \textbf{$\Delta$ (A$-$B)} \\
+        \textbf{Questão} & \textbf{Nível} & \textbf{Nota A (\gls{rag})} & \textbf{Nota B (sem \gls{rag})} & \textbf{$\Delta$ (A$-$B)} \\
         \hline
         Q1 & Excelente      & 10,00 & 10,00 & $\phantom{+}$0,00 \\
         Q1 & Intermediária  &  8,65 &  6,73 & $+$1,92 \\
@@ -238,7 +238,7 @@ A \autoref{tab:qa2-notas} apresenta a comparação das notas finais (após conse
     \source{Elaborado pelos autores.}
 \end{table}
 
-A \autoref{tab:qa2-notas-nivel} consolida os resultados por nível de qualidade, permitindo identificar em quais faixas o RAG exerce maior influência.
+A \autoref{tab:qa2-notas-nivel} consolida os resultados por nível de qualidade, permitindo identificar em quais faixas o \gls{rag} exerce maior influência.
 
 \begin{table}[H]
     \centering
@@ -247,7 +247,7 @@ A \autoref{tab:qa2-notas-nivel} consolida os resultados por nível de qualidade,
     {\small
     \begin{tabularx}{\textwidth}{p{0.18\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X}
         \hline
-        \textbf{Nível} & \textbf{Média A (RAG)} & \textbf{Média B (sem RAG)} & \textbf{$\Delta$ (A$-$B)} \\
+        \textbf{Nível} & \textbf{Média A (\gls{rag})} & \textbf{Média B (sem \gls{rag})} & \textbf{$\Delta$ (A$-$B)} \\
         \hline
         Excelente      & 10,00 & 10,00 & $\phantom{+}$0,00 \\
         Intermediária  &  9,31 &  8,47 & $+$0,84 \\
@@ -259,23 +259,23 @@ A \autoref{tab:qa2-notas-nivel} consolida os resultados por nível de qualidade,
     \source{Elaborado pelos autores.}
 \end{table}
 
-Os resultados revelam um efeito positivo do RAG concentrado no nível intermediário. O impacto mais expressivo ocorreu no nível ``Intermediária'' ($\Delta = +0{,}84$ na média), com destaque para Q1 ($\Delta = +1{,}92$) e Q2 ($\Delta = +0{,}59$). No nível ``Fraca'', o RAG produziu um efeito positivo modesto ($\Delta = +0{,}12$ na média), com Q2 apresentando a maior diferença ($\Delta = +0{,}92$), enquanto Q3 registrou leve redução ($\Delta = -0{,}55$). Os extremos --- ``Excelente'' e ``Fora do tema'' --- apresentaram notas idênticas em ambas as condições.
+Os resultados revelam um efeito positivo do \gls{rag} concentrado no nível intermediário. O impacto mais expressivo ocorreu no nível ``Intermediária'' ($\Delta = +0{,}84$ na média), com destaque para Q1 ($\Delta = +1{,}92$) e Q2 ($\Delta = +0{,}59$). No nível ``Fraca'', o \gls{rag} produziu um efeito positivo modesto ($\Delta = +0{,}12$ na média), com Q2 apresentando a maior diferença ($\Delta = +0{,}92$), enquanto Q3 registrou leve redução ($\Delta = -0{,}55$). Os extremos --- ``Excelente'' e ``Fora do tema'' --- apresentaram notas idênticas em ambas as condições.
 
-\subsection{Efeito do RAG sobre a precisão avaliativa}
+\subsection{Efeito do \texorpdfstring{\gls{rag}}{RAG} sobre a precisão avaliativa}
 
-O resultado mais relevante desta comparação é que o RAG auxilia os corretores a identificar com maior precisão o conhecimento parcial presente em respostas intermediárias. Ao dispor do material didático recuperado, o corretor pode comparar a resposta do aluno com o conteúdo de referência, reconhecendo acertos que, sem a referência, poderiam ser subestimados.
+O resultado mais relevante desta comparação é que o \gls{rag} auxilia os corretores a identificar com maior precisão o conhecimento parcial presente em respostas intermediárias. Ao dispor do material didático recuperado, o corretor pode comparar a resposta do aluno com o conteúdo de referência, reconhecendo acertos que, sem a referência, poderiam ser subestimados.
 
-A explicação reside na natureza do mecanismo de RAG como ``gabarito contextual'': com acesso ao material de referência, o corretor distingue com maior acurácia entre conceitos corretos, parcialmente corretos e ausentes. Sem o RAG, o corretor baseia-se exclusivamente no conhecimento paramétrico do modelo de linguagem, que captura o domínio de forma genérica e pode não reproduzir com fidelidade o recorte conceitual específico adotado na disciplina. A presença do material recuperado funciona, portanto, como um referencial explícito que restringe o espaço de interpretação do corretor, tornando a avaliação mais aderente ao conteúdo programático.
+A explicação reside na natureza do mecanismo de \gls{rag} como ``gabarito contextual'': com acesso ao material de referência, o corretor distingue com maior acurácia entre conceitos corretos, parcialmente corretos e ausentes. Sem o \gls{rag}, o corretor baseia-se exclusivamente no conhecimento paramétrico do modelo de linguagem, que captura o domínio de forma genérica e pode não reproduzir com fidelidade o recorte conceitual específico adotado na disciplina. A presença do material recuperado funciona, portanto, como um referencial explícito que restringe o espaço de interpretação do corretor, tornando a avaliação mais aderente ao conteúdo programático.
 
-Para os níveis ``Excelente'' e ``Fora do tema'', as notas foram idênticas em ambas as condições. Esses extremos são esperados: o material didático não altera a avaliação de respostas claramente corretas ou completamente irrelevantes, pois o LLM identifica esses casos com igual precisão com ou sem contexto adicional.
+Para os níveis ``Excelente'' e ``Fora do tema'', as notas foram idênticas em ambas as condições. Esses extremos são esperados: o material didático não altera a avaliação de respostas claramente corretas ou completamente irrelevantes, pois o \gls{llm} identifica esses casos com igual precisão com ou sem contexto adicional.
 
-A leve redução observada em Q3/Fraca ($\Delta = -0{,}55$) ilustra que o RAG não opera de forma uniforme: ao dispor do material de referência para a questão sobre BSTs, o corretor pode ter exigido maior rigor terminológico, penalizando mais a resposta fraca do que na ausência de contexto. Este resultado reforça que o RAG aumenta a especificidade avaliativa, podendo resultar tanto em notas maiores (quando o aluno demonstra conhecimento parcial compatível com o material) quanto em notas menores (quando o material expõe com mais clareza as lacunas da resposta).
+A leve redução observada em Q3/Fraca ($\Delta = -0{,}55$) ilustra que o \gls{rag} não opera de forma uniforme: ao dispor do material de referência para a questão sobre BSTs, o corretor pode ter exigido maior rigor terminológico, penalizando mais a resposta fraca do que na ausência de contexto. Este resultado reforça que o \gls{rag} aumenta a especificidade avaliativa, podendo resultar tanto em notas maiores (quando o aluno demonstra conhecimento parcial compatível com o material) quanto em notas menores (quando o material expõe com mais clareza as lacunas da resposta).
 
 \subsection{Análise}
 
-A comparação pareada entre as condições A e B revela que o RAG agrega valor ao processo de correção de forma coerente com o esperado. O efeito concentra-se no nível intermediário ($\Delta = +0{,}84$), onde o material recuperado fornece ao corretor a referência necessária para identificar com maior precisão o conhecimento parcial demonstrado. As notas finais da Condição A apresentaram coerência com os níveis de qualidade: excelente ($10{,}00$), intermediária ($9{,}31$), fraca ($1{,}07$) e fora do tema ($0{,}00$), demonstrando a capacidade discriminativa do sistema em ambas as condições.
+A comparação pareada entre as condições A e B revela que o \gls{rag} agrega valor ao processo de correção de forma coerente com o esperado. O efeito concentra-se no nível intermediário ($\Delta = +0{,}84$), onde o material recuperado fornece ao corretor a referência necessária para identificar com maior precisão o conhecimento parcial demonstrado. As notas finais da Condição A apresentaram coerência com os níveis de qualidade: excelente ($10{,}00$), intermediária ($9{,}31$), fraca ($1{,}07$) e fora do tema ($0{,}00$), demonstrando a capacidade discriminativa do sistema em ambas as condições.
 
-Em cenários com turmas reais, onde respostas com qualidade intermediária são mais frequentes e mais variadas do que as respostas sintéticas deste experimento, espera-se que o impacto positivo do RAG seja proporcionalmente mais consistente.
+Em cenários com turmas reais, onde respostas com qualidade intermediária são mais frequentes e mais variadas do que as respostas sintéticas deste experimento, espera-se que o impacto positivo do \gls{rag} seja proporcionalmente mais consistente.
 
 
 \section{QA3 --- Arbitragem por divergência}
@@ -289,7 +289,7 @@ A \autoref{tab:qa3-divergencia-completa} apresenta a verificação de divergênc
 
 \begin{table}[H]
     \centering
-    \caption{Verificação de divergência --- Condição A (com RAG)}
+    \caption{Verificação de divergência --- Condição A (com \gls{rag})}
     \label{tab:qa3-divergencia-completa}
     {\small
     \begin{tabularx}{\textwidth}{p{0.09\textwidth}|p{0.18\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X}
@@ -314,11 +314,11 @@ A \autoref{tab:qa3-divergencia-completa} apresenta a verificação de divergênc
     \source{Elaborado pelos autores.}
 \end{table}
 
-A \autoref{tab:qa3-divergencia-cond-b} apresenta os resultados equivalentes para a Condição B (sem RAG).
+A \autoref{tab:qa3-divergencia-cond-b} apresenta os resultados equivalentes para a Condição B (sem \gls{rag}).
 
 \begin{table}[H]
     \centering
-    \caption{Verificação de divergência --- Condição B (sem RAG)}
+    \caption{Verificação de divergência --- Condição B (sem \gls{rag})}
     \label{tab:qa3-divergencia-cond-b}
     {\small
     \begin{tabularx}{\textwidth}{p{0.09\textwidth}|p{0.18\textwidth}|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X}
@@ -347,7 +347,7 @@ A \autoref{tab:qa3-divergencia-cond-b} apresenta os resultados equivalentes para
 
 Em nenhum dos 24 casos avaliados (12 por condição) a divergência entre C1 e C2 ultrapassou o limiar de $2{,}0$ pontos. O valor máximo de divergência observado foi de $1{,}22$ pontos (Q3, Fraca, Condição B) e $1{,}18$ pontos (Q2, Intermediária, Condição A). Consequentemente, o árbitro não foi acionado em nenhum caso, e o método de consenso aplicado em todas as correções foi \texttt{mean\_2} (média entre C1 e C2).
 
-As divergências concentraram-se nos níveis ``Intermediária'' e ``Fraca'', conforme esperado: respostas nos extremos da escala (``Excelente'' e ``Fora do tema'') geraram convergência perfeita entre os corretores ($|$C1$-$C2$| = 0{,}00$) em todos os casos. Nos níveis ``Excelente'' e ``Fora do tema'', as avaliações foram idênticas nas duas condições, confirmando que o RAG não altera a avaliação de respostas inequívocas.
+As divergências concentraram-se nos níveis ``Intermediária'' e ``Fraca'', conforme esperado: respostas nos extremos da escala (``Excelente'' e ``Fora do tema'') geraram convergência perfeita entre os corretores ($|$C1$-$C2$| = 0{,}00$) em todos os casos. Nos níveis ``Excelente'' e ``Fora do tema'', as avaliações foram idênticas nas duas condições, confirmando que o \gls{rag} não altera a avaliação de respostas inequívocas.
 
 A maior variabilidade nas respostas de qualidade intermediária e fraca é coerente com a natureza desses casos: respostas parcialmente corretas envolvem julgamentos de valor sobre quais conceitos foram abordados e com que profundidade, o que introduz divergência natural entre avaliadores independentes.
 
@@ -413,11 +413,11 @@ Para avaliar a viabilidade operacional do sistema em termos de tempo de execuç�
         \hline
         \textbf{Etapa} & \textbf{Tempo (s)} & \textbf{Observações} \\
         \hline
-        Condição A (com RAG) --- 12 respostas & 155 & $\approx$12,9 s/resposta \\
-        Condição B (sem RAG) --- 12 respostas & 140 & $\approx$11,7 s/resposta \\
-        QA4 --- Run 1/3 (4 respostas, RAG ativo) & 55 & $\approx$13,8 s/resposta \\
-        QA4 --- Run 2/3 (4 respostas, RAG ativo) & 55 & $\approx$13,8 s/resposta \\
-        QA4 --- Run 3/3 (4 respostas, RAG ativo) & 55 & $\approx$13,8 s/resposta \\
+        Condição A (com \gls{rag}) --- 12 respostas & 155 & $\approx$12,9 s/resposta \\
+        Condição B (sem \gls{rag}) --- 12 respostas & 140 & $\approx$11,7 s/resposta \\
+        QA4 --- Run 1/3 (4 respostas, \gls{rag} ativo) & 55 & $\approx$13,8 s/resposta \\
+        QA4 --- Run 2/3 (4 respostas, \gls{rag} ativo) & 55 & $\approx$13,8 s/resposta \\
+        QA4 --- Run 3/3 (4 respostas, \gls{rag} ativo) & 55 & $\approx$13,8 s/resposta \\
         \hline
     \end{tabularx}
     }
@@ -455,7 +455,7 @@ O \autoref{qua:sintese-criterios} resume o atendimento aos critérios de sucesso
         \hline
         QA1 & Completude $\geq$ 95\% & 100\% & Sim \\
         \hline
-        QA2 & Efeito do RAG observável & $\Delta$Intermediária=$+$0,84; $\Delta$Fraca=$+$0,12 & Sim \\
+        QA2 & Efeito do \gls{rag} observável & $\Delta$Intermediária=$+$0,84; $\Delta$Fraca=$+$0,12 & Sim \\
         \hline
         QA3 & Árbitro acionado somente se $|$diff$|>$2,0 & Nenhum caso ultrapassou o limiar; árbitro não acionado & Sim \\
         \hline
@@ -468,25 +468,25 @@ O \autoref{qua:sintese-criterios} resume o atendimento aos critérios de sucesso
 
 \subsection{Viabilidade técnica}
 
-Os resultados demonstram que o sistema é tecnicamente viável para a tarefa proposta. O fluxo \textit{end-to-end} foi executado integralmente sem falhas, desde o cadastro da prova até a exportação dos relatórios finais, comprovando que a arquitetura baseada em LLM com dupla correção independente em paralelo, verificação de divergência e arbitragem condicional é funcional.
+Os resultados demonstram que o sistema é tecnicamente viável para a tarefa proposta. O fluxo \textit{end-to-end} foi executado integralmente sem falhas, desde o cadastro da prova até a exportação dos relatórios finais, comprovando que a arquitetura baseada em \gls{llm} com dupla correção independente em paralelo, verificação de divergência e arbitragem condicional é funcional.
 
 Os artefatos gerados pelo sistema são estruturados e rastreáveis: cada correção contém a nota final, as notas individuais de cada corretor, o valor de divergência e o método de consenso aplicado. Essa estrutura permite ao docente não apenas verificar a nota atribuída, mas compreender como ela foi obtida, facilitando a revisão e o ajuste quando necessário.
 
-A integração com o ChromaDB para indexação vetorial dos materiais didáticos funcionou conforme especificado, permitindo que o mecanismo de RAG recuperasse trechos relevantes para contextualizar as correções. A persistência no PostgreSQL garantiu a durabilidade e a rastreabilidade dos dados ao longo de todo o fluxo de execução.
+A integração com o ChromaDB para indexação vetorial dos materiais didáticos funcionou conforme especificado, permitindo que o mecanismo de \gls{rag} recuperasse trechos relevantes para contextualizar as correções. A persistência no PostgreSQL garantiu a durabilidade e a rastreabilidade dos dados ao longo de todo o fluxo de execução.
 
 \subsection{Viabilidade operacional}
 
-Do ponto de vista operacional, o sistema preserva a autoridade docente ao posicionar a correção automatizada como etapa de apoio, não de decisão final. O professor tem acesso aos resultados por meio da a API REST, que permite integração com outros sistemas institucionais.
+Do ponto de vista operacional, o sistema preserva a autoridade docente ao posicionar a correção automatizada como etapa de apoio, não de decisão final. O professor tem acesso aos resultados por meio da \gls{api} REST, que permite integração com outros sistemas institucionais.
 
 O sistema demonstrou operação autônoma durante o fluxo de correção, sem necessidade de intervenção manual entre as etapas. O tempo de execução de aproximadamente $155$ segundos para 12 respostas (Condição A) indica que a etapa de correção automatizada é concluída em tempo substancialmente inferior ao que seria demandado pela correção manual, ainda que uma comparação rigorosa exigiria mensuração controlada do tempo docente real para o mesmo conjunto de respostas.
 
-\subsection{Contribuição do RAG}
+\subsection{Contribuição do \texorpdfstring{\gls{rag}}{RAG}}
 
-Os dados pareados da comparação entre Condições A e B revelam que o mecanismo de RAG aumenta a especificidade avaliativa: ao dispor do material didático, o corretor passa a avaliar com maior aderência ao conteúdo programático da disciplina, em vez de se apoiar apenas no conhecimento paramétrico genérico do modelo. Esse aumento de especificidade não implica necessariamente notas mais altas, podendo resultar tanto em notas maiores, quando o material confirma acertos parciais que poderiam ser subestimados, quanto em notas menores, quando o material expõe lacunas que passariam despercebidas sem a referência.
+Os dados pareados da comparação entre Condições A e B revelam que o mecanismo de \gls{rag} aumenta a especificidade avaliativa: ao dispor do material didático, o corretor passa a avaliar com maior aderência ao conteúdo programático da disciplina, em vez de se apoiar apenas no conhecimento paramétrico genérico do modelo. Esse aumento de especificidade não implica necessariamente notas mais altas, podendo resultar tanto em notas maiores, quando o material confirma acertos parciais que poderiam ser subestimados, quanto em notas menores, quando o material expõe lacunas que passariam despercebidas sem a referência.
 
-No experimento, o efeito predominante foi positivo no nível intermediário ($\Delta = +0{,}84$), onde o material recuperado forneceu ao corretor a referência necessária para reconhecer o conhecimento parcial demonstrado. Já no nível fraco, o efeito foi modesto na média ($\Delta = +0{,}12$), com Q3 registrando leve redução ($\Delta = -0{,}55$), evidência de que o RAG também pode tornar o corretor mais rigoroso quando o material deixa mais clara a distância entre a resposta e o conteúdo esperado.
+No experimento, o efeito predominante foi positivo no nível intermediário ($\Delta = +0{,}84$), onde o material recuperado forneceu ao corretor a referência necessária para reconhecer o conhecimento parcial demonstrado. Já no nível fraco, o efeito foi modesto na média ($\Delta = +0{,}12$), com Q3 registrando leve redução ($\Delta = -0{,}55$), evidência de que o \gls{rag} também pode tornar o corretor mais rigoroso quando o material deixa mais clara a distância entre a resposta e o conteúdo esperado.
 
-Os níveis ``Excelente'' e ``Fora do tema'' não foram afetados pelo RAG, resultado esperado: o LLM identifica esses casos com igual precisão independentemente do contexto adicional, pois a distinção entre uma resposta completa e uma resposta irrelevante não requer referência ao material didático.
+Os níveis ``Excelente'' e ``Fora do tema'' não foram afetados pelo \gls{rag}, resultado esperado: o \gls{llm} identifica esses casos com igual precisão independentemente do contexto adicional, pois a distinção entre uma resposta completa e uma resposta irrelevante não requer referência ao material didático.
 
 \subsection{Limitações observadas}
 

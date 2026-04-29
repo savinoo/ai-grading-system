@@ -4,6 +4,6 @@
 \contentsline {figure}{\numberline {3}{\ignorespaces Fluxograma do subprocesso de correção da resposta, com acionamento condicional do Corretor 3 por limiar de divergência}}{42}{figure.caption.19}%
 \contentsline {figure}{\numberline {4}{\ignorespaces Visão geral da arquitetura do sistema}}{53}{figure.caption.21}%
 \contentsline {figure}{\numberline {5}{\ignorespaces Fluxo de requisição e resposta entre camadas do backend}}{55}{figure.caption.23}%
-\contentsline {figure}{\numberline {6}{\ignorespaces Pipeline de correção com RAG e arbitragem por divergência}}{58}{figure.caption.24}%
-\contentsline {figure}{\numberline {7}{\ignorespaces Modelo entidade-relacionamento (ER) simplificado do domínio}}{64}{figure.caption.26}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Pipeline de correção com \gls {rag} e arbitragem por divergência}}{58}{figure.caption.24}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Modelo entidade-relacionamento simplificado do domínio}}{64}{figure.caption.26}%
 \contentsline {figure}{\numberline {8}{\ignorespaces Esquema completo do banco de dados relacional}}{92}{figure.caption.44}%
