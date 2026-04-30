@@ -1,30 +1,34 @@
-\backcite {young_recent_2018, otter_survey_2021}{{1}{1}{chapter.1}}
-\backcite {young_recent_2018, otter_survey_2021}{{1}{1}{chapter.1}}
-\backcite {torfi_natural_2021}{{1}{1}{chapter.1}}
-\backcite {young_recent_2018, otter_survey_2021}{{1}{1}{chapter.1}}
-\backcite {young_recent_2018, otter_survey_2021}{{1}{1}{chapter.1}}
-\backcite {vaswani_attention_2023}{{1}{1}{chapter.1}}
-\backcite {chen_evaluating_2021}{{1}{1}{chapter.1}}
-\backcite {paixao_machine_2022}{{1}{1}{chapter.1}}
-\backcite {lai_large_2024}{{1}{1}{chapter.1}}
-\backcite {pessanha_large_2024}{{1}{1}{chapter.1}}
-\backcite {shahzad_comprehensive_2025}{{1}{1}{chapter.1}}
-\backcite {carnaval_desigualdade_2021}{{1}{1}{chapter.1}}
-\backcite {gatti_formacao_2017}{{1}{1}{chapter.1}}
-\backcite {silva_politicas_2020}{{1}{1}{chapter.1}}
-\backcite {santos_articulacao_2016}{{2}{1}{chapter.1}}
-\backcite {borges_avaliacao_2017}{{2}{1}{chapter.1}}
-\backcite {borges_avaliacao_2017, shahzad_comprehensive_2025}{{2}{1}{chapter.1}}
-\backcite {borges_avaliacao_2017, shahzad_comprehensive_2025}{{2}{1}{chapter.1}}
-\backcite {barbosa_tempo_2021}{{3}{1.2}{section.1.2}}
-\backcite {bottentuit_junior_inteligencia_2024}{{3}{1.2}{section.1.2}}
-\backcite {gatti_formacao_2017}{{3}{1.2}{section.1.2}}
-\backcite {borges_avaliacao_2017}{{4}{1.2}{section.1.2}}
-\backcite {santos_articulacao_2016}{{4}{1.2}{section.1.2}}
+\backcite {young_recent_2018, otter_survey_2021}{{1}{1.1}{section.1.1}}
+\backcite {young_recent_2018, otter_survey_2021}{{1}{1.1}{section.1.1}}
+\backcite {torfi_natural_2021}{{1}{1.1}{section.1.1}}
+\backcite {young_recent_2018, otter_survey_2021}{{1}{1.1}{section.1.1}}
+\backcite {young_recent_2018, otter_survey_2021}{{1}{1.1}{section.1.1}}
+\backcite {vaswani_attention_2023}{{1}{1.1}{section.1.1}}
+\backcite {chen_evaluating_2021}{{1}{1.1}{section.1.1}}
+\backcite {paixao_machine_2022}{{1}{1.1}{section.1.1}}
+\backcite {lai_large_2024}{{1}{1.1}{section.1.1}}
+\backcite {pessanha_large_2024}{{1}{1.1}{section.1.1}}
+\backcite {shahzad_comprehensive_2025}{{1}{1.1}{section.1.1}}
+\backcite {carnaval_desigualdade_2021}{{2}{1.2}{section.1.2}}
+\backcite {gatti_formacao_2017}{{2}{1.2}{section.1.2}}
+\backcite {silva_politicas_2020}{{2}{1.2}{section.1.2}}
+\backcite {santos_articulacao_2016}{{2}{1.2}{section.1.2}}
+\backcite {borges_avaliacao_2017}{{2}{1.2}{section.1.2}}
+\backcite {lima_aesvoting_2024}{{2}{1.3}{section.1.3}}
+\backcite {pinho_aplicacao_2024}{{2}{1.3}{section.1.3}}
+\backcite {dias_correcao_2023}{{2}{1.3}{section.1.3}}
+\backcite {seo_large_2025}{{2}{1.3}{section.1.3}}
+\backcite {heggler_as_2025}{{2}{1.3}{section.1.3}}
+\backcite {borges_avaliacao_2017, shahzad_comprehensive_2025}{{2}{1.3}{section.1.3}}
+\backcite {borges_avaliacao_2017, shahzad_comprehensive_2025}{{2}{1.3}{section.1.3}}
+\backcite {barbosa_tempo_2021}{{3}{1.5}{section.1.5}}
+\backcite {borges_avaliacao_2017}{{4}{1.5}{section.1.5}}
+\backcite {santos_articulacao_2016}{{4}{1.5}{section.1.5}}
+\backcite {pinho_aplicacao_2024}{{4}{1.5}{section.1.5}}
 \backcite {carregari_luckesi_2024}{{5}{2.1.1}{subsection.2.1.1}}
 \backcite {lima_avaliacao_2023}{{6}{2.1.2}{subsection.2.1.2}}
 \backcite {barbosa_tempo_2021}{{6}{1}{Item.5}}
-\backcite {pinho_aplicacao_2024}{{7}{4}{Item.8}}
+\backcite {pinho_aplicacao_2024}{{6}{4}{Item.8}}
 \backcite {barroso_subjetividade_2021}{{7}{2.1.3}{subsection.2.1.3}}
 \backcite {barroso_subjetividade_2021}{{7}{2.1.3}{subsection.2.1.3}}
 \backcite {borges_avaliacao_2017}{{7}{2.1.3}{subsection.2.1.3}}
@@ -33,7 +37,7 @@
 \backcite {lima_avaliacao_2023}{{9}{2.2.2}{subsection.2.2.2}}
 \backcite {barbosa_tempo_2021}{{9}{1}{Item.19}}
 \backcite {barbosa_tempo_2021}{{9}{2}{Item.20}}
-\backcite {pinho_aplicacao_2024}{{10}{4}{Item.22}}
+\backcite {pinho_aplicacao_2024}{{9}{4}{Item.22}}
 \backcite {lima_avaliacao_2023}{{10}{2.2.2}{Item.24}}
 \backcite {barroso_subjetividade_2021}{{10}{2.2.3}{subsection.2.2.3}}
 \backcite {barroso_subjetividade_2021}{{10}{2.2.3}{subsection.2.2.3}}
@@ -89,7 +93,7 @@
 \backcite {gao_retrieval-augmented_2024, ram_-context_2023}{{22}{3}{Item.70}}
 \backcite {kitchenham_guidelines_2007}{{25}{3.1.2}{subsection.3.1.2}}
 \backcite {kitchenham_guidelines_2007}{{25}{3.1.2}{subsection.3.1.2}}
-\backcite {kitchenham_guidelines_2007}{{26}{3.1.2}{quadro.caption.16}}
+\backcite {kitchenham_guidelines_2007}{{26}{3.1.2}{quadro.caption.14}}
 \backcite {kitchenham_guidelines_2007}{{27}{2}{Item.77}}
 \backcite {janumpally_role_2025}{{29}{2}{table.3.1}}
 \backcite {li_applying_2024}{{29}{2}{table.3.1}}

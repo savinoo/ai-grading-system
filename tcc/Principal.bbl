@@ -105,6 +105,18 @@ Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2412.17481}. Acesso em: 6 maio
 Dispon{\'\i}vel em: \url{https://docs.trychroma.com/}. Acesso em: 22 mar.
   2026.}
 
+\bibitem[Dias et al. 2023]{dias_correcao_2023}
+\abntrefinfo{Dias et al.}{Dias et al.}{2023}
+{DIAS, A. N. d.~L. et al. {CORREÇÃO} {AUTOMATIZADA} {DE} {QUESTÕES}
+  {DISSERTATIVAS} {UTILIZANDO} {MEDIDAS} {DE} {SIMILARIDADE} {E}
+  {PROCESSAMENTO} {DE} {LINGUAGEM} {NATURAL}.
+\emph{Colloquium Exactarum. ISSN: 2178-8332}, v.~15, n.~1, p. e234595--e234595,
+  ago. 2023.
+ISSN 2178-8332.
+Dispon{\'\i}vel em:
+  \url{https://journal.unoeste.br/index.php/ce/article/view/4595}. Acesso em: 1
+  abr. 2025.}
+
 \bibitem[{Docker, Inc.} 2026]{docker_compose_docs_2026}
 \abntrefinfo{{Docker, Inc.}}{{Docker, Inc.}}{2026a}
 {{Docker, Inc.} \emph{Docker Compose Documentation}. 2026.
@@ -214,18 +226,6 @@ Dispon{\'\i}vel em:
   \url{https://www.cureus.com/articles/334867-the-role-of-natural-language-processing-in-graduate-medical-education-a-scoping-review}.
   Acesso em: 12 maio 2025.}
 
-\bibitem[Junior et al. 2024]{bottentuit_junior_inteligencia_2024}
-\abntrefinfo{Junior et al.}{Junior et al.}{2024}
-{JUNIOR, J.~B. B. et al. Inteligência artificial no ensino superior: uma
-  revisão de literatura sobre desafios e possibilidades no contexto
-  acadêmico.
-\emph{PoliÉtica. Revista de Ética e Filosofia Política}, v.~12, n.~3, p.
-  145--171, nov. 2024.
-ISSN 2318-3160.
-Dispon{\'\i}vel em:
-  \url{https://revistas.pucsp.br/index.php/PoliEtica/article/view/68116}.
-  Acesso em: 7 maio 2025.}
-
 \bibitem[Khattab e Zaharia 2020]{khattab_colbert_2020}
 \abntrefinfo{Khattab e Zaharia}{Khattab; Zaharia}{2020}
 {KHATTAB, O.; ZAHARIA, M. \emph{{ColBERT}: {Efficient} and {Effective}
@@ -289,6 +289,16 @@ Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2005.11401}. Acesso em: 6 maio
 ISSN 2662-9992.
 Dispon{\'\i}vel em: \url{https://www.nature.com/articles/s41599-024-03209-9}.
   Acesso em: 12 maio 2025.}
+
+\bibitem[Lima, Freitas e Macario 2024]{lima_aesvoting_2024}
+\abntrefinfo{Lima, Freitas e Macario}{Lima; Freitas; Macario}{2024}
+{LIMA, T. B.~d.; FREITAS, E.; MACARIO, V. {AESVoting}: {Automatic} {Essay}
+  {Scoring} with {Bert} and {Voting} {Classifiers}. In:  GAMALLO, P. et al.
+  (Ed.). \emph{Proceedings of the 16th {International} {Conference} on
+  {Computational} {Processing} of {Portuguese} - {Vol}. 2}. Santiago de
+  Compostela, Galicia/Spain: Association for Computational Lingustics, 2024.
+  p.~6--9. Dispon{\'\i}vel em: \url{https://aclanthology.org/2024.propor-2.2/}.
+  Acesso em: 28 abr. 2025.}
 
 \bibitem[Lima et al. 2023]{lima_avaliacao_2023}
 \abntrefinfo{Lima et al.}{Lima et al.}{2023}
