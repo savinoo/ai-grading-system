@@ -167,6 +167,8 @@ Para avaliar estabilidade (QA4), seleciona-se um subconjunto de \(A_{rep}=4\) re
     \source{Elaborado pelos autores.}
 \end{quadro}
 
+A escolha dos parâmetros segue critérios de defensibilidade técnica. O modelo \texttt{gemini-2.5-flash} foi adotado pelo balanço entre custo, latência e qualidade adequado ao escopo experimental. A temperatura $0{,}0$ corresponde a um regime de \textit{decoding} determinístico, requisito metodológico para a análise de estabilidade (QA4): variações entre rodadas devem refletir comportamento intrínseco do modelo, não amostragem estocástica. O parâmetro $k=4$ na recuperação \gls{rag} situa-se na faixa intermediária recomendada em revisões da técnica \cite{finardi_chronicles_2024}, equilibrando cobertura semântica e ruído de recuperação. O limiar de divergência $2{,}0$ pontos segue a lógica estrutural do protocolo oficial de correção do \gls{enem} \cite{inep_cartilha_redacao_2024}, detalhada no \autoref{cap:desenvolvimento}, em que um terceiro avaliador é convocado quando a discrepância entre corretores excede um limiar predefinido. As quantidades $Q=3$, $A=4$ e $R=3$ representam o mínimo necessário para observar, simultaneamente, variação entre níveis de qualidade ($A$), comportamento sob diferentes questões ($Q$) e estabilidade entre execuções repetidas ($R$), sem inviabilizar o orçamento de chamadas ao modelo no escopo do trabalho.
+
 \subsection{Procedimento experimental}
 O procedimento é dividido em duas condições para observar o efeito do RAG, mantendo as demais variáveis constantes.
 
