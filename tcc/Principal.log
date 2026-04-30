@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.27)  30 APR 2026 20:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.27)  30 APR 2026 21:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2116,7 +2116,7 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
 (Font)              Font shape `T1/lmss/m/sl' tried instead on input line 89.
  [44] [45]
 [46] [47] [48] [49] [50]) (./textual/t5-desenvolvimento.tex [51]
-<media/arquitetura_sistema.png, id=1097, 1276.77pt x 523.9575pt>
+<media/arquitetura_sistema.png, id=1105, 1276.77pt x 523.9575pt>
 File: media/arquitetura_sistema.png Graphic file (type png)
 <use media/arquitetura_sistema.png>
 Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 17.
@@ -2124,13 +2124,13 @@ Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 17.
  [52
 
  <./media/arquitetura_sistema.png>] [53]
-<media/fluxo_requisicao.png, id=1109, 1102.1175pt x 519.9425pt>
+<media/fluxo_requisicao.png, id=1117, 1102.1175pt x 519.9425pt>
 File: media/fluxo_requisicao.png Graphic file (type png)
 <use media/fluxo_requisicao.png>
 Package pdftex.def Info: media/fluxo_requisicao.png  used on input line 89.
 (pdftex.def)             Requested size: 454.99905pt x 214.65347pt.
  [54 <./media/fluxo_requisicao.png>] [55]
-<media/pipeline.png, id=1121, 362.35374pt x 512.91624pt>
+<media/pipeline.png, id=1129, 362.35374pt x 512.91624pt>
 File: media/pipeline.png Graphic file (type png)
 <use media/pipeline.png>
 Package pdftex.def Info: media/pipeline.png  used on input line 127.
@@ -2139,7 +2139,7 @@ Package pdftex.def Info: media/pipeline.png  used on input line 127.
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 ) [57 <./media/pipeline.png>] [58] [59] [60] [61]
-<media/er.png, id=1181, 1439.3775pt x 1887.05pt>
+<media/er.png, id=1188, 1439.3775pt x 1887.05pt>
 File: media/er.png Graphic file (type png)
 <use media/er.png>
 Package pdftex.def Info: media/er.png  used on input line 226.
@@ -2196,7 +2196,7 @@ bibitemlist
 
 
 ] (./pos/apendice-schema-completo.tex
-<media/sql_schemas.png, id=1553, 1378.14874pt x 966.61125pt>
+<media/sql_schemas.png, id=1563, 1378.14874pt x 966.61125pt>
 File: media/sql_schemas.png Graphic file (type png)
 <use media/sql_schemas.png>
 Package pdftex.def Info: media/sql_schemas.png  used on input line 10.
@@ -2519,14 +2519,14 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `Principal.brf' has not changed.
-(rerunfilecheck)             Checksum: 55BB8C26794D3EDBE49D75506103EB55;9321.
+(rerunfilecheck)             Checksum: F92F369D9350822FD23C748AD6A99C67;9460.
  ) 
 Here is how much of TeX's memory you used:
- 49601 strings out of 476089
- 923786 string characters out of 5793232
+ 49615 strings out of 476089
+ 924110 string characters out of 5793232
  2058975 words of memory out of 5000000
- 69704 multiletter control sequences out of 15000+600000
- 681054 words of font info for 324 fonts, out of 8000000 for 9000
+ 69713 multiletter control sequences out of 15000+600000
+ 681228 words of font info for 326 fonts, out of 8000000 for 9000
  61 hyphenation exceptions out of 8191
  104i,16n,139p,2377b,1561s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
@@ -2542,10 +2542,10 @@ fb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts
 /type1/public/lm/lmsso12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso17.pf
 b></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on build/Principal.pdf (112 pages, 1148059 bytes).
+Output written on build/Principal.pdf (112 pages, 1150225 bytes).
 PDF statistics:
- 2141 PDF objects out of 2487 (max. 8388607)
- 1966 compressed objects within 20 object streams
- 474 named destinations out of 1000 (max. 500000)
+ 2152 PDF objects out of 2487 (max. 8388607)
+ 1977 compressed objects within 20 object streams
+ 475 named destinations out of 1000 (max. 500000)
  64569 words of extra memory for PDF output out of 74296 (max. 10000000)
 

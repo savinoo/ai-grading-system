@@ -151,6 +151,14 @@ Dispon{\'\i}vel em:
   \url{https://journal2.upgris.ac.id/index.php/eternal/article/view/1206}.
   Acesso em: 12 maio 2025.}
 
+\bibitem[Finardi et al. 2024]{finardi_chronicles_2024}
+\abntrefinfo{Finardi et al.}{Finardi et al.}{2024}
+{FINARDI, P. et al. \emph{The {Chronicles} of {RAG}: {The} {Retriever}, the
+  {Chunk} and the {Generator}}. arXiv, 2024.
+ArXiv:2401.07883.
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2401.07883}. Acesso em: 26 fev.
+  2025.}
+
 \bibitem[Gao et al. 2022]{gao_precise_2022}
 \abntrefinfo{Gao et al.}{Gao et al.}{2022}
 {GAO, L. et al. \emph{Precise {Zero}-{Shot} {Dense} {Retrieval} without

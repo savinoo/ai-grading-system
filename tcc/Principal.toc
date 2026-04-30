@@ -74,11 +74,11 @@
 \contentsline {subsection}{\numberline {4.4.3}Desenho do estudo}{46}{subsection.4.4.3}%
 \contentsline {subsection}{\numberline {4.4.4}Parâmetros experimentais}{47}{subsection.4.4.4}%
 \contentsline {subsection}{\numberline {4.4.5}Procedimento experimental}{48}{subsection.4.4.5}%
-\contentsline {subsection}{\numberline {4.4.6}Evidências coletadas}{48}{subsection.4.4.6}%
+\contentsline {subsection}{\numberline {4.4.6}Evidências coletadas}{49}{subsection.4.4.6}%
 \contentsline {subsection}{\numberline {4.4.7}Métricas simples}{49}{subsection.4.4.7}%
-\contentsline {subsection}{\numberline {4.4.8}Critérios de sucesso}{49}{subsection.4.4.8}%
+\contentsline {subsection}{\numberline {4.4.8}Critérios de sucesso}{50}{subsection.4.4.8}%
 \contentsline {subsection}{\numberline {4.4.9}Ameaças à validade}{50}{subsection.4.4.9}%
-\contentsline {subsection}{\numberline {4.4.10}Reprodutibilidade}{50}{subsection.4.4.10}%
+\contentsline {subsection}{\numberline {4.4.10}Reprodutibilidade}{51}{subsection.4.4.10}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{Desenvolvimento}}{52}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Arquitetura do sistema}{52}{section.5.1}%

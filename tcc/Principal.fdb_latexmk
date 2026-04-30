@@ -1,20 +1,20 @@
 # Fdb version 4
-["bibtex build/Principal"] 1777582744.07611 "build/Principal.aux" "build/Principal.bbl" "build/Principal" 1777582747.58912 0
+["bibtex build/Principal"] 1777582961.40543 "build/Principal.aux" "build/Principal.bbl" "build/Principal" 1777582966.47898 0
   "./Referencias.bib" 1777576487.85171 150347 fbf88f0c352a8e5f790614c2d41fe216 ""
   "./abntex2-alf.bst" 1777576487.85271 60089 0d69dfa473b1d18ec0d0bfb8b23d9d53 ""
   "/usr/share/texlive/texmf-dist/bibtex/bib/abntex2/abntex2-options.bib" 1357081713 5396 4eb260dac60f150ae608d45252853090 ""
-  "build/Principal.aux" 1777582747.19357 132068 c7cd4e0272115df81e65133cb6d74628 "pdflatex"
+  "build/Principal.aux" 1777582965.87699 132682 0e768a09ba5d95fca7a381f412661426 "pdflatex"
   (generated)
   "build/Principal.bbl"
   "build/Principal.blg"
   (rewritten before read)
-["makeindex build/Principal.idx"] 1777577138.41252 "build/Principal.idx" "build/Principal.ind" "build/Principal" 1777582747.58897 0
-  "build/Principal.idx" 1777582744.94257 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+["makeindex build/Principal.idx"] 1777577138.41252 "build/Principal.idx" "build/Principal.ind" "build/Principal" 1777582966.47878 0
+  "build/Principal.idx" 1777582962.85298 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   (generated)
   "build/Principal.ilg"
   "build/Principal.ind"
   (rewritten before read)
-["pdflatex"] 1777582744.14151 "Principal.tex" "build/Principal.pdf" "Principal" 1777582747.58937 0
+["pdflatex"] 1777582961.52314 "Principal.tex" "build/Principal.pdf" "Principal" 1777582966.47948 0
   "/etc/texmf/web2c/texmf.cnf" 1774632800.99797 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -378,15 +378,15 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774633023 6831957 301e33f48c9fdbf364a25fe663a0f10f ""
   "Principal.tex" 1777576487.85071 2911 3212000df323b632ec79593b59b870cd ""
   "abntex2.cls" 1777576487.85371 37987 566dd65c99748b7ab5b3d7d3986844e7 ""
-  "build/Principal.aux" 1777582747.19357 132068 c7cd4e0272115df81e65133cb6d74628 "pdflatex"
-  "build/Principal.bbl" 1777582744.13156 24776 e0b5236afafd49cd22e4707d92200cab "bibtex build/Principal"
-  "build/Principal.brf" 1777582747.23257 9321 55bb8c26794d3edbe49d75506103eb55 "pdflatex"
+  "build/Principal.aux" 1777582965.87699 132682 0e768a09ba5d95fca7a381f412661426 "pdflatex"
+  "build/Principal.bbl" 1777582961.50798 25109 5ea720bd95291e15153b13000df9576a "bibtex build/Principal"
+  "build/Principal.brf" 1777582965.93299 9460 f92f369d9350822fd23c748ad6a99c67 "pdflatex"
   "build/Principal.ind" 1777577138.50504 0 d41d8cd98f00b204e9800998ecf8427e "makeindex build/Principal.idx"
-  "build/Principal.loc" 1777582747.23457 128 59e97a507db1a85a9ad3965424028653 "pdflatex"
-  "build/Principal.lof" 1777582747.23357 1221 55ecc6311b9e1654737d11da7e2b6207 "pdflatex"
-  "build/Principal.loq" 1777582747.23457 999 ed57951793133096039a80b0fdf537c1 "pdflatex"
-  "build/Principal.lot" 1777582747.23457 1210 04583d9ceddbf9c6384bdcc66f026aaa "pdflatex"
-  "build/Principal.toc" 1777582747.23457 13098 f01480d65028b9fb5c921bb749cb5138 "pdflatex"
+  "build/Principal.loc" 1777582965.93399 128 59e97a507db1a85a9ad3965424028653 "pdflatex"
+  "build/Principal.lof" 1777582965.93399 1221 55ecc6311b9e1654737d11da7e2b6207 "pdflatex"
+  "build/Principal.loq" 1777582965.93399 999 ed57951793133096039a80b0fdf537c1 "pdflatex"
+  "build/Principal.lot" 1777582965.93399 1210 04583d9ceddbf9c6384bdcc66f026aaa "pdflatex"
+  "build/Principal.toc" 1777582965.93399 13098 8b31b4a55a12b79f46f7b4bc0312b673 "pdflatex"
   "configuracao.tex" 1777576487.85571 10950 4138bd1677c8c9b3443deb61884cff00 ""
   "media/arquitetura_sistema.png" 1777576487.86071 95067 b707b518c49fedac1ec0d68025713cb8 ""
   "media/er.png" 1777576487.86171 184776 c5f05093a24f006558d8f11715876ad8 ""
@@ -413,7 +413,7 @@
   "textual/t1-introducao.tex" 1777576966.87331 10989 5fae4b903279b7d9a76ff04ed14a583c ""
   "textual/t2-fundamentacao.tex" 1777582701.41746 47520 b9d9bb3f27297b55364d90d0e18a3f9e ""
   "textual/t3-trabalhos.tex" 1777577025.22357 42741 f3c988775f61ae49f73273cb27e6222e ""
-  "textual/t4-material.tex" 1777576487.93671 25305 fd6e91b5ad9f2597a92976d5c2501561 ""
+  "textual/t4-material.tex" 1777582933.04293 26595 ffe94f319d85b9c4f3df0a50ef70533b ""
   "textual/t5-desenvolvimento.tex" 1777576487.93771 32627 73701f1c5b503a65e7d8e5650b6cf3a0 ""
   "textual/t6-resultados.tex" 1777576487.93771 36839 d42569b2b4157319831960e66b747696 ""
   "textual/t7-conclusoes.tex" 1777576487.93771 7074 edd8c9054b7ef0d0f3f2aab451faa5fd ""
