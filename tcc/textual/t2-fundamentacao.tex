@@ -24,14 +24,10 @@ A avaliação discursiva, caracterizada pela proposição de questões abertas q
 
 Conforme apontado por \citeonline{lima_avaliacao_2023}, a correção de questões dissertativas constitui tarefa não trivial, exigindo do avaliador competências específicas e tempo considerável para a análise das respostas. O processo envolve a interpretação do conteúdo produzido pelo estudante, a identificação de elementos conceituais relevantes e o julgamento sobre a qualidade da argumentação desenvolvida.
 
-Entre os principais desafios da avaliação discursiva, destacam-se:
+Entre os principais desafios da avaliação discursiva, destacam-se aqueles relacionados ao desenho e à aplicação do instrumento avaliativo:
 
 \begin{enumerate}
-    \item \textbf{Tempo demandado para correção:} A disponibilidade de tempo da maioria dos educadores é limitada, o que dificulta o processo de ensino-aprendizagem dos estudantes. O tempo gasto para corrigir uma avaliação é extenso, e frequentemente o educador não consegue manter o mesmo nível de correção para todos os eventos \cite{barbosa_tempo_2021}.
-
     \item \textbf{Estabelecimento de critérios claros:} A definição de parâmetros objetivos para avaliação de respostas abertas representa desafio considerável, especialmente em áreas que envolvem interpretação e argumentação.
-
-    \item \textbf{Variabilidade entre avaliadores:} Diferentes corretores podem atribuir valores distintos à mesma resposta, dependendo de sua formação, experiência e concepções pedagógicas.
 
     \item \textbf{Escala de aplicação:} Para instituições como escolas de ensino básico e fundamental, universidades e o \gls{enem}, a atividade de correção demanda tempo e custo significativos para a avaliação dos textos produzidos \cite{pinho_aplicacao_2024}.
 
@@ -39,7 +35,7 @@ Entre os principais desafios da avaliação discursiva, destacam-se:
 
 \end{enumerate}
 
-Estes desafios tornam-se ainda mais evidentes em avaliações de larga escala, como vestibulares e exames nacionais, onde a padronização dos critérios e a equidade no processo avaliativo são requisitos fundamentais.
+Os desafios operacionais decorrentes da execução da correção --- tempo demandado, variabilidade entre avaliadores e fadiga --- são abordados de forma específica na \autoref{sec:correcao-manual}, dedicada à correção manual de provas discursivas. Os desafios listados acima, por sua vez, tornam-se ainda mais evidentes em avaliações de larga escala, como vestibulares e exames nacionais, onde a padronização dos critérios e a equidade no processo avaliativo são requisitos fundamentais.
 
 \subsection{Subjetividade na Avaliação de Questões Dissertativas}
 
@@ -115,17 +111,11 @@ Estes desafios tornam-se particularmente evidentes em contextos educacionais con
 
 A subjetividade inerente ao processo de avaliação manual de provas discursivas constitui elemento de particular relevância, com impactos significativos sobre a validade e a confiabilidade dos resultados obtidos. \citeonline{barroso_subjetividade_2021} investigaram especificamente se a subjetividade pode influenciar a avaliação da aprendizagem, inclusive interferindo na progressão do estudante para séries posteriores, confirmando esta hipótese através de estudos bibliográficos.
 
-Para \citeonline{barroso_subjetividade_2021}, o impacto da subjetividade manifesta-se em múltiplas dimensões do processo avaliativo:
+Os efeitos de halo, contraste, estereotipia, ordem e fadiga, descritos sob a perspectiva docimológica na \autoref{sec:avaliacao-educacional}, manifestam-se de modo concreto durante a execução da correção manual. Sobre esses efeitos individuais, no contexto específico da prática avaliativa, agregam-se duas dimensões adicionais que envolvem diretamente o instrumento e o ambiente de trabalho:
 
 \begin{enumerate}
-    \item  \textbf{Variabilidade entre avaliadores:} Diferentes corretores podem atribuir valores distintos à mesma resposta, fenômeno conhecido como "efeito avaliador". \citeonline{barroso_subjetividade_2021} destacam que esta variabilidade pode ser significativa, especialmente em áreas que envolvem a interpretação e o julgamento de argumentos.
-    
-    \item  \textbf{Inconsistência intra-avaliador:} Um mesmo avaliador pode aplicar critérios diferentes em momentos distintos do processo de correção, influenciado por fatores como fadiga, ordem das provas ou comparação entre respostas.
-    
-    \item  \textbf{Vieses inconscientes:} Expectativas prévias, estereótipos ou conhecimento anterior sobre o estudante podem influenciar o julgamento do avaliador, comprometendo a objetividade da avaliação.
-    
     \item  \textbf{Interpretação de critérios:} Mesmo quando existem rubricas ou critérios formalizados, sua interpretação pode variar entre avaliadores, resultando em diferenças significativas na atribuição de notas.
-    
+
     \item  \textbf{Efeitos contextuais:} Fatores como ambiente de correção, pressão de tempo e estado emocional do avaliador podem afetar o processo de julgamento, introduzindo variabilidade adicional nos resultados.
 \end{enumerate}
 
@@ -316,7 +306,7 @@ Um prompt, no contexto de LLMs, é mais do que uma simples pergunta; é uma inst
 No contexto do presente trabalho, quatro técnicas de engenharia de prompt foram empregadas de forma complementar nos agentes corretores \cite{sahoo_systematic_2025}:
 
 \begin{enumerate}
-    \item \textbf{\textit{Prompting Zero-Shot} e \textit{Few-Shot}:} No \textit{zero-shot}, o prompt contém apenas a instrução, sem exemplos; no \textit{few-shot}, demonstrações ilustrativas são incluídas para orientar o comportamento do modelo \cite{sahoo_systematic_2025}. Uma limitação do \textit{few-shot} manual é a sensibilidade à escolha e à ordem dos exemplos, o que pode introduzir variabilidade no desempenho. Para mitigar esse problema, o módulo \texttt{BootstrapFewShot} do DSPy adota uma abordagem de otimização automática: executa o pipeline sobre um conjunto de dados de treinamento, coleta as execuções bem-sucedidas e as incorpora automaticamente ao prompt como demonstrações, refinando iterativamente as instruções para maximizar uma métrica de desempenho definida pelo desenvolvedor \cite{dspy_docs_2026}. No presente trabalho, o DSPy com \texttt{BootstrapFewShot} foi empregado como ferramenta auxiliar de otimização \textit{offline} dos prompts dos agentes corretores, separado do fluxo de inferência em produção.
+    \item \textbf{\textit{Prompting Zero-Shot} e \textit{Few-Shot}:} No \textit{zero-shot}, o prompt contém apenas a instrução, sem exemplos; no \textit{few-shot}, demonstrações ilustrativas são incluídas para orientar o comportamento do modelo \cite{sahoo_systematic_2025}. Uma limitação do \textit{few-shot} manual é a sensibilidade à escolha e à ordem dos exemplos, o que pode introduzir variabilidade no desempenho. Para mitigar esse problema, o módulo \texttt{BootstrapFewShot} do \gls{dspy} adota uma abordagem de otimização automática: executa o pipeline sobre um conjunto de dados de treinamento, coleta as execuções bem-sucedidas e as incorpora automaticamente ao prompt como demonstrações, refinando iterativamente as instruções para maximizar uma métrica de desempenho definida pelo desenvolvedor \cite{dspy_docs_2026}. No presente trabalho, o \gls{dspy} com \texttt{BootstrapFewShot} foi empregado como ferramenta auxiliar de otimização \textit{offline} dos prompts dos agentes corretores, separado do fluxo de inferência em produção.
 
     \item \textbf{\textit{Chain-of-Thought} (\gls{cot}):} Instrui o modelo a desenvolver um raciocínio passo a passo antes de produzir a resposta final, tornando o processo de decisão explícito e auditável \cite{wei_chain--thought_2023}. No sistema desenvolvido, os agentes corretores são orientados a analisar cada critério da rubrica individualmente, registrando a pontuação parcial ao final de cada etapa; esse raciocínio é armazenado no campo \texttt{reasoning\_chain} da saída estruturada, permitindo rastreabilidade completa da avaliação.
 
