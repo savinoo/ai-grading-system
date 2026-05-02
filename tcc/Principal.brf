@@ -1,30 +1,30 @@
-\backcite {young_recent_2018, otter_survey_2021}{{1}{1.1}{section.1.1}}
-\backcite {young_recent_2018, otter_survey_2021}{{1}{1.1}{section.1.1}}
-\backcite {torfi_natural_2021}{{1}{1.1}{section.1.1}}
-\backcite {young_recent_2018, otter_survey_2021}{{1}{1.1}{section.1.1}}
-\backcite {young_recent_2018, otter_survey_2021}{{1}{1.1}{section.1.1}}
-\backcite {vaswani_attention_2023}{{1}{1.1}{section.1.1}}
-\backcite {chen_evaluating_2021}{{1}{1.1}{section.1.1}}
-\backcite {paixao_machine_2022}{{1}{1.1}{section.1.1}}
-\backcite {lai_large_2024}{{1}{1.1}{section.1.1}}
-\backcite {pessanha_large_2024}{{1}{1.1}{section.1.1}}
-\backcite {shahzad_comprehensive_2025}{{1}{1.1}{section.1.1}}
-\backcite {carnaval_desigualdade_2021}{{2}{1.2}{section.1.2}}
-\backcite {gatti_formacao_2017}{{2}{1.2}{section.1.2}}
-\backcite {silva_politicas_2020}{{2}{1.2}{section.1.2}}
-\backcite {santos_articulacao_2016}{{2}{1.2}{section.1.2}}
-\backcite {borges_avaliacao_2017}{{2}{1.2}{section.1.2}}
-\backcite {lima_aesvoting_2024}{{2}{1.3}{section.1.3}}
-\backcite {pinho_aplicacao_2024}{{2}{1.3}{section.1.3}}
-\backcite {dias_correcao_2023}{{2}{1.3}{section.1.3}}
-\backcite {seo_large_2025}{{2}{1.3}{section.1.3}}
-\backcite {heggler_as_2025}{{2}{1.3}{section.1.3}}
-\backcite {borges_avaliacao_2017, shahzad_comprehensive_2025}{{2}{1.3}{section.1.3}}
-\backcite {borges_avaliacao_2017, shahzad_comprehensive_2025}{{2}{1.3}{section.1.3}}
-\backcite {barbosa_tempo_2021}{{3}{1.5}{section.1.5}}
-\backcite {borges_avaliacao_2017}{{4}{1.5}{section.1.5}}
-\backcite {santos_articulacao_2016}{{4}{1.5}{section.1.5}}
-\backcite {pinho_aplicacao_2024}{{4}{1.5}{section.1.5}}
+\backcite {young_recent_2018, otter_survey_2021}{{1}{1}{chapter.1}}
+\backcite {young_recent_2018, otter_survey_2021}{{1}{1}{chapter.1}}
+\backcite {torfi_natural_2021}{{1}{1}{chapter.1}}
+\backcite {young_recent_2018, otter_survey_2021}{{1}{1}{chapter.1}}
+\backcite {young_recent_2018, otter_survey_2021}{{1}{1}{chapter.1}}
+\backcite {vaswani_attention_2023}{{1}{1}{chapter.1}}
+\backcite {chen_evaluating_2021}{{1}{1}{chapter.1}}
+\backcite {paixao_machine_2022}{{1}{1}{chapter.1}}
+\backcite {lai_large_2024}{{1}{1}{chapter.1}}
+\backcite {pessanha_large_2024}{{1}{1}{chapter.1}}
+\backcite {shahzad_comprehensive_2025}{{1}{1}{chapter.1}}
+\backcite {carnaval_desigualdade_2021}{{1}{1}{chapter.1}}
+\backcite {gatti_formacao_2017}{{1}{1}{chapter.1}}
+\backcite {silva_politicas_2020}{{1}{1}{chapter.1}}
+\backcite {santos_articulacao_2016}{{2}{1}{chapter.1}}
+\backcite {borges_avaliacao_2017}{{2}{1}{chapter.1}}
+\backcite {lima_aesvoting_2024}{{2}{1}{chapter.1}}
+\backcite {pinho_aplicacao_2024}{{2}{1}{chapter.1}}
+\backcite {dias_correcao_2023}{{2}{1}{chapter.1}}
+\backcite {seo_large_2025}{{2}{1}{chapter.1}}
+\backcite {heggler_as_2025}{{2}{1}{chapter.1}}
+\backcite {borges_avaliacao_2017, shahzad_comprehensive_2025}{{2}{1}{chapter.1}}
+\backcite {borges_avaliacao_2017, shahzad_comprehensive_2025}{{2}{1}{chapter.1}}
+\backcite {barbosa_tempo_2021}{{3}{1.2}{section.1.2}}
+\backcite {borges_avaliacao_2017}{{4}{1.2}{section.1.2}}
+\backcite {santos_articulacao_2016}{{4}{1.2}{section.1.2}}
+\backcite {pinho_aplicacao_2024}{{4}{1.2}{section.1.2}}
 \backcite {carregari_luckesi_2024}{{5}{2.1.1}{subsection.2.1.1}}
 \backcite {lima_avaliacao_2023}{{6}{2.1.2}{subsection.2.1.2}}
 \backcite {pinho_aplicacao_2024}{{6}{2}{Item.6}}
@@ -90,7 +90,7 @@
 \backcite {gao_retrieval-augmented_2024, ram_-context_2023}{{22}{3}{Item.65}}
 \backcite {kitchenham_guidelines_2007}{{24}{3.1.2}{subsection.3.1.2}}
 \backcite {kitchenham_guidelines_2007}{{24}{3.1.2}{subsection.3.1.2}}
-\backcite {kitchenham_guidelines_2007}{{25}{3.1.2}{quadro.caption.14}}
+\backcite {kitchenham_guidelines_2007}{{25}{3.1.2}{quadro.caption.16}}
 \backcite {kitchenham_guidelines_2007}{{26}{2}{Item.72}}
 \backcite {janumpally_role_2025}{{28}{2}{table.3.1}}
 \backcite {li_applying_2024}{{28}{2}{table.3.1}}
@@ -140,8 +140,8 @@
 \backcite {ollama_docs_2026,streamlit_docs_2026}{{45}{4.3.9}{subsection.4.3.9}}
 \backcite {ollama_docs_2026,streamlit_docs_2026}{{45}{4.3.9}{subsection.4.3.9}}
 \backcite {rfc8259_json_2017}{{45}{4.3.10}{subsection.4.3.10}}
-\backcite {finardi_chronicles_2024}{{48}{4.4.4}{quadro.caption.18}}
-\backcite {inep_cartilha_redacao_2024}{{48}{4.4.4}{quadro.caption.18}}
+\backcite {finardi_chronicles_2024}{{48}{4.4.4}{quadro.caption.20}}
+\backcite {inep_cartilha_redacao_2024}{{48}{4.4.4}{quadro.caption.20}}
 \backcite {inep_cartilha_redacao_2024}{{56}{5.3}{section.5.3}}
 \backcite {ai_grading_system_repo_2026}{{66}{5.5.3}{subsection.5.5.3}}
 \backcite {schneider_towards_2024}{{78}{6.6.1}{subsection.6.6.1}}
