@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  2 MAY 2026 14:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.21)  4 MAY 2026 22:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1800,4 +1800,270 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 130.
 ) [15]) (textual/t1-introducao.tex
-Cap\'{\i }tulo
+Cap\'{\i }tulo 1.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.16 
+      [1
+
+
+]
+Package babel Info: 'brazil' activates 'portuges' shorthands.
+(babel)             Reported on input line 28.
+ [2] [3]) (textual/t2-fundamentacao.tex [4]
+Cap\'{\i }tulo 2.
+[5
+
+] [6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18] [19]
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 309.
+ (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `lmtt' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+ [20] [21]) (textual/t3-trabalhos.tex [22]
+Cap\'{\i }tulo 3.
+[23
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 49--50
+ []|\T1/lmr/bx/n/12 (+20) Palavras-chave| 
+ []
+
+[24]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 92.
+ (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [25{C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}] [26]
+Overfull \hbox (4.5544pt too wide) in paragraph at lines 157--158
+[]|\T1/lmr/bx/n/10.95 (-20) Metodologia|  
+ []
+
+
+Overfull \hbox (44.7644pt too wide) in alignment at lines 152--162
+ [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (4.5544pt too wide) in paragraph at lines 165--166
+[]|\T1/lmr/bx/n/10.95 (-20) Metodologia|  
+ []
+
+
+Overfull \hbox (44.7644pt too wide) in alignment at lines 162--170
+ [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (1.7303pt too wide) in paragraph at lines 176--176
+[]|\T1/lmr/m/n/10.95 (-20) Experimentos 
+ []
+
+
+Overfull \hbox (44.7644pt too wide) in alignment at lines 170--187
+ [] [] [] [] [] [] [] 
+ []
+
+[27]
+ignored: Infinite glue shrinkage found in box being split [28] [29] [30] [31] [32] [33] [34] [35] [36]) (textual/t4-material.tex [37]
+Cap\'{\i }tulo 4.
+<media/fluxo-configuracao.jpg, id=952, 755.82375pt x 1059.96pt>
+File: media/fluxo-configuracao.jpg Graphic file (type jpg)
+<use media/fluxo-configuracao.jpg>
+Package pdftex.def Info: media/fluxo-configuracao.jpg  used on input line 23.
+(pdftex.def)             Requested size: 455.0pt x 638.08348pt.
+[38
+
+]
+<media/fluxo-correcao-prova.jpg, id=958, 824.07875pt x 1295.84125pt>
+File: media/fluxo-correcao-prova.jpg Graphic file (type jpg)
+<use media/fluxo-correcao-prova.jpg>
+Package pdftex.def Info: media/fluxo-correcao-prova.jpg  used on input line 31.
+(pdftex.def)             Requested size: 405.22302pt x 637.20212pt.
+ [39 <./media/fluxo-configuracao.jpg>]
+<media/fluxo-correcao-pergunta.jpg, id=965, 487.8225pt x 934.49126pt>
+File: media/fluxo-correcao-pergunta.jpg Graphic file (type jpg)
+<use media/fluxo-correcao-pergunta.jpg>
+Package pdftex.def Info: media/fluxo-correcao-pergunta.jpg  used on input line 39.
+(pdftex.def)             Requested size: 277.2057pt x 531.02576pt.
+ [40 <./media/fluxo-correcao-prova.jpg>] [41 <./media/fluxo-correcao-pergunta.jpg>] [42] [43]
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 89.
+ [44] [45] [46] [47] [48] [49] [50]) (textual/t5-desenvolvimento.tex [51]
+Cap\'{\i }tulo 5.
+<media/arquitetura_sistema.png, id=1092, 1276.77pt x 523.9575pt>
+File: media/arquitetura_sistema.png Graphic file (type png)
+<use media/arquitetura_sistema.png>
+Package pdftex.def Info: media/arquitetura_sistema.png  used on input line 17.
+(pdftex.def)             Requested size: 455.0pt x 186.72176pt.
+[52
+
+ <./media/arquitetura_sistema.png>] [53]
+<media/fluxo_requisicao.png, id=1104, 1102.1175pt x 519.9425pt>
+File: media/fluxo_requisicao.png Graphic file (type png)
+<use media/fluxo_requisicao.png>
+Package pdftex.def Info: media/fluxo_requisicao.png  used on input line 89.
+(pdftex.def)             Requested size: 454.99905pt x 214.65347pt.
+ [54 <./media/fluxo_requisicao.png>] [55]
+<media/pipeline.png, id=1116, 362.35374pt x 512.91624pt>
+File: media/pipeline.png Graphic file (type png)
+<use media/pipeline.png>
+Package pdftex.def Info: media/pipeline.png  used on input line 127.
+(pdftex.def)             Requested size: 250.08517pt x 353.99869pt.
+ [56] (C:\Users\Maycon Mendes\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2025/11/14 1.11b listings language file
+) [57 <./media/pipeline.png>] [58] [59] [60] [61]
+<media/er.png, id=1174, 1439.3775pt x 1887.05pt>
+File: media/er.png Graphic file (type png)
+<use media/er.png>
+Package pdftex.def Info: media/er.png  used on input line 226.
+(pdftex.def)             Requested size: 455.0pt x 596.49707pt.
+ [62] [63 <./media/er.png>] [64] [65] [66]) (textual/t6-resultados.tex [67]
+Cap\'{\i }tulo 6.
+[68
+
+]
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <17.28> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 89.
+ [69]
+Overfull \hbox (4.47365pt too wide) in paragraph at lines 162--162
+ []|\T1/lmr/bx/n/10.95 (-20) Divergência| 
+ []
+
+
+Overfull \hbox (10.31639pt too wide) in paragraph at lines 162--162
+ []|\T1/lmr/bx/n/10.95 (-20) Completo?| 
+ []
+
+
+Overfull \hbox (4.47365pt too wide) in paragraph at lines 191--191
+ []|\T1/lmr/bx/n/10.95 (-20) Divergência| 
+ []
+
+
+Overfull \hbox (10.31639pt too wide) in paragraph at lines 191--191
+ []|\T1/lmr/bx/n/10.95 (-20) Completo?| 
+ []
+
+[70] [71] [72] [73] [74] [75] [76] [77]
+Underfull \hbox (badness 10000) in paragraph at lines 464--464
+[]|$\OT1/lmr/m/n/10.95 (+20) ^^A$\T1/lmr/m/n/10.95 (+20) Intermediária=$\OT1/lmr/m/n/10.95 (+20) +$\T1/lmr/m/n/10.95 (+20) 0,84;
+ []
+
+
+Underfull \hbox (badness 1377) in paragraph at lines 464--464
+[]|\T1/lmr/m/n/10.95 (+20) Extremos: 0,00; In-ter-me-di-á-ria:
+ []
+
+[78] [79]) (textual/t7-conclusoes.tex [80]
+Cap\'{\i }tulo 7.
+[81
+
+] [82]) (Principal.bbl (Principal.brf)
+\tf@brf=\write6
+\openout6 = `Principal.brf'.
+
+ [83]
+bibitemlist
+[84
+
+] [85] [86] [87] [88]) [89] [90
+
+
+] (pos/apendice-schema-completo.tex
+AP\^ENDICE A.
+<media/sql_schemas.png, id=1546, 1378.14874pt x 966.61125pt>
+File: media/sql_schemas.png Graphic file (type png)
+<use media/sql_schemas.png>
+Package pdftex.def Info: media/sql_schemas.png  used on input line 10.
+(pdftex.def)             Requested size: 455.00078pt x 319.13019pt.
+) (pos/apendice-prompts.tex [91
+
+ <./media/sql_schemas.png (PNG copy)>]
+AP\^ENDICE B.
+
+Overfull \hbox (50.10493pt too wide) in paragraph at lines 42--43
+[][] 
+ []
+
+
+Overfull \hbox (50.10493pt too wide) in paragraph at lines 44--46
+[][] 
+ []
+
+[92
+
+]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 56.
+ [93]
+Overfull \hbox (50.10493pt too wide) in paragraph at lines 94--95
+[][] 
+ []
+
+
+Overfull \hbox (50.10493pt too wide) in paragraph at lines 96--98
+[][] 
+ []
+
+[94] [95]
+Overfull \hbox (50.10493pt too wide) in paragraph at lines 143--144
+[][] 
+ []
+
+
+Overfull \hbox (50.10493pt too wide) in paragraph at lines 145--147
+[][] 
+ []
+
+[96])
+
+Package glossaries Warning: No \printnoidxglossary or \printnoidxglossaries
+ found. (Remove \makenoidxglossaries if you don't want any glossaries.)
+This document will not have a glossary.
+
+[97]
+\tf@lof=\write7
+\openout7 = `Principal.lof'.
+
+\tf@loq=\write8
+\openout8 = `Principal.loq'.
+
+\tf@lot=\write9
+\openout9 = `Principal.lot'.
+
+\tf@loc=\write10
+\openout10 = `Principal.loc'.
+
+\tf@toc=\write11
+\openout11 = `Principal.toc'.
+
+ 
+enddocument/afterlastpage (AED): lastpage setting LastPage.
+(Principal.aux)
+ ***********
+LaTeX2e <2025-11-01>
+L3 programming layer <2020/03/25>
+ ***********
+Package rerunfilecheck Info: File `Principal.brf' has not changed.
+(rerunfilecheck)             Checksum: 3164DA8882B6AE04048837F4D473C0B5;9368.
+ ) 
+Here is how much of TeX's memory you used:
+ 53250 strings out of 467867
+ 1038457 string characters out of 5414426
+ 2154972 words of memory out of 5000000
+ 80031 multiletter control sequences out of 15000+600000
+ 755148 words of font info for 339 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 104i,16n,139p,2604b,2260s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbo10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso12.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsso17.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/Maycon Mendes/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt12.pfb>
+Output written on Principal.pdf (113 pages, 1434353 bytes).
+PDF statistics:
+ 2310 PDF objects out of 2487 (max. 8388607)
+ 636 named destinations out of 1000 (max. 500000)
+ 66081 words of extra memory for PDF output out of 74296 (max. 10000000)
+

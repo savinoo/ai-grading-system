@@ -3,7 +3,25 @@
 
 Este apêndice apresenta os prompts completos utilizados na implementação dos agentes corretores e do árbitro, bem como helpers de formatação usados para montar entradas. Os trechos abaixo correspondem ao conteúdo do arquivo de código-fonte `src/domain/ai/prompts.py`.
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines=true, breakatwhitespace=false, basicstyle=\ttfamily\footnotesize,
+  literate=
+    {á}{{\'a}}1 {à}{{\`a}}1 {â}{{\^a}}1 {ã}{{\~a}}1 {ä}{{\"a}}1
+    {é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {ë}{{\"e}}1
+    {í}{{\'i}}1 {ì}{{\`i}}1 {î}{{\^i}}1 {ï}{{\"i}}1
+    {ó}{{\'o}}1 {ò}{{\`o}}1 {ô}{{\^o}}1 {õ}{{\~o}}1 {ö}{{\"o}}1
+    {ú}{{\'u}}1 {ù}{{\`u}}1 {û}{{\^u}}1 {ü}{{\"u}}1
+    {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1
+    {Á}{{\'A}}1 {À}{{\`A}}1 {Â}{{\^A}}1 {Ã}{{\~A}}1
+    {É}{{\'E}}1 {Ê}{{\^E}}1
+    {Í}{{\'I}}1
+    {Ó}{{\'O}}1 {Ô}{{\^O}}1 {Õ}{{\~O}}1
+    {Ú}{{\'U}}1
+    {«}{{\guillemotleft}}1 {»}{{\guillemotright}}1
+    {→}{{$\rightarrow$}}1
+    {—}{{---}}1
+    {"}{{``}}1 {"}{{''}}1
+    {'}{{`}}1 {'}{{\'{}}}1
+]
 """
 Centralização dos Prompts do Sistema de Correção Automática.
 
@@ -164,4 +182,4 @@ def format_rag_context(context_list: List[RetrievedContext]) -> str:
         text += f"{ctx.content}\n\n"
     return text
 
-\end{verbatim}
+\end{lstlisting}
