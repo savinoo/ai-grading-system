@@ -32,6 +32,20 @@ class ExperimentStoreCriteriaTests(unittest.TestCase):
             self.assertEqual(exported["corrections"][0]["criterion_scores"][0]["score"], 7.5)
             store.conn.close()
 
+    def test_qa4_answer_round_trip(self):
+        with tempfile.TemporaryDirectory() as directory:
+            store = ExperimentStore(str(Path(directory) / "experiments.db"))
+            exp_id = store.create_experiment({"condition": "QA4 R1/3"})
+            store.save_answer(
+                exp_id, "question-1", "student-1", "Synthetic student",
+                "Immutable experimental response", "poor",
+            )
+            answers = store.export_experiment(exp_id)["answers"]
+            self.assertEqual(len(answers), 1)
+            self.assertEqual(answers[0]["answer_text"], "Immutable experimental response")
+            self.assertEqual(answers[0]["quality_actual"], "poor")
+            store.conn.close()
+
     def test_missing_correction_is_ignored(self):
         with tempfile.TemporaryDirectory() as directory:
             store = ExperimentStore(str(Path(directory) / "experiments.db"))
