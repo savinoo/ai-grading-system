@@ -153,6 +153,7 @@ class ExperimentStore:
                 divergence_value REAL DEFAULT 0.0,
                 final_score REAL,
                 consensus_method TEXT,
+                processing_metadata_json TEXT DEFAULT '{}',
                 FOREIGN KEY (experiment_id) REFERENCES experiments(id) ON DELETE CASCADE
             );
 
@@ -162,6 +163,12 @@ class ExperimentStore:
             CREATE INDEX IF NOT EXISTS idx_er_exp ON experiment_results(experiment_id);
             CREATE INDEX IF NOT EXISTS idx_erag_exp ON experiment_rag_contexts(experiment_id);
         """)
+        # Existing experiment databases predate optional processing metadata.
+        columns = {row["name"] for row in self.conn.execute("PRAGMA table_info(experiment_results)")}
+        if "processing_metadata_json" not in columns:
+            self.conn.execute(
+                "ALTER TABLE experiment_results ADD COLUMN processing_metadata_json TEXT DEFAULT '{}'"
+            )
         self.conn.commit()
         logger.info(f"ExperimentStore initialized at {self.db_path}")
 
@@ -350,8 +357,8 @@ class ExperimentStore:
                 """INSERT INTO experiment_results
                    (experiment_id, question_uuid, student_id, c1_score, c2_score,
                     arbiter_score, divergence_detected, divergence_value,
-                    final_score, consensus_method)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    final_score, consensus_method, processing_metadata_json)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                 (
                     exp_id, str(question_uuid), str(student_id),
                     c1.total_score if c1 else None,
@@ -361,6 +368,7 @@ class ExperimentStore:
                     div_value,
                     final_score,
                     consensus,
+                    json.dumps(final_state.get('processing_metadata') or {}, ensure_ascii=False, default=str),
                 )
             )
             self.conn.commit()
@@ -423,6 +431,12 @@ class ExperimentStore:
         exp['results'] = [dict(r) for r in self.conn.execute(
             "SELECT * FROM experiment_results WHERE experiment_id = ?", (exp_id,)
         ).fetchall()]
+
+        for result in exp['results']:
+            try:
+                result['processing_metadata'] = json.loads(result.pop('processing_metadata_json') or '{}')
+            except (TypeError, json.JSONDecodeError):
+                result['processing_metadata'] = {}
 
         # Parse config
         try:
