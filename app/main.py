@@ -25,6 +25,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app.analytics_ui import render_analytics_selector, render_class_analytics_dashboard, render_plagiarism_dashboard, render_student_profile_card
 from app.api_client import get_api_client
 from app.experiment_store import get_experiment_store
+from app.experiment_provenance import build_experiment_config
 from app.latex_exporter import LaTeXExporter
 from app.persistence import load_persistence_data, save_persistence_data
 from app.ui_components import (
@@ -607,6 +608,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                         pass
 
                     exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                         'llm_provider': settings.LLM_PROVIDER,
                         'llm_model': settings.LLM_MODEL_NAME,
                         'condition': 'A (com RAG)',
@@ -737,6 +739,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                         pass
 
                     exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                         'llm_provider': settings.LLM_PROVIDER,
                         'llm_model': settings.LLM_MODEL_NAME,
                         'condition': 'B (sem RAG)',
@@ -792,6 +795,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                         _t = time.time()
 
                         exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                             'llm_provider': settings.LLM_PROVIDER,
                             'llm_model': settings.LLM_MODEL_NAME,
                             'llm_temperature': settings.LLM_TEMPERATURE,
@@ -1122,6 +1126,7 @@ elif operation_mode == "Batch Processing (Turma)":
                             # Create experiment and save questions
                             _rag_on = st.session_state.get("rag_enabled", True)
                             exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                                 'llm_provider': settings.LLM_PROVIDER,
                                 'llm_model': settings.LLM_MODEL_NAME,
                                 'llm_temperature': settings.LLM_TEMPERATURE,
@@ -1265,6 +1270,7 @@ elif operation_mode == "Batch Processing (Turma)":
                         if not exp_id:
                             _rag_on = st.session_state.get("rag_enabled", True)
                             exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                                 'llm_provider': settings.LLM_PROVIDER,
                                 'llm_model': settings.LLM_MODEL_NAME,
                                 'llm_temperature': settings.LLM_TEMPERATURE,
@@ -1442,6 +1448,7 @@ elif operation_mode == "Batch Processing (Turma)":
 
                         # Create experiment for this repetition
                         rep_exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                             'llm_provider': settings.LLM_PROVIDER,
                             'llm_model': settings.LLM_MODEL_NAME,
                             'llm_temperature': settings.LLM_TEMPERATURE,
@@ -1806,6 +1813,7 @@ elif operation_mode == "🔗 End-to-End (Backend API)":
 
                         # Save to experiment store
                         exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                             'llm_provider': settings.LLM_PROVIDER,
                             'llm_model': settings.LLM_MODEL_NAME,
                             'mode': 'end-to-end (backend API)',
