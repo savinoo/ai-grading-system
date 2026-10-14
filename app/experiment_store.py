@@ -279,10 +279,10 @@ class ExperimentStore:
             return
 
         criterion_scores = []
-        if hasattr(correction, 'criterion_scores') and correction.criterion_scores:
+        if hasattr(correction, 'criteria_scores') and correction.criteria_scores:
             criterion_scores = [
                 cs.model_dump(mode="json") if hasattr(cs, 'model_dump') else cs
-                for cs in correction.criterion_scores
+                for cs in correction.criteria_scores
             ]
 
         with self._lock:
