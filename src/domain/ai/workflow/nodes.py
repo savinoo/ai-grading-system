@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from time import perf_counter
+
 from src.services.rag.retrieval_service import RetrievalService
 from src.services.agents.examiner_agent import ExaminerAgent
 from src.services.agents.arbiter_agent import ArbiterAgent
@@ -29,13 +31,20 @@ async def retrieve_context_node(state: GradingState) -> dict:
             "[RAG Node] Contexto já fornecido para questão %s — pulando retrieval",
             state['question'].id
         )
-        return {}
+        return {
+            "processing_metadata": {
+                "retrieval_status": "preprovided",
+                "retrieval_query_strategy": "question_only",
+                "retrieval_context_count": len(state['rag_contexts']),
+            }
+        }
 
     logger.info(
         "[RAG Node] Buscando contexto para questão %s",
         state['question'].id
     )
     
+    started_at = perf_counter()
     rag_service = RetrievalService()
     contexts = await rag_service.search_context(
         query=state['question'].statement,
@@ -45,7 +54,16 @@ async def retrieve_context_node(state: GradingState) -> dict:
     )
     
     logger.info("[RAG Node] Recuperados %d contextos", len(contexts))
-    return {"rag_contexts": contexts}
+    return {
+        "rag_contexts": contexts,
+        "processing_metadata": {
+            "retrieval_status": "completed",
+            "retrieval_query_strategy": "question_only",
+            "retrieval_scope": "exam_uuid",
+            "retrieval_context_count": len(contexts),
+            "retrieval_elapsed_ms": round((perf_counter() - started_at) * 1000, 2),
+        },
+    }
 
 
 # =============================================================================
