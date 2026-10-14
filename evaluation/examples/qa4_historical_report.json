@@ -1,0 +1,883 @@
+{
+  "schema_version": 1,
+  "total_corrections": 36,
+  "datasets": 3,
+  "reference_metrics": null,
+  "threshold_simulation": [
+    {
+      "threshold": 0.5,
+      "would_trigger": 8,
+      "eligible_rows": 36,
+      "note": "Counterfactual number of arbiter calls; no outcome or improvement measured"
+    },
+    {
+      "threshold": 1,
+      "would_trigger": 3,
+      "eligible_rows": 36,
+      "note": "Counterfactual number of arbiter calls; no outcome or improvement measured"
+    },
+    {
+      "threshold": 1.5,
+      "would_trigger": 1,
+      "eligible_rows": 36,
+      "note": "Counterfactual number of arbiter calls; no outcome or improvement measured"
+    },
+    {
+      "threshold": 2,
+      "would_trigger": 0,
+      "eligible_rows": 36,
+      "note": "Counterfactual number of arbiter calls; no outcome or improvement measured"
+    }
+  ],
+  "stability": [
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q1-excellent",
+      "profile": "excellent",
+      "runs": 3,
+      "score_min": 9.875,
+      "score_max": 10,
+      "score_range": 0.125,
+      "verified_identical_answer": false
+    },
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q1-average",
+      "profile": "average",
+      "runs": 3,
+      "score_min": 9.875,
+      "score_max": 10,
+      "score_range": 0.125,
+      "verified_identical_answer": false
+    },
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q1-poor",
+      "profile": "poor",
+      "runs": 3,
+      "score_min": 1.5,
+      "score_max": 1.5,
+      "score_range": 0,
+      "verified_identical_answer": false
+    },
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q1-off_topic",
+      "profile": "off_topic",
+      "runs": 3,
+      "score_min": 0.5,
+      "score_max": 1,
+      "score_range": 0.5,
+      "verified_identical_answer": false
+    },
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q2-excellent",
+      "profile": "excellent",
+      "runs": 3,
+      "score_min": 9.5625,
+      "score_max": 9.625,
+      "score_range": 0.0625,
+      "verified_identical_answer": false
+    },
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q2-average",
+      "profile": "average",
+      "runs": 3,
+      "score_min": 9.9375,
+      "score_max": 10,
+      "score_range": 0.0625,
+      "verified_identical_answer": false
+    },
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q2-poor",
+      "profile": "poor",
+      "runs": 3,
+      "score_min": 2.875,
+      "score_max": 3.5,
+      "score_range": 0.625,
+      "verified_identical_answer": false
+    },
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q2-off_topic",
+      "profile": "off_topic",
+      "runs": 3,
+      "score_min": 0,
+      "score_max": 0,
+      "score_range": 0,
+      "verified_identical_answer": false
+    },
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q3-excellent",
+      "profile": "excellent",
+      "runs": 3,
+      "score_min": 9.875,
+      "score_max": 9.875,
+      "score_range": 0,
+      "verified_identical_answer": false
+    },
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q3-average",
+      "profile": "average",
+      "runs": 3,
+      "score_min": 10,
+      "score_max": 10,
+      "score_range": 0,
+      "verified_identical_answer": false
+    },
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q3-poor",
+      "profile": "poor",
+      "runs": 3,
+      "score_min": 1.8125,
+      "score_max": 2.3125,
+      "score_range": 0.5,
+      "verified_identical_answer": false
+    },
+    {
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "case_id": "QA4-Q3-off_topic",
+      "profile": "off_topic",
+      "runs": 3,
+      "score_min": 0,
+      "score_max": 0,
+      "score_range": 0,
+      "verified_identical_answer": false
+    }
+  ],
+  "warnings": [
+    "Bundled historical QA4 preview generated from public branch tcc: experiments 9, 10, 11",
+    "Historical exports do not contain answer text; matching source IDs and declared settings are not proof of identical response text",
+    "Historical source/prompt fingerprints absent; no validated human gold labels",
+    "Historical per-criterion scores are empty; fixing persistence does not backfill old data",
+    "Numbers are observational and illustrative of the UI; no new LLM evaluations were run"
+  ],
+  "records": [
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q1-excellent",
+      "profile": "excellent",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 9.75,
+      "c2_score": 10,
+      "final_score": 9.875,
+      "divergence": 0.25,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q1-average",
+      "profile": "average",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 10,
+      "c2_score": 9.75,
+      "final_score": 9.875,
+      "divergence": 0.25,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q1-poor",
+      "profile": "poor",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 2,
+      "c2_score": 1,
+      "final_score": 1.5,
+      "divergence": 1,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q1-off_topic",
+      "profile": "off_topic",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 1,
+      "c2_score": 1,
+      "final_score": 1,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q2-excellent",
+      "profile": "excellent",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 9.625,
+      "c2_score": 9.625,
+      "final_score": 9.625,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q2-average",
+      "profile": "average",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 10,
+      "c2_score": 10,
+      "final_score": 10,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q2-poor",
+      "profile": "poor",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 3.25,
+      "c2_score": 3.5,
+      "final_score": 3.375,
+      "divergence": 0.25,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q2-off_topic",
+      "profile": "off_topic",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 0,
+      "c2_score": 0,
+      "final_score": 0,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q3-excellent",
+      "profile": "excellent",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 9.75,
+      "c2_score": 10,
+      "final_score": 9.875,
+      "divergence": 0.25,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q3-average",
+      "profile": "average",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 10,
+      "c2_score": 10,
+      "final_score": 10,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q3-poor",
+      "profile": "poor",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 1.625,
+      "c2_score": 2,
+      "final_score": 1.8125,
+      "divergence": 0.375,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_9.json",
+      "experiment_id": "9",
+      "case_id": "QA4-Q3-off_topic",
+      "profile": "off_topic",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 0,
+      "c2_score": 0,
+      "final_score": 0,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q1-excellent",
+      "profile": "excellent",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 10,
+      "c2_score": 10,
+      "final_score": 10,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q1-average",
+      "profile": "average",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 10,
+      "c2_score": 10,
+      "final_score": 10,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q1-poor",
+      "profile": "poor",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 2,
+      "c2_score": 1,
+      "final_score": 1.5,
+      "divergence": 1,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q1-off_topic",
+      "profile": "off_topic",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 1,
+      "c2_score": 0,
+      "final_score": 0.5,
+      "divergence": 1,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q2-excellent",
+      "profile": "excellent",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 9.75,
+      "c2_score": 9.5,
+      "final_score": 9.625,
+      "divergence": 0.25,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q2-average",
+      "profile": "average",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 10,
+      "c2_score": 9.875,
+      "final_score": 9.9375,
+      "divergence": 0.125,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q2-poor",
+      "profile": "poor",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 3.25,
+      "c2_score": 2.5,
+      "final_score": 2.875,
+      "divergence": 0.75,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q2-off_topic",
+      "profile": "off_topic",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 0,
+      "c2_score": 0,
+      "final_score": 0,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q3-excellent",
+      "profile": "excellent",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 9.75,
+      "c2_score": 10,
+      "final_score": 9.875,
+      "divergence": 0.25,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q3-average",
+      "profile": "average",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 10,
+      "c2_score": 10,
+      "final_score": 10,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q3-poor",
+      "profile": "poor",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 1.625,
+      "c2_score": 3,
+      "final_score": 2.3125,
+      "divergence": 1.375,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_10.json",
+      "experiment_id": "10",
+      "case_id": "QA4-Q3-off_topic",
+      "profile": "off_topic",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 0,
+      "c2_score": 0,
+      "final_score": 0,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q1-excellent",
+      "profile": "excellent",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 9.75,
+      "c2_score": 10,
+      "final_score": 9.875,
+      "divergence": 0.25,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q1-average",
+      "profile": "average",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 10,
+      "c2_score": 9.75,
+      "final_score": 9.875,
+      "divergence": 0.25,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q1-poor",
+      "profile": "poor",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 2,
+      "c2_score": 1,
+      "final_score": 1.5,
+      "divergence": 1,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q1-off_topic",
+      "profile": "off_topic",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 1,
+      "c2_score": 1,
+      "final_score": 1,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q2-excellent",
+      "profile": "excellent",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 9.625,
+      "c2_score": 9.5,
+      "final_score": 9.5625,
+      "divergence": 0.125,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q2-average",
+      "profile": "average",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 10,
+      "c2_score": 10,
+      "final_score": 10,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q2-poor",
+      "profile": "poor",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 4.5,
+      "c2_score": 2.5,
+      "final_score": 3.5,
+      "divergence": 2,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q2-off_topic",
+      "profile": "off_topic",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 0,
+      "c2_score": 0,
+      "final_score": 0,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q3-excellent",
+      "profile": "excellent",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 9.75,
+      "c2_score": 10,
+      "final_score": 9.875,
+      "divergence": 0.25,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q3-average",
+      "profile": "average",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 10,
+      "c2_score": 10,
+      "final_score": 10,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q3-poor",
+      "profile": "poor",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 1.625,
+      "c2_score": 3,
+      "final_score": 2.3125,
+      "divergence": 1.375,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    },
+    {
+      "source": "experiment_QA4_11.json",
+      "experiment_id": "11",
+      "case_id": "QA4-Q3-off_topic",
+      "profile": "off_topic",
+      "configuration_id": "historic-qa4-identical-declared-settings",
+      "c1_score": 0,
+      "c2_score": 0,
+      "final_score": 0,
+      "divergence": 0,
+      "rag_context_count": 4,
+      "has_criterion_scores": false,
+      "has_answer_text": false,
+      "reference_score": null,
+      "absolute_error": null,
+      "flags": [
+        "missing_criterion_scores",
+        "no_adjudicated_human_reference"
+      ]
+    }
+  ]
+}
