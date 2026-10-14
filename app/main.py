@@ -813,6 +813,11 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                             for s in students_list:
                                 if s['id'] in all_answers.get(q.id, {}):
                                     ans = all_answers[q.id][s['id']]
+                                    # Keep the exact answer for stable QA4 comparisons.
+                                    exp_store.save_answer(
+                                        exp_id, str(q.id), str(s['id']),
+                                        s['name'], ans.text, s.get('quality')
+                                    )
                                     inp = {
                                         "question": q, "student_answer": ans, "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
                                         "rag_contexts": None,
@@ -1469,6 +1474,10 @@ elif operation_mode == "Batch Processing (Turma)":
                             for s in students_list:
                                 if s['id'] in all_mock_answers.get(q.id, all_mock_answers.get(str(q.id), {})):
                                     ans = all_mock_answers.get(q.id, all_mock_answers.get(str(q.id), {}))[s['id']]
+                                    exp_store.save_answer(
+                                        rep_exp_id, str(q.id), str(s['id']),
+                                        s['name'], ans.text, s.get('quality')
+                                    )
                                     inputs_by_student[s['id']] = {
                                         "question": q, "student_answer": ans, "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
                                         "rag_contexts": None if _rag_on else [],
