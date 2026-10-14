@@ -144,3 +144,5 @@ out/
 *.tmp
 *.temp
 .claude/
+# Experimental reports may include case-level diagnostics
+evaluation/output/
