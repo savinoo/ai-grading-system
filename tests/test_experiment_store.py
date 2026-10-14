@@ -22,7 +22,7 @@ class ExperimentStoreCriteriaTests(unittest.TestCase):
                 feedback_text="Feedback",
                 confidence_level=0.8,
                 criteria_scores=[
-                    SimpleNamespace(criterion="Technical accuracy", score=7.5, max_score=10.0, feedback="ok"),
+                    {"criterion": "Technical accuracy", "score": 7.5, "max_score": 10.0, "feedback": "ok"},
                 ],
             )
             store.save_correction(exp_id, "question-1", "student-1", correction, "corretor_1")
