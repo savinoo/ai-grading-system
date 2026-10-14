@@ -94,3 +94,21 @@ Critical data-quality issues:
 ## Scope / security
 
 No migration of authentication, cookies, authorization rules, or Streamlit sessions is included in this evaluation PR. Previously identified security concerns need a separate security patch before any public deployment.
+
+
+## Visual dashboard (Streamlit)
+
+A working local dashboard is included in `evaluation/dashboard.py`. It reads the **same `report.json` schema** produced by the CLI, so dashboard graphics cannot invent metrics.
+
+```bash
+# Streamlit and pandas are already listed in requirements.txt
+streamlit run evaluation/dashboard.py
+```
+
+The app initially displays `evaluation/examples/qa4_historical_report.json`, a **de-identified historical QA4 snapshot** built from public `tcc` exports, for visual exploration. It shows 36 grading results, 12 cases, a 0.625 maximum score range, and threshold simulations (8 / 3 / 1 / 0 calls at >0.5 / >1.0 / >1.5 / >2.0). It is labelled as an example and does not contain real human gold labels.
+
+To view an actual newly generated dataset, upload the CLI's `report.json` in the dashboard sidebar. No requests are made to an LLM and no backend deployment is necessary.
+
+Human annotation protocol: see `evaluation/ANNOTATION_PROTOCOL.md`. The committed `evaluation/gold_standard_template.json` starts with **zero** labels on purpose.
+
+**Historical limitations:** source code configuration checksums, exact student answer text, and criterion scores were not stored consistently in old exports. These cannot be reconstructed by presentation styling or by the persistence fix.
