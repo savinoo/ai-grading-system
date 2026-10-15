@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "dataset_version": "1.0.0",
+  "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+  "source_repository": "https://github.com/savinoo/ai-grading-system",
+  "sources": [
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "tcc/results/experiment_QA4_9.json",
+      "source_sha256": "bac3d757fcab7dd2d43b4931240f08e04b2675d3cc7a60e8df66eb545fd6f6b1",
+      "source_family": "tcc_qa4_json",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "tcc/results/experiment_QA4_10.json",
+      "source_sha256": "4acb28aa11d2631fbf9fa17d89644749ab2e8dc12fc8ea5b3cc24a75205f1286",
+      "source_family": "tcc_qa4_json",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "tcc/results/experiment_QA4_11.json",
+      "source_sha256": "2d55dfd8e1f034b5320ddb7616d2a6dc29ebcaf706be4a46c91e48002eb5d6df",
+      "source_family": "tcc_qa4_json",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "tcc/results/experiment_A_7.json",
+      "source_sha256": "e9a9075991dc77b165d09f8c1874a4b674c360b73323e8129d16305ae62da8ae",
+      "source_family": "tcc_ab_initial",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "tcc/results/experiment_B_8.json",
+      "source_sha256": "823fd68d2a5bde6976725a376dfa94bf16a517ed425bba2d072c8aa887f90b92",
+      "source_family": "tcc_ab_initial",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "tcc/results/experiment_A_pareado_3.json",
+      "source_sha256": "e4d239f67208d2028a9a7ac7b44f58915ca71d51900fc2d8994d19ae238139b7",
+      "source_family": "tcc_ab_paired",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "tcc/results/experiment_B_pareado_4.json",
+      "source_sha256": "8a87a16758a678972f83270f3d72f918018f00065a2d0dd8d84f08f6fefcbc02",
+      "source_family": "tcc_ab_paired",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "tcc/results/experiment_A_final_6.json",
+      "source_sha256": "ba659423ef9c53a6cd03405a192673cc994a9e64c5d305b96c1bbf6a44454e4f",
+      "source_family": "tcc_ab_parallel",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "tcc/results/experiment_B_final_7.json",
+      "source_sha256": "87015320da0f1a369ef568768e3b913d3371fb1e4faa6b884ea8925ef80fa828",
+      "source_family": "tcc_ab_parallel",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "tcc/results/experiment_A_v3_13.json",
+      "source_sha256": "ce1a54a8d7a65b161549cd4d772c1c6b12a928ec891d754a57e49f57657384e2",
+      "source_family": "tcc_ab_v3",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "tcc/results/experiment_B_v3_14.json",
+      "source_sha256": "ef92350a8f8afdd44b2fd4ac1ede1651571a48418a2b14a8841991819189f0c0",
+      "source_family": "tcc_ab_v3",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "notebooks/results/cond_A_20260328_163833.json",
+      "source_sha256": "43ff73bce6c40c72ab44bc422fbd7df42e16d3319fd6c2ae5b3daad3ee7f9080",
+      "source_family": "notebook_ab",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "notebooks/results/cond_B_20260328_163833.json",
+      "source_sha256": "a977ade1196832186ddcf0e0fe87c65bcee1d4e9191f963bd6cb6a791887685f",
+      "source_family": "notebook_ab",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "notebooks/results/qa4_20260328_163833.json",
+      "source_sha256": "c104ab2c603ce0357a1bd190023cd3367f70291a871640936d3c55bea6fbdd79",
+      "source_family": "notebook_qa4",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "notebooks/results/qa4_todas_runs_20260328_163833.csv",
+      "source_sha256": "bdd7fb2a06afb52a415b4496bfa02ab64209d8f7322e1fde5d73c272821223c4",
+      "source_family": "notebook_qa4_crosscheck",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "notebooks/experimento_tcc.ipynb",
+      "source_sha256": "a09d0a9d45cb964259ecf30b4a5d8993db9f9a729b85a7d83cc822ae9163d8ee",
+      "source_family": "versioned_protocol_evidence",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    },
+    {
+      "source_repository": "https://github.com/savinoo/ai-grading-system",
+      "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+      "source_path": "run_experiment.py",
+      "source_sha256": "406436cc9fe2076bfe2d3380c67de0498adee15f78ae76e44a4516a9e613f97d",
+      "source_family": "versioned_protocol_evidence",
+      "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+    }
+  ],
+  "deidentification": {
+    "scope": "Reviewed public synthetic exports only; not a general anonymization guarantee",
+    "excluded": [
+      "student names",
+      "emails",
+      "participant/exam/question UUIDs",
+      "feedback",
+      "reasoning chains",
+      "timestamps"
+    ],
+    "identifiers": "Deterministic SHA256 pseudonyms; publicly linkable to public source, not irreversible anonymization",
+    "retrieved_text": "240-character evidence excerpts, exact full-content hash, original length and source/page metadata"
+  },
+  "human_reference_status": "absent; no legitimate human annotations found in inspected versioned experiment exports",
+  "annotation_cases": 48,
+  "normalized_exports": 16,
+  "cohorts": [
+    {
+      "dataset_id": "tcc-qa4-json-v1",
+      "correction_rows": 36,
+      "unique_cases": 12,
+      "questions": 3,
+      "runs": 3,
+      "maximum_final_score_range": 0.625,
+      "exact_answer_text": "absent; never substituted from A/B exports"
+    },
+    {
+      "dataset_id": "tcc-qa4-notebook-v1",
+      "correction_rows": 12,
+      "unique_cases": 4,
+      "questions": 1,
+      "question_label": "Q2",
+      "runs": 3,
+      "maximum_final_score_range": 1.37,
+      "exact_answer_text": "present in raw notebook review exports"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "annotation/blind_packet.json",
+      "sha256": "b422da9a5123f8d6554a7bd7f3ea38c691c57f49b74f9d1c4f5fefa1fa820b23"
+    },
+    {
+      "path": "annotation/ratings_template.json",
+      "sha256": "09fb6a6f10300723cdc7ec50ff635b5356029eeffc430bdc94345a6d9f5bbfdf"
+    },
+    {
+      "path": "exports/experiment_A_7.json",
+      "sha256": "f778f57ec37478090c7166929e311ea084e90fcf4c55f61e0ca8d302bda80fa9"
+    },
+    {
+      "path": "exports/experiment_A_final_6.json",
+      "sha256": "e153b30497361f57ca15f0141569f58f5cd3eb5d0e0fc341dec9710d4e6ffb7f"
+    },
+    {
+      "path": "exports/experiment_A_pareado_3.json",
+      "sha256": "728ebfa96946d20d73426d9f340e7f1a4a7534d4754bfd692256dad06c69a910"
+    },
+    {
+      "path": "exports/experiment_A_v3_13.json",
+      "sha256": "a8f8308ad9dbbd263852fc2a3a6c8d915db2a862f800a07476e3507515d220c8"
+    },
+    {
+      "path": "exports/experiment_B_8.json",
+      "sha256": "58c80c24f18002342b565047f0cdcd187325df3f86768020c0bff817bc88383b"
+    },
+    {
+      "path": "exports/experiment_B_final_7.json",
+      "sha256": "98deda94622dc5b1a86b90d5cafc675965b6a379ec55e267f86ceb0154530d7e"
+    },
+    {
+      "path": "exports/experiment_B_pareado_4.json",
+      "sha256": "f86c9f5ff51738b5d2d86ab4addd9b0653c6330ceb7e84e015012021de62a1f7"
+    },
+    {
+      "path": "exports/experiment_B_v3_14.json",
+      "sha256": "88bff86d08b1e032589b842897166abf1a7ad49dc160f66f267a07cce3fac094"
+    },
+    {
+      "path": "exports/experiment_QA4_10.json",
+      "sha256": "5950cd3ecbd857198b4d68233e0181074129cb3fee3d02d27091b0c4c5768be4"
+    },
+    {
+      "path": "exports/experiment_QA4_11.json",
+      "sha256": "fb1a2bc49a538766a96d6ced25327d86bc4a3db617d1665717c9949b18dc1b36"
+    },
+    {
+      "path": "exports/experiment_QA4_9.json",
+      "sha256": "5622ba196803e6e4e3d3f0b9015c7857d35fccbb72ac230ddbe33ea90cc68d4c"
+    },
+    {
+      "path": "exports/notebook_cond_A.json",
+      "sha256": "d730ed735fcfbbc9a32d4320e0e204307a91209cdefbe7419f3608b4375c5711"
+    },
+    {
+      "path": "exports/notebook_cond_B.json",
+      "sha256": "17a2f737d289e03cba529b539a67d72849b69e761f9d7e50ec4e7ce55de473fb"
+    },
+    {
+      "path": "exports/notebook_qa4_r1.json",
+      "sha256": "04727775ede4c697906900aef3dc57b687e5a0bc03bacde31926811c992316ce"
+    },
+    {
+      "path": "exports/notebook_qa4_r2.json",
+      "sha256": "af2645f13cdcadd46299136680e4ef76d7b44359397eec2e0c860f77f0525349"
+    },
+    {
+      "path": "exports/notebook_qa4_r3.json",
+      "sha256": "f8b211c4658e9cba42d7d1d3085705f8cb6e042473b63171c086d833afa70ae3"
+    },
+    {
+      "path": "qa4_notebook_report.json",
+      "sha256": "7bdb6292a4a2e15978df0806e37138d06dd74ff578477553cc3af7075faf6f71"
+    },
+    {
+      "path": "reliability_report.json",
+      "sha256": "a61f0e50657d87b9aacaf2651476f9edd52950f43e3a17b86a10779f5915e305"
+    },
+    {
+      "path": "synthetic_demo/annotations.json",
+      "sha256": "c6f0c0fc875c04a7af102a58f60ebed8197599f843dc964313ccc83083ee80f0"
+    },
+    {
+      "path": "synthetic_demo/packet.json",
+      "sha256": "8241fa48cf4274a6997f81964903a1a187b50f8dc7ebdc77c68b19aa2be6864d"
+    },
+    {
+      "path": "tables/qa4_json/corrections.csv",
+      "sha256": "5964bdf5bbcf221dd5610f5670b4e159417ba33036399124cb19b2de84a1e7aa"
+    },
+    {
+      "path": "tables/qa4_json/report.json",
+      "sha256": "a61f0e50657d87b9aacaf2651476f9edd52950f43e3a17b86a10779f5915e305"
+    },
+    {
+      "path": "tables/qa4_json/stability.csv",
+      "sha256": "ae536648948194da3f0578f5a035a884e8578ff613d1ea5904faabd7e14a5bba"
+    },
+    {
+      "path": "tables/qa4_notebook/corrections.csv",
+      "sha256": "f08f3599b13af7465c32fbbe3ba5bff48f09244678b7c03ac1a13be01e07d19d"
+    },
+    {
+      "path": "tables/qa4_notebook/report.json",
+      "sha256": "7bdb6292a4a2e15978df0806e37138d06dd74ff578477553cc3af7075faf6f71"
+    },
+    {
+      "path": "tables/qa4_notebook/stability.csv",
+      "sha256": "bfcb0fe3c30e1c15be3a8e30cc4158ce534c3986e38082d883d30aba1917217f"
+    }
+  ]
+}

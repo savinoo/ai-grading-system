@@ -25,6 +25,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app.analytics_ui import render_analytics_selector, render_class_analytics_dashboard, render_plagiarism_dashboard, render_student_profile_card
 from app.api_client import get_api_client
 from app.experiment_store import get_experiment_store
+from app.experiment_provenance import build_experiment_config
 from app.latex_exporter import LaTeXExporter
 from app.persistence import load_persistence_data, save_persistence_data
 from app.ui_components import (
@@ -607,6 +608,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                         pass
 
                     exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                         'llm_provider': settings.LLM_PROVIDER,
                         'llm_model': settings.LLM_MODEL_NAME,
                         'condition': 'A (com RAG)',
@@ -737,6 +739,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                         pass
 
                     exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                         'llm_provider': settings.LLM_PROVIDER,
                         'llm_model': settings.LLM_MODEL_NAME,
                         'condition': 'B (sem RAG)',
@@ -792,6 +795,7 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                         _t = time.time()
 
                         exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                             'llm_provider': settings.LLM_PROVIDER,
                             'llm_model': settings.LLM_MODEL_NAME,
                             'llm_temperature': settings.LLM_TEMPERATURE,
@@ -809,6 +813,11 @@ if operation_mode == "📋 Experimento TCC (Guiado)":
                             for s in students_list:
                                 if s['id'] in all_answers.get(q.id, {}):
                                     ans = all_answers[q.id][s['id']]
+                                    # Keep the exact answer for stable QA4 comparisons.
+                                    exp_store.save_answer(
+                                        exp_id, str(q.id), str(s['id']),
+                                        s['name'], ans.text, s.get('quality')
+                                    )
                                     inp = {
                                         "question": q, "student_answer": ans, "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
                                         "rag_contexts": None,
@@ -1122,6 +1131,7 @@ elif operation_mode == "Batch Processing (Turma)":
                             # Create experiment and save questions
                             _rag_on = st.session_state.get("rag_enabled", True)
                             exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                                 'llm_provider': settings.LLM_PROVIDER,
                                 'llm_model': settings.LLM_MODEL_NAME,
                                 'llm_temperature': settings.LLM_TEMPERATURE,
@@ -1265,6 +1275,7 @@ elif operation_mode == "Batch Processing (Turma)":
                         if not exp_id:
                             _rag_on = st.session_state.get("rag_enabled", True)
                             exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                                 'llm_provider': settings.LLM_PROVIDER,
                                 'llm_model': settings.LLM_MODEL_NAME,
                                 'llm_temperature': settings.LLM_TEMPERATURE,
@@ -1442,6 +1453,7 @@ elif operation_mode == "Batch Processing (Turma)":
 
                         # Create experiment for this repetition
                         rep_exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                             'llm_provider': settings.LLM_PROVIDER,
                             'llm_model': settings.LLM_MODEL_NAME,
                             'llm_temperature': settings.LLM_TEMPERATURE,
@@ -1462,6 +1474,10 @@ elif operation_mode == "Batch Processing (Turma)":
                             for s in students_list:
                                 if s['id'] in all_mock_answers.get(q.id, all_mock_answers.get(str(q.id), {})):
                                     ans = all_mock_answers.get(q.id, all_mock_answers.get(str(q.id), {}))[s['id']]
+                                    exp_store.save_answer(
+                                        rep_exp_id, str(q.id), str(s['id']),
+                                        s['name'], ans.text, s.get('quality')
+                                    )
                                     inputs_by_student[s['id']] = {
                                         "question": q, "student_answer": ans, "exam_uuid": st.session_state.setdefault('_exam_uuid', _uuid.uuid4()),
                                         "rag_contexts": None if _rag_on else [],
@@ -1806,6 +1822,7 @@ elif operation_mode == "🔗 End-to-End (Backend API)":
 
                         # Save to experiment store
                         exp_id = exp_store.create_experiment({
+                            **build_experiment_config(settings),
                             'llm_provider': settings.LLM_PROVIDER,
                             'llm_model': settings.LLM_MODEL_NAME,
                             'mode': 'end-to-end (backend API)',

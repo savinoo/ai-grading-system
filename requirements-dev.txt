@@ -1,0 +1,10 @@
+-r requirements-evaluation.txt
+# Actual grading graph, with external providers replaced at the test boundary.
+langgraph==1.0.5
+pydantic==2.12.5
+pydantic-settings==2.12.0
+# Validation tooling; security findings remain blocking.
+pytest==8.4.2
+pytest-cov==7.0.0
+ruff==0.14.14
+bandit[toml]==1.9.4

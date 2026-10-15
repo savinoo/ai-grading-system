@@ -1,0 +1,2 @@
+source,case_id,mean_2_score,observed_final_score,arbiter_score,score_shift,mean_2_absolute_error,final_absolute_error,arbiter_latency_ms,arbiter_cost_usd
+rag.json,41cb91ab9b9617c6,6.0,8.0,8.0,2.0,,,,

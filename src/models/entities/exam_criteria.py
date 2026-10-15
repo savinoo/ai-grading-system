@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 
 from sqlalchemy import (
     Index,
@@ -17,6 +17,9 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.models.settings.base import Base
+
+if TYPE_CHECKING:
+    from src.models.entities.grading_criteria import GradingCriteria
 
 class ExamCriteria(Base):
     """

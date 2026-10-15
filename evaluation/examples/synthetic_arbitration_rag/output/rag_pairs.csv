@@ -1,0 +1,3 @@
+comparison_id,material_sha256,rag_case_id,no_rag_case_id,rag_final_score,no_rag_final_score,score_delta,divergence_delta,eligible_controlled_comparison,blocking_reasons,reference_absolute_error_delta,observed_latency_delta_ms,observed_cost_delta_usd,retrieved_context_count
+synthetic_controlled_demo,8f3065f1fff3bf9722c63ed6bc833bcc9c41284717ec9ec11e22108f4a847608,41cb91ab9b9617c6,41cb91ab9b9617c6,8.0,6.0,2.0,4.0,True,,,,,1
+synthetic_controlled_demo,e8122e30398c60d495db57c729b3c87b8ed73c4d18378b2e856c7c090b201eff,715e033fb663f85d,715e033fb663f85d,7.0,7.0,0.0,0.0,True,,,,,1

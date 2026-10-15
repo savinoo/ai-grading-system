@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "html": "evaluation/artifacts/report.html",
+  "stages": {
+    "validation": "passed",
+    "package": "passed",
+    "verification": "structural_only"
+  },
+  "browserWarning": {
+    "code": "browser_unavailable",
+    "message": "No installed Chromium headless-shell executable was found. Set CHROMIUM_EXECUTABLE_PATH (or the legacy PLAYWRIGHT_EXECUTABLE_PATH) or preinstall Chromium headless-shell under PLAYWRIGHT_BROWSERS_PATH; portable tooling never downloads browsers."
+  },
+  "counts": {
+    "blocks": 13,
+    "charts": 4,
+    "html": 0,
+    "metrics": 0,
+    "tables": 0
+  },
+  "sourceDialog": "not_verified",
+  "sourceInteraction": "not_verified",
+  "viewports": [],
+  "timings": {
+    "validateAndPackageMs": 101.6,
+    "staticChartExtractionMs": 1.3,
+    "structuralVerificationMs": 2.8,
+    "totalMs": 105.4
+  }
+}

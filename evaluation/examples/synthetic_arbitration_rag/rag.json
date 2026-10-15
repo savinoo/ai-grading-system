@@ -1,0 +1,86 @@
+{
+  "id": "synthetic_rag",
+  "data_origin": "synthetic",
+  "status": "synthetic_fixture",
+  "config": {
+    "data_origin": "synthetic",
+    "comparison_id": "synthetic_controlled_demo",
+    "rag_enabled": true,
+    "llm_provider": "synthetic_no_provider",
+    "llm_model": "synthetic_no_model",
+    "llm_temperature": 0,
+    "divergence_threshold": 2,
+    "embedding_provider": "synthetic_no_provider",
+    "embedding_model": "synthetic_no_model",
+    "rag_top_k": 1,
+    "source_fingerprints": {
+      "examiner_prompt_file_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "examiner_runtime_file_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "workflow_file_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "retriever_file_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  },
+  "questions": [
+    {
+      "question_uuid": "synthetic_question",
+      "statement": "Synthetic question: 2 + 2?",
+      "total_points": 10,
+      "rubric_json": [
+        {
+          "name": "Synthetic rubric",
+          "weight": 1
+        }
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "question_uuid": "synthetic_question",
+      "student_id": "synthetic_case_1",
+      "answer_text": "Synthetic answer: four."
+    },
+    {
+      "question_uuid": "synthetic_question",
+      "student_id": "synthetic_case_2",
+      "answer_text": "Synthetic answer: two plus two equals four."
+    }
+  ],
+  "results": [
+    {
+      "question_uuid": "synthetic_question",
+      "student_id": "synthetic_case_1",
+      "c1_score": 4,
+      "c2_score": 8,
+      "arbiter_score": 8,
+      "final_score": 8,
+      "consensus_method": "closest_pair_3"
+    },
+    {
+      "question_uuid": "synthetic_question",
+      "student_id": "synthetic_case_2",
+      "c1_score": 6,
+      "c2_score": 8,
+      "arbiter_score": null,
+      "final_score": 7,
+      "consensus_method": "mean_2"
+    }
+  ],
+  "rag_contexts": [
+    {
+      "question_uuid": "synthetic_question",
+      "student_id": "synthetic_case_1",
+      "chunk_content": "SYNTHETIC RETRIEVAL: Two plus two equals four.",
+      "source_document": "synthetic_fixture.txt",
+      "page_number": 1,
+      "rank": 1
+    },
+    {
+      "question_uuid": "synthetic_question",
+      "student_id": "synthetic_case_2",
+      "chunk_content": "SYNTHETIC RETRIEVAL: Two plus two equals four.",
+      "source_document": "synthetic_fixture.txt",
+      "page_number": 1,
+      "rank": 1
+    }
+  ]
+}

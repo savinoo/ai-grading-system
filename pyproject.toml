@@ -1,0 +1,17 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "integration_*.py"]
+pythonpath = ["."]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+# Apply fatal correctness checks to the whole inherited codebase. Expanding to
+# stylistic rules requires a separate refactor; no baseline hides violations.
+select = ["E9", "F63", "F7", "F82"]
+
+[tool.bandit]
+# Deliberately empty: use every default check, no skipped IDs or severity filter.

@@ -1,0 +1,641 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Multi-Agent LLM Reliability & Evaluation Lab",
+    "generatedAt": "2026-10-15T02:05:29+00:00",
+    "description": "Historical results, controlled-comparison limits and reproducible evaluation methods.",
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# Multi-Agent LLM Reliability & Evaluation Lab"
+      },
+      {
+        "id": "section_0",
+        "type": "markdown",
+        "body": "## Technical summary\n\nThe grader exhibits high overall examiner agreement while concentrating disagreement in weak synthetic responses. The JSON QA4 cohort contains 36 grading rows for 12 cases; mean absolute examiner difference is **0.343750 points**, and weak responses average **1.013889 points**. The largest final-score range across three repetitions is **0.625 points**. The separate notebook QA4 cohort has 12 rows for four Q2 cases and a maximum recorded range of **1.37 points**. These cohorts implement different protocols and are not pooled.\n\nThe accessible study material contains **no validated human reference grades**. Therefore this case establishes descriptive consistency, instrumentation gaps and reproducible experimental infrastructure. It does not establish grading accuracy, arbitration benefit, or improved grading quality from RAG. All grades use a 0–10 scale. Historical response profiles were authored/generated synthetic examples, not a sample of real learners.\n\nThe delivery reuses the capstone's actual grading graph, experiment store and historical exports. It adds frozen deidentified data, strict human-label provenance checks, three offline experiments, a Streamlit results interface, a blind annotation packet and integration tests with mocked external providers. It performs no paid inference or production deployment."
+      },
+      {
+        "id": "section_1",
+        "type": "markdown",
+        "body": "## Experiment 1: disagreement is concentrated in weak responses\n\nThe JSON QA4 denominator is three questions × four profiles × three repetitions. The following values are recomputed from C1/C2 scores, not taken from a narrative summary:\n\n| Synthetic profile | Rows | Mean absolute C1/C2 difference (points) |\n|---|---:|---:|\n| Weak (`poor`) | 9 | 1.013889 |\n| Excellent | 9 | 0.180556 |\n| Off topic | 9 | 0.111111 |\n| Intermediate (`average`) | 9 | 0.069444 |\n\nAcross all 36 rows, 16/36 examiner pairs match exactly, 28/36 differ by at most 0.5 points and 33/36 by at most 1.0 point. Pearson correlation is 0.990958 and Lin's concordance coefficient is 0.990569. These high aggregate values partly reflect the broad score range across response profiles. Within weak responses, concordance is only 0.289651. Neither aggregate correlation nor concordance measures correctness against a human standard.\n\nThe JSON QA4 exports did not persist exact answer text. Its 0.625-point maximum range is consequently a descriptive within-ID variation; identical inputs across repetitions cannot be verified from these exports. We do not substitute answers from a different A/B experiment. The notebook QA4 retains exact material but has inconsistencies among stored final grades, examiner fields and consensus metadata. Its 1.37-point range describes the recorded final-score field under that separate protocol; it does not validate the same scoring semantics as the JSON implementation."
+      },
+      {
+        "id": "figure_disagreement",
+        "type": "chart",
+        "chartId": "disagreement"
+      },
+      {
+        "id": "figure_ranges",
+        "type": "chart",
+        "chartId": "ranges"
+      },
+      {
+        "id": "section_2",
+        "type": "markdown",
+        "body": "## Experiment 2: arbitration changes grades, but quality benefit is unmeasured\n\nFor the JSON QA4 cohort, strict threshold routing (`|C1 − C2| > threshold`) gives:\n\n| Threshold (points) | Simulated referrals | Denominator |\n|---|---:|---:|\n| 0.5 | 8 | 36 |\n| 1.0 | 3 | 36 |\n| 1.5 | 1 | 36 |\n| 2.0 | 0 | 36 |\n\nThese are counterfactual call counts. The missing arbiter outputs for newly eligible cases are not generated, inferred or filled with the examiner mean. Lowering a threshold therefore does not imply a complete alternative-policy result.\n\nThe wider diagnostic corpus contains 144 valid historical grading rows across heterogeneous protocols, including **10 observed arbiter grades** in the JSON A/B families. Relative to the same-row two-examiner mean, their mean absolute recorded final-score movement is **1.9 points**. This is selected, observational grade movement, with no human-relative quality conclusion. The reports also stratify arbitration by source family; the heterogeneous corpus is not a calibration sample for a single threshold.\n\nThe software replays the current mean-of-two-closest rule only when the required observed scores exist. Historical notebook consensus inconsistencies remain diagnostic flags. Counterfactual completeness and stored-versus-replayed mismatch counts are exposed. No actual inference latency, token prices or monetary cost are recorded in the relevant historical rows, so these fields remain null. Offline execution time is not presented as model latency."
+      },
+      {
+        "id": "figure_thresholds",
+        "type": "chart",
+        "chartId": "thresholds"
+      },
+      {
+        "id": "section_3",
+        "type": "markdown",
+        "body": "## Experiment 3: exact A/B material matches do not establish RAG benefit\n\nPairing fingerprints the exact question statement, rubric, scale and answer. It does not rely on participant IDs or quality-profile labels alone. Each row below has 12 exact material pairs; these are four separate comparisons, not 48 independent learners.\n\n| Historical comparison | Exact pairs | Mean final score RAG minus no RAG (points) | Fully controlled pairs |\n|---|---:|---:|---:|\n| JSON paired | 12 | -0.182292 | 0 |\n| JSON final | 12 | -0.437500 | 0 |\n| JSON v3 | 12 | -0.229167 | 0 |\n| Notebook A/B | 12 | +0.240000 | 0 |\n\nThe three JSON comparisons have no persisted retrieval context despite their RAG-on labels. The notebook A/B export has **four persisted retrieved chunks per case**, stored at question scope; the same question contexts may be repeated across profiles. We retain short evidence excerpts, full-content SHA-256 fingerprints, source-document locator, page, chunk index and retrieval score. These demonstrate recorded retrieval evidence; they do not show that the grader used it faithfully or that humans judged it relevant.\n\nNo historical comparison satisfies all required model, temperature, prompt/runtime fingerprint and retrieval-configuration controls. Notebook model configuration is particularly incomplete. Treatment allocation was not established as randomized. A positive or negative grade shift therefore measures neither causal RAG impact nor error reduction. No human reference effect or retrieval recall is reported.\n\nA separate synthetic controlled fixture exercises matching, context evidence, threshold replay and missing-measurement handling. Its declared outputs are software test data, isolated from the historical reports. It demonstrates that the pipeline runs; it is not an empirical RAG experiment."
+      },
+      {
+        "id": "figure_rag_deltas",
+        "type": "chart",
+        "chartId": "rag_deltas"
+      },
+      {
+        "id": "section_4",
+        "type": "markdown",
+        "body": "## Scope, lineage and metric definitions\n\nThe immutable historical source is Git commit `79495d00948908503ed4489861ea319a2c7e7972` on the repository's `tcc` history. The dataset manifest records exact original paths, raw-file SHA-256 values and hashes of normalized outputs. It covers the two QA4 cohorts, completed A/B families and failed/empty exports needed to expose exclusions.\n\nNormalization uses an allowlist: synthetic answers, questions, rubrics, scores, configuration evidence and short retrieval traces. It removes participant names, participant/exam UUIDs, feedback and reasoning chains. Deterministic pseudonyms are publicly linkable to the public source; this is deidentification of this reviewed corpus, not a guarantee of irreversible anonymization or a general tool for private student data.\n\n- **Examiner difference:** absolute C1 minus C2; its mean is descriptive inter-examiner disagreement, not MAE against a human.\n- **Signed examiner difference:** mean C1 minus C2, indicating direction of disagreement.\n- **Pearson correlation:** covariance divided by the two standard deviations; undefined for a constant series.\n- **Lin concordance:** twice covariance divided by the sum of variances and squared mean difference. Identical constant series remain undefined rather than being assigned perfect correlation.\n- **Repeat range:** maximum minus minimum recorded final score within case/configuration. Known changed answers are excluded; missing answers produce an explicit unverified-input warning.\n- **Reference MAE/RMSE/bias:** mean absolute, root mean squared and signed final-minus-human error, only for provenance-validated human labels matching exact annotation material.\n- **RAG score delta:** same-material RAG final score minus no-RAG final score, with eligibility blockers retained.\n\nRow counts, exclusions, source statuses and missing evidence are machine-readable. Empty/failed exports do not become zero-score learners. Descriptive statistics use correction rows and preserve repeated-case dependence; no independent-row confidence intervals or significance tests are claimed."
+      },
+      {
+        "id": "section_5",
+        "type": "markdown",
+        "body": "## Experimental design and human-reference pipeline\n\nThere are 48 distinct exact annotation materials: 40 assigned to development and 8 to held-out review by a deterministic response-text hash. This small challenge set is not a representative random sample. Annotation packets contain the statement, rubric, answer and scale, with model scores and profile names removed. The protocol requests two independent blind ratings followed by documented human adjudication. It does not imply that reviewers have been recruited.\n\nThe importer validates label origin, independent reviewer IDs, blind-review attestations, rationales, timestamps, adjudication and material fingerprints. Provisional ratings and legacy files without provenance do not enter research metrics. A schema can check recorded evidence; it cannot prove that a person actually performed the review. Research owners must retain legitimate rating evidence and reviewer authorization. Synthetic annotation examples require explicit demonstration mode and are rejected as research gold.\n\nA future prospective study should freeze prompts, rubric, model and retrieval setup; grade identical material across randomized or counterbalanced repeated RAG conditions; capture retrieved contexts, arbiter alternatives, tokens and stage-level latency; and compare all policies on the same held-out human-labelled cases. Policy tuning uses development cases only. Human-relative paired errors should be summarized at case level with uncertainty respecting repeated runs. This study remains pending, rather than being represented by synthetic results."
+      },
+      {
+        "id": "section_6",
+        "type": "markdown",
+        "body": "## Validation, limitations and release state\n\nThe reanalysis checks frozen-file hashes before reading results. Tests cover missing/changed answers, material mismatches, malformed scores, human-label provenance, strict routing boundaries, missing counterfactual arbiter outputs, incomplete RAG configuration and separation of synthetic data. Integrated tests exercise the real compiled graph, real agent prompt/structured-output path and SQLite export using deterministic external-provider doubles. This confirms software integration without claiming new live model quality.\n\nDetailed commands, exact pass counts, hosted CI links and pending checks appear in the validation record. The repaired security job runs without suppression and reports inherited findings plus low-severity subprocess warnings on the new dataset import helper. Image building depends on test and security success. Production release is blocked; security remediation is a separate scope. Live provider calls, real embedding retrieval, PostgreSQL integration, validated human grading and causal benefit measurements have not been performed for this delivery.\n\nThe dashboard and portable report expose the same historical results and unavailable fields. No merge to `main` or production deployment was performed."
+      },
+      {
+        "id": "section_7",
+        "type": "markdown",
+        "body": "## Next decisions and open research questions\n\nUse this case to demonstrate evaluation design, data lineage, controlled comparison eligibility, failure triage and honest interpretation. The evidence supports prioritizing weak-answer cases for human review and improving trace capture before making quality claims. It does not justify lowering the live arbitration threshold or claiming RAG improves grading.\n\nThe next empirical milestone is a legitimate, blind, adjudicated reference set on the prepared material. Open questions are whether examiner agreement masks shared-model errors, whether arbitration reduces held-out error enough to justify measured latency and cost, and which retrieved contexts help or distract under a genuinely controlled design.\n\nSource attribution: the original AI Grading System capstone by Lucas Lorenzo Savino and Maycon Mendes Fernandes, Instituto Federal Fluminense, April 2026. Exact experiment source paths and hashes are preserved in the dataset manifest; no external human-labelled dataset is claimed."
+      }
+    ],
+    "cards": [],
+    "charts": [
+      {
+        "id": "disagreement",
+        "title": "Mean examiner disagreement by synthetic profile",
+        "subtitle": "QA4 JSON · 9 rows per profile · 0–10 score scale",
+        "type": "bar",
+        "dataset": "profile_agreement",
+        "sourceId": "profile_agreement",
+        "valueFormat": "number",
+        "palette": {
+          "kind": "sequential",
+          "name": "blue"
+        },
+        "labels": {
+          "values": "auto"
+        },
+        "encodings": {
+          "x": {
+            "field": "profile",
+            "type": "nominal",
+            "label": "Profile"
+          },
+          "y": {
+            "field": "mean_absolute_difference",
+            "type": "quantitative",
+            "label": "Mean |C1 − C2| (points)"
+          }
+        }
+      },
+      {
+        "id": "ranges",
+        "title": "Recorded final-score range by case",
+        "subtitle": "QA4 JSON · three repetitions per case · identical answers unverified",
+        "type": "bar",
+        "dataset": "qa4_ranges",
+        "sourceId": "qa4_ranges",
+        "valueFormat": "number",
+        "palette": {
+          "kind": "sequential",
+          "name": "blue"
+        },
+        "labels": {
+          "values": "auto"
+        },
+        "encodings": {
+          "x": {
+            "field": "case_label",
+            "type": "nominal",
+            "label": "Anonymous case"
+          },
+          "y": {
+            "field": "score_range",
+            "type": "quantitative",
+            "label": "Maximum − minimum (points)"
+          }
+        }
+      },
+      {
+        "id": "thresholds",
+        "title": "Counterfactual arbitration referrals",
+        "subtitle": "QA4 JSON · 36 rows · strict thresholds · no new arbiter outcomes",
+        "type": "bar",
+        "dataset": "qa4_thresholds",
+        "sourceId": "qa4_thresholds",
+        "valueFormat": "number",
+        "palette": {
+          "kind": "sequential",
+          "name": "blue"
+        },
+        "labels": {
+          "values": "auto"
+        },
+        "encodings": {
+          "x": {
+            "field": "threshold_label",
+            "type": "nominal",
+            "label": "Strict disagreement threshold"
+          },
+          "y": {
+            "field": "would_trigger",
+            "type": "quantitative",
+            "label": "Simulated referrals"
+          }
+        }
+      },
+      {
+        "id": "rag_deltas",
+        "title": "Descriptive RAG minus no-RAG score shifts",
+        "subtitle": "12 exact-material pairs per comparison · zero fully controlled historical pairs",
+        "type": "bar",
+        "dataset": "rag_comparisons",
+        "sourceId": "rag_comparisons",
+        "valueFormat": "number",
+        "palette": {
+          "kind": "sequential",
+          "name": "blue"
+        },
+        "labels": {
+          "values": "auto"
+        },
+        "encodings": {
+          "x": {
+            "field": "comparison_id",
+            "type": "nominal",
+            "label": "Historical comparison"
+          },
+          "y": {
+            "field": "mean_score_shift_descriptive",
+            "type": "quantitative",
+            "label": "Mean grade shift (points)"
+          }
+        }
+      }
+    ],
+    "tables": [],
+    "sources": [
+      {
+        "id": "profile_agreement",
+        "label": "QA4 JSON correction aggregation",
+        "path": "evaluation/data/reliability_report.json",
+        "query": {
+          "language": "sql",
+          "engine": "SQLite in-memory; materialized from reviewed deidentified report rows",
+          "sql": "SELECT profile, COUNT(*) AS correction_rows, AVG(ABS(c1_score-c2_score)) AS mean_absolute_difference, AVG(c1_score-c2_score) AS signed_difference, SUM(ABS(c1_score-c2_score)<=0.5) AS within_0_5_rows, 10 AS scale_max FROM qa4_json_corrections GROUP BY profile ORDER BY mean_absolute_difference DESC",
+          "description": "Executed by evaluation/presentation.py. RAG material pairing is performed by evaluation/experiments.py; QA4 rows by evaluation/reliability.py.",
+          "tables_used": [
+            "qa4_json_corrections",
+            "threshold_candidates"
+          ],
+          "filters": [
+            "Historical valid score rows; QA4 cohorts kept separate; no human reference labels"
+          ],
+          "metric_definitions": {
+            "mean_absolute_difference": "mean(abs(c1_score-c2_score)); 0–10 points",
+            "score_range": "max(final_score)-min(final_score) within case/configuration",
+            "would_trigger": "count(abs(c1_score-c2_score)>threshold)",
+            "mean_score_shift_descriptive": "mean(final_score_rag-final_score_no_rag) within exact-material pairs; not quality or causal effect"
+          }
+        }
+      },
+      {
+        "id": "qa4_ranges",
+        "label": "QA4 JSON correction aggregation",
+        "path": "evaluation/data/reliability_report.json",
+        "query": {
+          "language": "sql",
+          "engine": "SQLite in-memory; materialized from reviewed deidentified report rows",
+          "sql": "SELECT case_id, SUBSTR(case_id,1,8) AS case_label, profile, configuration_id, COUNT(*) AS runs, MIN(final_score) AS score_min, MAX(final_score) AS score_max, MAX(final_score)-MIN(final_score) AS score_range FROM qa4_json_corrections GROUP BY case_id, profile, configuration_id ORDER BY score_range DESC",
+          "description": "Executed by evaluation/presentation.py. RAG material pairing is performed by evaluation/experiments.py; QA4 rows by evaluation/reliability.py.",
+          "tables_used": [
+            "qa4_json_corrections",
+            "threshold_candidates"
+          ],
+          "filters": [
+            "Historical valid score rows; QA4 cohorts kept separate; no human reference labels"
+          ],
+          "metric_definitions": {
+            "mean_absolute_difference": "mean(abs(c1_score-c2_score)); 0–10 points",
+            "score_range": "max(final_score)-min(final_score) within case/configuration",
+            "would_trigger": "count(abs(c1_score-c2_score)>threshold)",
+            "mean_score_shift_descriptive": "mean(final_score_rag-final_score_no_rag) within exact-material pairs; not quality or causal effect"
+          }
+        }
+      },
+      {
+        "id": "qa4_thresholds",
+        "label": "QA4 JSON correction aggregation",
+        "path": "evaluation/data/reliability_report.json",
+        "query": {
+          "language": "sql",
+          "engine": "SQLite in-memory; materialized from reviewed deidentified report rows",
+          "sql": "SELECT threshold, '> ' || PRINTF('%.1f',threshold) AS threshold_label, COUNT(*) AS eligible_rows, SUM(ABS(c1_score-c2_score)>threshold) AS would_trigger FROM qa4_json_corrections CROSS JOIN threshold_candidates GROUP BY threshold ORDER BY threshold",
+          "description": "Executed by evaluation/presentation.py. RAG material pairing is performed by evaluation/experiments.py; QA4 rows by evaluation/reliability.py.",
+          "tables_used": [
+            "qa4_json_corrections",
+            "threshold_candidates"
+          ],
+          "filters": [
+            "Historical valid score rows; QA4 cohorts kept separate; no human reference labels"
+          ],
+          "metric_definitions": {
+            "mean_absolute_difference": "mean(abs(c1_score-c2_score)); 0–10 points",
+            "score_range": "max(final_score)-min(final_score) within case/configuration",
+            "would_trigger": "count(abs(c1_score-c2_score)>threshold)",
+            "mean_score_shift_descriptive": "mean(final_score_rag-final_score_no_rag) within exact-material pairs; not quality or causal effect"
+          }
+        }
+      },
+      {
+        "id": "rag_comparisons",
+        "label": "Exact-material RAG pair aggregation",
+        "path": "evaluation/data/experiments.json",
+        "query": {
+          "language": "sql",
+          "engine": "SQLite in-memory; materialized from reviewed deidentified report rows",
+          "sql": "SELECT comparison_id, COUNT(*) AS exact_material_pairs, SUM(eligible) AS eligible_controlled_pairs, AVG(score_delta) AS mean_score_shift_descriptive, AVG(divergence_delta) AS mean_divergence_shift_descriptive FROM historical_rag_pairs GROUP BY comparison_id ORDER BY comparison_id",
+          "description": "Executed by evaluation/presentation.py. RAG material pairing is performed by evaluation/experiments.py; QA4 rows by evaluation/reliability.py.",
+          "tables_used": [
+            "historical_rag_pairs"
+          ],
+          "filters": [
+            "Historical valid score rows; QA4 cohorts kept separate; no human reference labels"
+          ],
+          "metric_definitions": {
+            "mean_absolute_difference": "mean(abs(c1_score-c2_score)); 0–10 points",
+            "score_range": "max(final_score)-min(final_score) within case/configuration",
+            "would_trigger": "count(abs(c1_score-c2_score)>threshold)",
+            "mean_score_shift_descriptive": "mean(final_score_rag-final_score_no_rag) within exact-material pairs; not quality or causal effect"
+          }
+        }
+      },
+      {
+        "id": "manifest",
+        "label": "Pinned original TCC source and lineage",
+        "path": "evaluation/data/manifest.json",
+        "url": "https://github.com/savinoo/ai-grading-system/tree/79495d00948908503ed4489861ea319a2c7e7972"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-10-15T02:05:29+00:00",
+    "status": "partial",
+    "datasets": {
+      "profile_agreement": [
+        {
+          "profile": "poor",
+          "correction_rows": 9,
+          "mean_absolute_difference": 1.0138888888888888,
+          "signed_difference": 0.2638888888888889,
+          "within_0_5_rows": 2,
+          "scale_max": 10
+        },
+        {
+          "profile": "excellent",
+          "correction_rows": 9,
+          "mean_absolute_difference": 0.18055555555555555,
+          "signed_difference": -0.09722222222222222,
+          "within_0_5_rows": 9,
+          "scale_max": 10
+        },
+        {
+          "profile": "off_topic",
+          "correction_rows": 9,
+          "mean_absolute_difference": 0.1111111111111111,
+          "signed_difference": 0.1111111111111111,
+          "within_0_5_rows": 8,
+          "scale_max": 10
+        },
+        {
+          "profile": "average",
+          "correction_rows": 9,
+          "mean_absolute_difference": 0.06944444444444445,
+          "signed_difference": 0.06944444444444445,
+          "within_0_5_rows": 9,
+          "scale_max": 10
+        }
+      ],
+      "qa4_ranges": [
+        {
+          "case_id": "3bd2f5e9e3341991",
+          "case_label": "3bd2f5e9",
+          "profile": "poor",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 2.875,
+          "score_max": 3.5,
+          "score_range": 0.625
+        },
+        {
+          "case_id": "5bd058766af0f20f",
+          "case_label": "5bd05876",
+          "profile": "poor",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 1.8125,
+          "score_max": 2.3125,
+          "score_range": 0.5
+        },
+        {
+          "case_id": "aadbfb17759bde36",
+          "case_label": "aadbfb17",
+          "profile": "off_topic",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 0.5,
+          "score_max": 1.0,
+          "score_range": 0.5
+        },
+        {
+          "case_id": "3fcd5eb4e36c0c7b",
+          "case_label": "3fcd5eb4",
+          "profile": "excellent",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 9.875,
+          "score_max": 10.0,
+          "score_range": 0.125
+        },
+        {
+          "case_id": "97787766db968815",
+          "case_label": "97787766",
+          "profile": "average",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 9.875,
+          "score_max": 10.0,
+          "score_range": 0.125
+        },
+        {
+          "case_id": "52a697a8cef5964c",
+          "case_label": "52a697a8",
+          "profile": "average",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 9.9375,
+          "score_max": 10.0,
+          "score_range": 0.0625
+        },
+        {
+          "case_id": "eebb2d7e6d4ff304",
+          "case_label": "eebb2d7e",
+          "profile": "excellent",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 9.5625,
+          "score_max": 9.625,
+          "score_range": 0.0625
+        },
+        {
+          "case_id": "24332140010d7ee5",
+          "case_label": "24332140",
+          "profile": "average",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 10.0,
+          "score_max": 10.0,
+          "score_range": 0.0
+        },
+        {
+          "case_id": "2bd281e80e1b2a84",
+          "case_label": "2bd281e8",
+          "profile": "excellent",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 9.875,
+          "score_max": 9.875,
+          "score_range": 0.0
+        },
+        {
+          "case_id": "31a5cb446b22a9a7",
+          "case_label": "31a5cb44",
+          "profile": "off_topic",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 0.0,
+          "score_max": 0.0,
+          "score_range": 0.0
+        },
+        {
+          "case_id": "72c89b00b978db46",
+          "case_label": "72c89b00",
+          "profile": "off_topic",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 0.0,
+          "score_max": 0.0,
+          "score_range": 0.0
+        },
+        {
+          "case_id": "7c96fdde0532c414",
+          "case_label": "7c96fdde",
+          "profile": "poor",
+          "configuration_id": "4f42f0dc65f1",
+          "runs": 3,
+          "score_min": 1.5,
+          "score_max": 1.5,
+          "score_range": 0.0
+        }
+      ],
+      "qa4_thresholds": [
+        {
+          "threshold": 0.5,
+          "threshold_label": "> 0.5",
+          "eligible_rows": 36,
+          "would_trigger": 8
+        },
+        {
+          "threshold": 1.0,
+          "threshold_label": "> 1.0",
+          "eligible_rows": 36,
+          "would_trigger": 3
+        },
+        {
+          "threshold": 1.5,
+          "threshold_label": "> 1.5",
+          "eligible_rows": 36,
+          "would_trigger": 1
+        },
+        {
+          "threshold": 2.0,
+          "threshold_label": "> 2.0",
+          "eligible_rows": 36,
+          "would_trigger": 0
+        }
+      ],
+      "rag_comparisons": [
+        {
+          "comparison_id": "notebook_ab",
+          "exact_material_pairs": 12,
+          "eligible_controlled_pairs": 0,
+          "mean_score_shift_descriptive": 0.24,
+          "mean_divergence_shift_descriptive": 0.12916666666666665
+        },
+        {
+          "comparison_id": "tcc_final",
+          "exact_material_pairs": 12,
+          "eligible_controlled_pairs": 0,
+          "mean_score_shift_descriptive": -0.4375,
+          "mean_divergence_shift_descriptive": -0.4583333333333333
+        },
+        {
+          "comparison_id": "tcc_paired",
+          "exact_material_pairs": 12,
+          "eligible_controlled_pairs": 0,
+          "mean_score_shift_descriptive": -0.18229166666666666,
+          "mean_divergence_shift_descriptive": 0.4895833333333333
+        },
+        {
+          "comparison_id": "tcc_v3",
+          "exact_material_pairs": 12,
+          "eligible_controlled_pairs": 0,
+          "mean_score_shift_descriptive": -0.22916666666666666,
+          "mean_divergence_shift_descriptive": 0.625
+        }
+      ],
+      "cohorts": [
+        {
+          "cohort": "QA4 JSON",
+          "rows": 36,
+          "cases": 12,
+          "max_range": 0.625,
+          "answer_identity": "unverified: exact answers absent"
+        },
+        {
+          "cohort": "QA4 notebook Q2",
+          "rows": 12,
+          "cases": 4,
+          "max_range": 1.37,
+          "answer_identity": "exact material present; scoring-field inconsistencies"
+        }
+      ]
+    },
+    "accessIssues": [
+      {
+        "id": "human_reference_absent",
+        "dataset": "human_references",
+        "message": "No validated human grades in the accessible study exports. Accuracy and human-relative arbitration/RAG benefit remain unmeasured."
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "profile_agreement",
+      "label": "QA4 JSON correction aggregation",
+      "path": "evaluation/data/reliability_report.json",
+      "query": {
+        "language": "sql",
+        "engine": "SQLite in-memory; materialized from reviewed deidentified report rows",
+        "sql": "SELECT profile, COUNT(*) AS correction_rows, AVG(ABS(c1_score-c2_score)) AS mean_absolute_difference, AVG(c1_score-c2_score) AS signed_difference, SUM(ABS(c1_score-c2_score)<=0.5) AS within_0_5_rows, 10 AS scale_max FROM qa4_json_corrections GROUP BY profile ORDER BY mean_absolute_difference DESC",
+        "description": "Executed by evaluation/presentation.py. RAG material pairing is performed by evaluation/experiments.py; QA4 rows by evaluation/reliability.py.",
+        "tables_used": [
+          "qa4_json_corrections",
+          "threshold_candidates"
+        ],
+        "filters": [
+          "Historical valid score rows; QA4 cohorts kept separate; no human reference labels"
+        ],
+        "metric_definitions": {
+          "mean_absolute_difference": "mean(abs(c1_score-c2_score)); 0–10 points",
+          "score_range": "max(final_score)-min(final_score) within case/configuration",
+          "would_trigger": "count(abs(c1_score-c2_score)>threshold)",
+          "mean_score_shift_descriptive": "mean(final_score_rag-final_score_no_rag) within exact-material pairs; not quality or causal effect"
+        }
+      }
+    },
+    {
+      "id": "qa4_ranges",
+      "label": "QA4 JSON correction aggregation",
+      "path": "evaluation/data/reliability_report.json",
+      "query": {
+        "language": "sql",
+        "engine": "SQLite in-memory; materialized from reviewed deidentified report rows",
+        "sql": "SELECT case_id, SUBSTR(case_id,1,8) AS case_label, profile, configuration_id, COUNT(*) AS runs, MIN(final_score) AS score_min, MAX(final_score) AS score_max, MAX(final_score)-MIN(final_score) AS score_range FROM qa4_json_corrections GROUP BY case_id, profile, configuration_id ORDER BY score_range DESC",
+        "description": "Executed by evaluation/presentation.py. RAG material pairing is performed by evaluation/experiments.py; QA4 rows by evaluation/reliability.py.",
+        "tables_used": [
+          "qa4_json_corrections",
+          "threshold_candidates"
+        ],
+        "filters": [
+          "Historical valid score rows; QA4 cohorts kept separate; no human reference labels"
+        ],
+        "metric_definitions": {
+          "mean_absolute_difference": "mean(abs(c1_score-c2_score)); 0–10 points",
+          "score_range": "max(final_score)-min(final_score) within case/configuration",
+          "would_trigger": "count(abs(c1_score-c2_score)>threshold)",
+          "mean_score_shift_descriptive": "mean(final_score_rag-final_score_no_rag) within exact-material pairs; not quality or causal effect"
+        }
+      }
+    },
+    {
+      "id": "qa4_thresholds",
+      "label": "QA4 JSON correction aggregation",
+      "path": "evaluation/data/reliability_report.json",
+      "query": {
+        "language": "sql",
+        "engine": "SQLite in-memory; materialized from reviewed deidentified report rows",
+        "sql": "SELECT threshold, '> ' || PRINTF('%.1f',threshold) AS threshold_label, COUNT(*) AS eligible_rows, SUM(ABS(c1_score-c2_score)>threshold) AS would_trigger FROM qa4_json_corrections CROSS JOIN threshold_candidates GROUP BY threshold ORDER BY threshold",
+        "description": "Executed by evaluation/presentation.py. RAG material pairing is performed by evaluation/experiments.py; QA4 rows by evaluation/reliability.py.",
+        "tables_used": [
+          "qa4_json_corrections",
+          "threshold_candidates"
+        ],
+        "filters": [
+          "Historical valid score rows; QA4 cohorts kept separate; no human reference labels"
+        ],
+        "metric_definitions": {
+          "mean_absolute_difference": "mean(abs(c1_score-c2_score)); 0–10 points",
+          "score_range": "max(final_score)-min(final_score) within case/configuration",
+          "would_trigger": "count(abs(c1_score-c2_score)>threshold)",
+          "mean_score_shift_descriptive": "mean(final_score_rag-final_score_no_rag) within exact-material pairs; not quality or causal effect"
+        }
+      }
+    },
+    {
+      "id": "rag_comparisons",
+      "label": "Exact-material RAG pair aggregation",
+      "path": "evaluation/data/experiments.json",
+      "query": {
+        "language": "sql",
+        "engine": "SQLite in-memory; materialized from reviewed deidentified report rows",
+        "sql": "SELECT comparison_id, COUNT(*) AS exact_material_pairs, SUM(eligible) AS eligible_controlled_pairs, AVG(score_delta) AS mean_score_shift_descriptive, AVG(divergence_delta) AS mean_divergence_shift_descriptive FROM historical_rag_pairs GROUP BY comparison_id ORDER BY comparison_id",
+        "description": "Executed by evaluation/presentation.py. RAG material pairing is performed by evaluation/experiments.py; QA4 rows by evaluation/reliability.py.",
+        "tables_used": [
+          "historical_rag_pairs"
+        ],
+        "filters": [
+          "Historical valid score rows; QA4 cohorts kept separate; no human reference labels"
+        ],
+        "metric_definitions": {
+          "mean_absolute_difference": "mean(abs(c1_score-c2_score)); 0–10 points",
+          "score_range": "max(final_score)-min(final_score) within case/configuration",
+          "would_trigger": "count(abs(c1_score-c2_score)>threshold)",
+          "mean_score_shift_descriptive": "mean(final_score_rag-final_score_no_rag) within exact-material pairs; not quality or causal effect"
+        }
+      }
+    },
+    {
+      "id": "manifest",
+      "label": "Pinned original TCC source and lineage",
+      "path": "evaluation/data/manifest.json",
+      "url": "https://github.com/savinoo/ai-grading-system/tree/79495d00948908503ed4489861ea319a2c7e7972"
+    }
+  ]
+}

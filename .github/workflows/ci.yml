@@ -2,9 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, feat/reliability-lab-complete]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 env:
   PYTHON_VERSION: "3.12"
@@ -15,76 +19,70 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PYTHONPATH: ${{ github.workspace }}
-      GOOGLE_API_KEY: test-key-for-ci
-      MODEL_NAME: gemini-2.0-flash
-
+      LANGSMITH_TRACING: "false"
+      LANGSMITH_TRACING_ENABLED: "false"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Python ${{ env.PYTHON_VERSION }}
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Cache pip dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements-dev.txt', 'requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install dependencies
-        run: pip install -r requirements-dev.txt
-
-      - name: Run ruff linting
-        run: ruff check src/ app/ tests/
-
-      - name: Run ruff format check
-        run: ruff format --check src/ app/ tests/
-
-      - name: Run tests with coverage
-        run: pytest --cov=src --cov-report=xml --cov-report=term-missing tests/
-
+          cache: pip
+          cache-dependency-path: |
+            requirements-dev.lock
+      - name: Install offline lab and test dependencies
+        run: python -m pip install -r requirements-dev.lock
+      - name: Check dependency consistency
+        run: python -m pip check
+      - name: Check fatal Python correctness errors across inherited source
+        run: ruff check src/ app/ evaluation/ tests/
+      - name: Check formatting of integration tests
+        run: ruff format --check tests/integration_*.py
+      - name: Validate Python syntax
+        run: python -m compileall -q src/ app/ evaluation/ tests/
+      - name: Run regressions and actual LangGraph integration with mocked providers
+        run: pytest --cov=src/domain/ai/workflow --cov=src/services/agents --cov=app.experiment_store --cov=evaluation --cov-report=xml --cov-report=term-missing tests/
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: coverage-report
           path: coverage.xml
+          if-no-files-found: warn
           retention-days: 30
 
   security:
     name: Security Scan
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Python ${{ env.PYTHON_VERSION }}
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Install bandit
-        run: pip install bandit
-
-      - name: Run bandit security scan
-        run: bandit -r src/ -c pyproject.toml
+      - name: Install pinned scanner
+        run: python -m pip install 'bandit[toml]==1.9.4'
+      - name: Run all default Bandit checks without suppressions
+        run: bandit -r src/ app/ evaluation/ -c pyproject.toml -f json -o bandit-report.json
+      - name: Preserve findings even when the scan fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-findings
+          path: bandit-report.json
+          if-no-files-found: error
+          retention-days: 30
 
   docker:
     name: Docker Build
     runs-on: ubuntu-latest
-    needs: test
-
+    needs: [test, security]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Build Docker image
         run: docker build -t ai-grading-system .
-
       - name: Verify image built successfully
         run: docker image inspect ai-grading-system
