@@ -6,9 +6,6 @@ Suporta múltiplos provedores (OpenAI, Gemini, Anthropic, Groq, Ollama).
 import logging
 from typing import Optional
 from langchain_core.language_models import BaseChatModel
-from langchain_openai import ChatOpenAI
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_groq import ChatGroq
 from src.core.settings import settings
 
 logger = logging.getLogger(__name__)
@@ -60,6 +57,8 @@ def get_chat_model(
     )
     
     if provider == "openai":
+        from langchain_openai import ChatOpenAI
+
         if not settings.OPENAI_API_KEY:
             raise ValueError("OPENAI_API_KEY não configurada")
 
@@ -71,6 +70,8 @@ def get_chat_model(
         )
 
     elif provider == "gemini":
+        from langchain_google_genai import ChatGoogleGenerativeAI
+
         if not settings.GOOGLE_API_KEY:
             raise ValueError("GOOGLE_API_KEY não configurada")
 
@@ -82,6 +83,8 @@ def get_chat_model(
         )
 
     elif provider == "groq":
+        from langchain_groq import ChatGroq
+
         if not settings.GROQ_API_KEY:
             raise ValueError("GROQ_API_KEY não configurada")
 
@@ -95,6 +98,8 @@ def get_chat_model(
         )
 
     elif provider == "ollama":
+        from langchain_openai import ChatOpenAI
+
         # Usa endpoint OpenAI-compatível do Ollama (sem rate limit)
         base_url = getattr(settings, "LLM_BASE_URL", None) or "http://localhost:11434/v1"
         return ChatOpenAI(

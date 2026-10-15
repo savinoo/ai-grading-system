@@ -1,0 +1,5 @@
+configuration_id,source_family,verified_complete_configuration,case_id,profile,runs,score_min,score_max,score_range,verified_identical_answer,verified_identical_material
+00d3c770dfe8,notebook_qa4,False,edba1728984fd0c7,excellent,3,10.0,10.0,0.0,True,True
+00d3c770dfe8,notebook_qa4,False,2f6016e79cbcb894,off_topic,3,0.0,0.0,0.0,True,True
+00d3c770dfe8,notebook_qa4,False,cd5c20b1c3710e70,average,3,9.04,9.88,0.84,True,True
+00d3c770dfe8,notebook_qa4,False,d5e2072399b97545,poor,3,0.51,1.88,1.37,True,True

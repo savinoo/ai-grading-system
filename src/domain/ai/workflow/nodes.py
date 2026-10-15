@@ -2,9 +2,6 @@ from __future__ import annotations
 
 from time import perf_counter
 
-from src.services.rag.retrieval_service import RetrievalService
-from src.services.agents.examiner_agent import ExaminerAgent
-from src.services.agents.arbiter_agent import ArbiterAgent
 from src.domain.ai.utils.divergence_checker import DivergenceChecker
 from src.domain.ai.utils.consensus_builder import ConsensusBuilder
 from src.domain.ai.agent_schemas import AgentID
@@ -14,6 +11,27 @@ from src.utils.concurrency import get_api_semaphore
 from src.core.logging_config import get_logger
 
 logger = get_logger("domain")
+
+
+def _create_retrieval_service():
+    """Load the external vector/provider stack only when retrieval is needed."""
+    from src.services.rag.retrieval_service import RetrievalService
+
+    return RetrievalService()
+
+
+def _create_examiner_agent():
+    """Keep provider construction at an explicit, mockable runtime boundary."""
+    from src.services.agents.examiner_agent import ExaminerAgent
+
+    return ExaminerAgent()
+
+
+def _create_arbiter_agent():
+    """Keep provider construction at an explicit, mockable runtime boundary."""
+    from src.services.agents.arbiter_agent import ArbiterAgent
+
+    return ArbiterAgent()
 
 
 # =============================================================================
@@ -45,7 +63,7 @@ async def retrieve_context_node(state: GradingState) -> dict:
     )
     
     started_at = perf_counter()
-    rag_service = RetrievalService()
+    rag_service = _create_retrieval_service()
     contexts = await rag_service.search_context(
         query=state['question'].statement,
         exam_uuid=state['exam_uuid'],
@@ -78,7 +96,7 @@ async def examiner_1_node(state: GradingState) -> dict:
     """
     logger.info("[Corretor 1 Node] Iniciando avaliação")
     
-    agent = ExaminerAgent()
+    agent = _create_examiner_agent()
     async with get_api_semaphore():
         correction = await agent.evaluate(
             agent_id=AgentID.CORRETOR_1,
@@ -107,7 +125,7 @@ async def examiner_2_node(state: GradingState) -> dict:
     """
     logger.info("[Corretor 2 Node] Iniciando avaliação")
     
-    agent = ExaminerAgent()
+    agent = _create_examiner_agent()
     async with get_api_semaphore():
         correction = await agent.evaluate(
             agent_id=AgentID.CORRETOR_2,
@@ -171,7 +189,7 @@ async def arbiter_node(state: GradingState) -> dict:
         state['divergence_value']
     )
     
-    agent = ArbiterAgent()
+    agent = _create_arbiter_agent()
     async with get_api_semaphore():
         correction = await agent.evaluate(
             question=state['question'],

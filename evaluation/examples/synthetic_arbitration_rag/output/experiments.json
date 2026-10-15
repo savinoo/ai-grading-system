@@ -1,0 +1,493 @@
+{
+  "schema_version": 1,
+  "report_type": "arbitration_and_rag",
+  "data_origin": "synthetic_demonstration",
+  "sources": [
+    {
+      "source": "no_rag.json",
+      "source_path": "no_rag.json",
+      "source_family": "unspecified",
+      "rows": 2,
+      "response_origin": null,
+      "declared_export_status": "synthetic_fixture",
+      "status": "synthetic_fixture"
+    },
+    {
+      "source": "rag.json",
+      "source_path": "rag.json",
+      "source_family": "unspecified",
+      "rows": 2,
+      "response_origin": null,
+      "declared_export_status": "synthetic_fixture",
+      "status": "synthetic_fixture"
+    }
+  ],
+  "arbitration": {
+    "eligible_rows": 4,
+    "observed_arbiter_rows": 1,
+    "mean_absolute_observed_score_shift": 2.0,
+    "observed_outcomes": [
+      {
+        "source": "rag.json",
+        "case_id": "41cb91ab9b9617c6",
+        "mean_2_score": 6.0,
+        "observed_final_score": 8.0,
+        "arbiter_score": 8.0,
+        "score_shift": 2.0,
+        "mean_2_absolute_error": null,
+        "final_absolute_error": null,
+        "arbiter_latency_ms": null,
+        "arbiter_cost_usd": null
+      }
+    ],
+    "reference_comparison": null,
+    "threshold_simulation": [
+      {
+        "threshold": 0.5,
+        "comparison": "absolute_difference > threshold",
+        "kind": "counterfactual_call_count_and_observed_score_replay",
+        "eligible_rows": 4,
+        "would_trigger": 3,
+        "observed_arbiter_available": 1,
+        "outcomes_available": 2,
+        "complete_policy_outcomes": false,
+        "replayed_vs_stored_final_mismatches": 0,
+        "mean_absolute_score_shift": null,
+        "reference_mae": null,
+        "mean_observed_arbiter_latency_ms": null,
+        "total_observed_arbiter_cost_usd": null,
+        "missing_arbiter_cases": [
+          {
+            "source": "no_rag.json",
+            "case_id": "715e033fb663f85d"
+          },
+          {
+            "source": "rag.json",
+            "case_id": "715e033fb663f85d"
+          }
+        ],
+        "replayed_outcomes": [
+          {
+            "source": "no_rag.json",
+            "case_id": "41cb91ab9b9617c6",
+            "score": 6.0,
+            "score_shift": 0.0,
+            "stored_final_score": 6.0,
+            "matches_stored_final": true,
+            "reference_score": null,
+            "absolute_error": null
+          },
+          {
+            "source": "rag.json",
+            "case_id": "41cb91ab9b9617c6",
+            "score": 8.0,
+            "score_shift": 2.0,
+            "stored_final_score": 8.0,
+            "matches_stored_final": true,
+            "reference_score": null,
+            "absolute_error": null
+          }
+        ],
+        "limitation": "Reuses only observed arbiter scores; no new calls or unobserved outcomes. Policy replay does not measure accuracy or causally identify arbiter quality."
+      },
+      {
+        "threshold": 1.0,
+        "comparison": "absolute_difference > threshold",
+        "kind": "counterfactual_call_count_and_observed_score_replay",
+        "eligible_rows": 4,
+        "would_trigger": 3,
+        "observed_arbiter_available": 1,
+        "outcomes_available": 2,
+        "complete_policy_outcomes": false,
+        "replayed_vs_stored_final_mismatches": 0,
+        "mean_absolute_score_shift": null,
+        "reference_mae": null,
+        "mean_observed_arbiter_latency_ms": null,
+        "total_observed_arbiter_cost_usd": null,
+        "missing_arbiter_cases": [
+          {
+            "source": "no_rag.json",
+            "case_id": "715e033fb663f85d"
+          },
+          {
+            "source": "rag.json",
+            "case_id": "715e033fb663f85d"
+          }
+        ],
+        "replayed_outcomes": [
+          {
+            "source": "no_rag.json",
+            "case_id": "41cb91ab9b9617c6",
+            "score": 6.0,
+            "score_shift": 0.0,
+            "stored_final_score": 6.0,
+            "matches_stored_final": true,
+            "reference_score": null,
+            "absolute_error": null
+          },
+          {
+            "source": "rag.json",
+            "case_id": "41cb91ab9b9617c6",
+            "score": 8.0,
+            "score_shift": 2.0,
+            "stored_final_score": 8.0,
+            "matches_stored_final": true,
+            "reference_score": null,
+            "absolute_error": null
+          }
+        ],
+        "limitation": "Reuses only observed arbiter scores; no new calls or unobserved outcomes. Policy replay does not measure accuracy or causally identify arbiter quality."
+      },
+      {
+        "threshold": 1.5,
+        "comparison": "absolute_difference > threshold",
+        "kind": "counterfactual_call_count_and_observed_score_replay",
+        "eligible_rows": 4,
+        "would_trigger": 3,
+        "observed_arbiter_available": 1,
+        "outcomes_available": 2,
+        "complete_policy_outcomes": false,
+        "replayed_vs_stored_final_mismatches": 0,
+        "mean_absolute_score_shift": null,
+        "reference_mae": null,
+        "mean_observed_arbiter_latency_ms": null,
+        "total_observed_arbiter_cost_usd": null,
+        "missing_arbiter_cases": [
+          {
+            "source": "no_rag.json",
+            "case_id": "715e033fb663f85d"
+          },
+          {
+            "source": "rag.json",
+            "case_id": "715e033fb663f85d"
+          }
+        ],
+        "replayed_outcomes": [
+          {
+            "source": "no_rag.json",
+            "case_id": "41cb91ab9b9617c6",
+            "score": 6.0,
+            "score_shift": 0.0,
+            "stored_final_score": 6.0,
+            "matches_stored_final": true,
+            "reference_score": null,
+            "absolute_error": null
+          },
+          {
+            "source": "rag.json",
+            "case_id": "41cb91ab9b9617c6",
+            "score": 8.0,
+            "score_shift": 2.0,
+            "stored_final_score": 8.0,
+            "matches_stored_final": true,
+            "reference_score": null,
+            "absolute_error": null
+          }
+        ],
+        "limitation": "Reuses only observed arbiter scores; no new calls or unobserved outcomes. Policy replay does not measure accuracy or causally identify arbiter quality."
+      },
+      {
+        "threshold": 2.0,
+        "comparison": "absolute_difference > threshold",
+        "kind": "counterfactual_call_count_and_observed_score_replay",
+        "eligible_rows": 4,
+        "would_trigger": 1,
+        "observed_arbiter_available": 1,
+        "outcomes_available": 4,
+        "complete_policy_outcomes": true,
+        "replayed_vs_stored_final_mismatches": 0,
+        "mean_absolute_score_shift": 0.5,
+        "reference_mae": null,
+        "mean_observed_arbiter_latency_ms": null,
+        "total_observed_arbiter_cost_usd": null,
+        "missing_arbiter_cases": [],
+        "replayed_outcomes": [
+          {
+            "source": "no_rag.json",
+            "case_id": "41cb91ab9b9617c6",
+            "score": 6.0,
+            "score_shift": 0.0,
+            "stored_final_score": 6.0,
+            "matches_stored_final": true,
+            "reference_score": null,
+            "absolute_error": null
+          },
+          {
+            "source": "no_rag.json",
+            "case_id": "715e033fb663f85d",
+            "score": 7.0,
+            "score_shift": 0.0,
+            "stored_final_score": 7.0,
+            "matches_stored_final": true,
+            "reference_score": null,
+            "absolute_error": null
+          },
+          {
+            "source": "rag.json",
+            "case_id": "41cb91ab9b9617c6",
+            "score": 8.0,
+            "score_shift": 2.0,
+            "stored_final_score": 8.0,
+            "matches_stored_final": true,
+            "reference_score": null,
+            "absolute_error": null
+          },
+          {
+            "source": "rag.json",
+            "case_id": "715e033fb663f85d",
+            "score": 7.0,
+            "score_shift": 0.0,
+            "stored_final_score": 7.0,
+            "matches_stored_final": true,
+            "reference_score": null,
+            "absolute_error": null
+          }
+        ],
+        "limitation": "Reuses only observed arbiter scores; no new calls or unobserved outcomes. Policy replay does not measure accuracy or causally identify arbiter quality."
+      }
+    ],
+    "limitation": "Repeated historical rows are not independent learners. Arbitration was selected by disagreement; grade movement is not evidence of improved correctness."
+  },
+  "arbitration_by_source_family": [
+    {
+      "source_family": "unspecified",
+      "sources": [
+        "no_rag.json",
+        "rag.json"
+      ],
+      "source_status": {
+        "no_rag.json": "synthetic_fixture",
+        "rag.json": "synthetic_fixture"
+      },
+      "eligible_rows": 4,
+      "observed_arbiter_rows": 1,
+      "mean_absolute_observed_score_shift": 2.0,
+      "threshold_simulation": [
+        {
+          "threshold": 0.5,
+          "comparison": "absolute_difference > threshold",
+          "kind": "counterfactual_call_count_and_observed_score_replay",
+          "eligible_rows": 4,
+          "would_trigger": 3,
+          "observed_arbiter_available": 1,
+          "outcomes_available": 2,
+          "complete_policy_outcomes": false,
+          "replayed_vs_stored_final_mismatches": 0,
+          "mean_absolute_score_shift": null,
+          "reference_mae": null,
+          "mean_observed_arbiter_latency_ms": null,
+          "total_observed_arbiter_cost_usd": null,
+          "limitation": "Reuses only observed arbiter scores; no new calls or unobserved outcomes. Policy replay does not measure accuracy or causally identify arbiter quality."
+        },
+        {
+          "threshold": 1.0,
+          "comparison": "absolute_difference > threshold",
+          "kind": "counterfactual_call_count_and_observed_score_replay",
+          "eligible_rows": 4,
+          "would_trigger": 3,
+          "observed_arbiter_available": 1,
+          "outcomes_available": 2,
+          "complete_policy_outcomes": false,
+          "replayed_vs_stored_final_mismatches": 0,
+          "mean_absolute_score_shift": null,
+          "reference_mae": null,
+          "mean_observed_arbiter_latency_ms": null,
+          "total_observed_arbiter_cost_usd": null,
+          "limitation": "Reuses only observed arbiter scores; no new calls or unobserved outcomes. Policy replay does not measure accuracy or causally identify arbiter quality."
+        },
+        {
+          "threshold": 1.5,
+          "comparison": "absolute_difference > threshold",
+          "kind": "counterfactual_call_count_and_observed_score_replay",
+          "eligible_rows": 4,
+          "would_trigger": 3,
+          "observed_arbiter_available": 1,
+          "outcomes_available": 2,
+          "complete_policy_outcomes": false,
+          "replayed_vs_stored_final_mismatches": 0,
+          "mean_absolute_score_shift": null,
+          "reference_mae": null,
+          "mean_observed_arbiter_latency_ms": null,
+          "total_observed_arbiter_cost_usd": null,
+          "limitation": "Reuses only observed arbiter scores; no new calls or unobserved outcomes. Policy replay does not measure accuracy or causally identify arbiter quality."
+        },
+        {
+          "threshold": 2.0,
+          "comparison": "absolute_difference > threshold",
+          "kind": "counterfactual_call_count_and_observed_score_replay",
+          "eligible_rows": 4,
+          "would_trigger": 1,
+          "observed_arbiter_available": 1,
+          "outcomes_available": 4,
+          "complete_policy_outcomes": true,
+          "replayed_vs_stored_final_mismatches": 0,
+          "mean_absolute_score_shift": 0.5,
+          "reference_mae": null,
+          "mean_observed_arbiter_latency_ms": null,
+          "total_observed_arbiter_cost_usd": null,
+          "limitation": "Reuses only observed arbiter scores; no new calls or unobserved outcomes. Policy replay does not measure accuracy or causally identify arbiter quality."
+        }
+      ]
+    }
+  ],
+  "rag": {
+    "comparisons": [
+      {
+        "comparison_id": "synthetic_controlled_demo",
+        "source_rag": "rag.json",
+        "source_no_rag": "no_rag.json",
+        "source_status": {
+          "rag": "synthetic_fixture",
+          "no_rag": "synthetic_fixture"
+        },
+        "rag_rows": 2,
+        "no_rag_rows": 2,
+        "exact_material_pairs": 2,
+        "eligible_controlled_pairs": 2,
+        "mean_score_shift_descriptive": 1.0,
+        "mean_divergence_shift_descriptive": 2.0,
+        "controlled_mean_score_shift": 1.0,
+        "reference_effect": null,
+        "configuration_blocking_reasons": [],
+        "pairs": [
+          {
+            "material_sha256": "8f3065f1fff3bf9722c63ed6bc833bcc9c41284717ec9ec11e22108f4a847608",
+            "rag_case_id": "41cb91ab9b9617c6",
+            "no_rag_case_id": "41cb91ab9b9617c6",
+            "rag_final_score": 8.0,
+            "no_rag_final_score": 6.0,
+            "score_delta": 2.0,
+            "divergence_delta": 4.0,
+            "retrieved_contexts": [
+              {
+                "chunk_sha256": "dfa12f81d79caa19d34c4feb8ecf9632c25a77375be3d439c5c30195ebeec566",
+                "excerpt": "SYNTHETIC RETRIEVAL: Two plus two equals four.",
+                "content_truncated": false,
+                "source_document": "synthetic_fixture.txt",
+                "page_number": 1,
+                "retrieval_scope": "case",
+                "chunk_index": null,
+                "rank": 1,
+                "relevance_score": null
+              }
+            ],
+            "eligible_controlled_comparison": true,
+            "blocking_reasons": [],
+            "reference_absolute_error_delta": null,
+            "observed_latency_delta_ms": null,
+            "observed_cost_delta_usd": null,
+            "flags": [
+              "high_examiner_disagreement",
+              "no_verified_human_reference"
+            ]
+          },
+          {
+            "material_sha256": "e8122e30398c60d495db57c729b3c87b8ed73c4d18378b2e856c7c090b201eff",
+            "rag_case_id": "715e033fb663f85d",
+            "no_rag_case_id": "715e033fb663f85d",
+            "rag_final_score": 7.0,
+            "no_rag_final_score": 7.0,
+            "score_delta": 0.0,
+            "divergence_delta": 0.0,
+            "retrieved_contexts": [
+              {
+                "chunk_sha256": "dfa12f81d79caa19d34c4feb8ecf9632c25a77375be3d439c5c30195ebeec566",
+                "excerpt": "SYNTHETIC RETRIEVAL: Two plus two equals four.",
+                "content_truncated": false,
+                "source_document": "synthetic_fixture.txt",
+                "page_number": 1,
+                "retrieval_scope": "case",
+                "chunk_index": null,
+                "rank": 1,
+                "relevance_score": null
+              }
+            ],
+            "eligible_controlled_comparison": true,
+            "blocking_reasons": [],
+            "reference_absolute_error_delta": null,
+            "observed_latency_delta_ms": null,
+            "observed_cost_delta_usd": null,
+            "flags": [
+              "high_examiner_disagreement",
+              "no_verified_human_reference"
+            ]
+          }
+        ],
+        "unmatched_cases": [],
+        "interpretation": "Exact material pairing controls question, rubric, answer and scale. Missing setup or retrieval evidence blocks a controlled interpretation. A score shift without verified human references does not measure quality. Even eligible historical pairs are observational; causal claims require a preregistered randomized/repeated design and an independent reference."
+      }
+    ],
+    "unpaired_sources": [],
+    "retrieval_coverage": [
+      {
+        "source": "no_rag.json",
+        "source_family": "unspecified",
+        "rows": 2,
+        "rag_enabled": false,
+        "rows_with_context_content": 0,
+        "context_assignments": 0,
+        "unique_content_hashes": 0,
+        "context_examples": []
+      },
+      {
+        "source": "rag.json",
+        "source_family": "unspecified",
+        "rows": 2,
+        "rag_enabled": true,
+        "rows_with_context_content": 2,
+        "context_assignments": 2,
+        "unique_content_hashes": 1,
+        "context_examples": [
+          {
+            "chunk_sha256": "dfa12f81d79caa19d34c4feb8ecf9632c25a77375be3d439c5c30195ebeec566",
+            "excerpt": "SYNTHETIC RETRIEVAL: Two plus two equals four.",
+            "content_truncated": false,
+            "source_document": "synthetic_fixture.txt",
+            "page_number": 1,
+            "retrieval_scope": "case",
+            "chunk_index": null,
+            "rank": 1,
+            "relevance_score": null
+          }
+        ]
+      }
+    ],
+    "causal_quality_effect": null,
+    "limitation": "Historical exports do not establish randomized treatment allocation. Relevance scores and textbook excerpts are retrieval traces, not human relevance judgments."
+  },
+  "failures": [
+    {
+      "source": "no_rag.json",
+      "case_id": "41cb91ab9b9617c6",
+      "flags": [
+        "no_verified_human_reference"
+      ]
+    },
+    {
+      "source": "no_rag.json",
+      "case_id": "715e033fb663f85d",
+      "flags": [
+        "no_verified_human_reference",
+        "high_examiner_disagreement"
+      ]
+    },
+    {
+      "source": "rag.json",
+      "case_id": "41cb91ab9b9617c6",
+      "flags": [
+        "no_verified_human_reference",
+        "high_examiner_disagreement"
+      ]
+    },
+    {
+      "source": "rag.json",
+      "case_id": "715e033fb663f85d",
+      "flags": [
+        "no_verified_human_reference",
+        "high_examiner_disagreement"
+      ]
+    }
+  ],
+  "source_failures": [],
+  "measurement_policy": "Null means not measured or not identifiable. No API calls, human labels, costs, or latencies are fabricated. Synthetic outputs demonstrate software behavior only."
+}

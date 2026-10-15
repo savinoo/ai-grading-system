@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "dataset_id": "synthetic-demo-only",
+  "status": "unlabelled_annotation_material",
+  "label_origin": null,
+  "blind_to": [
+    "model_scores",
+    "response_quality_profile",
+    "experiment_condition"
+  ],
+  "note": "No reviewers have been recruited or promised. No human reference labels are present.",
+  "items": [
+    {
+      "case_id": "annotation-dde8ad0962dfdc9e",
+      "question_uuid": "demo-question",
+      "student_id": "demo-response",
+      "material_sha256": "083891c2493884e8b94e8fe647ede31ec3f47a75423ec0ee27abeede6e1f2838",
+      "statement": "What is 2 + 2?",
+      "rubric": [
+        {
+          "name": "correctness",
+          "weight": 1.0,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "4",
+      "split": "development"
+    }
+  ]
+}

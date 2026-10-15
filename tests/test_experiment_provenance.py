@@ -24,6 +24,8 @@ class ProvenanceTests(unittest.TestCase):
         self.assertNotIn("GOOGLE_API_KEY", json.dumps(snapshot))
         self.assertNotIn("THIS_IS_A_SECRET", json.dumps(snapshot))
         self.assertEqual(len(snapshot["source_fingerprints"]["examiner_prompt_file_sha256"]), 64)
+        self.assertEqual(len(snapshot["source_fingerprints"]["arbiter_runtime_file_sha256"]), 64)
+        self.assertEqual(len(snapshot["source_fingerprints"]["consensus_runtime_file_sha256"]), 64)
 
     def test_missing_sources_explicitly_null(self):
         with tempfile.TemporaryDirectory() as tmp:

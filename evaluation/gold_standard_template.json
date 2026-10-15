@@ -1,4 +1,10 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
+  "label_origin": "human",
+  "provenance": {
+    "dataset_id": "tcc-historical-material-v1",
+    "annotation_protocol": "evaluation/ANNOTATION_PROTOCOL.md",
+    "source_attribution": "Repository owner's public synthetic TCC responses; source commit and SHA256 checksums in evaluation/data/manifest.json"
+  },
   "items": []
 }

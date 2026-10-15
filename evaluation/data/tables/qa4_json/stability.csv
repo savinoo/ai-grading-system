@@ -1,0 +1,13 @@
+configuration_id,source_family,verified_complete_configuration,case_id,profile,runs,score_min,score_max,score_range,verified_identical_answer,verified_identical_material
+4f42f0dc65f1,tcc_qa4_json,False,52a697a8cef5964c,average,3,9.9375,10.0,0.0625,False,False
+4f42f0dc65f1,tcc_qa4_json,False,31a5cb446b22a9a7,off_topic,3,0.0,0.0,0.0,False,False
+4f42f0dc65f1,tcc_qa4_json,False,eebb2d7e6d4ff304,excellent,3,9.5625,9.625,0.0625,False,False
+4f42f0dc65f1,tcc_qa4_json,False,3bd2f5e9e3341991,poor,3,2.875,3.5,0.625,False,False
+4f42f0dc65f1,tcc_qa4_json,False,24332140010d7ee5,average,3,10.0,10.0,0.0,False,False
+4f42f0dc65f1,tcc_qa4_json,False,72c89b00b978db46,off_topic,3,0.0,0.0,0.0,False,False
+4f42f0dc65f1,tcc_qa4_json,False,2bd281e80e1b2a84,excellent,3,9.875,9.875,0.0,False,False
+4f42f0dc65f1,tcc_qa4_json,False,5bd058766af0f20f,poor,3,1.8125,2.3125,0.5,False,False
+4f42f0dc65f1,tcc_qa4_json,False,97787766db968815,average,3,9.875,10.0,0.125,False,False
+4f42f0dc65f1,tcc_qa4_json,False,aadbfb17759bde36,off_topic,3,0.5,1.0,0.5,False,False
+4f42f0dc65f1,tcc_qa4_json,False,3fcd5eb4e36c0c7b,excellent,3,9.875,10.0,0.125,False,False
+4f42f0dc65f1,tcc_qa4_json,False,7c96fdde0532c414,poor,3,1.5,1.5,0.0,False,False

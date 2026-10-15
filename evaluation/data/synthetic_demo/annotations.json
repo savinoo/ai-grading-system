@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "label_origin": "synthetic_demo",
+  "provenance": {
+    "dataset_id": "synthetic-demo-only",
+    "annotation_protocol": "evaluation/ANNOTATION_PROTOCOL.md",
+    "source_attribution": "Invented arithmetic fixture; no human reviewers or annotations"
+  },
+  "items": [
+    {
+      "case_id": "annotation-dde8ad0962dfdc9e",
+      "question_uuid": "demo-question",
+      "student_id": "demo-response",
+      "material_sha256": "083891c2493884e8b94e8fe647ede31ec3f47a75423ec0ee27abeede6e1f2838",
+      "review_status": "adjudicated",
+      "reference_score": 10.0,
+      "independent_ratings": [
+        {
+          "reviewer_id": "synthetic-rater-A",
+          "score": 10.0,
+          "blinded_to_model_scores": true,
+          "material_sha256": "083891c2493884e8b94e8fe647ede31ec3f47a75423ec0ee27abeede6e1f2838",
+          "rationale": "Synthetic fixture rating, not a human judgement",
+          "recorded_at": "synthetic-fixture",
+          "criterion_scores": [
+            {
+              "criterion": "correctness",
+              "score": 10.0,
+              "max_score": 10.0
+            }
+          ]
+        },
+        {
+          "reviewer_id": "synthetic-rater-B",
+          "score": 9.0,
+          "blinded_to_model_scores": true,
+          "material_sha256": "083891c2493884e8b94e8fe647ede31ec3f47a75423ec0ee27abeede6e1f2838",
+          "rationale": "Synthetic fixture rating, not a human judgement",
+          "recorded_at": "synthetic-fixture",
+          "criterion_scores": [
+            {
+              "criterion": "correctness",
+              "score": 9.0,
+              "max_score": 10.0
+            }
+          ]
+        }
+      ],
+      "adjudication": {
+        "reviewer_id": "synthetic-adjudicator",
+        "material_sha256": "083891c2493884e8b94e8fe647ede31ec3f47a75423ec0ee27abeede6e1f2838",
+        "rationale": "Synthetic fixture decision, not a human judgement",
+        "recorded_at": "synthetic-fixture",
+        "criterion_scores": [
+          {
+            "criterion": "correctness",
+            "score": 10.0,
+            "max_score": 10.0
+          }
+        ]
+      }
+    }
+  ],
+  "import_validation": {
+    "adjudicated_cases": 1,
+    "recorded_reviewer_mean_absolute_difference": 1.0,
+    "origin": "synthetic_demo",
+    "evidence_note": "Recorded provenance validated; human identity/qualification must be audited privately"
+  }
+}

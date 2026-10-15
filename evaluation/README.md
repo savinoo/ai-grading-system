@@ -1,114 +1,135 @@
-# LLM Reliability Lab — Phase 2 (offline evaluation)
+# Reproduce the Reliability & Evaluation Lab
 
-This experimental layer is attached to the existing AI grading system, not a new chatbot.
-It evaluates **agreement, repeatability, traceability and deviations from adjudicated human references**, without calling an LLM.
+This layer evaluates the existing TCC grader offline. The bundled results are historical model grades on synthetic response profiles. **No validated human gold labels are present.** Agreement, score movement and retrieval traces do not establish grading accuracy.
 
-## Usage
+## 1. Install a bounded environment
 
-From repository root, with Python 3.12+:
+From repository root, Python 3.12:
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements-dev.lock
+python -m pip check
+```
+
+`requirements-evaluation.lock` is sufficient for analysis and the dashboard. `requirements-dev.lock` also provides real LangGraph, agent-schema and test dependencies. The `.txt` counterparts declare maintained direct pins; `.lock` files resolve transitives for Python 3.12 with platform markers. These locks were exercised locally and by the CI configuration; they do not imply every OS/provider was tested. The large original `requirements.txt` remains the separate capstone application environment.
+
+The analysis commands themselves use the Python standard library and need no API key, database server or internet access. They do not send data to providers.
+
+## 2. Recompute the frozen results
+
+```bash
+python -m evaluation.run --output evaluation/output/reproduced
+```
+
+The runner verifies manifest hashes and the exact frozen export set before analyzing. It keeps QA4 cohorts separate and writes:
+
+```text
+evaluation/output/reproduced/
+  reproduction.json
+  qa4_json/report.json
+  qa4_json/corrections.csv
+  qa4_json/stability.csv
+  qa4_notebook/report.json
+  qa4_notebook/corrections.csv
+  qa4_notebook/stability.csv
+  experiments.json
+  arbitration_observed.csv
+  rag_pairs.csv
+```
+
+Inputs are the 16 reviewed exports in `evaluation/data/exports/`, with lineage in `evaluation/data/manifest.json`. Main result files are `evaluation/data/reliability_report.json`, `qa4_notebook_report.json` and `experiments.json`. The dataset README documents inclusions, missingness and deidentification limits. Repeated cases are not independent learners.
+
+| Cohort | Corrections | Cases | Maximum recorded final-score range |
+|---|---:|---:|---:|
+| QA4 JSON | 36 | 12 | 0.625 |
+| QA4 notebook, Q2 only | 12 | 4 | 1.370 |
+
+The JSON QA4 exports lack exact answers, so same-input repetition is unverified. Notebook QA4 uses a different implementation and contains inconsistent score/divergence/consensus fields. We preserve those fields and flag mismatches rather than silently repairing them. The two QA4 results are not pooled.
+
+## 3. Inspect the dashboard
+
+```bash
+streamlit run evaluation/dashboard.py --server.address 127.0.0.1
+```
+
+The sidebar selects one QA4 cohort or imports a generated reliability `report.json`. The reliability and threshold panels use only that selected report. Arbitration and RAG detail panels explicitly use the separate bundled historical A/B artifacts. They show recorded arbiter movement, exact-material pairs, comparability blockers, retrieved excerpts/hashes/pages and diagnostic flags. Changing the QA4 selector does not change the A/B experiment population.
+
+No human-reference metric is shown for the bundled history. Monetary cost and model-inference latency remain unavailable where not observed. Model profile names describe synthetic construction, not human grades.
+
+## 4. Rebuild data from original TCC exports
+
+The source is pinned to commit `79495d00948908503ed4489861ea319a2c7e7972`. A shallow clone may need that history fetched once:
+
+```bash
+git fetch --no-tags origin tcc
+python -m evaluation.dataset build \
+  --source-ref 79495d00948908503ed4489861ea319a2c7e7972 \
+  --output evaluation/output/rebuilt-data
+python -m evaluation.run --data evaluation/output/rebuilt-data \
+  --output evaluation/output/rebuilt-analysis
+```
+
+The builder uses read-only Git commands, not the live VPS or production database. It records original source-file and normalized-output SHA-256 hashes. It processes an explicit allowlist of this public synthetic study. It is not a general anonymizer for private student records. Participant names/IDs, feedback and reasoning are excluded; publicly linkable pseudonyms and short document traces remain. Exact answers are included only where present, never reconstructed for missing QA4 records.
+
+Two initial backend A/B exports recorded `TIMEOUT` and no result rows despite their export status saying completed. Their failures are preserved and they are not counted as successful grading observations.
+
+## 5. Run all validation
+
+```bash
+python -m pytest tests/
+ruff check src/ app/ evaluation/ tests/
+ruff format --check tests/integration_*.py
+python -m compileall -q src/ app/ evaluation/ tests/
+bandit -r src/ app/ evaluation/ -c pyproject.toml -f json -o evaluation/output/bandit.json
+```
+
+The **security command is expected to fail while reported findings remain**. It is not disabled, filtered or marked optional to obtain a green pipeline. The CI uploads findings even on failure and gates image building on test and security success. Security remediation is a separate workstream.
+
+For standard-library-only checks, without the dashboard/graph dependencies:
 
 ```bash
 python -m unittest discover -s tests -p 'test_*.py' -v
-python -m evaluation.reliability \
-  tcc/results/experiment_QA4_9.json \
-  tcc/results/experiment_QA4_10.json \
-  tcc/results/experiment_QA4_11.json \
-  --output evaluation/output/qa4-historical
 ```
 
-The historical exports live in the **tcc** branch, *not* main; copy those three files locally before executing the example. The repository does **not** publish a real human-adjudicated gold dataset. The `evaluation/output/` directory is ignored by Git to avoid accidentally committing sensitive case-level output.
+The full pytest run additionally collects `integration_*.py`: actual compiled graph, real examiner/arbiter prompt chains, SQLite round-trip and Streamlit user interactions with deterministic external provider doubles. These are software integration tests, not live model-quality measurements. See `VALIDATION.md` and `docs/CI_AND_RELEASE_STATUS.md` for exact observed outcomes and remaining limits.
 
-Generated reports:
-- `report.json`: metric summaries, quality warnings, threshold simulation and per-case diagnostic tags;
-- `corrections.csv`: pseudonymous case IDs, model scores, disagreement, presence of retrieval/criterion evidence, and **observable** diagnostic flags;
-- `stability.csv`: QA4 score ranges; whether identical answer text could be verified from the exported records.
+## 6. Human annotation: ready for legitimate ratings
 
-The following values are **not** automatically calculated without adjudicated references: model accuracy, hallucination rate, faithfulness, improved grading due to arbitration, retrieval recall, human agreement, or cost.
+The prepared blind packet is `evaluation/data/annotation/blind_packet.json`. Its 48 distinct materials contain questions, rubrics and exact answers with model grades/profile names withheld. The empty `ratings_template.json` records no ratings. Follow `ANNOTATION_PROTOCOL.md` for independent blind review, per-criterion scores, consent/provenance and adjudication.
 
-## Human gold standard
-
-Create a separate private JSON with **human-reviewed**, anonymized grade references:
-
-```json
-{
-  "schema_version": 1,
-  "items": [
-    {
-      "question_uuid": "uuid-of-question",
-      "student_id": "opaque-id-for-answer",
-      "reference_score": 7.0,
-      "review_status": "adjudicated"
-    }
-  ]
-}
-```
-
-The example above describes the schema; **7.0 is not a real label**. Draft labels are excluded from accuracy metrics. Two or more blind human reviewers should grade the same answers using a predeclared rubric and resolve disagreements before the label is marked `adjudicated`.
-
-Run:
+A real completed annotation file must be imported against the packet before analysis:
 
 ```bash
-python -m evaluation.reliability path/to/export.json --gold path/to/private_gold.json --output evaluation/output/human-audit
+python -m evaluation.annotation import \
+  --packet evaluation/data/annotation/blind_packet.json \
+  --annotations path/to/legitimate-private-ratings.json \
+  --output evaluation/output/validated-human-gold.json
+python -m evaluation.run --gold evaluation/output/validated-human-gold.json \
+  --output evaluation/output/human-reference-analysis
 ```
 
-For cases with matched adjudicated labels, the analyzer computes MAE, RMSE and bias. It **does not** infer root causes from score differences alone. Its tags are triage signals (e.g. missing retrieval evidence, large reference error), not explanations.
+Only schema-v2 human labels with required recorded evidence and exact material fingerprints enter reference metrics. Draft/legacy labels and mismatched answers/rubrics are rejected or ineligible. Schema validation cannot certify that a human actually supplied the ratings; retain authentic rating evidence privately. QA4 JSON cannot be labelled retrospectively from other experiments because its exact answers are absent.
 
-## Provenance recorded for new experiments
-
-`app/experiment_provenance.py` snapshots the **effective** model/provider, temperature, embeddings provider/model, RAG top-k, arbitration threshold and SHA-256 fingerprints of prompt, examiner runtime, retriever and workflow files. No API keys or student responses enter the configuration snapshot.
-
-The retrieval node records `retrieval_status`, `retrieval_query_strategy`, `retrieval_scope`, `retrieval_context_count` and `retrieval_elapsed_ms` in `processing_metadata`. The store exports this per-result field, with an additive schema migration for existing SQLite experiment databases. Context content continues to be stored in `experiment_rag_contexts` *only when supplied to the ExperimentStore*. The backend API's separate execution path may not populate the same store; a UI config labelled RAG-on is **not** proof that retrieval evidence was recorded.
-
-These fields do **not** measure LLM inference time, token usage or price. Use LangSmith or a separately validated token/cost capture in a later experiment. Temperature zero is not a determinism guarantee.
-
-## Historical experiment interpretation
-
-For `tcc/results/experiment_QA4_{9,10,11}.json` (Gemini 2.5 Flash, 3 questions, 4 response profiles, 3 repetitions), a direct read found **36 correction results**, with `|C1-C2|` thresholds **strictly greater than**:
-
-| Arbitrator threshold | Would trigger (offline) |
-|---|---:|
-| 0.5 | 8/36 |
-| 1.0 | 3/36 |
-| 1.5 | 1/36 |
-| 2.0 | 0/36 |
-
-These are **potential calls** under altered thresholds, not regraded outcomes. Largest range of final scores across the three exports: **0.625** points. The exported QA4 answer tables are empty, so identical student-answer text across repetitions **cannot be verified from these JSON files alone**.
-
-A **different** QA4 run in `notebooks/results/qa4_todas_runs_20260328_163833.csv` covers just Q2 and four profiles repeated 3 times; it reports a max final-score variation of **1.37**. Do not pool it with the JSON QA4 runs or claim they are the same protocol.
-
-Critical data-quality issues:
-- Historical exports have empty `criterion_scores` in corrections due to the old `criteria_scores` persistence mismatch. Old records cannot be recovered merely by fixing the serializer.
-- Some exports labelled `A (com RAG)` contain zero persisted retrieval contexts. Label alone does not establish effective RAG usage.
-- Human gold labels are absent. Examiner agreement is not evidence that both are correct.
-- QA4 labels refer to synthetic response profiles, not measured performance on real classrooms.
-
-## Root-cause protocol
-
-1. Review high-disagreement and high-error cases first, **without exposing student data in public reports**.
-2. Verify the original question, exact answer, rubric, prompt SHA, model configuration and retrieval traces.
-3. Have independent humans adjudicate the grade before attributing wrong grading to a model.
-4. Classify causes only after evidence review: incorrect retrieval, missing reference, prompt ambiguity, shared model bias, grading-rule ambiguity, or instrumentation failure.
-5. Compare one change at a time on a frozen blind evaluation set. Track accuracy **and** cost/latency separately.
-6. Do not change production arbitration thresholds based on simulations alone: compare real arbiter outputs and MAE to human labels.
-
-## Scope / security
-
-No migration of authentication, cookies, authorization rules, or Streamlit sessions is included in this evaluation PR. Previously identified security concerns need a separate security patch before any public deployment.
-
-
-## Visual dashboard (Streamlit)
-
-A working local dashboard is included in `evaluation/dashboard.py`. It reads the **same `report.json` schema** produced by the CLI, so dashboard graphics cannot invent metrics.
+Exercise annotation import safely with an explicitly synthetic example:
 
 ```bash
-# Streamlit and pandas are already listed in requirements.txt
-streamlit run evaluation/dashboard.py
+python -m evaluation.annotation demo --output evaluation/output/synthetic-annotation-demo
+python -m evaluation.experiments evaluation/examples/synthetic_arbitration_rag/rag.json evaluation/examples/synthetic_arbitration_rag/no_rag.json \
+  --output evaluation/output/synthetic-policy-demo
 ```
 
-The app initially displays `evaluation/examples/qa4_historical_report.json`, a **de-identified historical QA4 snapshot** built from public `tcc` exports, for visual exploration. It shows 36 grading results, 12 cases, a 0.625 maximum score range, and threshold simulations (8 / 3 / 1 / 0 calls at >0.5 / >1.0 / >1.5 / >2.0). It is labelled as an example and does not contain real human gold labels.
+Synthetic annotations are never research gold. Synthetic policy output is evaluated separately; attempts to mix it with historical exports fail. These examples demonstrate pipeline behavior, not grading accuracy or human review.
 
-To view an actual newly generated dataset, upload the CLI's `report.json` in the dashboard sidebar. No requests are made to an LLM and no backend deployment is necessary.
+## 7. Reports and evidence
 
-Human annotation protocol: see `evaluation/ANNOTATION_PROTOCOL.md`. The committed `evaluation/gold_standard_template.json` starts with **zero** labels on purpose.
+- `TECHNICAL_REPORT.md`: English methods, findings and limits.
+- `SUMMARY_PT.md`: Portuguese handoff and portfolio framing.
+- `EXPERIMENTS.md`: policy replay and RAG eligibility definitions.
+- `RESEARCH_VALIDATION.md`: independent calculation and methodology checks.
+- `VALIDATION.md`: actual test/check outcomes and CI links.
+- `artifacts/report.html`: self-contained portable report with source-backed charts.
+- `artifacts/report.artifact.json`: reviewed chart data, actual SQLite aggregation queries and narrative.
 
-**Historical limitations:** source code configuration checksums, exact student answer text, and criterion scores were not stored consistently in old exports. These cannot be reconstructed by presentation styling or by the persistence fix.
+The portable report manifest can be regenerated with `python -m evaluation.presentation`. Its HTML is a packaged reader export, not a second analysis pipeline. The dataset reports and dashboard are reproducible entirely from repository code; optional regeneration of the identical portable reader requires the Data Analytics report-packaging plugin. The checked HTML opens locally without that plugin or a server. No hosted publication is part of this case.

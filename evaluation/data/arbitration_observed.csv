@@ -1,0 +1,11 @@
+source,case_id,mean_2_score,observed_final_score,arbiter_score,score_shift,mean_2_absolute_error,final_absolute_error,arbiter_latency_ms,arbiter_cost_usd
+experiment_A_final_6.json,5bd058766af0f20f,8.5,7.0,7.0,-1.5,,,,
+experiment_A_pareado_3.json,7c96fdde0532c414,1.75,2.5,2.0,0.75,,,,
+experiment_A_pareado_3.json,3bd2f5e9e3341991,6.5,4.5,4.0,-2.0,,,,
+experiment_A_v3_13.json,7c96fdde0532c414,5.0,3.0,3.0,-2.0,,,,
+experiment_A_v3_13.json,8482b86c453eba10,8.125,10.0,10.0,1.875,,,,
+experiment_A_v3_13.json,3bd2f5e9e3341991,5.75,2.0,2.0,-3.75,,,,
+experiment_B_final_7.json,3bd2f5e9e3341991,7.0,9.0,8.0,2.0,,,,
+experiment_B_final_7.json,5bd058766af0f20f,8.5,7.0,7.0,-1.5,,,,
+experiment_B_v3_14.json,8482b86c453eba10,8.125,10.0,10.0,1.875,,,,
+experiment_B_v3_14.json,3bd2f5e9e3341991,8.0,6.25,6.0,-1.75,,,,

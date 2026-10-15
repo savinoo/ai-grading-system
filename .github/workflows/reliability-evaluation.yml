@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - feat/llm-reliability-evaluation
+      - feat/reliability-lab-complete
+  workflow_dispatch:
 
 permissions:
   contents: read

@@ -146,3 +146,12 @@ out/
 .claude/
 # Experimental reports may include case-level diagnostics
 evaluation/output/
+
+# Reviewed public synthetic evaluation snapshots; private outputs stay ignored.
+!evaluation/data/
+!evaluation/data/**
+
+.coverage
+coverage.xml
+.pytest_cache/
+.ruff_cache/

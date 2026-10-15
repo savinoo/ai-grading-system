@@ -1,0 +1,1814 @@
+{
+  "schema_version": 1,
+  "dataset_id": "tcc-historical-material-v1",
+  "status": "unlabelled_annotation_material",
+  "label_origin": null,
+  "blind_to": [
+    "model_scores",
+    "response_quality_profile",
+    "experiment_condition"
+  ],
+  "note": "No reviewers have been recruited or promised. No human reference labels are present.",
+  "items": [
+    {
+      "case_id": "annotation-034f047a6732f39c",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-4195239a765b626e60bd",
+      "material_sha256": "e6c7c6d3aac5c9b1a2d669f020fec8f6120e23793343e1e7238eed52dd7c669b",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Assar um bolo garante estabilidade na textura, mas leva mais tempo; fritar um ovo é rápido, mas pode queimar no pior cenário. O espaço para o forno é fixo, enquanto a frigideira ocupa menos. Para jantares elaborados, a assadeira é ideal, focando na uniformidade. Já para um lanche veloz, a fritura é preferível pela agilidade e crocância.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-06e19bcab4eb4f1d",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-dbc694fe02a87b650434",
+      "material_sha256": "a138eaa2edfe6bc67ac350d2c60efec3fafec23b228f13e5ba19ab922289594a",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Uma BST balanceada mantém a altura da árvore pequena, próxima de O(log n), enquanto uma não balanceada pode crescer de forma descontrolada dependendo da ordem de inserção dos elementos. A vantagem principal da balanceada é que busca, inserção e remoção ficam em O(log n) sempre. Na não balanceada, essas operações podem chegar a O(n) no pior caso, quando a árvore vira praticamente uma lista encadeada. No melhor caso, ambas conseguem O(log n) se os elementos forem inseridos de forma bem distribuída.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-0a2f8377c871c741",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "material_sha256": "12b39e274467729c68b835ea7044e6b8a9c785724b74251d8d68858177c50791",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Merge Sort é tipicamente estável e tem um desempenho de tempo mais previsível, sendo O(n log n) no pior caso, mas utiliza mais espaço auxiliar (O(n)). Quick Sort geralmente não é estável e pode ter um pior caso de tempo de O(n^2).\n\nNo entanto, Quick Sort costuma ser mais eficiente em termos de espaço (O(log n) na média). Assim, escolhe-se Merge Sort quando a ordem relativa de elementos iguais é crucial ou a previsibilidade do tempo é prioritária.\n\nQuick Sort é preferível para menor uso de memória, mas é preciso considerar a variação do seu desempenho dependendo dos dados de entrada.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-185010831ef10a78",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "material_sha256": "870693e590ef1fbf56281bc550db168702cf37547be3ef228a9e5f148f647831",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Árvores balanceadas mantêm uma altura proporcional ao logaritmo do número de elementos, assegurando desempenho consistente O(log n) para busca, inserção e remoção no melhor e pior caso. Já as não balanceadas podem ter altura linear, degenerando para um pior caso O(n) nessas operações. A principal vantagem das balanceadas é a garantia de eficiência, evitando o desempenho imprevisível do pior caso linear das não balanceadas.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-1af322ab794b5412",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "material_sha256": "5caf35ec685f86e0233d56d2e82e38a11da3acb556591295b2de6fd406099fa9",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Merge Sort é estável, com complexidade de tempo O(n log n) e espaço O(n), sendo preferível quando a ordem relativa de elementos iguais importa. Quick Sort não é estável, com tempo no pior caso O(n^2) e espaço médio O(log n). A escolha depende da tolerância a picos de desempenho e uso de memória, e se a estabilidade é um requisito primordial para a aplicação. Quick Sort costuma ser mais rápido na prática, mas Merge Sort oferece um desempenho mais previsível.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-1df266e9df60035f",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-6be66b032c8178cebaba",
+      "material_sha256": "ffc76d38e5d1ba2ad7ce124dd6aad4da120066c1a6b2b84d0adc4056d48855ad",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Arrays utilizam alocação contígua de memória: os elementos ocupam posições consecutivas, permitindo acesso direto via aritmética de ponteiros com complexidade O(1) para qualquer índice k. Listas Encadeadas Simples alocam nós dinamicamente em posições não contíguas; cada nó armazena o dado e um ponteiro para o próximo. O acesso ao índice k exige travessia sequencial a partir da cabeça, resultando em O(n) no pior caso. Na inserção/remoção no meio: em Arrays, todos os elementos após a posição precisam ser deslocados, custo O(n). Em Listas, uma vez localizado o nó predecessor (O(n) de busca), a operação em si é O(1) — apenas ponteiros são redirecionados. O trade-off é claro: Arrays são superiores para leitura aleatória intensiva; Listas são mais eficientes para inserções/remoções frequentes em posições intermediárias, especialmente quando o ponteiro de inserção já é conhecido.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-2c99abf68af71a0f",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "material_sha256": "6d71c609acebd62a1f41502616c0b46f1468ed8756c752bc29fd9527e035300f",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Arrays alocam memória contígua; Listas Encadeadas alocam nós não contiguamente. O acesso a um elemento `k` em Array é O(1) (direto por índice); em Lista é O(n), pois exige travessia sequencial. A inserção/remoção no meio em Array é O(n), devido ao deslocamento de elementos. Em Lista Encadeada, também é O(n) para localizar a posição e ajustar ponteiros.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-2e9074ff296a1b7c",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "material_sha256": "fbdab15f8af96b3619e39fd6a96e8c0394b92c5af359634e8d217643503e3cb1",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "O Quick Sort é mais rápido, com complexidade de tempo O(n log n) no pior caso, enquanto o Merge Sort, por ser recursivo, é O(n^2). Ambos são estáveis, essencial para manter a ordem dos elementos, sendo o Merge Sort um pouco mais robusto nesse aspecto. Em relação ao espaço, o Merge Sort é muito eficiente, usando o mesmo array de entrada, enquanto o Quick Sort demanda mais memória auxiliar para pilhas. A escolha depende do compilador e da arquitetura do hardware para maximizar o desempenho.",
+      "split": "held_out"
+    },
+    {
+      "case_id": "annotation-31e1678af39518b7",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "material_sha256": "c6dc5dbbec71174edc3d09f7665736552dbc81a3a40632b27c9eea16fa78ba49",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Merge Sort (MS) é estável, O(n log n) tempo no pior caso e O(n) espaço auxiliar, ideal para estabilidade e desempenho garantido.\nQuick Sort (QS) é instável, O(n²) tempo no pior caso e O(log n) espaço médio (pilha recursiva), favorecendo eficiência de espaço.\nA estabilidade do MS é crucial para manter a ordem relativa de elementos iguais, e sua complexidade de tempo garantida é vital em sistemas críticos.\nO QS, embora mais rápido na prática para muitos cenários, exige boa escolha de pivô para evitar seu pior caso de tempo.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-330f32bd2807754c",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-4195239a765b626e60bd",
+      "material_sha256": "4dcc862f5dfae017346be6be05384d491fd908b7f9d83880328c9b8bcfa565f9",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Na culinária, um bolo de cenoura começa com a alocação de ingredientes frescos, como cenoura ralada e ovos. O acesso ao ponto ideal de cozimento é verificado inserindo um palito no centro, o que pode levar vários minutos de espera. A adição de uma cobertura de chocolate durante o resfriamento altera drasticamente o perfil de sabor e a apresentação final do doce.",
+      "split": "held_out"
+    },
+    {
+      "case_id": "annotation-334f25140ea40d68",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-4195239a765b626e60bd",
+      "material_sha256": "feb8ccc3ecea4bf3c30e1f957b65592670ed85a5fada90ac807f98df063929ec",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Um bolo bem batido tem textura aerada e sabor equilibrado, enquanto um mal misturado fica denso e com sabor irregular. A principal vantagem do bem-feito é a experiência gustativa superior. Preparar e saborear um bolo equilibrado (melhor caso) é um prazer rápido e completo. Já o não balanceado (pior caso) demanda mais tempo para aceitação, ou é logo descartado.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-37ac59bc2cbe0c2a",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "material_sha256": "5444f42af29624ae2f4ef02e5d9f71bf3494e5ed909cdadaf12da32369471e48",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Merge Sort é instável com complexidade de tempo O(n^2) no pior caso e usa pouco espaço O(log n). Quick Sort é estável, mais rápido no pior caso O(n log n), mas com O(n) de espaço auxiliar, sendo bom para poucos itens.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-3a5da882d073acaf",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "material_sha256": "4259d969289eda67aeb1b78f5198a2ff2fb85b2c8e5e00cb7650edcc2741b48b",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Uma BST balanceada garante altura O(log n) (diferença de altura entre subárvores limitada); a não balanceada pode degenerar para O(n). A principal vantagem da balanceada é manter busca, inserção e remoção em O(log n) no melhor e pior caso. Já na não balanceada, estas operações são O(log n) no melhor caso, mas O(n) no pior caso (árvore degenerada), desempenho que a balanceada evita.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-3c2491b2d37639d8",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-4195239a765b626e60bd",
+      "material_sha256": "c35b84225b8929a0911bf04aeedc1f9bc582ea6bbc2903c8889071ed248c7b11",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Para um churrasco perfeito, a alocação da carne na grelha exige cuidado para assar uniformemente. A marinada precisa ser aplicada em todas as peças, garantindo o sabor. Inserir ou remover carvão durante o preparo afeta diretamente a temperatura geral. A qualidade do fogo, um processo O(paciência), é crucial.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-420a6774a309c8e4",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-4195239a765b626e60bd",
+      "material_sha256": "ac3db88db9e99d00b4bffb3498fb4f47ac3be0ac58c619da9787b0ac838fe734",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Descrevo as propriedades de uma dieta balanceada e uma não balanceada: a primeira inclui todos os grupos alimentares em proporções adequadas, enquanto a segunda é deficiente em nutrientes. A principal vantagem de uma dieta balanceada é a manutenção da saúde e energia. Seu processo de assimilação é eficiente, otimizando o bem-estar rapidamente, ao contrário da não balanceada, que pode levar a problemas metabólicos complexos no longo prazo.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-43419916ac5eee8d",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "material_sha256": "992b7feef176acd9497c81479230a3e1e1550385595f64d7c08a16f504e8f81d",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Uma BST balanceada mantém seus nós igualmente distribuídos, como em um array, enquanto a não balanceada permite qualquer estrutura. A vantagem principal da balanceada é a performance superior. Operações nela são sempre O(log N) em todos os casos, pois a estrutura está otimizada. Para a não balanceada, todas as operações sempre levam O(N), pois não há otimização de caminho, tornando-a lenta.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-464bdef25171c70d",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-4195239a765b626e60bd",
+      "material_sha256": "d8a8e26174fae9476fe80d695bde4979c04eb3cff693cd025b51eaecc84e67dc",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Um pão balanceado requer levedura, farinha e água em proporções exatas para uma massa leve e aerada. Um pão não balanceado resulta em um miolo denso ou seco. A principal vantagem do balanceado é a melhor fermentação e sabor; o tempo de sova é O(1) no melhor caso, ou O(N) para ajustes no pior.",
+      "split": "held_out"
+    },
+    {
+      "case_id": "annotation-47262073847a23d8",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "material_sha256": "782448d781c4d08e58d41eae41d9164c381c1deca080359fd55b2b755bcebcef",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "BST balanceada mantém a altura logarítmica (O(log n)), garantindo que a diferença de altura entre subárvores de qualquer nó seja pequena (ex: <= 1 em AVL). A não balanceada pode ter altura O(n).\nA principal vantagem da balanceada é a garantia de eficiência.\nComplexidade (busca/inserção/remoção): Balanceada: O(log n) (melhor e pior caso).\nNão balanceada: O(log n) (melhor caso); O(n) (pior caso, quando degenera para lista encadeada).",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-5225c16571c4629f",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "material_sha256": "ecc2d91754a8d924f4a3a71dafddc2bdf45c1319fade343d13758ff78bbb4640",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "`Arrays` alocam memória de forma estática em segmentos contíguos, facilitando o acesso O(1) a qualquer elemento via índice `k` por meio de um cálculo direto. Já `Listas Encadeadas` utilizam alocação dinâmica, onde cada nó armazena dados e ponteiros, o que exige um acesso O(n) para encontrar um elemento em `k`. A inserção/remoção no meio da `Array` causa um grande impacto de O(n) devido à necessidade de reorganização de todos os elementos, enquanto na `Lista` é mais eficiente, pois apenas ponteiros são alterados, mas a busca por esse ponto ainda é O(n).",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-53c7cadfa41d6dbf",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-cbec77f5e01e5b7f7fd1",
+      "material_sha256": "d8590e173b3fcd852b8241cf588e368ba02d25cb56c6912b33e8597e9e9f1783",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Arrays permitem acesso direto a um elemento na posição `k` em tempo constante O(1), diferentemente das Listas Encadeadas Simples, que exigem travessia sequencial, resultando em O(k) para acesso e O(n) no pior caso. A inserção ou remoção de um elemento no meio de um Array tem um impacto de O(n) devido ao deslocamento de elementos, enquanto em uma Lista Encadeada, essa operação, após encontrar o ponto (O(n)), é O(1) para atualizar os ponteiros.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-549847541c121596",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "material_sha256": "66fb8814208312643e31d6fcbc2eaecd80e24c8b22c1408f1a54585a0a555f27",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Merge Sort é instável e tem complexidade de tempo de O(N^2) no pior caso, gastando pouco espaço. O Quick Sort é estável e mais eficiente, com O(N log N) no pior caso, mas exige mais memória. A escolha depende se a performance ou a estabilidade é a prioridade, sendo o Quick Sort melhor para dados já ordenados.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-5a05e4ebc89309d3",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "material_sha256": "726ff5ac7b8935b5d0c9370052bc405bdd37ac8ccb1a714112d6a3ab0bcf1d03",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Uma BST balanceada é aquela onde um lado pode ser bem maior que o outro, enquanto a não balanceada mantém a altura mínima. A vantagem da não balanceada é a busca ser sempre O(log n), e a balanceada tem pior caso O(n) para busca.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-6ed5b97d241ebe02",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "material_sha256": "b8e4b3c44cf60ededf585341e1ea6730c7045f54c918c367f16ab2fe82c2107f",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Merge Sort é estável e O(n log n) no pior caso, exigindo O(n) de espaço auxiliar. Quick Sort é instável, tem pior caso O(n^2) e O(log n) de espaço (pilha de recursão). Merge Sort é ideal para garantir estabilidade e desempenho consistente (O(n log n) sempre); Quick Sort é preferido pelo melhor caso médio e eficiência *in-place*, desde que o pior caso seja evitado com pivô inteligente.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-83b900b2fe4c55d9",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-4195239a765b626e60bd",
+      "material_sha256": "e95d7885e2ef656637cbc3b4462616ce298d5288f6adbc94b16402b0e3c29e01",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "A diferenciação entre planetas rochosos e gigantes gasosos reside na sua composição interna e formação. Enquanto rochosos possuem núcleo sólido e superfícies definidas, como a Terra, gigantes gasosos, como Júpiter, são vastas esferas de hidrogênio e hélio, sem superfície sólida clara. A observação de exoplanetas pode variar, revelando atmosferas ou a ausência delas, impactando a busca por vida.",
+      "split": "held_out"
+    },
+    {
+      "case_id": "annotation-868b4a0db3f6e54b",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-dbc694fe02a87b650434",
+      "material_sha256": "6639b6bd2dc560316e0d2721df2acfd22379552b93545fcefafca1609c4e5b23",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Merge Sort é um algoritmo estável, enquanto Quick Sort não é estável. O Merge Sort tem complexidade O(n log n) mesmo no pior caso, o que o torna mais previsível. O Quick Sort pode chegar a O(n²) no pior caso, mas em média é O(n log n). Em relação ao espaço, o Merge Sort precisa de memória extra proporcional ao tamanho do array, enquanto Quick Sort usa menos memória adicional. Para escolher entre eles, deve-se considerar se a estabilidade importa e quanto de memória está disponível no sistema.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-86af192e2268714b",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-cbec77f5e01e5b7f7fd1",
+      "material_sha256": "4b002cd659287137492b03a651a494ae42cc19062690813711684a32378fa5df",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Merge Sort é um algoritmo estável e possui complexidade de tempo O(n log n) no pior caso, garantindo desempenho previsível. Quick Sort, por outro lado, não é inerentemente estável e seu pior caso é O(n^2), o que pode ser um problema para dados já ordenados. A escolha entre eles depende da necessidade de estabilidade e da tolerância ao pior caso de tempo.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-88b38c2dc6bcf97d",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-4195239a765b626e60bd",
+      "material_sha256": "fe67ec578293d8a343971cc71b5652a8bfac44bf11622868708dc6f914bbad7a",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Grelhar e assar diferem muito. Grelhar oferece sabor defumado intenso e cozimento rápido para carnes finas, mas requer atenção constante. Assar distribui calor uniformemente, ideal para bolos e pães, garantindo maciez interna. A complexidade do preparo e os equipamentos variam. A escolha impacta diretamente a textura final e a suculência do prato.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-98827ac75e7c0004",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "material_sha256": "e54efe5c444382cb341a2a0697b3be600553987f989db5ce4d846a70545d4760",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Uma BST balanceada tem seus nós organizados de forma que todos os caminhos sejam de igual comprimento e cada nó filho é sempre maior que o pai, o que a torna otimizada. Uma não balanceada não segue essa regra, podendo virar uma lista. A vantagem principal da balanceada é sua agilidade. A complexidade de busca, inserção e remoção é O(log n) para a balanceada (todos os casos), e para a não balanceada, é O(1) no melhor e O(n!) no pior.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-98a77b121bf231be",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-6be66b032c8178cebaba",
+      "material_sha256": "aa46369aa6ee007f604444f16377d0b6880f5b631cf4a65c78f6f88c2d424e90",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Uma BST é definida pela propriedade de ordenação: todo nó à esquerda tem chave menor e à direita maior que o nó pai. Em uma BST balanceada (ex.: AVL, Red-Black), a diferença de altura entre as subárvores esquerda e direita de qualquer nó é limitada (fator de balanceamento ≤ 1 em AVL), garantindo altura O(log n). Em uma BST não balanceada, inserções em ordem crescente ou decrescente degeram a estrutura em uma lista linear, com altura O(n). A principal vantagem da BST balanceada é garantir complexidade O(log n) para busca, inserção e remoção em todos os cenários (melhor e pior caso). Na não balanceada: melhor caso O(log n) (árvore naturalmente equilibrada pela ordem aleatória das inserções) e pior caso O(n) (árvore degenerada). Esse comportamento imprevisível é crítico em aplicações com requisitos de latência garantida, justificando o overhead de rebalanceamento das árvores autobalanceadas.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-9e4a0219fa99de0a",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-f93d73531b4d2ac9ff27",
+      "material_sha256": "a410ddb659c6ad7808416a41d4ab5ccaaa3b6f5a80971030693556b8c8db0bcc",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Merge Sort é um algoritmo instável que divide o array ao meio e depois junta as partes. Sua complexidade no pior caso é O(n²) e usa muito espaço de memória. Quick Sort é estável e funciona escolhendo um pivô para separar elementos menores e maiores. Tem complexidade O(n log n) em todos os casos e usa pouco espaço. Por isso o Quick Sort é sempre mais eficiente que o Merge Sort, especialmente em arrays já ordenados onde o Merge Sort fica muito lento.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-a06b9e6151ee2206",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-d01fe380fa45362d53ef",
+      "material_sha256": "4fc2683babe224458ced4076993e400d56b266ceeef06945a36155889668f0a7",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Redes neurais artificiais são modelos computacionais inspirados no cérebro humano. São compostas por camadas de neurônios artificiais que processam informações de entrada. As redes profundas (deep learning) possuem múltiplas camadas ocultas e são utilizadas em reconhecimento de imagens, processamento de linguagem natural e outros problemas de aprendizado de máquina supervisionado.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-af7ed974d8067445",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "material_sha256": "c99073fed5d9dc7edff40a5c3ee326112c10487dc1031a46a6f8f67fda38ca03",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Array: Aloca memória contígua e de tamanho fixo. Acesso a `k` é O(1) (direto).\nInserção/remoção no meio é O(n) devido ao deslocamento de elementos.\nLista Encadeada Simples: Aloca nós dinamicamente e não contiguamente. Acesso a `k` é O(n) por varredura sequencial.\nInserção/remoção no meio também é O(n) para localizar o ponto de inserção/remoção.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-b699102bce61a212",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-4195239a765b626e60bd",
+      "material_sha256": "8ba41b97e85d4e3b44da9606872d2e62e6bb0ca7ef89277a9db67fa78f4ad9cf",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "No preparo de um bom café, a moagem dos grãos impacta diretamente o sabor e aroma; um pó fino demais pode resultar em amargor. A temperatura da água influencia a extração, e o tempo de infusão define a intensidade. A escolha entre coado e expresso depende da preferência pessoal, um para a degustação lenta e outro para um despertar rápido.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-bbe94c9a68680be2",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-f93d73531b4d2ac9ff27",
+      "material_sha256": "8764c7de04768042124c9c1cf56ecdf70e727f4e60bda4d49fdb76f547d2f0c5",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Uma BST balanceada tem os nós organizados de forma que cada filho seja sempre maior que o pai, tornando a estrutura simétrica e eficiente. A BST não balanceada pode ter os nós em qualquer posição, o que a torna desorganizada e difícil de percorrer. A vantagem da balanceada é que o acesso é sempre muito rápido. A complexidade de busca na balanceada é O(1) no melhor e pior caso. Na não balanceada, o melhor caso é O(log n) e o pior caso é O(n²), pois é necessário percorrer toda a estrutura reorganizando os nós durante a busca.",
+      "split": "held_out"
+    },
+    {
+      "case_id": "annotation-bfacba2baf1c1d7c",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "material_sha256": "745c35fa83120008da92e87e9d0e275affe69f4edc3dae3ddcf740307aadbb2a",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Arrays alocam memória contígua, enquanto Listas Encadeadas utilizam nós dispersos conectados. O acesso a um elemento em Array é direto (O(1)); em Lista, requer percorrer desde o início (O(n)). Inserir ou remover no meio de um Array exige deslocar elementos, podendo ser O(n). Em uma Lista Encadeada, essa operação também pode ser O(n) para localizar o ponto e ajustar conexões.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-c225fdb96247bd48",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "material_sha256": "644425db7927f6e101f8c58843cdc3ef454c77e78dfd399d75af2e12ff26d1ef",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Uma BST balanceada possui altura O(log n), mantendo diferenças de altura limitadas entre suas subárvores; a não balanceada pode ter altura O(n). A vantagem da balanceada é garantir complexidade O(log n) para busca, inserção e remoção em *todos* os casos (melhor e pior). Em BSTs não balanceadas, o melhor caso é O(log n), mas o pior caso (degenerado) é O(n) para as mesmas operações.",
+      "split": "held_out"
+    },
+    {
+      "case_id": "annotation-c271cfdbc9cfb073",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "material_sha256": "d12a9ab443c907c46b47fa1ff809eaf59ce7621590f7af79d3bc2989af5026a7",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Uma Array aloca memória contígua, permitindo acesso direto a um elemento `k`. Já a Lista Encadeada Simples aloca nós dispersos, sendo o acesso a `k` feito por travessia, resultando em complexidade O(n). Inserir ou remover no meio de uma Array exige deslocar elementos, o que também custa O(n). Na Lista Encadeada, após achar o ponto, a inserção/remoção exige ajustar os ponteiros, podendo também levar tempo O(n) para localizar.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-c35cb800ac291bdb",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "material_sha256": "7809937f31398c47e88d6addef39913bd756f6e831d2e742287625f2aeccce90",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Merge Sort (MS) é estável e possui complexidade O(n log n) no pior caso, enquanto Quick Sort (QS) não é estável e pode atingir O(n^2) no pior caso.\nMS requer O(n) de espaço auxiliar para a intercalação; QS utiliza O(log n) a O(n) para a pilha de recursão, dependendo da escolha do pivô.\nMS é ideal quando estabilidade é crucial ou garantia de tempo O(n log n) é necessária (e.g., com dados pré-ordenados), aceitando maior uso de memória.\nQS, mais rápido na prática e com menor espaço esperado, é preferível quando estabilidade não é requisito e o pior caso O(n^2) (mitigável) é aceitável.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-c5695f46ab934ff7",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-cbec77f5e01e5b7f7fd1",
+      "material_sha256": "91dcfe8c22910c2d047a6127c13aed4b3daae000f9d6ea72c817f7150ad41f9a",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Uma Árvore Binária de Busca (BST) balanceada mantém a altura das subárvores de cada nó com uma diferença máxima limitada, prevenindo a degeneração da árvore. A principal vantagem é garantir que as operações de busca, inserção e remoção tenham uma complexidade de tempo logarítmica (O(log n)), ao contrário de uma BST não balanceada.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-c5a0bfe7d7e80a5e",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-d01fe380fa45362d53ef",
+      "material_sha256": "0af69321aa20717357425705efc398433b01315f3cc8e0668cd6d26b7de867d5",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "A fotossíntese é o processo pelo qual as plantas convertem luz solar em energia química. Ocorre nos cloroplastos, onde a clorofila absorve luz e usa CO2 e água para produzir glicose e oxigênio. É fundamental para a cadeia alimentar e para a manutenção do oxigênio na atmosfera terrestre.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-cacdcc59bf115ffc",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-d01fe380fa45362d53ef",
+      "material_sha256": "f009e57b07d042e5320b3ec366795041d7d5654bd56e605fe8b577f0b38342ba",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Fritar e cozinhar são técnicas culinárias muito diferentes. Fritar usa gordura quente para criar uma crosta crocante por fora enquanto mantém o interior úmido. Cozinhar em água transmite calor por condução e é indicado para legumes e massas. A escolha depende do ingrediente e do resultado desejado em termos de textura e sabor do prato final.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-cde1543d4322a213",
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-6be66b032c8178cebaba",
+      "material_sha256": "a6864ab15fed500a2559f1e2af339aa54eb4fe60932cfa4d345a59c8dfac38b8",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Merge Sort é estável: elementos com chaves iguais preservam sua ordem relativa original após a ordenação. Sua complexidade de tempo é O(n log n) no melhor, médio e pior caso, garantindo desempenho consistente independente da entrada. O custo de espaço é O(n) auxiliar, pois requer um array temporário na mesclagem. Quick Sort é instável: a posição relativa de elementos iguais pode mudar após a partição. Sua complexidade média é O(n log n), mas degenera para O(n²) no pior caso (pivô sempre extremo, ex.: array já ordenado sem aleatorização do pivô). O espaço auxiliar é O(log n) em média (pilha de recursão). Implicações práticas: Merge Sort é preferível quando estabilidade é requisito (ex.: ordenar registros por múltiplos campos mantendo sub-ordenação prévia) ou quando desempenho garantido é crítico. Quick Sort é preferível com memória limitada e dados sem padrões degenerativos, sendo geralmente mais rápido na prática por menor constante multiplicativa e melhor localidade de cache.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-d395fec425f022ba",
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "material_sha256": "4b2412d388382c0ccb3d88fbe9f6a7d54395d7fe0558d304213497793badf67c",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Uma BST balanceada mantém as alturas de suas sub-árvores com diferenças mínimas, evitando que a árvore se torne muito \"esticada\", ao contrário da não balanceada. A principal vantagem da balanceada é sua eficiência previsível: busca, inserção e remoção têm complexidade de O(log N) tanto no melhor quanto no pior caso. Em uma não balanceada, embora possa ser O(log N) no melhor caso, degrada para O(N) no pior, assemelhando-se a uma lista.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-dfab7aa9c839a784",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-f93d73531b4d2ac9ff27",
+      "material_sha256": "a7f025f4df3484b646966790d012988d21b466638dacda36e520115090b69e5c",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Arrays são estruturas onde os dados ficam armazenados em ordem sequencial. O acesso é feito de forma sequencial, então para chegar ao elemento k é preciso percorrer todos os anteriores, custando O(n). Listas Encadeadas alocam toda a memória necessária de uma vez no início do programa, e os nós ficam conectados. O acesso a qualquer elemento é direto pelo índice, sendo O(1). Para inserir ou remover no meio de uma Array, o custo é O(1) porque os elementos não precisam ser movidos. Já na Lista, o custo é O(n²) porque é necessário reorganizar todos os ponteiros da estrutura inteira.",
+      "split": "held_out"
+    },
+    {
+      "case_id": "annotation-e0a6c026dd45126c",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "material_sha256": "dc4a70d3a1ac1f72062c83b817c4967170ef6b6be0871a1860ee6889db8c45ef",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Um vetor estático (Array) aloca memória de forma dispersa e acessar um elemento é O(n) porque ele precisa percorrer todos os itens. Uma Lista Encadeada Simples, por outro lado, aloca memória contígua e acessa qualquer elemento diretamente em O(1), e sua inserção é O(n) pois requer reorganizar todos os elementos.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-ecb6d948f3487f7d",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "material_sha256": "b6785d39115b7abd9b8c11cf1930e10d62a2db200386949b01fa2f0a32a55c58",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Array (vetor estático) possui alocação de memória contígua e estática, permitindo acesso O(1) a qualquer índice `k`. Inserção/remoção no meio exige O(n) para deslocar elementos.\nUma Lista Encadeada Simples tem alocação dinâmica e não contígua (nós separados); acesso por índice `k` é O(k)/O(n) devido à travessia linear.\nInserção/remoção no meio da lista também requer O(n) para encontrar a posição correta via travessia.\nAssim, a contiguidade da Array viabiliza acesso direto O(1), enquanto a dispersão da Lista Encadeada impõe complexidades O(n) para acesso e manipulação no meio.",
+      "split": "held_out"
+    },
+    {
+      "case_id": "annotation-f1bfa4c9bc910650",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "material_sha256": "b71594502dbe118f968cf943d4432aa7e5c2c63eb912b35b632f099f87622586",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Precisão Técnica e Conceitual",
+          "description": "Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.",
+          "weight": 0.4,
+          "max_score": 10.0
+        },
+        {
+          "name": "Completude da Resposta",
+          "description": "Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.",
+          "weight": 0.3,
+          "max_score": 10.0
+        },
+        {
+          "name": "Clareza e Organização",
+          "description": "Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.",
+          "weight": 0.2,
+          "max_score": 10.0
+        },
+        {
+          "name": "Justificativa e Análise Crítica",
+          "description": "Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.",
+          "weight": 0.1,
+          "max_score": 10.0
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Arrays alocam memória de forma flexível e dispersa para agilidade no processamento, enquanto listas encadeadas tendem a ser mais rígidas e contíguas. Acessar um índice `k` em um array é O(n) porque exige varredura, ao contrário da lista que é O(1) se o nó for conhecido. Inserir ou remover no meio do array é O(1), mas nas listas encadeadas é O(n) devido à complexidade da reindexação dos elementos.",
+      "split": "development"
+    },
+    {
+      "case_id": "annotation-fec20f42044865c7",
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-dbc694fe02a87b650434",
+      "material_sha256": "47d9ee1eaf7fb53ad28da7d50c0f179295dd02f85eb717b6c660b2f500a2c8fc",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "rubric": [
+        {
+          "name": "Correção técnica",
+          "description": "Avalia a precisão conceitual e a ausência de erros técnicos.",
+          "max_score": 3.5,
+          "weight": 0.35
+        },
+        {
+          "name": "Completude da resposta",
+          "description": "Avalia se todos os pontos solicitados foram abordados de forma adequada.",
+          "max_score": 2.5,
+          "weight": 0.25
+        },
+        {
+          "name": "Precisão terminológica",
+          "description": "Avalia o uso correto de termos técnicos e definições, evitando ambiguidade ou imprecisão.",
+          "max_score": 2.0,
+          "weight": 0.2
+        },
+        {
+          "name": "Uso de exemplos",
+          "description": "Avalia se a resposta utiliza exemplos relevantes para sustentar a explicação (quando aplicável).",
+          "max_score": 1.0,
+          "weight": 0.1
+        },
+        {
+          "name": "Análise crítica e profundidade",
+          "description": "Avalia se a resposta vai além do superficial, analisando causas, consequências, relações e implicações.",
+          "max_score": 1.0,
+          "weight": 0.1
+        }
+      ],
+      "total_points": 10.0,
+      "answer_text": "Arrays guardam os dados de forma organizada na memória, um do lado do outro, o que permite acessar qualquer elemento diretamente pelo índice. Listas Encadeadas funcionam de forma diferente: cada elemento aponta para o próximo, então para acessar o elemento k é preciso percorrer desde o início. Quando se insere ou remove no meio de uma Array, os outros elementos precisam se mover para abrir ou fechar espaço. Na Lista, basta mudar os ponteiros, sem mover dados. No geral, Arrays são boas para acesso rápido e Listas para quando se modifica muito a estrutura.",
+      "split": "development"
+    }
+  ]
+}

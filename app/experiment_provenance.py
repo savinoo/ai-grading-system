@@ -13,6 +13,8 @@ _REPO_ROOT = Path(__file__).resolve().parent.parent
 _VERSIONED_SOURCES = {
     "examiner_prompt_file": "src/domain/ai/prompts.py",
     "examiner_runtime_file": "src/services/agents/examiner_agent.py",
+    "arbiter_runtime_file": "src/services/agents/arbiter_agent.py",
+    "consensus_runtime_file": "src/domain/ai/utils/consensus_builder.py",
     "retriever_file": "src/services/rag/retrieval_service.py",
     "workflow_file": "src/domain/ai/workflow/nodes.py",
 }

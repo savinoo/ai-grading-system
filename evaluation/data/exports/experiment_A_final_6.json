@@ -1,0 +1,469 @@
+{
+  "schema_version": 1,
+  "id": "historical-experiment_A_final_6",
+  "provenance": {
+    "source_repository": "https://github.com/savinoo/ai-grading-system",
+    "source_commit": "79495d00948908503ed4489861ea319a2c7e7972",
+    "source_path": "tcc/results/experiment_A_final_6.json",
+    "source_sha256": "ba659423ef9c53a6cd03405a192673cc994a9e64c5d305b96c1bbf6a44454e4f",
+    "source_family": "tcc_ab_parallel",
+    "attribution": "Historical TCC experiments in repository owned by Lucas Lorenzo Savino"
+  },
+  "response_origin": "synthetic_profiles",
+  "status": "completed",
+  "config": {
+    "llm_provider": "gemini",
+    "llm_model": "gemini-2.5-flash",
+    "condition": "A (com RAG) - pareado + paralelo",
+    "rag_enabled": true,
+    "divergence_threshold": 2.0,
+    "num_questions": 3,
+    "num_students": 4
+  },
+  "questions": [
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "statement": "Diferencie uma `Array` (vetor estático) de uma `Lista Encadeada Simples` quanto aos seguintes aspectos: alocação de memória, acesso a um elemento em uma posição arbitrária (índice `k`), e impacto da inserção/remoção de um elemento no meio da estrutura. Justifique suas respostas com exemplos de complexidade de tempo O(n).",
+      "total_points": 10.0,
+      "rubric_json": "[{\"name\": \"Precisão Técnica e Conceitual\", \"description\": \"Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.\", \"weight\": 0.4, \"max_score\": 10.0}, {\"name\": \"Completude da Resposta\", \"description\": \"Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.\", \"weight\": 0.3, \"max_score\": 10.0}, {\"name\": \"Clareza e Organização\", \"description\": \"Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.\", \"weight\": 0.2, \"max_score\": 10.0}, {\"name\": \"Justificativa e Análise Crítica\", \"description\": \"Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.\", \"weight\": 0.1, \"max_score\": 10.0}]",
+      "difficulty": "médio",
+      "topic": "Geral",
+      "discipline": "Algoritmos e Estrutura de Dados"
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "statement": "Compare os algoritmos de ordenação `Merge Sort` e `Quick Sort` considerando os seguintes critérios: estabilidade, complexidade de tempo no pior caso e complexidade de espaço. Explique as implicações de cada característica para a escolha de um algoritmo em cenários específicos.",
+      "total_points": 10.0,
+      "rubric_json": "[{\"name\": \"Precisão Técnica e Conceitual\", \"description\": \"Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.\", \"weight\": 0.4, \"max_score\": 10.0}, {\"name\": \"Completude da Resposta\", \"description\": \"Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.\", \"weight\": 0.3, \"max_score\": 10.0}, {\"name\": \"Clareza e Organização\", \"description\": \"Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.\", \"weight\": 0.2, \"max_score\": 10.0}, {\"name\": \"Justificativa e Análise Crítica\", \"description\": \"Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.\", \"weight\": 0.1, \"max_score\": 10.0}]",
+      "difficulty": "médio",
+      "topic": "Geral",
+      "discipline": "Algoritmos e Estrutura de Dados"
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "statement": "Descreva as propriedades que definem uma `Árvore Binária de Busca (BST)` balanceada e uma não balanceada. Explique qual a principal vantagem de uma BST balanceada em relação a uma não balanceada, especificando a complexidade de tempo de busca, inserção e remoção em ambos os cenários (melhor e pior caso).",
+      "total_points": 10.0,
+      "rubric_json": "[{\"name\": \"Precisão Técnica e Conceitual\", \"description\": \"Avalia a exatidão da terminologia técnica utilizada e a correção dos conceitos apresentados. Erros conceituais graves penalizam fortemente.\", \"weight\": 0.4, \"max_score\": 10.0}, {\"name\": \"Completude da Resposta\", \"description\": \"Verifica se todos os aspectos e sub-itens solicitados na questão foram abordados de forma satisfatória e abrangente.\", \"weight\": 0.3, \"max_score\": 10.0}, {\"name\": \"Clareza e Organização\", \"description\": \"Analisa a capacidade de expressar ideias de forma lógica, coesa e facilmente compreensível, com boa estruturação da resposta.\", \"weight\": 0.2, \"max_score\": 10.0}, {\"name\": \"Justificativa e Análise Crítica\", \"description\": \"Examina a profundidade das justificativas, a fundamentação teórica e a capacidade de realizar uma análise crítica dos tópicos, incluindo exemplos de complexidade quando solicitado.\", \"weight\": 0.1, \"max_score\": 10.0}]",
+      "difficulty": "médio",
+      "topic": "Geral",
+      "discipline": "Algoritmos e Estrutura de Dados"
+    }
+  ],
+  "students": [
+    {
+      "student_id": "response-af4455a7af28ac46cd74",
+      "quality_profile": "excellent"
+    },
+    {
+      "student_id": "response-088d04af4aa6024f48b3",
+      "quality_profile": "average"
+    },
+    {
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "quality_profile": "poor"
+    },
+    {
+      "student_id": "response-4195239a765b626e60bd",
+      "quality_profile": "off_topic"
+    }
+  ],
+  "answers": [
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "answer_text": "Arrays alocam memória contígua; Listas Encadeadas alocam nós não contiguamente. O acesso a um elemento `k` em Array é O(1) (direto por índice); em Lista é O(n), pois exige travessia sequencial. A inserção/remoção no meio em Array é O(n), devido ao deslocamento de elementos. Em Lista Encadeada, também é O(n) para localizar a posição e ajustar ponteiros."
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "answer_text": "Uma Array aloca memória contígua, permitindo acesso direto a um elemento `k`. Já a Lista Encadeada Simples aloca nós dispersos, sendo o acesso a `k` feito por travessia, resultando em complexidade O(n). Inserir ou remover no meio de uma Array exige deslocar elementos, o que também custa O(n). Na Lista Encadeada, após achar o ponto, a inserção/remoção exige ajustar os ponteiros, podendo também levar tempo O(n) para localizar."
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "answer_text": "`Arrays` alocam memória de forma estática em segmentos contíguos, facilitando o acesso O(1) a qualquer elemento via índice `k` por meio de um cálculo direto. Já `Listas Encadeadas` utilizam alocação dinâmica, onde cada nó armazena dados e ponteiros, o que exige um acesso O(n) para encontrar um elemento em `k`. A inserção/remoção no meio da `Array` causa um grande impacto de O(n) devido à necessidade de reorganização de todos os elementos, enquanto na `Lista` é mais eficiente, pois apenas ponteiros são alterados, mas a busca por esse ponto ainda é O(n)."
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-4195239a765b626e60bd",
+      "answer_text": "A diferenciação entre planetas rochosos e gigantes gasosos reside na sua composição interna e formação. Enquanto rochosos possuem núcleo sólido e superfícies definidas, como a Terra, gigantes gasosos, como Júpiter, são vastas esferas de hidrogênio e hélio, sem superfície sólida clara. A observação de exoplanetas pode variar, revelando atmosferas ou a ausência delas, impactando a busca por vida."
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "answer_text": "Merge Sort (MS) é estável, O(n log n) tempo no pior caso e O(n) espaço auxiliar, ideal para estabilidade e desempenho garantido.\nQuick Sort (QS) é instável, O(n²) tempo no pior caso e O(log n) espaço médio (pilha recursiva), favorecendo eficiência de espaço.\nA estabilidade do MS é crucial para manter a ordem relativa de elementos iguais, e sua complexidade de tempo garantida é vital em sistemas críticos.\nO QS, embora mais rápido na prática para muitos cenários, exige boa escolha de pivô para evitar seu pior caso de tempo."
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "answer_text": "Merge Sort é tipicamente estável e tem um desempenho de tempo mais previsível, sendo O(n log n) no pior caso, mas utiliza mais espaço auxiliar (O(n)). Quick Sort geralmente não é estável e pode ter um pior caso de tempo de O(n^2).\n\nNo entanto, Quick Sort costuma ser mais eficiente em termos de espaço (O(log n) na média). Assim, escolhe-se Merge Sort quando a ordem relativa de elementos iguais é crucial ou a previsibilidade do tempo é prioritária.\n\nQuick Sort é preferível para menor uso de memória, mas é preciso considerar a variação do seu desempenho dependendo dos dados de entrada."
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "answer_text": "Merge Sort é instável e tem complexidade de tempo de O(N^2) no pior caso, gastando pouco espaço. O Quick Sort é estável e mais eficiente, com O(N log N) no pior caso, mas exige mais memória. A escolha depende se a performance ou a estabilidade é a prioridade, sendo o Quick Sort melhor para dados já ordenados."
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-4195239a765b626e60bd",
+      "answer_text": "Grelhar e assar diferem muito. Grelhar oferece sabor defumado intenso e cozimento rápido para carnes finas, mas requer atenção constante. Assar distribui calor uniformemente, ideal para bolos e pães, garantindo maciez interna. A complexidade do preparo e os equipamentos variam. A escolha impacta diretamente a textura final e a suculência do prato."
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "answer_text": "Uma BST balanceada garante altura O(log n) (diferença de altura entre subárvores limitada); a não balanceada pode degenerar para O(n). A principal vantagem da balanceada é manter busca, inserção e remoção em O(log n) no melhor e pior caso. Já na não balanceada, estas operações são O(log n) no melhor caso, mas O(n) no pior caso (árvore degenerada), desempenho que a balanceada evita."
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "answer_text": "Árvores balanceadas mantêm uma altura proporcional ao logaritmo do número de elementos, assegurando desempenho consistente O(log n) para busca, inserção e remoção no melhor e pior caso. Já as não balanceadas podem ter altura linear, degenerando para um pior caso O(n) nessas operações. A principal vantagem das balanceadas é a garantia de eficiência, evitando o desempenho imprevisível do pior caso linear das não balanceadas."
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "answer_text": "Uma BST balanceada tem seus nós organizados de forma que todos os caminhos sejam de igual comprimento e cada nó filho é sempre maior que o pai, o que a torna otimizada. Uma não balanceada não segue essa regra, podendo virar uma lista. A vantagem principal da balanceada é sua agilidade. A complexidade de busca, inserção e remoção é O(log n) para a balanceada (todos os casos), e para a não balanceada, é O(1) no melhor e O(n!) no pior."
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-4195239a765b626e60bd",
+      "answer_text": "Um pão balanceado requer levedura, farinha e água em proporções exatas para uma massa leve e aerada. Um pão não balanceado resulta em um miolo denso ou seco. A principal vantagem do balanceado é a melhor fermentação e sabor; o tempo de sova é O(1) no melhor caso, ou O(N) para ajustes no pior."
+    }
+  ],
+  "corrections": [
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "agent_role": "corretor_1",
+      "total_score": 10.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "agent_role": "corretor_2",
+      "total_score": 10.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "agent_role": "corretor_1",
+      "total_score": 10.0,
+      "confidence_level": 0.98,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "agent_role": "corretor_2",
+      "total_score": 10.0,
+      "confidence_level": 0.9,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "agent_role": "corretor_1",
+      "total_score": 10.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "agent_role": "corretor_2",
+      "total_score": 10.0,
+      "confidence_level": null,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-4195239a765b626e60bd",
+      "agent_role": "corretor_1",
+      "total_score": 0.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-4195239a765b626e60bd",
+      "agent_role": "corretor_2",
+      "total_score": 0.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "agent_role": "corretor_1",
+      "total_score": 10.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "agent_role": "corretor_2",
+      "total_score": 10.0,
+      "confidence_level": 0.98,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "agent_role": "corretor_1",
+      "total_score": 10.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "agent_role": "corretor_2",
+      "total_score": 10.0,
+      "confidence_level": 0.95,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "agent_role": "corretor_1",
+      "total_score": 3.5,
+      "confidence_level": 0.95,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "agent_role": "corretor_2",
+      "total_score": 4.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-4195239a765b626e60bd",
+      "agent_role": "corretor_1",
+      "total_score": 0.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-4195239a765b626e60bd",
+      "agent_role": "corretor_2",
+      "total_score": 0.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "agent_role": "corretor_1",
+      "total_score": 10.0,
+      "confidence_level": null,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "agent_role": "corretor_2",
+      "total_score": 10.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "agent_role": "corretor_1",
+      "total_score": 10.0,
+      "confidence_level": 0.98,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "agent_role": "corretor_2",
+      "total_score": 10.0,
+      "confidence_level": 0.95,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "agent_role": "corretor_1",
+      "total_score": 7.0,
+      "confidence_level": 0.95,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "agent_role": "corretor_2",
+      "total_score": 10.0,
+      "confidence_level": null,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "agent_role": "arbiter",
+      "total_score": 7.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-4195239a765b626e60bd",
+      "agent_role": "corretor_1",
+      "total_score": 0.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-4195239a765b626e60bd",
+      "agent_role": "corretor_2",
+      "total_score": 0.0,
+      "confidence_level": 1.0,
+      "criterion_scores": []
+    }
+  ],
+  "rag_contexts": [],
+  "results": [
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "c1_score": 10.0,
+      "c2_score": 10.0,
+      "arbiter_score": null,
+      "divergence_detected": 0,
+      "divergence_value": 0.0,
+      "final_score": 10.0,
+      "consensus_method": "mean_2"
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "c1_score": 10.0,
+      "c2_score": 10.0,
+      "arbiter_score": null,
+      "divergence_detected": 0,
+      "divergence_value": 0.0,
+      "final_score": 10.0,
+      "consensus_method": "mean_2"
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "c1_score": 10.0,
+      "c2_score": 10.0,
+      "arbiter_score": null,
+      "divergence_detected": 0,
+      "divergence_value": 0.0,
+      "final_score": 10.0,
+      "consensus_method": "mean_2"
+    },
+    {
+      "question_uuid": "q-a2e8ea3c2b9b5c33fc7a",
+      "student_id": "response-4195239a765b626e60bd",
+      "c1_score": 0.0,
+      "c2_score": 0.0,
+      "arbiter_score": null,
+      "divergence_detected": 0,
+      "divergence_value": 0.0,
+      "final_score": 0.0,
+      "consensus_method": "mean_2"
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "c1_score": 10.0,
+      "c2_score": 10.0,
+      "arbiter_score": null,
+      "divergence_detected": 0,
+      "divergence_value": 0.0,
+      "final_score": 10.0,
+      "consensus_method": "mean_2"
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "c1_score": 10.0,
+      "c2_score": 10.0,
+      "arbiter_score": null,
+      "divergence_detected": 0,
+      "divergence_value": 0.0,
+      "final_score": 10.0,
+      "consensus_method": "mean_2"
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "c1_score": 3.5,
+      "c2_score": 4.0,
+      "arbiter_score": null,
+      "divergence_detected": 0,
+      "divergence_value": 0.5,
+      "final_score": 3.75,
+      "consensus_method": "mean_2"
+    },
+    {
+      "question_uuid": "q-255ef6464c0fabd6005f",
+      "student_id": "response-4195239a765b626e60bd",
+      "c1_score": 0.0,
+      "c2_score": 0.0,
+      "arbiter_score": null,
+      "divergence_detected": 0,
+      "divergence_value": 0.0,
+      "final_score": 0.0,
+      "consensus_method": "mean_2"
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-af4455a7af28ac46cd74",
+      "c1_score": 10.0,
+      "c2_score": 10.0,
+      "arbiter_score": null,
+      "divergence_detected": 0,
+      "divergence_value": 0.0,
+      "final_score": 10.0,
+      "consensus_method": "mean_2"
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-088d04af4aa6024f48b3",
+      "c1_score": 10.0,
+      "c2_score": 10.0,
+      "arbiter_score": null,
+      "divergence_detected": 0,
+      "divergence_value": 0.0,
+      "final_score": 10.0,
+      "consensus_method": "mean_2"
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-b24215cce03bf36bb4b9",
+      "c1_score": 7.0,
+      "c2_score": 10.0,
+      "arbiter_score": 7.0,
+      "divergence_detected": 1,
+      "divergence_value": 3.0,
+      "final_score": 7.0,
+      "consensus_method": "closest_pair_3"
+    },
+    {
+      "question_uuid": "q-546f6770750fff9d237e",
+      "student_id": "response-4195239a765b626e60bd",
+      "c1_score": 0.0,
+      "c2_score": 0.0,
+      "arbiter_score": null,
+      "divergence_detected": 0,
+      "divergence_value": 0.0,
+      "final_score": 0.0,
+      "consensus_method": "mean_2"
+    }
+  ]
+}

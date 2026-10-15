@@ -1,0 +1,4 @@
+# Offline lab + dashboard. Does not install provider SDKs or the production API.
+pandas==2.3.3
+plotly==6.6.0
+streamlit==1.55.0
